@@ -1,2 +1,4 @@
 # gosling-engine
-Tile based game engine for making games like Tic-Tac-Toe, Checkers, Chess, Minesweeper, etc.
+
+<img src="https://travis-ci.org/danielricci/gosling-engine.svg?branch=master" />
+
