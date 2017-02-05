@@ -55,8 +55,7 @@ public abstract class BaseView extends JPanel implements IView {
 		setController(ControllerFactory.instance().get(controller, shared, this));
 	}
 	
-	// TODO - this needs to be protected
-	public final <T extends BaseController> T getController(Class<T> controllerClass) {	
+	protected final <T extends BaseController> T getController(Class<T> controllerClass) {	
 		BaseController myController = null;
 		for(BaseController controller : _controllers) {
 			if(controller.getClass() == controllerClass) {

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project basedir="." default="gosling-engine-build" name="Gosling">
+	<!-- PROPERTIES -->
+	<property environment="env"/>
+    <property name="debuglevel" value="source,lines,vars"/>
+    <property name="target" value="1.8"/>
+    <property name="source" value="1.8"/>
+    <path id="Project and External Dependencies.libraryclasspath"/>
+    <path id="Gosling.classpath">
+        <pathelement location="bin"/>
+        <path refid="Project and External Dependencies.libraryclasspath"/>
+    </path>
+    <target name="gosling-engine-init">
+        <mkdir dir="bin"/>
+        <copy includeemptydirs="false" todir="bin">
+            <fileset dir="src">
+                <exclude name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="gosling-engine-clean">
+        <delete dir="bin"/>
+    </target>
+    <target depends="gosling-engine-clean, gosling-engine-init" name="gosling-engine-build">
+        <echo message="${ant.project.name}: ${ant.file}"/>
+        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
+            <src path="src"/>
+            <classpath refid="Gosling.classpath"/>
+        </javac>
+    </target>
+</project>
