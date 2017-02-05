@@ -16,7 +16,6 @@ cache:
     - $HOME/.gradle/wrapper/
 
 before_script:
-  - cd Gosling
   - chmod +x gradlew
   
 script: gradle gosling-engine-build
