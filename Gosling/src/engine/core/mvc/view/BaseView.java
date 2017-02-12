@@ -31,6 +31,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
+import engine.api.IInvokable;
 import engine.api.IView;
 import engine.communication.internal.dispatcher.DispatcherOperation;
 import engine.core.mvc.controller.BaseController;
@@ -40,6 +41,7 @@ import engine.factories.ControllerFactory;
 public abstract class BaseView extends JPanel implements IView {
 
 	private final Vector<BaseController> _controllers = new Vector<>();
+	private final Vector<IInvokable> _entities = new Vector<>();
 	
 	private BaseView(){
 		register();
@@ -99,10 +101,19 @@ public abstract class BaseView extends JPanel implements IView {
 		return found;
 	}
 	
+	protected final void addInvokableEntity(IInvokable entity) {
+		_entities.addElement(entity);
+	}
+	
 	@Override public void register(){
 	}
 		
 	@Override public void render(){
+		for(IInvokable entity : _entities)
+		{
+			//entity.Invoke(this);
+		}
+		_entities.clear();
 	}
 	
 	@Override public void refresh(GameModel model){
