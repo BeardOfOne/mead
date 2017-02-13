@@ -32,6 +32,7 @@ import java.util.Vector;
 import javax.swing.JPanel;
 
 import engine.api.IInvokable;
+import engine.api.IInvokable.Result;
 import engine.api.IView;
 import engine.communication.internal.dispatcher.DispatcherOperation;
 import engine.core.mvc.controller.BaseController;
@@ -105,15 +106,24 @@ public abstract class BaseView extends JPanel implements IView {
 		_entities.addElement(entity);
 	}
 	
+	protected final <T extends IInvokable> Result getInvokableEntityResult(Class<T> entityClass) {
+		T result = null;
+		for(IInvokable entity : _entities) {
+			if(entity.getClass() == entityClass) {
+				result = (T) entity;
+				break;
+			}
+		}
+		return result != null ? result.getResult() : null;
+	}
+	
 	@Override public void register(){
 	}
 		
 	@Override public void render(){
-		for(IInvokable entity : _entities)
-		{
-			//entity.Invoke(this);
+		for(IInvokable entity : _entities) {
+			entity.invoke();
 		}
-		_entities.clear();
 	}
 	
 	@Override public void refresh(GameModel model){
