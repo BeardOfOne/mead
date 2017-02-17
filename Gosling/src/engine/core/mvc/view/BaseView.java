@@ -124,10 +124,7 @@ public abstract class BaseView extends JPanel implements IView {
 			entity.invoke();
 		}
 	}
-	
-	@Override public void refresh(GameModel model){
-	}
-				
+
 	@Override public void dispose() {
 		removeAll();
 		_controllers.clear();

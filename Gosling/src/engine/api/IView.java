@@ -24,10 +24,7 @@
 
 package engine.api;
 
-import engine.core.mvc.model.GameModel;
-
 public interface IView extends IDestructor, IReceiver {
 	public void render();
-	public void refresh(GameModel model);
 	public void register();
 }
