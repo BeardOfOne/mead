@@ -9,7 +9,9 @@ apply plugin: 'java'
 
 /** ANT **/
 //-------------------------------
-ant.importBuild 'build.xml'
+ant.importBuild('build.xml') { antTargetName ->
+    'ant-' + antTargetName
+}
 //-------------------------------
 /** REPOSITORIES **/
 //-------------------------------
