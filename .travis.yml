@@ -19,4 +19,4 @@ before_script:
   - cd Gosling
   - chmod +x gradlew
 
-script: gradle gosling-engine-build
+script: gradle ant-gosling-engine-build
