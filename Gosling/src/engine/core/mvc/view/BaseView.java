@@ -31,8 +31,7 @@ import java.util.Vector;
 
 import javax.swing.JPanel;
 
-import engine.api.IInvokable;
-import engine.api.IInvokable.Result;
+import engine.api.IInvokableView;
 import engine.api.IView;
 import engine.communication.internal.dispatcher.DispatcherOperation;
 import engine.core.mvc.controller.BaseController;
@@ -42,7 +41,7 @@ import engine.factories.ControllerFactory;
 public abstract class BaseView extends JPanel implements IView {
 
 	private final Vector<BaseController> _controllers = new Vector<>();
-	private final Vector<IInvokable> _entities = new Vector<>();
+	private final Vector<IInvokableView> _entities = new Vector<>();
 	
 	private BaseView(){
 		register();
@@ -102,26 +101,26 @@ public abstract class BaseView extends JPanel implements IView {
 		return found;
 	}
 	
-	protected final void addInvokableEntity(IInvokable entity) {
+	protected final void addInvokableEntity(IInvokableView entity) {
 		_entities.addElement(entity);
 	}
 	
-	protected final <T extends IInvokable> Result getInvokableEntityResult(Class<T> entityClass) {
+	protected final <T extends IInvokableView> T getInvokableEntityResult(Class<T> entityClass) {
 		T result = null;
-		for(IInvokable entity : _entities) {
+		for(IInvokableView entity : _entities) {
 			if(entity.getClass() == entityClass) {
 				result = (T) entity;
 				break;
 			}
 		}
-		return result != null ? result.getResult() : null;
+		return result;
 	}
 	
 	@Override public void register(){
 	}
 		
 	@Override public void render(){
-		for(IInvokable entity : _entities) {
+		for(IInvokableView entity : _entities) {
 			entity.invoke();
 		}
 	}
