@@ -33,10 +33,8 @@ import javax.swing.JPanel;
 
 import engine.api.IInvokableView;
 import engine.api.IView;
-import engine.communication.internal.dispatcher.DispatcherOperation;
+import engine.core.factories.ControllerFactory;
 import engine.core.mvc.controller.BaseController;
-import engine.core.mvc.model.GameModel;
-import engine.factories.ControllerFactory;
 
 public abstract class BaseView extends JPanel implements IView {
 
@@ -75,12 +73,12 @@ public abstract class BaseView extends JPanel implements IView {
 		}
 	}
 	
-	@Override public Map<DispatcherOperation, ActionListener> getRegisteredOperations() {
+	@Override public Map<String, ActionListener> getRegisteredOperations() {
 		return null;
 	}
 		
-	@Override public final void executeRegisteredOperation(Object sender, DispatcherOperation operation) {		
-		Map<DispatcherOperation, ActionListener> operations = getRegisteredOperations();
+	@Override public final void executeRegisteredOperation(Object sender, String operation) {		
+		Map<String, ActionListener> operations = getRegisteredOperations();
 		ActionListener event;
 		if(operations != null && (event = operations.get(operation)) != null) {
 			event.actionPerformed(new ActionEvent(sender, 0, null));	

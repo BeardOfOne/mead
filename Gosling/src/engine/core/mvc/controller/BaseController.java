@@ -30,9 +30,8 @@ import java.util.Map;
 
 import engine.api.IController;
 import engine.api.IView;
-import engine.communication.internal.dispatcher.DispatcherOperation;
+import engine.core.factories.ViewFactory;
 import engine.core.mvc.view.BaseView;
-import engine.factories.ViewFactory;
 
 /**
  * This class holds base controller implementation functionality for all controllers
@@ -67,12 +66,12 @@ public abstract class BaseController implements IController  {
 		_view = view;
 	}
 	
-	@Override public Map<DispatcherOperation, ActionListener> getRegisteredOperations() {
+	@Override public Map<String, ActionListener> getRegisteredOperations() {
 		return null;
 	}
 	
-	@Override public final void executeRegisteredOperation(Object sender, DispatcherOperation operation) {		
-		Map<DispatcherOperation, ActionListener> operations = getRegisteredOperations();
+	@Override public final void executeRegisteredOperation(Object sender, String operation) {		
+		Map<String, ActionListener> operations = getRegisteredOperations();
 		ActionListener event;
 		if(operations != null && (event = operations.get(operation)) != null) {
 			event.actionPerformed(new ActionEvent(sender, 0, null));	

@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.factories;
+package engine.core.factories;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,9 +35,8 @@ import java.util.Set;
 import engine.api.IController;
 import engine.api.IDestructor;
 import engine.api.IDispatcher;
-import engine.communication.internal.dispatcher.Dispatcher;
-import engine.communication.internal.dispatcher.DispatcherMessage;
-import engine.communication.internal.dispatcher.DispatcherOperation;
+import engine.communication.internal.message.Dispatcher;
+import engine.communication.internal.message.DispatcherMessage;
 import engine.core.mvc.controller.BaseController;
 
 public class ControllerFactory implements IDestructor, IDispatcher<BaseController> {
@@ -148,7 +147,7 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
 		_instance = null;
 	}
 
-	@Override public <U extends BaseController> void SendMessage(Object sender, DispatcherOperation operation, Class<U> type, Object... args) {
+	@Override public <U extends BaseController> void SendMessage(Object sender, String operationName, Class<U> type, Object... args) {
 		
 		List<IController> resources = null;
 		
@@ -160,7 +159,7 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
 			continue;
 		}
 
-		DispatcherMessage<IController> message = new DispatcherMessage<IController>(sender, operation, resources, Arrays.asList(args));
+		DispatcherMessage<IController> message = new DispatcherMessage<IController>(sender, operationName, resources, Arrays.asList(args));
 		_dispatcher.add(message);
 	}
 }

@@ -22,19 +22,19 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.internal.dispatcher;
+package engine.communication.internal.message;
 
 import java.util.List;
 
 public class DispatcherMessage<U> {
 	public final Object sender;
 	public final List<Object> args;
-	public final DispatcherOperation operation;
+	public final String operationName;
 	public final List<U> resources;
 		
-	public DispatcherMessage(Object sender, DispatcherOperation operation, List<U> resources, List<Object> args) {
+	public DispatcherMessage(Object sender, String operationName, List<U> resources, List<Object> args) {
 		this.sender = sender;
-		this.operation = operation;
+		this.operationName = operationName;
 		this.resources = resources;
 		this.args = args;
 	}

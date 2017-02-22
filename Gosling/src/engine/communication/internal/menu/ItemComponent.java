@@ -1,4 +1,4 @@
-package engine.communication.internal.command;
+package engine.communication.internal.menu;
 
 import java.awt.event.ActionEvent;
 

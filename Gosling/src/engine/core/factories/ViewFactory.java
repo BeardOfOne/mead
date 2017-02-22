@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.factories;
+package engine.core.factories;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,9 +36,8 @@ import java.util.Vector;
 import engine.api.IDestructor;
 import engine.api.IDispatcher;
 import engine.api.IView;
-import engine.communication.internal.dispatcher.Dispatcher;
-import engine.communication.internal.dispatcher.DispatcherMessage;
-import engine.communication.internal.dispatcher.DispatcherOperation;
+import engine.communication.internal.message.Dispatcher;
+import engine.communication.internal.message.DispatcherMessage;
 import engine.core.mvc.view.BaseView;
 
 public class ViewFactory implements IDestructor, IDispatcher<BaseView> {
@@ -124,7 +123,7 @@ public class ViewFactory implements IDestructor, IDispatcher<BaseView> {
 		_instance = null;
 	}
 
-	@Override public <U extends BaseView> void SendMessage(Object sender, DispatcherOperation operation, Class<U> type, Object... args) {
+	@Override public <U extends BaseView> void SendMessage(Object sender, String operationName, Class<U> type, Object... args) {
 		List<IView> resources = null;
 		
 		for(Set<IView> views : _history.values()) {
@@ -135,7 +134,7 @@ public class ViewFactory implements IDestructor, IDispatcher<BaseView> {
 			continue;
 		}
 
-		DispatcherMessage<IView> message = new DispatcherMessage<IView>(sender, operation, resources, Arrays.asList(args));
+		DispatcherMessage<IView> message = new DispatcherMessage<IView>(sender, operationName, resources, Arrays.asList(args));
 		_dispatcher.add(message);
 	}
 }

@@ -30,7 +30,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 import engine.api.IReceiver;
-import engine.communication.internal.dispatcher.DispatcherOperation;
 
 /**
  * A Game Model represents the base class of all model type objects
@@ -45,7 +44,7 @@ public class GameModel
 	/**
 	 * The list of operations that can be used on the model
 	 */
-	private final Queue<DispatcherOperation> _operations = new LinkedList<>();
+	private final Queue<String> _operations = new LinkedList<>();
 	
 	/**
 	 * The list of receivable objects that can receive messages 
@@ -66,7 +65,7 @@ public class GameModel
 
 	protected final void notifyReceivers() {
 		for(IReceiver receiver : _receivers) {
-			for(DispatcherOperation operation : _operations) {
+			for(String operation : _operations) {
 				receiver.executeRegisteredOperation(this, operation);
 			}
 		}
@@ -74,19 +73,19 @@ public class GameModel
 				
 	protected final void doneUpdating() {
 		if(_operations.isEmpty()) {
-			_operations.add(DispatcherOperation.Refresh);
+			_operations.add("Refresh");
 		}
 		
 		notifyReceivers();
 		_operations.clear();
 	}	
 	
-	protected final void addOperation(DispatcherOperation operation) { 
-		_operations.add(operation); 
+	protected final void addOperation(String operationName) { 
+		_operations.add(operationName); 
 	}
 	
-	protected final DispatcherOperation[] getOperations() {
-		DispatcherOperation[] operations = new DispatcherOperation[_operations.size()];
+	protected final String[] getOperations() {
+		String[] operations = new String[_operations.size()];
 		_operations.toArray(operations);
 		return operations;
 	}
