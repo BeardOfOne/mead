@@ -35,8 +35,8 @@ import java.util.Set;
 import engine.api.IController;
 import engine.api.IDestructor;
 import engine.api.IDispatcher;
-import engine.communication.internal.message.Dispatcher;
-import engine.communication.internal.message.DispatcherMessage;
+import engine.communication.internal.dispatcher.Dispatcher;
+import engine.communication.internal.dispatcher.DispatcherMessage;
 import engine.core.mvc.controller.BaseController;
 
 public class ControllerFactory implements IDestructor, IDispatcher<BaseController> {

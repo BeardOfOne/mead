@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.internal.message;
+package engine.communication.internal.dispatcher;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -40,10 +40,9 @@ public class Dispatcher<T extends IReceiver> extends Thread {
 			try {
 				DispatcherMessage<T> message = _messages.poll();
 				if(message != null) {
-					for(Object resource : message.resources)
-					{
-						((T)resource).executeRegisteredOperation(message.sender, message.operationName);
-					}
+					message.resources.stream().forEach(
+						z -> z.executeRegisteredOperation(message.sender, message.operationName)
+					);
 				}
 				Thread.sleep(220);						
 			} catch (InterruptedException exception) {

@@ -36,8 +36,8 @@ import java.util.Vector;
 import engine.api.IDestructor;
 import engine.api.IDispatcher;
 import engine.api.IView;
-import engine.communication.internal.message.Dispatcher;
-import engine.communication.internal.message.DispatcherMessage;
+import engine.communication.internal.dispatcher.Dispatcher;
+import engine.communication.internal.dispatcher.DispatcherMessage;
 import engine.core.mvc.view.BaseView;
 
 public class ViewFactory implements IDestructor, IDispatcher<BaseView> {

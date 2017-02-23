@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.internal.message;
+package engine.communication.internal.dispatcher;
 
 import java.util.List;
 
