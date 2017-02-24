@@ -52,7 +52,9 @@ public abstract class BaseView extends JPanel implements IView {
 	
 	public <T extends BaseController> BaseView(Class<T> controller, boolean shared) {
 		this();
-		setController(ControllerFactory.instance().get(controller, shared, this));
+		if(controller != null) {
+			setController(ControllerFactory.instance().get(controller, shared, this));			
+		}
 	}
 	
 	public final <T extends BaseController> T getController(Class<T> controllerClass) {	
