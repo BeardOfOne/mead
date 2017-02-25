@@ -31,46 +31,27 @@ import java.util.Map;
 import engine.api.IController;
 import engine.api.IView;
 import engine.core.factories.ViewFactory;
-import engine.core.mvc.view.BaseView;
 
-/**
- * This class holds base controller implementation functionality for all controllers
- * 
- * @author Daniel Ricci <thedanny09@gmail.com>
- */
 public abstract class BaseController implements IController  {
-		
-	/**
-	 * The view assigned to the controller
-	 */
-	private BaseView _view;
-		
-	public BaseController() {
-	}
-	
-	public <T extends BaseView> BaseController(T view) {
-		this();
+
+	private IView _view;
+			
+	public <T extends IView> BaseController(T view) {
 		setView(view);
 	}
-
-	public <T extends BaseView> BaseController(Class<T> viewClass, boolean shared) {
-		this();
+	
+	/**
+	 * @deprecated  Use {@link # BaseController(T view)}
+	 */
+	@Deprecated public <T extends IView> BaseController(Class<T> viewClass, boolean shared) {
 		setView(ViewFactory.instance().get(viewClass, shared, this));
 	}
-		
-	protected final <T extends IView> T getView(Class<T> viewClass) {
-		return (T)_view;
-	}
-	
-	protected final <T extends BaseView> void setView(T view) {
-		_view = view;
-	}
-	
+
 	@Override public Map<String, ActionListener> getRegisteredOperations() {
 		return null;
 	}
 	
-	@Override public final void executeRegisteredOperation(Object sender, String operation) {		
+	@Override public final void executeRegisteredOperation(Object sender, String operation) {
 		Map<String, ActionListener> operations = getRegisteredOperations();
 		ActionListener event;
 		if(operations != null && (event = operations.get(operation)) != null) {
@@ -78,6 +59,16 @@ public abstract class BaseController implements IController  {
 		}
 	}
 	
-	@Override public void dispose() {	
+	@Override public void dispose() {
+		_view.dispose();
+		_view = null;
+	}
+	
+	protected final <T extends IView> T getView(Class<T> viewClass) {
+		return (T)_view;
+	}
+	
+	protected final <T extends IView> void setView(T view) {
+		_view = view;
 	}
 }

@@ -31,16 +31,14 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Vector;
 
 import engine.api.IDestructor;
 import engine.api.IDispatcher;
 import engine.api.IView;
 import engine.communication.internal.dispatcher.Dispatcher;
 import engine.communication.internal.dispatcher.DispatcherMessage;
-import engine.core.mvc.view.BaseView;
 
-public class ViewFactory implements IDestructor, IDispatcher<BaseView> {
+public class ViewFactory implements IDestructor, IDispatcher<IView> {
 
 	/**
 	 * A message dispatcher used to communicate with views 
@@ -53,7 +51,7 @@ public class ViewFactory implements IDestructor, IDispatcher<BaseView> {
      */
     private final Map<String, Set<IView>> _history = new HashMap<>();
 
-	private final Vector<BaseView> _views = new Vector<>(); 
+	private final ArrayList<IView> _views = new ArrayList<>(); 
 	
 	private static ViewFactory _instance;
 		
@@ -67,7 +65,7 @@ public class ViewFactory implements IDestructor, IDispatcher<BaseView> {
 	 * @param controller The controller to add
 	 * @param isShared If the controller should be added into the exposed cache
 	 */
-	private void Add(BaseView view, boolean isShared) { 
+	private void Add(IView view, boolean isShared) { 
 	    String viewName = view.getClass().getName();
 	    
 	    Set<IView> views = _history.get(viewName);
@@ -89,10 +87,10 @@ public class ViewFactory implements IDestructor, IDispatcher<BaseView> {
 		return _instance;
 	}
 	
-	public <T extends BaseView> T get(Class<T> viewClass, boolean isShared, Object...args) {
+	public <T extends IView> T get(Class<T> viewClass, boolean isShared, Object...args) {
 		System.out.println("Attempting to get " + viewClass.getName());
 		if(isShared) {
-			for(BaseView item : _views) {
+			for(IView item : _views) {
 				if(item.getClass() == viewClass) {
 					return (T)item;
 				}
@@ -117,13 +115,14 @@ public class ViewFactory implements IDestructor, IDispatcher<BaseView> {
 	}
 		
 	@Override public void dispose() {
-		for(BaseView view : _views) { // TODO - this needs to remove from _history
+		for(IView view : _views) { 
 			view.dispose();
 		}
+		_views.clear();
 		_instance = null;
 	}
 
-	@Override public <U extends BaseView> void SendMessage(Object sender, String operationName, Class<U> type, Object... args) {
+	@Override public <U extends IView> void SendMessage(Object sender, String operationName, Class<U> type, Object... args) {
 		List<IView> resources = null;
 		
 		for(Set<IView> views : _history.values()) {

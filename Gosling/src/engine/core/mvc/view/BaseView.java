@@ -24,54 +24,37 @@
 
 package engine.core.mvc.view;
 
+import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
-import java.util.Vector;
 
-import javax.swing.JPanel;
-
-import engine.api.IInvokableView;
+import engine.api.IController;
 import engine.api.IView;
 import engine.core.factories.ControllerFactory;
-import engine.core.mvc.controller.BaseController;
 
-public abstract class BaseView extends JPanel implements IView {
+abstract class BaseView<T extends Container> implements IView {
 
-	private final Vector<BaseController> _controllers = new Vector<>();
-	private final Vector<IInvokableView> _entities = new Vector<>();
+	private IController _controller;
+	private T _entity;
 	
-	private BaseView(){
+	public BaseView(T entity){
+		_entity = entity;
 		register();
 	}
 	
-	public BaseView(final BaseController controller) {			
-		this();
-		_controllers.add(controller);
+	public BaseView(T entity, IController controller) {
+		this(entity);
+		_controller = controller;			
 	}
 	
-	public <T extends BaseController> BaseView(Class<T> controller, boolean shared) {
-		this();
+	/**
+	 * @deprecated  Use {@link # BaseView(T entity, IController controller)}
+	 */
+	@Deprecated public <U extends IController> BaseView(T entity, Class<U> controller, boolean shared) {
+		this(entity);
 		if(controller != null) {
 			setController(ControllerFactory.instance().get(controller, shared, this));			
-		}
-	}
-	
-	public final <T extends BaseController> T getController(Class<T> controllerClass) {	
-		BaseController myController = null;
-		for(BaseController controller : _controllers) {
-			if(controller.getClass() == controllerClass) {
-				myController = controller;
-				break;
-			}
-		}
-		return (T) myController;
-	}
-	
-	protected final <T extends BaseController> void setController(T controller) {
-		assert controller != null : "Cannot add null controller into baseview";
-		if(!controllerExists(controller)) {
-			_controllers.add(controller);
 		}
 	}
 	
@@ -79,54 +62,32 @@ public abstract class BaseView extends JPanel implements IView {
 		return null;
 	}
 		
-	@Override public final void executeRegisteredOperation(Object sender, String operation) {		
+	@Override public final void executeRegisteredOperation(Object sender, String operation) {
 		Map<String, ActionListener> operations = getRegisteredOperations();
 		ActionListener event;
 		if(operations != null && (event = operations.get(operation)) != null) {
 			event.actionPerformed(new ActionEvent(sender, 0, null));	
 		}
 	}
-	
-	private boolean controllerExists(BaseController controller) {
-		assert controller != null : "Cannot pass a null controller";
-		boolean found = false;
 		
-		for(BaseController _controller : _controllers) {
-			if(_controller.getClass() == controller.getClass()) {
-				found = true;
-				break;
-			}
-		}
-		
-		return found;
-	}
-	
-	protected final void addInvokableEntity(IInvokableView entity) {
-		_entities.addElement(entity);
-	}
-	
-	protected final <T extends IInvokableView> T getInvokableEntityResult(Class<T> entityClass) {
-		T result = null;
-		for(IInvokableView entity : _entities) {
-			if(entity.getClass() == entityClass) {
-				result = (T) entity;
-				break;
-			}
-		}
-		return result;
-	}
-	
 	@Override public void register(){
 	}
 		
-	@Override public void render(){
-		for(IInvokableView entity : _entities) {
-			entity.invoke();
-		}
+	@Override public void dispose() {		
+		_controller.dispose();
+		_controller = null;
+		_entity = null;
 	}
-
-	@Override public void dispose() {
-		removeAll();
-		_controllers.clear();
+	
+	public final <U extends IController> U getController(Class<T> controllerClass) {
+		return (U) _controller;
+	}
+	
+	protected final void setController(IController controller) {
+		_controller = controller;
+	}
+	
+	protected <U extends Container> U getEntity(Class<U> entityClass) { 
+		return (U)_entity; 
 	}
 }

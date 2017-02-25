@@ -57,7 +57,7 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
      * controller is one where the controller reference is marked to be stored by this factory
      * so that it may be referenced by others during the lifespan of the process
      */
-	private final Set<BaseController> _controllers = new HashSet<>(); 
+	private final Set<IController> _controllers = new HashSet<>(); 
 	
 	/**
 	 * Singleton instance of this class
@@ -89,7 +89,7 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
 	 * @param controller The controller to add
 	 * @param isShared If the controller should be added into the exposed cache
 	 */
-	private void Add(BaseController controller, boolean isShared) { 
+	private void Add(IController controller, boolean isShared) { 
 	    String controllerName = controller.getClass().getName();
 	    
 	    Set<IController> controllers = _history.get(controllerName);
@@ -112,10 +112,10 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
 	 * @param args The arguments to pass into the controller class
 	 * @return A reference to the specified class
 	 */
-	public <T extends BaseController> T get(Class<T> controllerClass, boolean isShared, Object...args) {
+	public <T extends IController> T get(Class<T> controllerClass, boolean isShared, Object...args) {
 		System.out.println("Attempting to get " + controllerClass.getName());
 		if(isShared) {
-			for(BaseController item : _controllers) {
+			for(IController item : _controllers) {
 				if(item.getClass() == controllerClass) {
 					return (T)item;
 				}
@@ -141,7 +141,7 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
 	}
 	
 	@Override public void dispose() {
-		for(BaseController controller : _controllers) { // TODO - this needs to remove from _history
+		for(IController controller : _controllers) { // TODO - this needs to remove from _history
 			controller.dispose();
 		}
 		_instance = null;

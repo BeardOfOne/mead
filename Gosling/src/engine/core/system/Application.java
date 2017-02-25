@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.mvc.view;
+package engine.core.system;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
