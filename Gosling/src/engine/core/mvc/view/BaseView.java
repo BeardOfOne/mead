@@ -31,7 +31,6 @@ import java.util.Map;
 
 import engine.api.IController;
 import engine.api.IView;
-import engine.core.factories.ControllerFactory;
 
 abstract class BaseView<T extends Container> implements IView {
 
@@ -43,25 +42,10 @@ abstract class BaseView<T extends Container> implements IView {
 		register();
 	}
 	
-	public BaseView(T entity, IController controller) {
-		this(entity);
-		_controller = controller;			
-	}
-	
-	/**
-	 * @deprecated  Use {@link # BaseView(T entity, IController controller)}
-	 */
-	@Deprecated public <U extends IController> BaseView(T entity, Class<U> controller, boolean shared) {
-		this(entity);
-		if(controller != null) {
-			setController(ControllerFactory.instance().get(controller, shared, this));			
-		}
-	}
-	
 	@Override public Map<String, ActionListener> getRegisteredOperations() {
 		return null;
 	}
-		
+	
 	@Override public final void executeRegisteredOperation(Object sender, String operation) {
 		Map<String, ActionListener> operations = getRegisteredOperations();
 		ActionListener event;
@@ -69,25 +53,30 @@ abstract class BaseView<T extends Container> implements IView {
 			event.actionPerformed(new ActionEvent(sender, 0, null));	
 		}
 	}
-		
-	@Override public void register(){
-	}
-		
+	
 	@Override public void dispose() {		
 		_controller.dispose();
 		_controller = null;
+		
+		_entity.removeAll();
 		_entity = null;
 	}
 	
 	public final <U extends IController> U getController(Class<T> controllerClass) {
-		return (U) _controller;
+		return _controller != null ? (U)_controller : null;
 	}
 	
 	protected final void setController(IController controller) {
 		_controller = controller;
 	}
 	
-	protected <U extends Container> U getEntity(Class<U> entityClass) { 
+	public <U extends Container> U getEntity(Class<U> entityClass) { 
 		return (U)_entity; 
+	}
+
+	@Override public void register(){
+	}
+
+	@Override public void render() {
 	}
 }
