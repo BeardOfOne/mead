@@ -35,10 +35,10 @@ import engine.api.IView;
 abstract class BaseView<T extends Container> implements IView {
 
 	private IController _controller;
-	private T _entity;
+	public final T entity;
 	
 	public BaseView(T entity){
-		_entity = entity;
+		this.entity = entity;
 		register();
 	}
 	
@@ -56,10 +56,7 @@ abstract class BaseView<T extends Container> implements IView {
 	
 	@Override public void dispose() {		
 		_controller.dispose();
-		_controller = null;
-		
-		_entity.removeAll();
-		_entity = null;
+		entity.removeAll();
 	}
 	
 	public final <U extends IController> U getController(Class<T> controllerClass) {
@@ -70,10 +67,6 @@ abstract class BaseView<T extends Container> implements IView {
 		_controller = controller;
 	}
 	
-	public <U extends Container> U getEntity(Class<U> entityClass) { 
-		return (U)_entity; 
-	}
-
 	@Override public void register(){
 	}
 
