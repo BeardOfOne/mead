@@ -24,7 +24,44 @@
 
 package engine.api;
 
+import java.awt.Container;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Map;
+
 public interface IView extends IDestructor, IReceiver {
+	
+	public class ViewProperties implements IDestructor {
+		private IController controller;
+		
+		@Override public void dispose() {
+			controller.dispose();
+		}
+
+		public final <T extends IController> T getController(Class<T> controllerClass) {
+			return controller != null ? (T)controller : null;
+		}
+		
+		public final void setController(IController controller) {
+			this.controller = controller;
+		}
+	}
+	
+	@Override default void executeRegisteredOperation(Object sender, String operationName) {
+		Map<String, ActionListener> operations = getRegisteredOperations();
+		ActionListener event;
+		if(operations != null && (event = operations.get(operationName)) != null) {
+			event.actionPerformed(new ActionEvent(sender, 0, null));	
+		}
+	}
+	
+	@Override default Map<String, ActionListener> getRegisteredOperations() {
+		return null;
+	}
+	
+	public ViewProperties getViewProperties();
+	
+	public Container getContainerClass();
+	
 	public void render();
-	public void register();
 }
