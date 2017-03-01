@@ -11,8 +11,8 @@ public abstract class DialogView extends JDialog implements IView {
 	
 	private final ViewProperties properties = new ViewProperties();
 	
-	public DialogView(Window owner, String title, int width, int height) {
-		super(owner, title);
+	public DialogView(Container container, String title, int width, int height) {
+		super((Window)container, title);
 		setSize(width, height);
 	}
 		

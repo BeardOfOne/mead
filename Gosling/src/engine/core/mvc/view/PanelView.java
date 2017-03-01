@@ -5,7 +5,6 @@ import java.awt.Container;
 import javax.swing.JPanel;
 
 import engine.api.IView;
-import engine.api.IView.ViewProperties;
 
 public abstract class PanelView extends JPanel implements IView {
 	
@@ -17,5 +16,9 @@ public abstract class PanelView extends JPanel implements IView {
 	
 	@Override public Container getContainerClass() {
 		return this;
+	}
+	
+	@Override public void dispose() {
+		properties.dispose();
 	}
 }
