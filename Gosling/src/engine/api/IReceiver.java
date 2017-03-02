@@ -31,7 +31,6 @@ import java.util.Map;
  * Contract that specifies how entities register to dispatched events
  */
 public interface IReceiver {
-	
 	/**
 	 * Executes the specified operation based on the operations registered by the IReceivable entity
 	 * 
