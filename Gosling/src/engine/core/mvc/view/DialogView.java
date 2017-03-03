@@ -19,8 +19,4 @@ public abstract class DialogView extends JDialog implements IView {
 	@Override public final ViewProperties getViewProperties() {
 		return properties;
 	}
-	
-	@Override public final Container getContainerClass() {
-		return this;
-	}
 }

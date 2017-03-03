@@ -61,7 +61,9 @@ public interface IView extends IDestructor, IReceiver {
 	
 	public ViewProperties getViewProperties();
 	
-	public Container getContainerClass();
+	default <T extends Container> T getContainerClass() {
+		return (T)this;
+	}
 	
 	public void render();
 }
