@@ -51,7 +51,7 @@ public interface IView extends IDestructor, IReceiver {
 			_hasRendered = true;
 		}
 		
-		public boolean getRendered() {
+		public final boolean hasRendered() {
 			return _hasRendered;
 		}
 	}
@@ -73,7 +73,7 @@ public interface IView extends IDestructor, IReceiver {
 	}
 	
 	default public boolean hasRendered() {
-		return getViewProperties().getRendered();
+		return getViewProperties().hasRendered();
 	}
 	
 	default public void render() {
