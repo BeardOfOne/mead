@@ -20,6 +20,10 @@ public abstract class PanelView extends JPanel implements IView {
 		properties.dispose();
 	}
 	
+	@Override public void render() {
+		IView.super.render();
+	}
+	
 	protected void registerHandlers() {
 	}
 }

@@ -33,6 +33,7 @@ public interface IView extends IDestructor, IReceiver {
 	
 	public class ViewProperties implements IDestructor {
 		private IController controller;
+		private boolean _hasRendered = false;
 		
 		@Override public void dispose() {
 			controller.dispose();
@@ -45,9 +46,17 @@ public interface IView extends IDestructor, IReceiver {
 		public final void setController(IController controller) {
 			this.controller = controller;
 		}
+		
+		protected final void flagAsRendered() {
+			_hasRendered = true;
+		}
+		
+		public boolean getRendered() {
+			return _hasRendered;
+		}
 	}
-	
-	@Override default void executeRegisteredOperation(Object sender, String operationName) {
+
+	@Override default public void executeRegisteredOperation(Object sender, String operationName) {
 		Map<String, ActionListener> operations = getRegisteredOperations();
 		ActionListener event;
 		if(operations != null && (event = operations.get(operationName)) != null) {
@@ -55,15 +64,21 @@ public interface IView extends IDestructor, IReceiver {
 		}
 	}
 	
-	@Override default Map<String, ActionListener> getRegisteredOperations() {
+	@Override default public Map<String, ActionListener> getRegisteredOperations() {
 		return null;
 	}
 	
-	public ViewProperties getViewProperties();
-	
-	default <T extends Container> T getContainerClass() {
+	default public <T extends Container> T getContainerClass() {
 		return (T)this;
 	}
 	
-	public void render();
+	default public boolean hasRendered() {
+		return getViewProperties().getRendered();
+	}
+	
+	default public void render() {
+		getViewProperties().flagAsRendered();
+	}
+	
+	public ViewProperties getViewProperties();
 }
