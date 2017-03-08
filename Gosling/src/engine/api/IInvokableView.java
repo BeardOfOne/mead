@@ -24,7 +24,7 @@
 
 package engine.api;
 
-import javax.swing.JComponent;
+import java.awt.Container;
 
 /**
  * This interfaces specifies that an implementing object can be invoked by an outside source.
@@ -34,7 +34,7 @@ import javax.swing.JComponent;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public interface IInvokableView<T extends Enum<T>, U extends JComponent> extends IDestructor {
+public interface IInvokableView<T extends Enum<T>, U extends Container> extends IDestructor {
 	/**
 	 * Invokes the implemented object, similar to a lazy-load operation in many ways
 	 * Note: Calling this more than one could have unintended side-effects as I have not
