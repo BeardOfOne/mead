@@ -24,18 +24,26 @@
 
 package engine.core.mvc.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.UUID;
 
+import engine.api.IModel;
 import engine.api.IReceiver;
 
 /**
  * A Game Model represents the base class of all model type objects
  */
-public class GameModel
+public abstract class BaseModel implements IModel, Serializable
 {
+	/**
+	 * Identifier for this model
+	 */
+	private UUID _identifier = UUID.randomUUID();
+			
 	/**
 	 * The list of receivers that can receive a message from the GameModel
 	 */
@@ -51,7 +59,7 @@ public class GameModel
 	 * 
 	 * @param receivers The list of receivers
 	 */
-	protected GameModel(IReceiver... receivers) {
+	protected BaseModel(IReceiver... receivers) {
 		_receivers.addAll(Arrays.asList(receivers));
 	}
 		
@@ -88,5 +96,16 @@ public class GameModel
 		String[] operations = new String[_operations.size()];
 		_operations.toArray(operations);
 		return operations;
+	}
+	
+	public final String getIdentifier()
+	{
+		return _identifier.toString();
+	}
+	
+	@Override public void dispose() {
+		_identifier = null;
+		_receivers.clear();
+		_operations.clear();
 	}
 }

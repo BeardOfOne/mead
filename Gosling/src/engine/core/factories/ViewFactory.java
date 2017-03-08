@@ -33,10 +33,10 @@ import java.util.Map;
 import java.util.Set;
 
 import engine.api.IDestructor;
-import engine.api.IDispatcher;
 import engine.api.IView;
 import engine.communication.internal.dispatcher.Dispatcher;
 import engine.communication.internal.dispatcher.DispatcherMessage;
+import engine.communication.internal.dispatcher.IDispatcher;
 
 public class ViewFactory implements IDestructor, IDispatcher<IView> {
 

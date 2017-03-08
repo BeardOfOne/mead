@@ -37,14 +37,13 @@ import java.awt.Container;
 public interface IInvokableView<T extends Enum<T>, U extends Container> extends IDestructor {
 	/**
 	 * Invokes the implemented object, similar to a lazy-load operation in many ways
-	 * Note: Calling this more than one could have unintended side-effects as I have not
+	 * Note: Calling this more than once could have unintended side-effects as I have not
 	 * coded against this yet.
 	 */
 	public void invoke();
 	
 	/**
 	 * Gets the result of the specified key.  This key should be an enumeration of some sort
-	 * implemented by the programmer
 	 * 
 	 * @param key The key to lookup
 	 * 

@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.api;
+package engine.communication.internal.dispatcher;
 
 public interface IDispatcher<T> {
 	public <U extends T> void SendMessage(Object sender, String operationName, Class<U> type, Object... args);
