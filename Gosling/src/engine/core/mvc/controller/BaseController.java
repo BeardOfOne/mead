@@ -24,51 +24,48 @@
 
 package engine.core.mvc.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
 import engine.api.IController;
+import engine.api.IModel;
 import engine.api.IView;
-import engine.core.factories.ViewFactory;
 
 public abstract class BaseController implements IController  {
 
 	private IView _view;
-			
+	private final Collection<IModel> _models = new ArrayList<>();
+	
 	public <T extends IView> BaseController(T view) {
-		setView(view);
-	}
-	
-	/**
-	 * @deprecated  Use {@link # BaseController(T view)}
-	 */
-	@Deprecated public <T extends IView> BaseController(Class<T> viewClass, boolean shared) {
-		setView(ViewFactory.instance().get(viewClass, shared, this));
-	}
-
-	@Override public Map<String, ActionListener> getRegisteredOperations() {
-		return null;
-	}
-	
-	@Override public final void executeRegisteredOperation(Object sender, String operation) {
-		Map<String, ActionListener> operations = getRegisteredOperations();
-		ActionListener event;
-		if(operations != null && (event = operations.get(operation)) != null) {
-			event.actionPerformed(new ActionEvent(sender, 0, null));	
-		}
+		_view = view;
+		register();
 	}
 	
 	@Override public void dispose() {
 		_view.dispose();
 		_view = null;
+		
+		for(IModel model : _models) {
+			model.dispose();
+		}
+		_models.clear();
 	}
 	
-	protected final <T extends IView> T getView(Class<T> viewClass) {
-		return (T)_view;
+	protected final void addModel(IModel model) {
+		model.addReceiver(_view);
+		_models.add(model);
 	}
 	
-	protected final <T extends IView> void setView(T view) {
-		_view = view;
+	protected final void removeModel(IModel model) {
+		_models.remove(model);
+		model.removeReciever(_view);
+	}
+	
+	protected Iterator<IModel> getModels() {
+		return _models.iterator();
+	}
+
+	protected void register() {
 	}
 }

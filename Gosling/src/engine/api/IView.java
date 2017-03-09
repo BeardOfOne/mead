@@ -32,19 +32,19 @@ import java.util.Map;
 public interface IView extends IDestructor, IReceiver {
 	
 	public class ViewProperties implements IDestructor {
-		private IController controller;
+		private IController _controller;
 		private boolean _hasRendered = false;
 		
 		@Override public void dispose() {
-			controller.dispose();
+			_controller.dispose();
 		}
 
-		public final <T extends IController> T getController(Class<T> controllerClass) {
-			return controller != null ? (T)controller : null;
+		public final void setController(IController controller) {
+			this._controller = controller;
 		}
 		
-		public final void setController(IController controller) {
-			this.controller = controller;
+		public IController getController() {
+			return _controller;
 		}
 		
 		protected final void flagAsRendered() {
@@ -80,5 +80,5 @@ public interface IView extends IDestructor, IReceiver {
 		getViewProperties().flagAsRendered();
 	}
 	
-	public ViewProperties getViewProperties();
+	public ViewProperties getViewProperties();	
 }

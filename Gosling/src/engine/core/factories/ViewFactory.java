@@ -88,9 +88,10 @@ public class ViewFactory implements IDestructor, IDispatcher<IView> {
 	}
 	
 	public <T extends IView> IView get(Class<T> viewClass) {
-		IView view = _views.stream().filter(z -> z.getClass() == viewClass).findFirst().get();
-		assert view != null : "Attemted to find view " + viewClass.getName() + " but could not";
-		return view;
+		return _views.stream()
+				.filter(z -> z.getClass() == viewClass)
+				.findFirst()
+				.get();
 	}
 	
 	public <T extends IView> IView get(Class<T> viewClass, boolean isShared, Object...args) {

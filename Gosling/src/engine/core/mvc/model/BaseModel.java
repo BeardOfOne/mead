@@ -63,11 +63,11 @@ public abstract class BaseModel implements IModel, Serializable
 		_receivers.addAll(Arrays.asList(receivers));
 	}
 		
-	public final void addReceiver(IReceiver receiver) {
+	@Override public final void addReceiver(IReceiver receiver) {
 		_receivers.add(receiver);
 	}
 
-	public final void removeReciever(IReceiver receiver) {
+	@Override public final void removeReciever(IReceiver receiver) {
 		_receivers.remove(receiver);
 	}
 
@@ -81,7 +81,7 @@ public abstract class BaseModel implements IModel, Serializable
 				
 	protected final void doneUpdating() {
 		if(_operations.isEmpty()) {
-			_operations.add("Refresh");
+			_operations.add("Update");
 		}
 		
 		notifyReceivers();
