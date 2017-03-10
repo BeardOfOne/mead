@@ -42,6 +42,10 @@ public abstract class BaseController implements IController  {
 		register();
 	}
 	
+	protected final IView getView() {
+		return _view;
+	}
+	
 	@Override public void dispose() {
 		_view.dispose();
 		_view = null;
@@ -66,6 +70,5 @@ public abstract class BaseController implements IController  {
 		return _models.iterator();
 	}
 
-	protected void register() {
-	}
+	protected abstract void register();
 }

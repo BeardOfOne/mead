@@ -32,7 +32,7 @@ import java.util.Map;
 public interface IView extends IDestructor, IReceiver {
 	
 	public class ViewProperties implements IDestructor {
-		private IController _controller;
+		private IController _controller;		
 		private boolean _hasRendered = false;
 		
 		@Override public void dispose() {
@@ -54,18 +54,6 @@ public interface IView extends IDestructor, IReceiver {
 		public final boolean hasRendered() {
 			return _hasRendered;
 		}
-	}
-
-	@Override default public void executeRegisteredOperation(Object sender, String operationName) {
-		Map<String, ActionListener> operations = getRegisteredOperations();
-		ActionListener event;
-		if(operations != null && (event = operations.get(operationName)) != null) {
-			event.actionPerformed(new ActionEvent(sender, 0, null));	
-		}
-	}
-	
-	@Override default public Map<String, ActionListener> getRegisteredOperations() {
-		return null;
 	}
 	
 	default public <T extends Container> T getContainerClass() {

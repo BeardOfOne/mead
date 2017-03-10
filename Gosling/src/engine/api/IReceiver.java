@@ -24,6 +24,7 @@
 
 package engine.api;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
@@ -37,12 +38,20 @@ public interface IReceiver {
 	 * @param sender The sender
 	 * @param operation The operation
 	 */
-	public void executeRegisteredOperation(Object sender, String operationName);
+	default public void executeRegisteredOperation(Object sender, String operationName) {
+		Map<String, ActionListener> operations = getRegisteredOperations();
+		ActionListener event;
+		if(operations != null && (event = operations.get(operationName)) != null) {
+			event.actionPerformed(new ActionEvent(sender, 0, null));	
+		}
+	}
 	
 	/**
 	 * Gets the list of registered operation by the entity
 	 * 
 	 * @return Map<DispatcherOperation, ActionListener>
 	 */
-	public Map<String, ActionListener> getRegisteredOperations();
+	default public Map<String, ActionListener> getRegisteredOperations() {
+		return null;
+	}
 }

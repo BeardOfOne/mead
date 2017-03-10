@@ -24,22 +24,6 @@
 
 package engine.api;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Map;
-
 public interface IController extends IDestructor, IReceiver {
-	
-	@Override default public Map<String, ActionListener> getRegisteredOperations() {
-		return null;
-	}
-	
-	@Override default public void executeRegisteredOperation(Object sender, String operation) {
-		Map<String, ActionListener> operations = getRegisteredOperations();
-		ActionListener event;
-		if(operations != null && (event = operations.get(operation)) != null) {
-			event.actionPerformed(new ActionEvent(sender, 0, null));	
-		}
-	}
-	
+		
 }
