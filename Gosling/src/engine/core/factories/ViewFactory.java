@@ -87,15 +87,23 @@ public class ViewFactory implements IDestructor, IDispatcher<IView> {
 		return _instance;
 	}
 	
+	/**
+	 * Gets a particular view without the side-effect of creation
+	 * 
+	 * @param viewClass The class type to get
+	 * 
+	 * @return The specified class view
+	 */
 	public <T extends IView> IView get(Class<T> viewClass) {
-		return _views.stream()
-				.filter(z -> z.getClass() == viewClass)
-				.findFirst()
-				.get();
+		for(IView view : _views) {
+			if(view.getClass() == viewClass) {
+				return view;
+			}
+		}
+		return null;
 	}
 	
 	public <T extends IView> IView get(Class<T> viewClass, boolean isShared, Object...args) {
-		System.out.println("Attempting to get " + viewClass.getName());
 		if(isShared) {
 			for(IView item : _views) {
 				if(item.getClass() == viewClass) {

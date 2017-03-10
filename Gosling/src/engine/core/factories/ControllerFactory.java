@@ -103,6 +103,22 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
 	        _controllers.add(controller);
 	    }
 	}
+	
+	/**
+	 * Gets a particular controller without the side-effect of creation
+	 * 
+	 * @param controllerClass The class type to get
+	 * 
+	 * @return The specified class controller
+	 */
+	public <T extends IController> IController get(Class<T> controllerClass) {
+		for(IController controller : _controllers) {
+			if(controller.getClass() == controllerClass) {
+				return controller;
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * Gets the specified type of resource
