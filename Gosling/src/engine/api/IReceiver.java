@@ -30,28 +30,47 @@ import java.util.Map;
 
 /**
  * Contract that specifies how entities register to dispatched events
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
  */
 public interface IReceiver {
+	
+	/**
+	 * This listener class introduces the ability to attach custom arguments
+	 * to action listener types.  You must extend this class when defining 
+	 * action listener events if you want to do inter-component message passing
+	 * 
+	 * @author Daniel Ricci <thedanny09@gmail.com>
+	 *
+	 */
+	public abstract class ReceiverListener implements ActionListener {
+		public Object[] args;
+	}
+	
 	/**
 	 * Executes the specified operation based on the operations registered by the IReceivable entity
 	 * 
-	 * @param sender The sender
-	 * @param operation The operation
+	 * @param sender The sender of the event
+	 * @param operation The operation to fire
+	 * @param args The list of arguments to include
 	 */
-	default public void executeRegisteredOperation(Object sender, String operationName) {
-		Map<String, ActionListener> operations = getRegisteredOperations();
-		ActionListener event;
-		if(operations != null && (event = operations.get(operationName)) != null) {
-			event.actionPerformed(new ActionEvent(sender, 0, null));	
+	default public void executeRegisteredOperation(Object sender, String operationName, Object... args) {
+		Map<String, ReceiverListener> operations = getRegisteredOperations();
+		if(operations != null) {
+			ReceiverListener event = operations.get(operationName);
+			if(event != null) {
+				event.args = args;		
+				event.actionPerformed(new ActionEvent(sender, 0, operationName));				
+			}
 		}
 	}
 	
 	/**
 	 * Gets the list of registered operation by the entity
 	 * 
-	 * @return Map<DispatcherOperation, ActionListener>
+	 * @return A mapping of operations to receiver listener types 
 	 */
-	default public Map<String, ActionListener> getRegisteredOperations() {
+	default public Map<String, ReceiverListener> getRegisteredOperations() {
 		return null;
 	}
 }

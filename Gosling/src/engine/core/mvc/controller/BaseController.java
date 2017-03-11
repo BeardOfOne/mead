@@ -25,8 +25,10 @@
 package engine.core.mvc.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.stream.Collectors;
 
 import engine.api.IController;
 import engine.api.IModel;
@@ -64,6 +66,13 @@ public abstract class BaseController implements IController  {
 	protected final void removeModel(IModel model) {
 		_models.remove(model);
 		model.removeReciever(_view);
+	}
+	
+	protected <T extends IModel> Collection<IModel> getModels(Class<T> modelType) {
+		return _models
+			.stream()
+			.filter(z -> z.getClass() == modelType)
+			.collect(Collectors.toList());
 	}
 	
 	protected Iterator<IModel> getModels() {
