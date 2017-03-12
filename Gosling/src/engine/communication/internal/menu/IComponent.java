@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.api;
+package engine.communication.internal.menu;
 
 import java.awt.event.ActionEvent;
 

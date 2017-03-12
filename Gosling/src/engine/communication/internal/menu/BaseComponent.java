@@ -29,7 +29,6 @@ import java.util.UUID;
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
 
-import engine.api.IComponent;
 import engine.core.mvc.controller.BaseController;
 
 public abstract class BaseComponent implements IComponent {
