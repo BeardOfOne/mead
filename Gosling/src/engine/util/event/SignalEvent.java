@@ -22,10 +22,23 @@
 * IN THE SOFTWARE.
 */
 
-package engine.api;
+package engine.util.event;
 
-import engine.util.event.ISignalReceiver;
+import java.util.EventObject;
 
-public interface IController extends IDestructor, ISignalReceiver {
-		
+/**
+ * The top-level class to form messages when invoking a signal
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ */
+public class SignalEvent extends EventObject {
+	
+	/**
+	 * Constructs a new object of this class
+	 * 
+	 * @param sender The source of the signal
+	 */
+	public SignalEvent(Object sender) { super(sender);
+	}
 }

@@ -22,38 +22,23 @@
 * IN THE SOFTWARE.
 */
 
-package engine.api;
+package engine.util.event;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Map;
 
 /**
- * Contract that specifies how entities register to dispatched events
+ * Contract that specifies how signals are received and processed
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
  */
-public interface IReceiver {
+public interface ISignalReceiver {
 	
-	/**
-	 * This listener class introduces the ability to attach custom arguments
-	 * to action listener types.  You must extend this class when defining 
-	 * action listener events if you want to do inter-component message passing
-	 * 
-	 * @author Daniel Ricci <thedanny09@gmail.com>
-	 *
-	 */
 	public abstract class ReceiverListener implements ActionListener {
 		public Object[] args;
 	}
 	
-	/**
-	 * Executes the specified operation based on the operations registered by the IReceivable entity
-	 * 
-	 * @param sender The sender of the event
-	 * @param operation The operation to fire
-	 * @param args The list of arguments to include
-	 */
 	default public void executeRegisteredOperation(Object sender, String operationName, Object... args) {
 		Map<String, ReceiverListener> operations = getRegisteredOperations();
 		if(operations != null) {
@@ -65,11 +50,6 @@ public interface IReceiver {
 		}
 	}
 	
-	/**
-	 * Gets the list of registered operation by the entity
-	 * 
-	 * @return A mapping of operations to receiver listener types 
-	 */
 	default public Map<String, ReceiverListener> getRegisteredOperations() {
 		return null;
 	}

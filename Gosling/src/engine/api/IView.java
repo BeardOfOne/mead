@@ -25,11 +25,10 @@
 package engine.api;
 
 import java.awt.Container;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Map;
 
-public interface IView extends IDestructor, IReceiver {
+import engine.util.event.ISignalReceiver;
+
+public interface IView extends IDestructor, ISignalReceiver {
 	
 	public class ViewProperties implements IDestructor {
 		private IController _controller;		

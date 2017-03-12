@@ -32,7 +32,7 @@ import java.util.Queue;
 import java.util.UUID;
 
 import engine.api.IModel;
-import engine.api.IReceiver;
+import engine.util.event.ISignalReceiver;
 
 /**
  * A Game Model represents the base class of all model type objects
@@ -47,7 +47,7 @@ public abstract class BaseModel implements IModel, Serializable
 	/**
 	 * The list of receivers that can receive a message from the GameModel
 	 */
-	private final ArrayList<IReceiver> _receivers = new ArrayList<>();
+	private final ArrayList<ISignalReceiver> _receivers = new ArrayList<>();
 
 	/**
 	 * The list of operations that can be used on the model
@@ -59,20 +59,20 @@ public abstract class BaseModel implements IModel, Serializable
 	 * 
 	 * @param receivers The list of receivers
 	 */
-	protected BaseModel(IReceiver... receivers) {
+	protected BaseModel(ISignalReceiver... receivers) {
 		_receivers.addAll(Arrays.asList(receivers));
 	}
 		
-	@Override public final void addReceiver(IReceiver receiver) {
+	@Override public final void addReceiver(ISignalReceiver receiver) {
 		_receivers.add(receiver);
 	}
 
-	@Override public final void removeReciever(IReceiver receiver) {
+	@Override public final void removeReciever(ISignalReceiver receiver) {
 		_receivers.remove(receiver);
 	}
 
 	protected final void notifyReceivers() {
-		for(IReceiver receiver : _receivers) {
+		for(ISignalReceiver receiver : _receivers) {
 			for(String operation : _operations) {
 				receiver.executeRegisteredOperation(this, operation);
 			}

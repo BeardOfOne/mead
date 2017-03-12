@@ -22,10 +22,25 @@
 * IN THE SOFTWARE.
 */
 
-package engine.api;
+package engine.util.event;
 
-import engine.util.event.ISignalReceiver;
+import java.util.EventListener;
 
-public interface IController extends IDestructor, ISignalReceiver {
-		
+/**
+ * An interface for tagging event implementations as being capable of being 
+ * signaled
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ * @param <T> The SignalEvent type expected
+ */
+public interface ISignalListener<T extends SignalEvent> extends EventListener {
+	
+	/**
+	 * This method is invoked when a particular signal is received. This
+	 * signal is in the form of a particular SignalEvent
+	 * 
+	 * @param event The event container
+	 */
+	public void signalReceived(T event);
 }
