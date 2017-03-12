@@ -24,8 +24,6 @@
 
 package engine.util.event;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Map;
 
 /**
@@ -35,22 +33,17 @@ import java.util.Map;
  */
 public interface ISignalReceiver {
 	
-	public abstract class ReceiverListener implements ActionListener {
-		public Object[] args;
-	}
-	
-	default public void executeRegisteredOperation(Object sender, String operationName, Object... args) {
-		Map<String, ReceiverListener> operations = getRegisteredOperations();
+	default public void executeRegisteredOperation(SignalEvent signalEvent) {
+		Map<String, ISignalListener> operations = getRegisteredOperations();
 		if(operations != null) {
-			ReceiverListener event = operations.get(operationName);
+			ISignalListener event = operations.get(signalEvent.getOperationName());
 			if(event != null) {
-				event.args = args;		
-				event.actionPerformed(new ActionEvent(sender, 0, operationName));				
+				event.signalReceived(signalEvent);
 			}
 		}
 	}
 	
-	default public Map<String, ReceiverListener> getRegisteredOperations() {
+	default public Map<String, ISignalListener> getRegisteredOperations() {
 		return null;
 	}
 }

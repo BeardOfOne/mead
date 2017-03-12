@@ -33,6 +33,7 @@ import java.util.UUID;
 
 import engine.api.IModel;
 import engine.util.event.ISignalReceiver;
+import engine.util.event.SignalEvent;
 
 /**
  * A Game Model represents the base class of all model type objects
@@ -73,8 +74,8 @@ public abstract class BaseModel implements IModel, Serializable
 
 	protected final void notifyReceivers() {
 		for(ISignalReceiver receiver : _receivers) {
-			for(String operation : _operations) {
-				receiver.executeRegisteredOperation(this, operation);
+			for(String operationName : _operations) {
+				receiver.executeRegisteredOperation(new SignalEvent(this, operationName));
 			}
 		}
 	}

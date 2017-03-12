@@ -27,6 +27,7 @@ package engine.communication.internal.dispatcher;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 import engine.util.event.ISignalReceiver;
+import engine.util.event.SignalEvent;
 
 public class Dispatcher<T extends ISignalReceiver> extends Thread {
 	private volatile ConcurrentLinkedQueue<DispatcherMessage<T>> _messages = new ConcurrentLinkedQueue<>();		
@@ -41,7 +42,7 @@ public class Dispatcher<T extends ISignalReceiver> extends Thread {
 				DispatcherMessage<T> message = _messages.poll();
 				if(message != null) {
 					message.resources.stream().forEach(
-						z -> z.executeRegisteredOperation(message.sender, message.operationName)
+						z -> z.executeRegisteredOperation(new SignalEvent(message.sender, message.operationName))
 					);
 				}
 				Thread.sleep(220);						

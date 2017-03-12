@@ -34,11 +34,18 @@ import java.util.EventObject;
  */
 public class SignalEvent extends EventObject {
 	
+	private final String _operationName;
+	
 	/**
 	 * Constructs a new object of this class
 	 * 
 	 * @param sender The source of the signal
 	 */
-	public SignalEvent(Object sender) { super(sender);
+	public SignalEvent(Object sender, String operationName) { super(sender);
+		_operationName = operationName;
+	}
+	
+	public final String getOperationName() {
+		return _operationName;
 	}
 }
