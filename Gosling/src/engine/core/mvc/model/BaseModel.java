@@ -27,12 +27,11 @@ package engine.core.mvc.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.UUID;
 
 import engine.api.IModel;
 import engine.util.event.ISignalReceiver;
+import engine.util.event.ModelEvent;
 import engine.util.event.SignalEvent;
 
 /**
@@ -51,9 +50,14 @@ public abstract class BaseModel implements IModel, Serializable
 	private final ArrayList<ISignalReceiver> _receivers = new ArrayList<>();
 
 	/**
-	 * The list of operations that can be used on the model
+	 * The name of the operation to be performed
 	 */
-	private final Queue<String> _operations = new LinkedList<>();
+	private String _operationName;
+	
+	/**
+	 * The event to submit when performing the request to do the operation
+	 */
+	private SignalEvent _operationEvent;
 	
 	/**
 	 * The list of receivable objects that can receive messages 
@@ -72,41 +76,34 @@ public abstract class BaseModel implements IModel, Serializable
 		_receivers.remove(receiver);
 	}
 
-	protected final void notifyReceivers() {
-		for(ISignalReceiver receiver : _receivers) {
-			for(String operationName : _operations) {
-				receiver.executeRegisteredOperation(new SignalEvent(this, operationName));
-			}
-		}
-	}
-				
 	protected final void doneUpdating() {
-		if(_operations.isEmpty()) {
-			_operations.add("Update");
+		if(_operationName == null || _operationName.isEmpty()) {
+			_operationName = ISignalReceiver.UPDATE_SIGNAL;
+			_operationEvent = new ModelEvent(this, _operationName, this);
 		}
+
+		for(ISignalReceiver receiver : _receivers) {
+			receiver.executeRegisteredOperation(_operationEvent);
+		}		
 		
-		notifyReceivers();
-		_operations.clear();
+		_operationName = null;
+		_operationEvent = null;
 	}	
 	
-	protected final void addOperation(String operationName) { 
-		_operations.add(operationName); 
+	protected final void setOperation(String operationName) {
+		_operationName = operationName; 
 	}
 	
-	protected final String[] getOperations() {
-		String[] operations = new String[_operations.size()];
-		_operations.toArray(operations);
-		return operations;
+	protected final String getOperation() {
+		return _operationName;
 	}
 	
-	public final String getIdentifier()
-	{
+	public final String getIdentifier() {
 		return _identifier.toString();
 	}
 	
 	@Override public void dispose() {
 		_identifier = null;
 		_receivers.clear();
-		_operations.clear();
 	}
 }

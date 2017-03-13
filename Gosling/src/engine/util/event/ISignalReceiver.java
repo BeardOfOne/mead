@@ -25,6 +25,7 @@
 package engine.util.event;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  * Contract that specifies how signals are received and processed
@@ -33,17 +34,33 @@ import java.util.Map;
  */
 public interface ISignalReceiver {
 	
+	public String UPDATE_SIGNAL = "UPDATE";
+	
 	default public void executeRegisteredOperation(SignalEvent signalEvent) {
-		Map<String, ISignalListener> operations = getRegisteredOperations();
-		if(operations != null) {
-			ISignalListener event = operations.get(signalEvent.getOperationName());
-			if(event != null) {
-				event.signalReceived(signalEvent);
+		
+		// If we just want to do an update then trigger the update method
+		if(signalEvent.getOperationName().equalsIgnoreCase(UPDATE_SIGNAL)) {
+			update(signalEvent);
+		}
+		// Perform regular signal operation
+		else {
+			Map<String, ISignalListener> operations = getRegisteredOperations();
+			if(operations != null) {
+				String operationName = signalEvent.getOperationName();
+				for(Entry<String, ISignalListener> kvp : operations.entrySet()) {
+					if(kvp.getKey().equalsIgnoreCase(operationName)) {
+						kvp.getValue().signalReceived(signalEvent);
+						break;
+					}
+				}
 			}
 		}
 	}
 	
 	default public Map<String, ISignalListener> getRegisteredOperations() {
 		return null;
+	}
+	
+	default public void update(SignalEvent signalEvent) {
 	}
 }

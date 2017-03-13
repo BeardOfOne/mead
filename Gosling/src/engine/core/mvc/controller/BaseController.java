@@ -24,23 +24,15 @@
 
 package engine.core.mvc.controller;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.stream.Collectors;
-
 import engine.api.IController;
-import engine.api.IModel;
 import engine.api.IView;
 
 public abstract class BaseController implements IController  {
 
 	private IView _view;
-	private final Collection<IModel> _models = new ArrayList<>();
 	
 	public <T extends IView> BaseController(T view) {
 		_view = view;
-		register();
 	}
 	
 	protected final IView getView() {
@@ -49,34 +41,6 @@ public abstract class BaseController implements IController  {
 	
 	@Override public void dispose() {
 		_view.dispose();
-		_view = null;
-		
-		for(IModel model : _models) {
-			model.dispose();
-		}
-		_models.clear();
+		_view = null;		
 	}
-	
-	protected final void addModel(IModel model) {
-		model.addReceiver(_view);
-		_models.add(model);
-	}
-	
-	protected final void removeModel(IModel model) {
-		_models.remove(model);
-		model.removeReciever(_view);
-	}
-	
-	protected <T extends IModel> Collection<IModel> getModels(Class<T> modelType) {
-		return _models
-			.stream()
-			.filter(z -> z.getClass() == modelType)
-			.collect(Collectors.toList());
-	}
-	
-	protected Iterator<IModel> getModels() {
-		return _models.iterator();
-	}
-
-	protected abstract void register();
 }
