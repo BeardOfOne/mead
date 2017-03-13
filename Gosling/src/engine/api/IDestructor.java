@@ -25,5 +25,33 @@
 package engine.api;
 
 public interface IDestructor {
-	public void dispose();
+
+	/**
+	 * If you want to reset this object than call this method.  If you 
+	 * want to destroy the object then you are better of calling Dispose
+	 * 
+	 * Sets all fields of this object to its default set of values
+	 * effectively reseting the current object.  
+	 * 
+	 * This method might not release handles depending on implementation.  
+	 * 
+	 * This method should only affect the current object and should not bubble up
+	 */
+	default public void flush() {
+	}
+	
+	/**
+	 * Call this method if you want to ready your object for finalize without
+	 * having to do anything special with it before-hand
+	 * 
+	 * Sets all fields of this object to its default set of values
+	 * effectively reseting the current object.  
+	 * 
+	 * This method should release all handles  
+	 * 
+	 * This method should bubble up and affect the entire hierarchy from this object
+	 * onwards
+	 */
+	default public void dispose() {
+	}
 }
