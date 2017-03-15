@@ -32,20 +32,38 @@ import java.util.EventObject;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public class SignalEvent extends EventObject {
+public class SignalEvent<T extends Object> extends EventObject {
 	
+	/**
+	 * The name of the operation which is used to identify
+	 * which {@link ISignalListener } to invoke
+	 */
 	private final String _operationName;
 	
 	/**
-	 * Constructs a new object of this class
+	 * Constructs a new signal type event
 	 * 
-	 * @param sender The source of the signal
+	 * @param sender The sender source
+	 * @param operationName The name of the operation being performed
 	 */
-	public SignalEvent(Object sender, String operationName) { super(sender);
+	public SignalEvent(T sender, String operationName) { 
+		super(sender);
 		_operationName = operationName;
 	}
 	
+	/**
+	 * Gets the operation name
+	 * 
+	 * @return The name of the operation
+	 */
 	public final String getOperationName() {
 		return _operationName;
+	}	
+	
+	/**
+	 * Gets the source with respect to the specified type
+	 */
+	@Override public final T getSource() {
+		return (T)super.getSource();
 	}
 }

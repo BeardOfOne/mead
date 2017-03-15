@@ -25,29 +25,36 @@
 package engine.util.event;
 
 import java.util.Map;
-import java.util.Map.Entry;
 
 /**
- * Contract that specifies how signals are received and processed
+ * This interface defines a methodology for communicating signals between different sub-systems using
+ * a signaling concept with a custom set of custom event arguments
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
+ *
  */
 public interface ISignalReceiver {
 	
-	public String UPDATE_SIGNAL = "UPDATE";
+	/**
+	 * Update constant for performing an update on a sub-system
+	 */
+	public static final String UPDATE_SIGNAL = "UPDATE";
 	
-	default public void executeRegisteredOperation(SignalEvent signalEvent) {
-		
-		// If we just want to do an update then trigger the update method
+	/**
+	 * Sends a signal with a specified signal event to the internally defined listener
+	 * 
+	 * @param signalEvent signalEvent An event that holds information about the action being performed
+	 * 
+	 */
+	default public void sendSignal(SignalEvent signalEvent) {
 		if(signalEvent.getOperationName().equalsIgnoreCase(UPDATE_SIGNAL)) {
 			update(signalEvent);
 		}
-		// Perform regular signal operation
 		else {
-			Map<String, ISignalListener> operations = getRegisteredOperations();
+			Map<String, ISignalListener> operations = getSignalListeners();
 			if(operations != null) {
 				String operationName = signalEvent.getOperationName();
-				for(Entry<String, ISignalListener> kvp : operations.entrySet()) {
+				for(Map.Entry<String, ISignalListener> kvp : operations.entrySet()) {
 					if(kvp.getKey().equalsIgnoreCase(operationName)) {
 						kvp.getValue().signalReceived(signalEvent);
 						break;
@@ -57,10 +64,21 @@ public interface ISignalReceiver {
 		}
 	}
 	
-	default public Map<String, ISignalListener> getRegisteredOperations() {
+	/**
+	 * Gets the list of available signal listeners that the sub-system is listening to
+	 * 
+	 * @return A mapping of listener names to listener concrete implementations
+	 */
+	default public Map<String, ISignalListener> getSignalListeners() {
 		return null;
 	}
 	
+	/**
+	 * An update event that sub-systems can hook onto to perform an update, similar to update loops
+	 * in a real-time simulation
+	 * 
+	 * @param signalEvent An event that holds information about the action being performed
+	 */
 	default public void update(SignalEvent signalEvent) {
 	}
 }

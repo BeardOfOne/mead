@@ -50,7 +50,7 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
      * Contains the history of all the controllers ever created by this factory, organized 
      * by class name and mapping to the list of all those classes
      */
-    private final Map<String, Set<IController>> _history = new HashMap<>(); // TODO - can this be put into the dispatcher functionality?
+    private final Map<String, Set<IController>> _history = new HashMap<>();
     
     /**
      * Contains the list of all exposed unique controllers created by this factory.  An exposed
@@ -128,12 +128,12 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
 	 * @param args The arguments to pass into the controller class
 	 * @return A reference to the specified class
 	 */
-	public <T extends IController> T get(Class<T> controllerClass, boolean isShared, Object...args) {
+	public <T extends IController> IController get(Class<T> controllerClass, boolean isShared, Object...args) {
 		System.out.println("Attempting to get " + controllerClass.getName());
 		if(isShared) {
 			for(IController item : _controllers) {
 				if(item.getClass() == controllerClass) {
-					return (T)item;
+					return item;
 				}
 			}
 		}
@@ -163,7 +163,7 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
 		_instance = null;
 	}
 
-	@Override public <U extends BaseController> void SendMessage(Object sender, String operationName, Class<U> type, Object... args) {
+	@Override public <U extends BaseController> void BroadcastMessage(Object sender, String operationName, Class<U> type, Object... args) {
 		
 		List<IController> resources = null;
 		

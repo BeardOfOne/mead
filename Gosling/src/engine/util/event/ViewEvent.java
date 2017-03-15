@@ -22,7 +22,25 @@
 * IN THE SOFTWARE.
 */
 
-package engine.api;
+package engine.util.event;
 
-public interface IModel extends IDestructor {
+import engine.api.IView;
+
+/**
+ * Events specific from an IView source
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ * @param <T> The IView type
+ */
+public final class ViewEvent<T extends IView> extends SignalEvent<T> {
+	/**
+	 * Constructs a new signal type event
+	 * 
+	 * @param sender The sender source
+	 * @param operationName The name of the operation being performed
+	 */
+	public ViewEvent(T sender, String operationName) {
+		super(sender, operationName);
+	}	
 }

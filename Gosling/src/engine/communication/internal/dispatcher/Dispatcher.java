@@ -42,7 +42,7 @@ public class Dispatcher<T extends ISignalReceiver> extends Thread {
 				DispatcherMessage<T> message = _messages.poll();
 				if(message != null) {
 					message.resources.stream().forEach(
-						z -> z.executeRegisteredOperation(new SignalEvent(message.sender, message.operationName))
+						z -> z.sendSignal(new SignalEvent(message.sender, message.operationName))
 					);
 				}
 				Thread.sleep(220);						

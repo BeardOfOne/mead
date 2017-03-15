@@ -26,6 +26,5 @@ package engine.api;
 
 import engine.util.event.ISignalReceiver;
 
-public interface IController extends IDestructor, ISignalReceiver {
-		
+public interface IController extends IDestructor, ISignalReceiver {		
 }

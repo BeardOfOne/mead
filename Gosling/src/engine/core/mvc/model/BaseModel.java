@@ -68,22 +68,24 @@ public abstract class BaseModel implements IModel, Serializable
 		_receivers.addAll(Arrays.asList(receivers));
 	}
 		
-	@Override public final void addReceiver(ISignalReceiver receiver) {
+	public final void addReceiver(ISignalReceiver receiver) {
 		_receivers.add(receiver);
 	}
 
-	@Override public final void removeReciever(ISignalReceiver receiver) {
+	public final void removeReciever(ISignalReceiver receiver) {
 		_receivers.remove(receiver);
 	}
 
 	protected final void doneUpdating() {
+				
 		if(_operationName == null || _operationName.isEmpty()) {
 			_operationName = ISignalReceiver.UPDATE_SIGNAL;
-			_operationEvent = new ModelEvent(this, _operationName, this);
 		}
 
+		_operationEvent = new ModelEvent(this, _operationName);
+		
 		for(ISignalReceiver receiver : _receivers) {
-			receiver.executeRegisteredOperation(_operationEvent);
+			receiver.sendSignal(_operationEvent);
 		}		
 		
 		_operationName = null;

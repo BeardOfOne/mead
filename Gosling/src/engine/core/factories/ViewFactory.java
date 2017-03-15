@@ -137,7 +137,7 @@ public class ViewFactory implements IDestructor, IDispatcher<IView> {
 		_instance = null;
 	}
 
-	@Override public <U extends IView> void SendMessage(Object sender, String operationName, Class<U> type, Object... args) {
+	@Override public <U extends IView> void BroadcastMessage(Object sender, String operationName, Class<U> type, Object... args) {
 		List<IView> resources = null;
 		
 		for(Set<IView> views : _history.values()) {

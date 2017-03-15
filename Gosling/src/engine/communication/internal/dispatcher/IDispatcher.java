@@ -25,5 +25,5 @@
 package engine.communication.internal.dispatcher;
 
 public interface IDispatcher<T> {
-	public <U extends T> void SendMessage(Object sender, String operationName, Class<U> type, Object... args);
+	public <U extends T> void BroadcastMessage(Object sender, String operationName, Class<U> type, Object... args);
 }

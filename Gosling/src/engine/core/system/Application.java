@@ -29,7 +29,7 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JFrame;
 
-public abstract class Application extends JFrame {
+public class Application extends JFrame {
 
     protected Application() {
         SetListeners();
