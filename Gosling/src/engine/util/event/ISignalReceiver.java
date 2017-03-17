@@ -34,12 +34,6 @@ import java.util.Map;
  *
  */
 public interface ISignalReceiver {
-	
-	/**
-	 * Update constant for performing an update on a sub-system
-	 */
-	public static final String UPDATE_SIGNAL = "UPDATE";
-	
 	/**
 	 * Sends a signal with a specified signal event to the internally defined listener
 	 * 
@@ -47,13 +41,17 @@ public interface ISignalReceiver {
 	 * 
 	 */
 	default public void sendSignal(SignalEvent signalEvent) {
-		if(signalEvent.getOperationName().equalsIgnoreCase(UPDATE_SIGNAL)) {
-			update(signalEvent);
-		}
-		else {
-			Map<String, ISignalListener> operations = getSignalListeners();
-			if(operations != null) {
-				String operationName = signalEvent.getOperationName();
+		
+		/**
+		 * Get the list of listening entities of this receiver, and look
+		 * for the right entity to call upon.  Note that a set of entities
+		 * is registered by a receiver.  An entity can be thought of as 
+		 * an event.
+		 */
+		Map<String, ISignalListener> operations = getSignalListeners();
+		if(operations != null) {
+			String operationName = signalEvent.getOperationName();
+			if(operationName != null && !operationName.isEmpty()) {
 				for(Map.Entry<String, ISignalListener> kvp : operations.entrySet()) {
 					if(kvp.getKey().equalsIgnoreCase(operationName)) {
 						kvp.getValue().signalReceived(signalEvent);
@@ -62,6 +60,10 @@ public interface ISignalReceiver {
 				}
 			}
 		}
+		
+		// Update the state of the receiver, this is done at the end to 'apply'
+		// whatever changes could potentially be made from above
+		update(signalEvent);
 	}
 	
 	/**

@@ -77,11 +77,7 @@ public abstract class BaseModel implements IModel, Serializable
 	}
 
 	protected final void doneUpdating() {
-				
-		if(_operationName == null || _operationName.isEmpty()) {
-			_operationName = ISignalReceiver.UPDATE_SIGNAL;
-		}
-
+		
 		_operationEvent = new ModelEvent(this, _operationName);
 		
 		for(ISignalReceiver receiver : _receivers) {
