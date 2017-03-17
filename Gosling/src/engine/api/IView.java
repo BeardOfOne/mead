@@ -46,6 +46,10 @@ public interface IView extends IDestructor, ISignalReceiver {
 			return _controller;
 		}
 		
+		public <T extends IController> T getController(Class<T> controllerType) {
+			return (T)getController();
+		}
+		
 		protected final void flagAsRendered() {
 			_hasRendered = true;
 		}

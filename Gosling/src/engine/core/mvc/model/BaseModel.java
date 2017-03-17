@@ -108,4 +108,13 @@ public abstract class BaseModel implements IModel, Serializable
 		_identifier = null;
 		_receivers.clear();
 	}
+	
+	@Override public final boolean equals(Object obj) {
+		if(obj instanceof BaseModel) {
+			BaseModel model = (BaseModel) obj;
+			return model.getIdentifier() == model.getIdentifier();
+		}
+		
+		return false;
+	}
 }
