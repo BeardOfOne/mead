@@ -33,7 +33,7 @@ public abstract class PanelView extends JPanel implements IView {
 	private final ViewProperties properties = new ViewProperties();
 
 	public PanelView() {
-		registerHandlers();
+		registerListeners();
 	}
 	
 	@Override public ViewProperties getViewProperties() {
@@ -46,8 +46,5 @@ public abstract class PanelView extends JPanel implements IView {
 	
 	@Override public void render() {
 		IView.super.render();
-	}
-	
-	protected void registerHandlers() {
 	}
 }

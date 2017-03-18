@@ -30,7 +30,7 @@ import engine.util.event.ISignalReceiver;
 
 public interface IView extends IDestructor, ISignalReceiver {
 	
-	public class ViewProperties implements IDestructor {
+	public final class ViewProperties implements IDestructor {
 		private IController _controller;		
 		private boolean _hasRendered = false;
 		

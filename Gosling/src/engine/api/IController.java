@@ -26,5 +26,30 @@ package engine.api;
 
 import engine.util.event.ISignalReceiver;
 
-public interface IController extends IDestructor, ISignalReceiver {		
+public interface IController extends IDestructor, ISignalReceiver {
+	public final class ControllerProperties implements IDestructor {
+		private IView _view;
+		
+		@Override public void dispose() {
+			_view.dispose();
+		}
+		
+		public final void setView(IView view) {
+			this._view = view;
+		}
+		
+		public IView getView() {
+			return _view;
+		}
+		
+		public boolean isViewVisible() {
+			return getView().getContainerClass().isVisible();
+		}
+		
+		public <T extends IView> T getView(Class<T> viewType) {
+			return (T)getView();
+		}
+	}
+	
+	public ControllerProperties getControllerProperties();
 }

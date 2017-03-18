@@ -76,6 +76,11 @@ public interface ISignalReceiver {
 	}
 	
 	/**
+	 * Registers the handlers that will listen in for messages that are called
+	 */
+	public void registerListeners();
+	
+	/**
 	 * An update event that sub-systems can hook onto to perform an update, similar to update loops
 	 * in a real-time simulation
 	 * 

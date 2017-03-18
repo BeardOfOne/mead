@@ -65,11 +65,15 @@ public abstract class BaseModel implements IModel, Serializable
 	 * @param receivers The list of receivers
 	 */
 	protected BaseModel(ISignalReceiver... receivers) {
-		_receivers.addAll(Arrays.asList(receivers));
+		for(ISignalReceiver receiver : receivers) {
+			addReceiver(receiver);
+		}
 	}
 		
 	public final void addReceiver(ISignalReceiver receiver) {
-		_receivers.add(receiver);
+		if(!(receiver == null || _receivers.contains(receiver))) {
+			_receivers.add(receiver);
+		}
 	}
 
 	public final void removeReciever(ISignalReceiver receiver) {

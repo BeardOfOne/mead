@@ -33,22 +33,34 @@ import engine.util.event.ISignalListener;
 
 public abstract class BaseController implements IController  {
 
-	protected final Map<String, ISignalListener> SignalListenerMap = new HashMap<>();
+	private final Map<String, ISignalListener> SignalListenerMap = new HashMap<>();
 	
-	private IView _view;
-	
+	private final ControllerProperties _properties = new ControllerProperties();
+
 	public <T extends IView> BaseController(T view) {
-		_view = view;
-		registerHandlers();
+		_properties.setView(view);
+		registerListeners();
 	}
 	
 	protected final IView getView() {
-		return _view;
+		return _properties.getView();
+	}
+	
+	@Override final public Map<String, ISignalListener> getSignalListeners() {
+		return SignalListenerMap;
 	}
 	
 	@Override public void dispose() {
-		_view.dispose();
-		_view = null;		
+		_properties.dispose();
+		SignalListenerMap.clear();
+	}
+	
+	@Override public final ControllerProperties getControllerProperties() {
+		return _properties;
+	}
+	
+	protected final void unregisterListeners() {
+		SignalListenerMap.clear();
 	}
 	
 	protected final String unregisterListener(ISignalListener listener) {
@@ -65,8 +77,5 @@ public abstract class BaseController implements IController  {
 		if(!SignalListenerMap.containsKey(signalName)) {
 			SignalListenerMap.put(signalName, listener);
 		}
-	}
-		
-	protected void registerHandlers() {
 	}
 }

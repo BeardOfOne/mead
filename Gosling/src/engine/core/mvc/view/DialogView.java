@@ -37,7 +37,7 @@ public abstract class DialogView extends JDialog implements IView {
 	public DialogView(Window parent, String title, int width, int height) {
 		super(parent, title);
 		setSize(width, height);
-		registerHandlers();
+		registerListeners();
 	}
 		
 	@Override public final ViewProperties getViewProperties() {
@@ -46,8 +46,5 @@ public abstract class DialogView extends JDialog implements IView {
 	
 	@Override public void render() {
 		IView.super.render();
-	}
-	
-	protected void registerHandlers() {
 	}
 }

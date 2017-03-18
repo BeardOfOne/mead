@@ -24,60 +24,19 @@
 
 package engine.util.event;
 
-import java.util.EventObject;
-
 /**
- * The top-level class to form messages when invoking a signal
+ * Events specific from an IModel source
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
- *
  */
-public class SignalEvent<T extends Object> extends EventObject {
-	
-	/**
-	 * The name of the operation which is used to identify
-	 * which {@link ISignalListener } to invoke
-	 */
-	private String _operationName;
-	
-	private SignalEvent(T sender) {
-		super(sender);
-	}
-	
+public final class NullEvent extends SignalEvent {
 	/**
 	 * Constructs a new signal type event
 	 * 
 	 * @param sender The sender source
 	 * @param operationName The name of the operation being performed
 	 */
-	public SignalEvent(T sender, String operationName) {
-		this(sender);	
-		_operationName = operationName;
-	}
-	
-	/**
-	 * Verifies the validity of the signal event.  Validity is determined
-	 * by the expected usage of SignalEvent reference in a general case.
-	 * 
-	 * @return The validity of this SignalEvent
-	 */
-	public final boolean isValid() {
-		return this instanceof NullEvent;
-	}
-	
-	/**
-	 * Gets the operation name
-	 * 
-	 * @return The name of the operation
-	 */
-	public final String getOperationName() {
-		return _operationName;
-	}	
-	
-	/**
-	 * Gets the source with respect to the specified type
-	 */
-	@Override public final T getSource() {
-		return (T)super.getSource();
+	public NullEvent() {
+		super(0, null);
 	}
 }
