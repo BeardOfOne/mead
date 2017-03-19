@@ -42,18 +42,18 @@ public interface ISignalReceiver {
 	 */
 	default public void sendSignal(SignalEvent signalEvent) {
 		
-		/**
-		 * Get the list of listening entities of this receiver, and look
-		 * for the right entity to call upon.  Note that a set of entities
-		 * is registered by a receiver.  An entity can be thought of as 
-		 * an event.
+		/*
+		 * Get the list of listening events of this receiver, and look
+		 * for the right one to call upon.  Note that a set of events
+		 * is registered by a receiver.
 		 */
 		Map<String, ISignalListener> operations = getSignalListeners();
 		if(operations != null) {
 			String operationName = signalEvent.getOperationName();
-			if(operationName != null && !operationName.isEmpty()) {
+			if(operationName != null && !operationName.trim().isEmpty()) {
 				for(Map.Entry<String, ISignalListener> kvp : operations.entrySet()) {
 					if(kvp.getKey().equalsIgnoreCase(operationName)) {
+						System.out.println("Signal:: " + operationName + " ---> " + kvp.getValue().getClass().getCanonicalName());
 						kvp.getValue().signalReceived(signalEvent);
 						break;
 					}
@@ -62,7 +62,7 @@ public interface ISignalReceiver {
 		}
 		
 		// Update the state of the receiver, this is done at the end to 'apply'
-		// whatever changes could potentially be made from above
+		// whatever changes have been made by calling events registered before-hand
 		update(signalEvent);
 	}
 	
