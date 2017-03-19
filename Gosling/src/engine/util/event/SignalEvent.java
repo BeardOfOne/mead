@@ -62,7 +62,7 @@ public class SignalEvent<T extends Object> extends EventObject {
 	 * @return The validity of this SignalEvent
 	 */
 	public final boolean isValid() {
-		return this instanceof NullEvent;
+		return !(this instanceof NullEvent || _operationName == null || _operationName.trim().isEmpty());
 	}
 	
 	/**

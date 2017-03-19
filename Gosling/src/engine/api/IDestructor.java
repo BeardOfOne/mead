@@ -33,9 +33,6 @@ public interface IDestructor {
 	 * Sets all fields of this object to its default set of values
 	 * effectively reseting the current object.  
 	 * 
-	 * This method might not release handles depending on implementation.  
-	 * 
-	 * This method should only affect the current object and should not bubble up
 	 */
 	default public void flush() {
 	}
