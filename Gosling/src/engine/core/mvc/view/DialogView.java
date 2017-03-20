@@ -32,7 +32,7 @@ import engine.api.IView;
 
 public abstract class DialogView extends JDialog implements IView {
 	
-	private final ViewProperties properties = new ViewProperties();
+	private final ViewProperties _properties = new ViewProperties();
 	
 	public DialogView(Window parent, String title, int width, int height) {
 		super(parent, title);
@@ -41,10 +41,18 @@ public abstract class DialogView extends JDialog implements IView {
 	}
 		
 	@Override public final ViewProperties getViewProperties() {
-		return properties;
+		return _properties;
 	}	
+	
+	@Override public void dispose() {
+		_properties.dispose();
+		IView.super.dispose();
+	}
 	
 	@Override public void render() {
 		IView.super.render();
+	}
+	
+	@Override public void registerListeners() {
 	}
 }

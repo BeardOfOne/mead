@@ -71,5 +71,9 @@ public interface IView extends IDestructor, ISignalReceiver {
 		getViewProperties().flagAsRendered();
 	}
 	
+	@Override default void dispose() {
+		IDestructor.super.dispose();
+	}
+	
 	public ViewProperties getViewProperties();	
 }

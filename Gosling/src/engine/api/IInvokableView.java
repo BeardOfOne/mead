@@ -34,7 +34,7 @@ import java.awt.Container;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public interface IInvokableView<T extends Enum<T>, U extends Container> extends IDestructor {
+public interface IInvokableView<T extends Enum<T>, U> extends IDestructor {
 	/**
 	 * Invokes the implemented object, similar to a lazy-load operation in many ways
 	 * Note: Calling this more than once could have unintended side-effects as I have not

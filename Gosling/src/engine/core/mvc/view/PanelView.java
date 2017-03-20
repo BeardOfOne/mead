@@ -30,18 +30,19 @@ import engine.api.IView;
 
 public abstract class PanelView extends JPanel implements IView {
 	
-	private final ViewProperties properties = new ViewProperties();
+	private final ViewProperties _properties = new ViewProperties();
 
 	public PanelView() {
 		registerListeners();
 	}
 	
 	@Override public ViewProperties getViewProperties() {
-		return properties;
+		return _properties;
 	}
 	
 	@Override public void dispose() {
-		properties.dispose();
+		_properties.dispose();
+		IView.super.dispose();
 	}
 	
 	@Override public void render() {
