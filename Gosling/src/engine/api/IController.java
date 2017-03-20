@@ -52,4 +52,7 @@ public interface IController extends IDestructor, ISignalReceiver {
 	}
 	
 	public ControllerProperties getControllerProperties();
+	
+	@Override default void registerListeners() {
+	}
 }

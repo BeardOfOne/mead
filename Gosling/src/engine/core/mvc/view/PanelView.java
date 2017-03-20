@@ -47,4 +47,7 @@ public abstract class PanelView extends JPanel implements IView {
 	@Override public void render() {
 		IView.super.render();
 	}
+	
+	@Override public void registerListeners() {
+	}
 }
