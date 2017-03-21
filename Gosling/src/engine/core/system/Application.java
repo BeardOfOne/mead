@@ -41,8 +41,6 @@ public class Application extends JFrame {
                 setJMenuBar(null);
             }
             @Override public void componentShown(ComponentEvent e) {
-                setLocationRelativeTo(null);
-
                 // Generate menu system
                 SetWindowedInstanceMenu();
             	getJMenuBar().revalidate();
