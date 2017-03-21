@@ -35,7 +35,9 @@ public interface IView extends IDestructor, ISignalReceiver {
 		private boolean _hasRendered = false;
 		
 		@Override public void dispose() {
-			_controller.dispose();
+			if(_controller != null) {
+				_controller.dispose();	
+			}
 		}
 
 		public final void setController(IController controller) {

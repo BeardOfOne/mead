@@ -45,7 +45,7 @@ public abstract class DialogView extends JDialog implements IView {
 	}	
 	
 	@Override public void dispose() {
-		_properties.dispose();
+		_properties.dispose();	
 		IView.super.dispose();
 	}
 	
