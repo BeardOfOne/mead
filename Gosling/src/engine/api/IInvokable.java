@@ -24,8 +24,6 @@
 
 package engine.api;
 
-import java.awt.Container;
-
 /**
  * This interfaces specifies that an implementing object can be invoked by an outside source.
  * This entity will be capable of being invoked and will have the notion of being able to return
@@ -34,7 +32,8 @@ import java.awt.Container;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public interface IInvokableView<T extends Enum<T>, U> extends IDestructor {
+public interface IInvokable<T extends Enum<T>> extends IDestructor {
+	
 	/**
 	 * Invokes the implemented object, similar to a lazy-load operation in many ways
 	 * Note: Calling this more than once could have unintended side-effects as I have not
@@ -43,11 +42,12 @@ public interface IInvokableView<T extends Enum<T>, U> extends IDestructor {
 	public void invoke();
 	
 	/**
-	 * Gets the result of the specified key.  This key should be an enumeration of some sort
+	 * Gets the result of the specified key, this key should be an enumeration of some sort.
 	 * 
 	 * @param key The key to lookup
+	 * @param returnType The type of value to return
 	 * 
 	 * @return The value of the lookup
 	 */
-	public U getResult(T key);	
+	public <U extends Object> U getResult(T key, Class<U> returnType);
 }
