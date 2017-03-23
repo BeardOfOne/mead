@@ -25,13 +25,17 @@
 package engine.core.mvc.view;
 
 import java.awt.Window;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JDialog;
 
 import engine.api.IView;
+import engine.util.event.ISignalListener;
 
 public abstract class DialogView extends JDialog implements IView {
 	
+	private final Map<String, ISignalListener> SignalListeners = new HashMap<>();
 	private final ViewProperties _properties = new ViewProperties();
 	
 	public DialogView(Window parent, String title, int width, int height) {
@@ -51,6 +55,10 @@ public abstract class DialogView extends JDialog implements IView {
 	
 	@Override public void render() {
 		IView.super.render();
+	}
+	
+	@Override final public Map<String, ISignalListener> getSignalListeners() {
+		return SignalListeners;
 	}
 	
 	@Override public void registerListeners() {
