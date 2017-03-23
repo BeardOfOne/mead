@@ -27,7 +27,9 @@ package engine.api;
 import engine.util.event.ISignalReceiver;
 
 public interface IController extends IDestructor, ISignalReceiver {
+	
 	public final class ControllerProperties implements IDestructor {
+		
 		private IView _view;
 		
 		@Override public void dispose() {
@@ -49,10 +51,11 @@ public interface IController extends IDestructor, ISignalReceiver {
 		public <T extends IView> T getView(Class<T> viewType) {
 			return (T)getView();
 		}
+
+		@Override public void flush() {
+			
+		}
 	}
 	
 	public ControllerProperties getControllerProperties();
-	
-	@Override default void registerListeners() {
-	}
 }

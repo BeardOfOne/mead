@@ -57,25 +57,5 @@ public abstract class BaseController implements IController  {
 	
 	@Override public final ControllerProperties getControllerProperties() {
 		return _properties;
-	}
-	
-	protected final void unregisterListeners() {
-		SignalListenerMap.clear();
-	}
-	
-	protected final String unregisterListener(ISignalListener listener) {
-		for(Map.Entry<String, ISignalListener> kvp : SignalListenerMap.entrySet()) {
-			if(kvp.getValue() == listener) {
-				SignalListenerMap.remove(kvp.getKey());
-				return kvp.getKey();
-			}
-		}
-		return null;
-	}
-	
-	protected final void registerListener(String signalName, ISignalListener listener) {
-		if(!SignalListenerMap.containsKey(signalName)) {
-			SignalListenerMap.put(signalName, listener);
-		}
-	}
+	}	
 }

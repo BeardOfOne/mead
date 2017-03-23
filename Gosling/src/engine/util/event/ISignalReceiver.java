@@ -67,6 +67,54 @@ public interface ISignalReceiver {
 	}
 	
 	/**
+	 * Registers a listener into the list of listeners
+	 * 
+	 * @param signalName The name of the signal 
+	 * @param listener The listener implementation
+	 */
+	default public void registerListener(String signalName, ISignalListener listener) {
+		Map<String, ISignalListener> listeners = getSignalListeners();
+		if(listeners != null) {
+			if(!listeners.containsKey(signalName)) {
+				listeners.put(signalName, listener);
+			}
+		}
+	}
+	
+	/**
+	 * Unregisters the specified listener, returning a key to use as a reference to help
+	 * when you wish to register back, you will be able to use the same key.
+	 * 
+	 * @param listener The listener to unregister
+	 * 
+	 * @return The name of the key associated to the listener that you passed in originally, use
+	 * this as record keeping and to register back
+	 */
+	default public String unregisterListener(ISignalListener listener) {
+		Map<String, ISignalListener> listeners = getSignalListeners();
+		if(listeners != null) {
+			for(Map.Entry<String, ISignalListener> kvp : listeners.entrySet()) {
+				if(kvp.getValue() == listener) {
+					listeners.remove(kvp.getKey());
+					return kvp.getKey();
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * Clears the list of listeners
+	 */
+	default public void unregisterListeners() {
+		Map<String, ISignalListener> listeners = getSignalListeners();
+		if(listeners != null) {
+			listeners.clear();
+		}
+	}
+	
+	/**
 	 * Gets the list of available signal listeners that the sub-system is listening to
 	 * 
 	 * @return A mapping of listener names to listener concrete implementations
@@ -78,7 +126,8 @@ public interface ISignalReceiver {
 	/**
 	 * Registers the handlers that will listen in for messages that are called
 	 */
-	public void registerListeners();
+	default public void registerListeners() {
+	}
 	
 	/**
 	 * An update event that sub-systems can hook onto to perform an update, similar to update loops

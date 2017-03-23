@@ -25,14 +25,95 @@
 package engine.api;
 
 import java.awt.Container;
+import java.util.HashMap;
+import java.util.Map;
 
+import engine.util.event.ISignalListener;
 import engine.util.event.ISignalReceiver;
 
+/**
+ * This contract specifies how views should operate within the framework. 
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ */
 public interface IView extends IDestructor, ISignalReceiver {
 	
+	/**
+	 * The view properties that each IView will have
+	 * 
+	 * @author Daniel Ricci <thedanny09@gmail.com>
+	 */
 	public final class ViewProperties implements IDestructor {
+		
+		/**
+		 * The controller that is associated to the view
+		 */
 		private IController _controller;		
+		
+		/**
+		 * Flag indicating if the view has performed a render operation
+		 * Note: For this to be properly set it is imperative that the programmer
+		 * call the super of the render() method or this flag will not be properly registered
+		 */
 		private boolean _hasRendered = false;
+		
+		/**
+		 * The mapping of signal names to signal implementations
+		 */
+		private final Map<String, ISignalListener> _signalListeners = new HashMap<>();
+		
+		/**
+		 * Sets the controller of the view property
+		 * 
+		 * @param controller The controller
+		 */
+		public final void setController(IController controller) {
+			this._controller = controller;
+		}
+		
+		/**
+		 * Gets the controller associated to the view
+		 *  
+		 * @return The controller associated to the view
+		 */
+		public IController getController() {
+			return _controller;
+		}
+		
+		/**
+		 * Gets the controller associated to the view
+		 * Note: This method complements getController in that it does a cast for you
+		 * 
+		 * @param controllerType The type of controller to cast the associating controller to
+		 * 
+		 * @return The controller associated to view 
+		 */
+		public <T extends IController> T getController(Class<T> controllerType) {
+			return (T)getController();
+		}
+		
+		/**
+		 * Flags this view as being rendered at least once
+		 */
+		protected final void flagAsRendered() {
+			_hasRendered = true;
+		}
+		
+		/**
+		 * Gets a flag indicating if the view has been rendered at least once
+		 */
+		public final boolean hasRendered() {
+			return _hasRendered;
+		}
+
+		/**
+		 * Gets the list of signal listeners associated to the view
+		 * 
+		 * @return The list of signal listeners 
+		 */
+		public Map<String, ISignalListener> getSignalListeners() {
+			return _signalListeners;
+		}
 		
 		@Override public void dispose() {
 			if(_controller != null) {
@@ -40,42 +121,50 @@ public interface IView extends IDestructor, ISignalReceiver {
 			}
 		}
 
-		public final void setController(IController controller) {
-			this._controller = controller;
-		}
+		@Override public void flush() {
+			_signalListeners.clear();
+		}		
+	}
 		
-		public IController getController() {
-			return _controller;
-		}
-		
-		public <T extends IController> T getController(Class<T> controllerType) {
-			return (T)getController();
-		}
-		
-		protected final void flagAsRendered() {
-			_hasRendered = true;
-		}
-		
-		public final boolean hasRendered() {
-			return _hasRendered;
-		}
+	@Override default Map<String, ISignalListener> getSignalListeners() {
+		return getViewProperties().getSignalListeners();
 	}
 	
+	@Override default void dispose() {
+	}
+	
+	@Override default void flush() {
+	}
+	
+	/**
+	 * Gets the containing class of the view, this is the container representation in Swing terms
+	 * 
+	 * @return The swing container of the view
+	 */
 	default public <T extends Container> T getContainerClass() {
 		return (T)this;
 	}
 	
+	/**
+	 * Gets a flag indicating if the view has been rendered or not
+	 * @return
+	 */
 	default public boolean hasRendered() {
 		return getViewProperties().hasRendered();
 	}
 	
+	/**
+	 * Renders the view. This should be only called once, and you should register to the update method
+	 * to receive subsequent messages thereafter
+	 */
 	default public void render() {
 		getViewProperties().flagAsRendered();
 	}
 	
-	@Override default void dispose() {
-		IDestructor.super.dispose();
-	}
-	
+	/**
+	 * Gets a reference to the view properties associated to the view
+	 * 
+	 * @return the view properties associated to the view
+	 */
 	public ViewProperties getViewProperties();	
 }

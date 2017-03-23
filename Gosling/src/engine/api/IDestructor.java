@@ -34,8 +34,7 @@ public interface IDestructor {
 	 * effectively reseting the current object.  
 	 * 
 	 */
-	default public void flush() {
-	}
+	public void flush();
 	
 	/**
 	 * Call this method if you want to ready your object for finalize without
@@ -49,6 +48,5 @@ public interface IDestructor {
 	 * This method should bubble up and affect the entire hierarchy from this object
 	 * onwards
 	 */
-	default public void dispose() {
-	}
+	public void dispose();
 }
