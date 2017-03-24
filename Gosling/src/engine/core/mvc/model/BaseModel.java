@@ -26,7 +26,6 @@ package engine.core.mvc.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.UUID;
 
 import engine.api.IModel;
@@ -116,5 +115,8 @@ public abstract class BaseModel implements IModel, Serializable
 		}
 		
 		return false;
+	}
+
+	@Override public void flush() {		
 	}
 }

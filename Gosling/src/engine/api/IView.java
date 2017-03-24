@@ -27,6 +27,7 @@ package engine.api;
 import java.awt.Container;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import engine.util.event.ISignalListener;
 import engine.util.event.ISignalReceiver;
@@ -82,7 +83,7 @@ public interface IView extends IDestructor, ISignalReceiver {
 		
 		/**
 		 * Gets the controller associated to the view
-		 * Note: This method complements getController in that it does a cast for you
+		 * Note: This method compliments getController in that it does a cast for you
 		 * 
 		 * @param controllerType The type of controller to cast the associating controller to
 		 * 
@@ -96,7 +97,7 @@ public interface IView extends IDestructor, ISignalReceiver {
 		 * Flags this view as being rendered at least once
 		 */
 		protected final void flagAsRendered() {
-			_hasRendered = true;
+			_hasRendered = true;			
 		}
 		
 		/**

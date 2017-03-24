@@ -51,11 +51,16 @@ public abstract class BaseController implements IController  {
 	}
 	
 	@Override public void dispose() {
+		unregisterListeners();
 		_properties.dispose();
-		SignalListenerMap.clear();
 	}
 	
 	@Override public final ControllerProperties getControllerProperties() {
 		return _properties;
+	}
+
+	@Override public void flush() {
+		unregisterListeners();
+		_properties.flush();
 	}	
 }

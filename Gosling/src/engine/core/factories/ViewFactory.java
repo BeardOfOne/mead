@@ -151,4 +151,8 @@ public class ViewFactory implements IDestructor, IDispatcher<IView> {
 		DispatcherMessage<IView> message = new DispatcherMessage<IView>(sender, operationName, resources, Arrays.asList(args));
 		_dispatcher.add(message);
 	}
+
+	@Override public void flush() {
+		
+	}
 }

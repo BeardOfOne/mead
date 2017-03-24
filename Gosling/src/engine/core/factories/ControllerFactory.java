@@ -178,4 +178,7 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
 		DispatcherMessage<IController> message = new DispatcherMessage<IController>(sender, operationName, resources, Arrays.asList(args));
 		_dispatcher.add(message);
 	}
+
+	@Override public void flush() {
+	}
 }
