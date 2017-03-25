@@ -29,26 +29,45 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JFrame;
 
-public class Application extends JFrame {
+/**
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ */
+public abstract class Application extends JFrame {
 
+	/**
+	 * 
+	 */
     protected Application() {
-        SetListeners();
+        setListeners();
+        setEngineDefaults();
     }
     
-    private void SetListeners() {
+    /**
+     * 
+     */
+    private void setListeners() {
         addComponentListener(new ComponentAdapter() {
             @Override public void componentHidden(ComponentEvent e) {
                 setJMenuBar(null);
             }
             @Override public void componentShown(ComponentEvent e) {
                 // Generate menu system
-                SetWindowedInstanceMenu();
+            	setWindowedInstanceMenu();
             	getJMenuBar().revalidate();
                 getJMenuBar().repaint();
             }
         });
     }
     
-    protected void SetWindowedInstanceMenu() {
-    }
+    /**
+     * 
+     */
+    protected abstract void setWindowedInstanceMenu();
+    
+    /**
+     * 
+     */
+    protected abstract void setEngineDefaults();
 }
