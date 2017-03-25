@@ -27,7 +27,6 @@ package engine.api;
 import java.awt.Container;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Properties;
 
 import engine.util.event.ISignalListener;
 import engine.util.event.ISignalReceiver;

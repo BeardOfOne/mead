@@ -157,7 +157,7 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
 	}
 	
 	@Override public void dispose() {
-		for(IController controller : _controllers) { // TODO - this needs to remove from _history
+		for(IController controller : _controllers) {
 			controller.dispose();
 		}
 		_instance = null;
