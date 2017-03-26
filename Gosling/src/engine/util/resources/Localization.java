@@ -36,12 +36,7 @@ import engine.api.IDestructor;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public final class Localization implements IDestructor {
-	
-	/**
-	 * 
-	 */
-	private static Localization _instance;
+public abstract class Localization<T extends Enum<T>> implements IDestructor {
 	
 	/**
 	 * 
@@ -51,32 +46,13 @@ public final class Localization implements IDestructor {
 	/**
 	 * 
 	 */
-	private Map<Locale, ResourceBundle> _resources = new HashMap<>();
-	
-	/**
-	 * 
-	 */
-	private Localization() {
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public static Localization instance()
-	{
-		if(_instance == null) {
-			_instance = new Localization();
-		}
-		
-		return _instance;
-	}
+	private final Map<Locale, ResourceBundle> _resources = new HashMap<>();
 	
 	/**
 	 * 
 	 * @param bundle
 	 */
-	public void addLocale(ResourceBundle bundle) {
+	public final void addLocale(ResourceBundle bundle) {
 		_resources.put(bundle.getLocale(), bundle);
 	}
 	
@@ -85,7 +61,7 @@ public final class Localization implements IDestructor {
 	 * @param bundle
 	 * @param setActive
 	 */
-	public void addLocale(ResourceBundle bundle, boolean setActive) {
+	public final void addLocale(ResourceBundle bundle, boolean setActive) {
 		addLocale(bundle);
 		if(setActive) {
 			setActiveLocale(bundle.getLocale());
@@ -96,10 +72,14 @@ public final class Localization implements IDestructor {
 	 * 
 	 * @param locale
 	 */
-	public void setActiveLocale(Locale locale) {
+	public final void setActiveLocale(Locale locale) {
 		if(_resources.containsKey(locale)) {
 			_activeLocale = locale;		
 		}
+	}
+	
+	public final String getLocalizedString(T key) {
+		return getResource(key.toString());
 	}
 	
 	/**
@@ -107,8 +87,8 @@ public final class Localization implements IDestructor {
 	 * @param key
 	 * @return
 	 */
-	public <T extends Object> T getResource(String key) { 
-		return (T)_resources.get(_activeLocale).getObject(key);
+	public final <U extends Object> U getResource(String key) { 
+		return (U)_resources.get(_activeLocale).getObject(key);
 	}
 
 	@Override public void flush() {
@@ -117,7 +97,6 @@ public final class Localization implements IDestructor {
 	}
 
 	@Override public void dispose() {
-		_instance = null;
 		try {
 			finalize();
 		} 
