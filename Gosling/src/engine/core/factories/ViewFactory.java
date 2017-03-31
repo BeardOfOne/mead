@@ -155,4 +155,8 @@ public class ViewFactory implements IDestructor, IDispatcher<IView> {
 	@Override public void flush() {
 		
 	}
+
+	public static boolean running() {
+		return _instance != null;
+	}
 }

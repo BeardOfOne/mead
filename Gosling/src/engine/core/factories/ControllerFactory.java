@@ -181,4 +181,8 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
 
 	@Override public void flush() {
 	}
+
+	public static boolean running() {
+		return _instance != null;
+	}
 }
