@@ -33,6 +33,9 @@ public class Dispatcher<T extends ISignalReceiver> extends Thread {
 	private volatile ConcurrentLinkedQueue<DispatcherMessage<T>> _messages = new ConcurrentLinkedQueue<>();		
 	
 	public void add(DispatcherMessage<T> message) {
+		if(!isAlive()) {
+			start();
+		}
 		_messages.add(message);
 	}
 	

@@ -24,148 +24,20 @@
 
 package engine.core.factories;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import engine.api.IDestructor;
 import engine.api.IView;
-import engine.communication.internal.dispatcher.Dispatcher;
-import engine.communication.internal.dispatcher.DispatcherMessage;
-import engine.communication.internal.dispatcher.IDispatcher;
 
 /**
- * This factory is in charge of creating and keeping tracking of all IView related
- * objects created.  Use this factory to create IView implemented types, and to retrieve
- * a specified type.  You can also dispatch a message to all types that were created 
- * as a broadcast
+ * Factory for creating and working with IView types
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public class ViewFactory implements IDestructor, IDispatcher<IView> {
-
-	/**
-	 * A message dispatcher used to communicate with views 
-	 */
-	Dispatcher<IView> _dispatcher = new Dispatcher<>();
-	
-	/**
-     * Contains the history of all the views ever created by this factory, organized 
-     * by class name and mapping to the list of all those classes
-     */
-    private final Map<String, Set<IView>> _history = new HashMap<>();
-
-	private final ArrayList<IView> _views = new ArrayList<>(); 
-	
-	private static ViewFactory _instance;
-		
-	private ViewFactory() {
-		_dispatcher.start();
-	}
-	
-	/**
-	 * Adds a view
-	 * 
-	 * @param controller The controller to add
-	 * @param isShared If the controller should be added into the exposed cache
-	 */
-	private void Add(IView view, boolean isShared) { 
-	    String viewName = view.getClass().getName();
-	    
-	    Set<IView> views = _history.get(viewName);
-	    if(views == null) {
-	        views = new HashSet<IView>();
-	        _history.put(viewName, views);
-	    }
-	    views.add(view);
-	    
-	    if(isShared) {
-	        _views.add(view);
-	    }
-	}
-	
-	public synchronized static ViewFactory instance() {
-		if(_instance == null) {
-			_instance = new ViewFactory();
-		}
-		return _instance;
-	}
-	
-	/**
-	 * Gets a particular view without the side-effect of creation
-	 * 
-	 * @param viewClass The class type to get
-	 * 
-	 * @return The specified class view
-	 */
-	public <T extends IView> IView get(Class<T> viewClass) {
-		for(IView view : _views) {
-			if(view.getClass() == viewClass) {
-				return view;
-			}
-		}
-		return null;
-	}
-	
-	public <T extends IView> IView get(Class<T> viewClass, boolean isShared, Object...args) {
-		if(isShared) {
-			for(IView item : _views) {
-				if(item.getClass() == viewClass) {
-					return item;
-				}
-			}
-		}
-		
-		// Get the list of arguments together
-		Class<?>[] argsClass = new Class<?>[args.length];
-		for(int i = 0; i < args.length; ++i) {
-			argsClass[i] = args[i].getClass();
-		}
-		
-		try {	
-			T view = viewClass.getConstructor(argsClass).newInstance(args);
-			Add(view, isShared);
-			return view;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
-		
-		return null;
-	}
-		
-	@Override public void dispose() {
-		for(IView view : _views) { 
-			view.dispose();
-		}
-		_views.clear();
-		_instance = null;
-	}
+public final class ViewFactory extends AbstractFactory<IView> {
 
 	@Override public <U extends IView> void BroadcastMessage(Object sender, String operationName, Class<U> type, Object... args) {
-		List<IView> resources = null;
-		
-		for(Set<IView> views : _history.values()) {
-			if(views.iterator().next().getClass() == type) {
-				resources = new ArrayList<>(views);
-				break;
-			} 
-			continue;
-		}
-
-		DispatcherMessage<IView> message = new DispatcherMessage<IView>(sender, operationName, resources, Arrays.asList(args));
-		_dispatcher.add(message);
 	}
 
-	@Override public void flush() {
-		
-	}
-
-	public static boolean running() {
-		return _instance != null;
+	@Override public boolean isRunning() {
+		return false;
 	}
 }

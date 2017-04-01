@@ -24,6 +24,13 @@
 
 package engine.api;
 
+/**
+ * Specifies a contract for flushing (clearing) resources effectively resetting its state, and
+ * disposing of an object properly.
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ */
 public interface IDestructor {
 
 	/**
