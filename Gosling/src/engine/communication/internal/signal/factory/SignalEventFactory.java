@@ -22,11 +22,16 @@
 * IN THE SOFTWARE.
 */
 
-package engine.util.event;
+package engine.communication.internal.signal.factory;
 
 import engine.api.IController;
 import engine.api.IModel;
 import engine.api.IView;
+import engine.communication.internal.signal.types.ControllerEvent;
+import engine.communication.internal.signal.types.ModelEvent;
+import engine.communication.internal.signal.types.NullEvent;
+import engine.communication.internal.signal.types.SignalEvent;
+import engine.communication.internal.signal.types.ViewEvent;
 
 /**
  * Factory that serves SignalEvent type objects

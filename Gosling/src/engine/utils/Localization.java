@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.util.resources;
+package engine.utils;
 
 import java.util.HashMap;
 import java.util.Locale;

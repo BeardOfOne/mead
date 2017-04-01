@@ -29,9 +29,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import engine.api.IModel;
-import engine.util.event.ISignalReceiver;
-import engine.util.event.ModelEvent;
-import engine.util.event.SignalEvent;
+import engine.communication.internal.signal.ISignalReceiver;
+import engine.communication.internal.signal.types.ModelEvent;
+import engine.communication.internal.signal.types.SignalEvent;
 
 /**
  * A Game Model represents the base class of all model type objects

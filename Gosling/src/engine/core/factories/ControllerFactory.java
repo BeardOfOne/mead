@@ -26,6 +26,7 @@ package engine.core.factories;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -37,9 +38,15 @@ import engine.api.IDestructor;
 import engine.communication.internal.dispatcher.Dispatcher;
 import engine.communication.internal.dispatcher.DispatcherMessage;
 import engine.communication.internal.dispatcher.IDispatcher;
-import engine.core.mvc.controller.BaseController;
 
-public class ControllerFactory implements IDestructor, IDispatcher<BaseController> {
+/**
+ * This is a factory for the Controller core module. This factory will create all controller
+ * related items for any given application as long as it implements the proper interface
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ */
+public final class ControllerFactory implements IDestructor, IDispatcher<IController> {
 	
 	/**
 	 * A message dispatcher used to communicate with controller 
@@ -49,13 +56,17 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
     /**
      * Contains the history of all the controllers ever created by this factory, organized 
      * by class name and mapping to the list of all those classes
+     * 
+     * Note: This list should be properly cleaned with respect to disposed
+     * items within this list
      */
-    private final Map<String, Set<IController>> _history = new HashMap<>();
-    
+    //private final Map<String, Set<IController>> _history = new HashMap<>();
+	private final Map<Class, Set<IController>> _history = new HashMap<>();
+	
     /**
      * Contains the list of all exposed unique controllers created by this factory.  An exposed
      * controller is one where the controller reference is marked to be stored by this factory
-     * so that it may be referenced by others during the lifespan of the process
+     * so that it may be referenced by others during it's lifespan
      */
 	private final Set<IController> _controllers = new HashSet<>(); 
 	
@@ -90,12 +101,10 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
 	 * @param isShared If the controller should be added into the exposed cache
 	 */
 	private void Add(IController controller, boolean isShared) { 
-	    String controllerName = controller.getClass().getName();
-	    
-	    Set<IController> controllers = _history.get(controllerName);
+	    Set<IController> controllers = _history.get(controller.getClass());
 	    if(controllers == null) {
 	        controllers = new HashSet<IController>();
-	        _history.put(controllerName, controllers);
+	        _history.put(controller.getClass(), controllers);
 	    }
 	    controllers.add(controller);
 	    
@@ -163,20 +172,13 @@ public class ControllerFactory implements IDestructor, IDispatcher<BaseControlle
 		_instance = null;
 	}
 
-	@Override public <U extends BaseController> void BroadcastMessage(Object sender, String operationName, Class<U> type, Object... args) {
-		
-		List<IController> resources = null;
-		
-		for(Set<IController> controllers : _history.values()) {
-			if(controllers.iterator().next().getClass() == type) {
-				resources = new ArrayList<>(controllers);
-				break;
-			} 
-			continue;
+	@Override public <U extends IController> void BroadcastMessage(Object sender, String operationName, Class<U> type, Object... args) {
+		Set<IController> controllers = _history.get(type);
+		if(controllers == null) {
+			_dispatcher.add(
+				new DispatcherMessage<IController>(sender, operationName, null, Arrays.asList(args))
+			);	
 		}
-
-		DispatcherMessage<IController> message = new DispatcherMessage<IController>(sender, operationName, resources, Arrays.asList(args));
-		_dispatcher.add(message);
 	}
 
 	@Override public void flush() {

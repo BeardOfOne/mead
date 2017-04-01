@@ -22,27 +22,18 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.internal.menu;
+package engine.core.option;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
-import javax.swing.JComponent;
-import javax.swing.JMenuItem;
+import engine.core.mvc.controller.BaseController;
 
-public abstract class ItemComponent extends BaseComponent{
+public interface IOption {
+	
+	public boolean visibility();
+	public boolean enabled();
+	
+	public void onExecute(ActionEvent actionEvent);
 
-	protected ItemComponent(JComponent component, JComponent parent) {
-		super(component, parent);
-	}	
-	
-	@Override protected final void onInitialize() {
-		super.get(JMenuItem.class).addActionListener(new AbstractAction(super.toString()) {
-			@Override public void actionPerformed(ActionEvent actionEvent) {
-				onExecute(actionEvent);
-			}
-		});
-	}
-	
-	
+	public void bind(BaseController controller);
 }

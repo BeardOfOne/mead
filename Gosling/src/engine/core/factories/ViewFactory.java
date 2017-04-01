@@ -38,6 +38,15 @@ import engine.communication.internal.dispatcher.Dispatcher;
 import engine.communication.internal.dispatcher.DispatcherMessage;
 import engine.communication.internal.dispatcher.IDispatcher;
 
+/**
+ * This factory is in charge of creating and keeping tracking of all IView related
+ * objects created.  Use this factory to create IView implemented types, and to retrieve
+ * a specified type.  You can also dispatch a message to all types that were created 
+ * as a broadcast
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ */
 public class ViewFactory implements IDestructor, IDispatcher<IView> {
 
 	/**

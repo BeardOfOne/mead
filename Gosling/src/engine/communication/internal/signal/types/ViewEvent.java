@@ -22,18 +22,25 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.internal.menu;
+package engine.communication.internal.signal.types;
 
-import java.awt.event.ActionEvent;
+import engine.api.IView;
 
-import engine.core.mvc.controller.BaseController;
-
-public interface IComponent {
-	
-	public boolean visibility();
-	public boolean enabled();
-	
-	public void onExecute(ActionEvent actionEvent);
-
-	public void bind(BaseController controller);
+/**
+ * Events specific from an IView source
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ * @param <T> The IView type
+ */
+public final class ViewEvent<T extends IView> extends SignalEvent<T> {
+	/**
+	 * Constructs a new signal type event
+	 * 
+	 * @param sender The sender source
+	 * @param operationName The name of the operation being performed
+	 */
+	public ViewEvent(T sender, String operationName) {
+		super(sender, operationName);
+	}	
 }

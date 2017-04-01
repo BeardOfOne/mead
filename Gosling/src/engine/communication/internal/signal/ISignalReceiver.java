@@ -22,9 +22,11 @@
 * IN THE SOFTWARE.
 */
 
-package engine.util.event;
+package engine.communication.internal.signal;
 
 import java.util.Map;
+
+import engine.communication.internal.signal.types.SignalEvent;
 
 /**
  * This interface defines a methodology for communicating signals between different sub-systems using

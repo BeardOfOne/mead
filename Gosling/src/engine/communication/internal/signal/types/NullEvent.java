@@ -22,26 +22,21 @@
 * IN THE SOFTWARE.
 */
 
-package engine.util.event;
-
-import engine.api.IModel;
+package engine.communication.internal.signal.types;
 
 /**
  * Events specific from an IModel source
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
- *
- * @param <T> The IModel type
  */
-public final class ModelEvent<T extends IModel> extends SignalEvent<T> {
-	
+public final class NullEvent extends SignalEvent {
 	/**
 	 * Constructs a new signal type event
 	 * 
 	 * @param sender The sender source
 	 * @param operationName The name of the operation being performed
 	 */
-	public ModelEvent(T sender, String operationName) { 
-		super(sender, operationName);
+	public NullEvent() {
+		super(0, null);
 	}
 }

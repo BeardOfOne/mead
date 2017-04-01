@@ -29,7 +29,7 @@ import java.util.Map;
 
 import engine.api.IController;
 import engine.api.IView;
-import engine.util.event.ISignalListener;
+import engine.communication.internal.signal.ISignalListener;
 
 public abstract class BaseController implements IController  {
 

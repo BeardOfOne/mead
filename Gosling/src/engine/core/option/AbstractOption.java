@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.internal.menu;
+package engine.core.option;
 
 import java.util.UUID;
 
@@ -31,7 +31,7 @@ import javax.swing.JSeparator;
 
 import engine.core.mvc.controller.BaseController;
 
-public abstract class BaseComponent implements IComponent {
+public abstract class AbstractOption implements IOption {
 	
 	private final UUID _identifier = UUID.randomUUID();
 	private final String ParentKey = "__parent__";
@@ -39,7 +39,7 @@ public abstract class BaseComponent implements IComponent {
 	private final JComponent _component;
 	private final JComponent _parent;
 	
-	protected BaseComponent(JComponent component, JComponent parent) {
+	protected AbstractOption(JComponent component, JComponent parent) {
 
 		_component = component;
 		_parent = parent;
@@ -56,7 +56,7 @@ public abstract class BaseComponent implements IComponent {
 		onInitialize();
 	}
 	
-	protected BaseComponent(JComponent component, BaseComponent parent) {
+	protected AbstractOption(JComponent component, AbstractOption parent) {
 		this(component, parent._component);
 	}
 	
@@ -73,11 +73,11 @@ public abstract class BaseComponent implements IComponent {
 	}
 	
 	@Override public final boolean equals(Object obj) {
-		if(obj == null || obj instanceof BaseComponent) {
+		if(obj == null || obj instanceof AbstractOption) {
 			return false;
 		}
 		
-		BaseComponent component = (BaseComponent) obj;
+		AbstractOption component = (AbstractOption) obj;
 		return component.toString() == this.toString();
 	}
 	

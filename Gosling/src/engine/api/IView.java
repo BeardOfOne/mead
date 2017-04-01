@@ -28,8 +28,8 @@ import java.awt.Container;
 import java.util.HashMap;
 import java.util.Map;
 
-import engine.util.event.ISignalListener;
-import engine.util.event.ISignalReceiver;
+import engine.communication.internal.signal.ISignalListener;
+import engine.communication.internal.signal.ISignalReceiver;
 
 /**
  * This contract specifies how views should operate within the framework. 

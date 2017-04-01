@@ -26,8 +26,8 @@ package engine.communication.internal.dispatcher;
 
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import engine.util.event.ISignalReceiver;
-import engine.util.event.SignalEvent;
+import engine.communication.internal.signal.ISignalReceiver;
+import engine.communication.internal.signal.types.SignalEvent;
 
 public class Dispatcher<T extends ISignalReceiver> extends Thread {
 	private volatile ConcurrentLinkedQueue<DispatcherMessage<T>> _messages = new ConcurrentLinkedQueue<>();		

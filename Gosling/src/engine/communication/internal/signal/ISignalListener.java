@@ -22,21 +22,27 @@
 * IN THE SOFTWARE.
 */
 
-package engine.util.event;
+package engine.communication.internal.signal;
+
+import java.util.EventListener;
+
+import engine.communication.internal.signal.types.SignalEvent;
 
 /**
- * Events specific from an IModel source
+ * An interface for tagging event implementations as being capable of being 
+ * signaled
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ * @param <T> The SignalEvent type expected
  */
-public final class NullEvent extends SignalEvent {
+public interface ISignalListener<T extends SignalEvent> extends EventListener {
+	
 	/**
-	 * Constructs a new signal type event
+	 * This method is invoked when a particular signal is received. This
+	 * signal is in the form of a particular SignalEvent
 	 * 
-	 * @param sender The sender source
-	 * @param operationName The name of the operation being performed
+	 * @param event The event container
 	 */
-	public NullEvent() {
-		super(0, null);
-	}
+	public void signalReceived(T event);
 }

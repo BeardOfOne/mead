@@ -22,62 +22,25 @@
 * IN THE SOFTWARE.
 */
 
-package engine.util.event;
+package engine.communication.internal.signal.types;
 
-import java.util.EventObject;
+import engine.api.IController;
 
 /**
- * The top-level class to form messages when invoking a signal
+ * Events specific from an IController source
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
+ * @param <T> The IController type
  */
-public class SignalEvent<T extends Object> extends EventObject {
-	
-	/**
-	 * The name of the operation which is used to identify
-	 * which {@link ISignalListener } to invoke
-	 */
-	private String _operationName;
-	
-	private SignalEvent(T sender) {
-		super(sender);
-	}
-	
+public final class ControllerEvent<T extends IController> extends SignalEvent<T> {	
 	/**
 	 * Constructs a new signal type event
 	 * 
 	 * @param sender The sender source
 	 * @param operationName The name of the operation being performed
 	 */
-	public SignalEvent(T sender, String operationName) {
-		this(sender);	
-		_operationName = operationName;
-	}
-	
-	/**
-	 * Verifies the validity of the signal event.  Validity is determined
-	 * by the expected usage of SignalEvent reference in a general case.
-	 * 
-	 * @return The validity of this SignalEvent
-	 */
-	public final boolean isValid() {
-		return !(this instanceof NullEvent || _operationName == null || _operationName.trim().isEmpty());
-	}
-	
-	/**
-	 * Gets the operation name
-	 * 
-	 * @return The name of the operation
-	 */
-	public final String getOperationName() {
-		return _operationName;
-	}	
-	
-	/**
-	 * Gets the source with respect to the specified type
-	 */
-	@Override public final T getSource() {
-		return (T)super.getSource();
+	public ControllerEvent(T sender, String operationName) {
+		super(sender, operationName);
 	}
 }

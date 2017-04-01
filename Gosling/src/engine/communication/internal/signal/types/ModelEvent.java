@@ -22,25 +22,26 @@
 * IN THE SOFTWARE.
 */
 
-package engine.util.event;
+package engine.communication.internal.signal.types;
 
-import engine.api.IView;
+import engine.api.IModel;
 
 /**
- * Events specific from an IView source
+ * Events specific from an IModel source
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
- * @param <T> The IView type
+ * @param <T> The IModel type
  */
-public final class ViewEvent<T extends IView> extends SignalEvent<T> {
+public final class ModelEvent<T extends IModel> extends SignalEvent<T> {
+	
 	/**
 	 * Constructs a new signal type event
 	 * 
 	 * @param sender The sender source
 	 * @param operationName The name of the operation being performed
 	 */
-	public ViewEvent(T sender, String operationName) {
+	public ModelEvent(T sender, String operationName) { 
 		super(sender, operationName);
-	}	
+	}
 }

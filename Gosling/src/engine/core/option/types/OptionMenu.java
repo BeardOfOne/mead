@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.internal.menu;
+package engine.core.option.types;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -32,9 +32,11 @@ import javax.swing.JMenu;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
-public abstract class MenuComponent extends BaseComponent {
+import engine.core.option.AbstractOption;
 
-	protected MenuComponent(JComponent component, JComponent parent) {
+public abstract class OptionMenu extends AbstractOption {
+
+	protected OptionMenu(JComponent component, JComponent parent) {
 		super(component, parent);
 	}
 	
@@ -57,8 +59,8 @@ public abstract class MenuComponent extends BaseComponent {
 					if(component instanceof JComponent) {
 						JComponent jComponent = (JComponent) component;
 						Object clientProperty = jComponent.getClientProperty(jComponent);
-						if(clientProperty instanceof ItemComponent) {
-						    ItemComponent itemComponent = (ItemComponent) jComponent.getClientProperty(jComponent);
+						if(clientProperty instanceof OptionItem) {
+						    OptionItem itemComponent = (OptionItem) jComponent.getClientProperty(jComponent);
 	                        jComponent.setEnabled(itemComponent.enabled());
 	                        jComponent.setVisible(itemComponent.visibility());    
 						}

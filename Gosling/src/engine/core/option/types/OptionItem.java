@@ -22,25 +22,29 @@
 * IN THE SOFTWARE.
 */
 
-package engine.util.event;
+package engine.core.option.types;
 
-import java.util.EventListener;
+import java.awt.event.ActionEvent;
 
-/**
- * An interface for tagging event implementations as being capable of being 
- * signaled
- * 
- * @author Daniel Ricci <thedanny09@gmail.com>
- *
- * @param <T> The SignalEvent type expected
- */
-public interface ISignalListener<T extends SignalEvent> extends EventListener {
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JMenuItem;
+
+import engine.core.option.AbstractOption;
+
+public abstract class OptionItem extends AbstractOption{
+
+	protected OptionItem(JComponent component, JComponent parent) {
+		super(component, parent);
+	}	
 	
-	/**
-	 * This method is invoked when a particular signal is received. This
-	 * signal is in the form of a particular SignalEvent
-	 * 
-	 * @param event The event container
-	 */
-	public void signalReceived(T event);
+	@Override protected final void onInitialize() {
+		super.get(JMenuItem.class).addActionListener(new AbstractAction(super.toString()) {
+			@Override public void actionPerformed(ActionEvent actionEvent) {
+				onExecute(actionEvent);
+			}
+		});
+	}
+	
+	
 }

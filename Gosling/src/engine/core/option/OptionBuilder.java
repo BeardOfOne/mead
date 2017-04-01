@@ -22,13 +22,13 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.internal.menu;
+package engine.core.option;
 
 import java.util.Vector;
 
 import javax.swing.JComponent;
 
-public final class ComponentBuilder {
+public final class OptionBuilder {
 
     /**
      * The host of this builder
@@ -45,7 +45,7 @@ public final class ComponentBuilder {
 	 */
 	private Vector<JComponent> _components = new Vector<>();
 	
-	private ComponentBuilder(JComponent host) {
+	private OptionBuilder(JComponent host) {
 	    _host = host;
 	}
 	
@@ -56,8 +56,8 @@ public final class ComponentBuilder {
 	 * 
 	 * @return A reference to this builder
 	 */
-	public static ComponentBuilder start(JComponent host) {
-		return new ComponentBuilder(host);
+	public static OptionBuilder start(JComponent host) {
+		return new OptionBuilder(host);
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public final class ComponentBuilder {
      * 
      * @return A reference to this builder
 	 */
-	public static ComponentBuilder start(ComponentBuilder host) {
+	public static OptionBuilder start(OptionBuilder host) {
 	    return start(host._root);
 	}
 	
@@ -78,7 +78,7 @@ public final class ComponentBuilder {
 	 * 
 	 * @return A reference to this builder
 	 */
-	public ComponentBuilder root(JComponent root) {
+	public OptionBuilder root(JComponent root) {
 	    _root = root;
 	    return this;
 	}
@@ -90,7 +90,7 @@ public final class ComponentBuilder {
 	 * 
 	 * @return A reference to this builder
 	 */
-	public final <T extends BaseComponent> ComponentBuilder AddItem(Class<T> component) {
+	public final <T extends AbstractOption> OptionBuilder AddItem(Class<T> component) {
 		try {
 		    T baseComponent = component.getConstructor(JComponent.class).newInstance(_root == null ? _host : _root);
 		    if(_components.isEmpty() && _root == null) {
@@ -107,7 +107,7 @@ public final class ComponentBuilder {
 		return this;
 	}
 	
-	public final <T extends BaseComponent> ComponentBuilder AddSeparator() {
+	public final <T extends AbstractOption> OptionBuilder AddSeparator() {
 		if(_root != null) {
 			T component = (T) _root.getClientProperty(_root);
 			component.addSeperator();			
@@ -117,7 +117,7 @@ public final class ComponentBuilder {
 	}
 
 		
-    public ComponentBuilder AddItem(ComponentBuilder builder) {
+    public OptionBuilder AddItem(OptionBuilder builder) {
         builder._root = _root;
         _components.addAll(builder._components);
         
