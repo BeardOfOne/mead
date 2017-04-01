@@ -35,6 +35,7 @@ import engine.communication.internal.dispatcher.Dispatcher;
 import engine.communication.internal.dispatcher.IDispatcher;
 import engine.communication.internal.signal.ISignalReceiver;
 
+//--------------------------------------------------------------
 /**
  * This abstract factory manages the creation and reference requests of all factories. 
  * 
@@ -46,6 +47,7 @@ import engine.communication.internal.signal.ISignalReceiver;
  * @param <T> The type of factory
  * 
  */
+//--------------------------------------------------------------
 public abstract class AbstractFactory<T extends ISignalReceiver> implements IDispatcher<T>, IDestructor {
 	
 	/**
@@ -172,13 +174,13 @@ public abstract class AbstractFactory<T extends ISignalReceiver> implements IDis
 	 * @return The concrete class of the specified type
 	 */
 	//--------------------------------------------------------------
-	public final T get(Class<T> resourceClass) {
+	public final <U extends T> U get(Class<U> resourceClass) {
 		
 		// Go through all the resources and try to find
 		// the concrete class with the same resource class 
 		for(T resource : _resources) {
 			if(resource.getClass() == resourceClass) {
-				return resource;
+				return (U)resource;
 			}
 		}
 		
@@ -199,18 +201,17 @@ public abstract class AbstractFactory<T extends ISignalReceiver> implements IDis
 	 * @return The created or already created resource
 	 */
 	//--------------------------------------------------------------
-	public final T get(Class<T> resourceClass, boolean isShared, Object... resourceParameters) {
+	public final <U extends T> U get(Class<U> resourceClass, boolean isShared, Object... resourceParameters) {
 		
 		// If the shared flag is set then make sure it doesn't 
 		// already exist before creating it
 		if(isShared) {
 
 			// Try to get the resource to see if it already exists
-			T resource = get(resourceClass);
+			U resource = get(resourceClass);
 			if(resource != null) {
 				return resource;
 			}
-			
 		}
 
 		// Construct the list of arguments that were provided
@@ -221,7 +222,7 @@ public abstract class AbstractFactory<T extends ISignalReceiver> implements IDis
 		}
 		
 		// Create a fresh instance of the class specified
-		T createdClass = null;
+		U createdClass = null;
 		
 		try {
 			
