@@ -134,18 +134,18 @@ public abstract class AbstractFactory<T extends ISignalReceiver> implements IDis
 	 * 
 	 */
 	//--------------------------------------------------------------
-	private final void add(T resource, boolean isShared) {
+	private final <U extends T> void add(U resource, boolean isShared) {
 		
 		// Get the list of classes based on the type of controller 
 		// that is being added
-	    List<T> resources = _history.get(resource.getClass());
+	    List resources = _history.get(resource.getClass());
 	    
 	    // If there is no entry then create a new entry and add to it
 	    if(resources == null) {
 	    	
-	    	// Create a new list and populate it with
-	    	// the specified resource
-	        resources = Arrays.asList(resource);
+	    	// Create a new list and populate it with the specified resource
+	        resources = new ArrayList<>();
+	        resources.add(resource);
 	        
 	        // Add the new entry into the history structure
 	        // for future reference
