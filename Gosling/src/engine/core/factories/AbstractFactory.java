@@ -25,15 +25,13 @@
 package engine.core.factories;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import engine.api.IDestructor;
-import engine.communication.internal.dispatcher.Dispatcher;
-import engine.communication.internal.dispatcher.IDispatcher;
-import engine.communication.internal.signal.ISignalReceiver;
+import engine.communication.internal.signal.ISignalListener;
+import engine.communication.internal.signal.types.SignalEvent;
 
 //--------------------------------------------------------------
 /**
@@ -48,7 +46,7 @@ import engine.communication.internal.signal.ISignalReceiver;
  * 
  */
 //--------------------------------------------------------------
-public abstract class AbstractFactory<T extends ISignalReceiver> implements IDispatcher<T>, IDestructor {
+public abstract class AbstractFactory<T extends ISignalListener> implements IDestructor {
 	
 	/**
 	 * The list of factories that have been constructed and that are still active 
@@ -65,11 +63,6 @@ public abstract class AbstractFactory<T extends ISignalReceiver> implements IDis
 	 */
 	private final List<T> _resources = new ArrayList<>();
 	
-	/**
-	 * A dispatcher used for broadcasting message to resources within this factory
-	 */
-	protected final Dispatcher<T> _dispatcher = new Dispatcher<T>();
-
 	//--------------------------------------------------------------
 	/**
 	 * Checks if the factory is running 
@@ -201,7 +194,7 @@ public abstract class AbstractFactory<T extends ISignalReceiver> implements IDis
 	 * @return The created or already created resource
 	 */
 	//--------------------------------------------------------------
-	public final <U extends T> U get(Class<U> resourceClass, boolean isShared, Object... resourceParameters) {
+	public <U extends T> U get(Class<U> resourceClass, boolean isShared, Object... resourceParameters) {
 		
 		// If the shared flag is set then make sure it doesn't 
 		// already exist before creating it
@@ -242,6 +235,38 @@ public abstract class AbstractFactory<T extends ISignalReceiver> implements IDis
 		}
 			
 		return createdClass;
+	}
+	
+	public final <U extends T, V extends SignalEvent> void multicastSignal(Class<U> classType, V event) {
+		// TODO - Optim can be done here to fully parallelize this call
+		for(T resource : _history.get(classType)) {
+			// Send out a unicast signal to every resource, although 
+			// horribly inefficient the way it is being done right now
+			resource.unicastSignalListener(event);
+		}
+	}
+	
+	/**
+	 * Gets the total count of resources from the factory
+	 * 
+	 * Note: This goes through the history list therefore this will
+	 * include everything that was ever created, minus whatever resources
+	 * have been destroyed (nullified)
+	 *  
+	 * @return The total number of current resources within the
+	 *         history structure
+	 */
+	protected final int getTotalResourcesCount() {
+		
+		int count = 0;
+		
+		// For every list within the history structure
+		// get the total number of entries
+		for(List list : _history.values()) {
+			count += list.size();
+		}
+		
+		return count;
 	}
 		
 	@Override public void flush() {

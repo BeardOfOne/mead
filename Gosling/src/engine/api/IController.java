@@ -24,11 +24,20 @@
 
 package engine.api;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
 
-public interface IController extends IDestructor, ISignalReceiver {
+public interface IController extends IDestructor, ISignalListener {
 	
 	public final class ControllerProperties implements IDestructor {
+		
+		/**
+		 * The mapping of signal names to signal implementations
+		 */
+		private final Map<String, ISignalReceiver> _signalListeners = new HashMap<>();
 		
 		private IView _view;
 		
@@ -53,9 +62,17 @@ public interface IController extends IDestructor, ISignalReceiver {
 		}
 
 		@Override public void flush() {
-			
+		
+		}
+		
+		public Map<String, ISignalReceiver> getSignalListeners() {
+			return _signalListeners;
 		}
 	}
 	
+	@Override default Map<String, ISignalReceiver> getSignalListeners() {
+		return getControllerProperties().getSignalListeners();
+	}
+
 	public ControllerProperties getControllerProperties();
 }

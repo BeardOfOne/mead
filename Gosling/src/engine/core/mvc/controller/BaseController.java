@@ -29,29 +29,22 @@ import java.util.Map;
 
 import engine.api.IController;
 import engine.api.IView;
-import engine.communication.internal.signal.ISignalListener;
+import engine.communication.internal.signal.ISignalReceiver;
 
 public abstract class BaseController implements IController  {
 
-	private final Map<String, ISignalListener> SignalListenerMap = new HashMap<>();
-	
 	private final ControllerProperties _properties = new ControllerProperties();
 
 	public <T extends IView> BaseController(T view) {
 		_properties.setView(view);
-		registerListeners();
 	}
 	
 	protected final IView getView() {
 		return _properties.getView();
 	}
 	
-	@Override final public Map<String, ISignalListener> getSignalListeners() {
-		return SignalListenerMap;
-	}
-	
 	@Override public void dispose() {
-		unregisterListeners();
+		unregisterSignalListeners();
 		_properties.dispose();
 	}
 	
@@ -60,7 +53,7 @@ public abstract class BaseController implements IController  {
 	}
 
 	@Override public void flush() {
-		unregisterListeners();
+		unregisterSignalListeners();
 		_properties.flush();
 	}	
 }

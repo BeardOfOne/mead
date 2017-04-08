@@ -24,11 +24,11 @@
 
 package engine.core.mvc.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
 import engine.api.IModel;
+import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
 import engine.communication.internal.signal.types.ModelEvent;
 import engine.communication.internal.signal.types.SignalEvent;
@@ -36,8 +36,14 @@ import engine.communication.internal.signal.types.SignalEvent;
 /**
  * A Game Model represents the base class of all model type objects
  */
-public abstract class BaseModel implements IModel, Serializable
+public abstract class BaseModel implements IModel
 {
+	public static final String Event_Register = "Event_Register";
+	
+	public static final String Event_Unregister = "Event_Unregister";
+	
+	private final ModelProperties _modelProperties = new ModelProperties();
+	
 	/**
 	 * Identifier for this model
 	 */
@@ -46,7 +52,7 @@ public abstract class BaseModel implements IModel, Serializable
 	/**
 	 * The list of receivers that can receive a message from the GameModel
 	 */
-	private final ArrayList<ISignalReceiver> _receivers = new ArrayList<>();
+	private final ArrayList<ISignalListener> _receivers = new ArrayList<>();
 
 	/**
 	 * The name of the operation to be performed
@@ -63,19 +69,24 @@ public abstract class BaseModel implements IModel, Serializable
 	 * 
 	 * @param receivers The list of receivers
 	 */
-	protected BaseModel(ISignalReceiver... receivers) {
-		for(ISignalReceiver receiver : receivers) {
-			addReceiver(receiver);
-		}
+	protected BaseModel(ISignalListener... receivers) {
+		
+		registerSignalListeners();
+		
+		for(ISignalListener receiver : receivers) {
+			addListener(receiver);
+		}		
 	}
 		
-	public final void addReceiver(ISignalReceiver receiver) {
-		if(!(receiver == null || _receivers.contains(receiver))) {
-			_receivers.add(receiver);
+	public final void addListener(ISignalListener... receivers) {
+		for(ISignalListener receiver : receivers) {
+			if(!(receiver == null || _receivers.contains(receiver))) {
+				_receivers.add(receiver);
+			}			
 		}
 	}
 
-	public final void removeReciever(ISignalReceiver receiver) {
+	public final void removeListener(ISignalListener receiver) {
 		_receivers.remove(receiver);
 	}
 
@@ -83,8 +94,8 @@ public abstract class BaseModel implements IModel, Serializable
 		
 		_operationEvent = new ModelEvent(this, _operationName);
 		
-		for(ISignalReceiver receiver : _receivers) {
-			receiver.sendSignal(_operationEvent);
+		for(ISignalListener receiver : _receivers) {
+			receiver.unicastSignalListener(_operationEvent);
 		}		
 		
 		_operationName = null;
@@ -101,6 +112,25 @@ public abstract class BaseModel implements IModel, Serializable
 	
 	public final String getIdentifier() {
 		return _identifier.toString();
+	}
+	
+	@Override public void registerSignalListeners() {
+		registerSignalListener(Event_Register, new ISignalReceiver<SignalEvent>() {
+			@Override public void signalReceived(SignalEvent event) {
+				ISignalListener listener = (ISignalListener) event.getSource();
+				addListener(listener);
+			}
+		});
+		registerSignalListener(Event_Unregister, new ISignalReceiver<SignalEvent>() {
+			@Override public void signalReceived(SignalEvent event) {
+				ISignalListener listener = (ISignalListener) event.getSource();
+				removeListener(listener);
+			}
+		});
+	}
+	
+	@Override public final ModelProperties getModelProperties() {
+		return _modelProperties;
 	}
 	
 	@Override public void dispose() {

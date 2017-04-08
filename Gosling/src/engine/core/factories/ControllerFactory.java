@@ -34,10 +34,6 @@ import engine.api.IController;
  */
 public final class ControllerFactory extends AbstractFactory<IController> {
 	
-	@Override public <U extends IController> void BroadcastMessage(Object sender, String operationName, Class<U> type, Object... args) {
-		_dispatcher.add(null);
-	}
-
 	@Override public boolean isRunning() {
 		return false;
 	}

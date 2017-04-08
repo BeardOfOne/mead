@@ -24,5 +24,42 @@
 
 package engine.api;
 
-public interface IModel extends IDestructor {
+import java.util.HashMap;
+import java.util.Map;
+
+import engine.communication.internal.signal.ISignalReceiver;
+import engine.communication.internal.signal.ISignalListener;
+import engine.communication.internal.signal.types.SignalEvent;
+
+public interface IModel extends IDestructor, ISignalListener {
+	
+	public final class ModelProperties implements IDestructor {
+				
+		/**
+		 * The mapping of signal names to signal implementations
+		 */
+		private final Map<String, ISignalReceiver> _signalListeners = new HashMap<>();
+		
+		/**
+		 * Gets the list of signal listeners associated to the view
+		 * 
+		 * @return The list of signal listeners 
+		 */
+		public Map<String, ISignalReceiver> getSignalListeners() {
+			return _signalListeners;
+		}
+		
+		@Override public void dispose() {
+		}
+
+		@Override public void flush() {
+			_signalListeners.clear();
+		}	
+	}
+	
+	public ModelProperties getModelProperties();
+	
+	@Override default Map<String, ISignalReceiver> getSignalListeners() {
+		return getModelProperties().getSignalListeners();
+	}
 }

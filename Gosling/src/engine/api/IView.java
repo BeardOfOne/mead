@@ -25,18 +25,20 @@
 package engine.api;
 
 import java.awt.Container;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
+import engine.communication.internal.signal.ISignalListener;
 
 /**
  * This contract specifies how views should operate within the framework. 
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
  */
-public interface IView extends IDestructor, ISignalReceiver {
+public interface IView extends IDestructor, ISignalListener {
 	
 	/**
 	 * The view properties that each IView will have
@@ -44,7 +46,7 @@ public interface IView extends IDestructor, ISignalReceiver {
 	 * @author Daniel Ricci <thedanny09@gmail.com>
 	 */
 	public final class ViewProperties implements IDestructor {
-		
+				
 		/**
 		 * The controller that is associated to the view
 		 */
@@ -60,7 +62,56 @@ public interface IView extends IDestructor, ISignalReceiver {
 		/**
 		 * The mapping of signal names to signal implementations
 		 */
-		private final Map<String, ISignalListener> _signalListeners = new HashMap<>();
+		private final Map<String, ISignalReceiver> _signalListeners = new HashMap<>();
+		
+		/**
+		 * Constructs a new view properties object in charge of holding
+		 * information about the view such as the controller
+		 * 
+		 * @param view A reference to the container class implementing
+		 * the view.
+		 * 
+		 * Note: The parameter exists because from an interface there is no way
+		 * to get a reference to the outer class using Outer.this.methodName
+		 */
+		public ViewProperties(IView view) {
+			
+			// The view is set to false because by default most container classes
+			// are already visible when they are created and because of this no event
+			// will ever be sent out that a JPanel or some other container is being shown
+			//
+			// Note: The render at this point in time is now in charge is setting a container
+			// class to visible, but the implementor must call super
+			// 
+			// Note: Do not touch this line of code, ever.
+			view.getContainerClass().setVisible(false);
+			
+			view.getContainerClass().addComponentListener(new ComponentAdapter() {
+		        @Override public void componentHidden(ComponentEvent args) {
+		        	// Some views don't have controllers, so this would not apply
+		        	// in this case
+		        	if(_controller == null) {
+		        		System.out.println("Cannot invoke controller for hidden component " + args.getSource().getClass().getCanonicalName());
+		        		return;
+		        	}
+		        	_controller.unregisterSignalListeners();
+		        	System.out.println("HIDDEN: " + args.getSource().getClass().getCanonicalName());
+		        }
+		        
+		        @Override public void componentShown(ComponentEvent args) {
+		        	// Some views don't have controllers, so this would not apply
+		        	// in this case
+		        	if(_controller == null) {
+		        		System.out.println("Cannot invoke controller for shown component " + args.getSource().getClass().getCanonicalName());
+		        		return;
+		        	}
+		        	
+		           	_controller.registerSignalListeners();
+		        	System.out.println("SHOWN: " + args.getSource().getClass().getCanonicalName());
+		        }
+		        
+		    });
+		}
 		
 		/**
 		 * Sets the controller of the view property
@@ -105,13 +156,13 @@ public interface IView extends IDestructor, ISignalReceiver {
 		public final boolean hasRendered() {
 			return _hasRendered;
 		}
-
+		
 		/**
 		 * Gets the list of signal listeners associated to the view
 		 * 
 		 * @return The list of signal listeners 
 		 */
-		public Map<String, ISignalListener> getSignalListeners() {
+		public Map<String, ISignalReceiver> getSignalListeners() {
 			return _signalListeners;
 		}
 		
@@ -126,7 +177,32 @@ public interface IView extends IDestructor, ISignalReceiver {
 		}		
 	}
 		
-	@Override default Map<String, ISignalListener> getSignalListeners() {
+	/**
+	 * Gets a reference to the view properties associated to the view
+	 * 
+	 * @return the view properties associated to the view
+	 */
+	public ViewProperties getViewProperties();	
+	
+	/**
+	 * Defines how components in the view are initialized
+	 * 
+	 * Note: This is automatically called by the corresponding 
+	 *       factory. This method will be called after the 
+	 *       constructor is done executing
+	 * 
+	 * Note: This method should include both initialization where
+	 *       necessary and most importantly is the best place to put 
+	 *       listener specific code based on UI components
+	 * 
+	 * Note: This is not the place where you should deal with
+	 *       signals from the SignalListener interface and such, 
+	 *       this is really specific to the UI itself and its 
+	 *       JComponent/Container hierarchies 
+	 */
+	public void initializeComponents();
+	
+	@Override default Map<String, ISignalReceiver> getSignalListeners() {
 		return getViewProperties().getSignalListeners();
 	}
 	
@@ -154,17 +230,14 @@ public interface IView extends IDestructor, ISignalReceiver {
 	}
 	
 	/**
-	 * Renders the view. This should be only called once, and you should register to the update method
+	 * Renders the view. This should be only called once.
+	 * 
+	 * Note: You should register to the update method
 	 * to receive subsequent messages thereafter
 	 */
 	default public void render() {
 		getViewProperties().flagAsRendered();
+		getContainerClass().setVisible(true);
 	}
-	
-	/**
-	 * Gets a reference to the view properties associated to the view
-	 * 
-	 * @return the view properties associated to the view
-	 */
-	public ViewProperties getViewProperties();	
+
 }

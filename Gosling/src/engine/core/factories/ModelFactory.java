@@ -22,8 +22,13 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.internal.dispatcher;
+package engine.core.factories;
 
-public interface IDispatcher<T> {
-	public <U extends T> void BroadcastMessage(Object sender, String operationName, Class<U> type, Object... args);
+import engine.api.IModel;
+
+public final class ModelFactory extends AbstractFactory<IModel> {
+	
+	@Override public boolean isRunning() {
+		return false;
+	}
 }

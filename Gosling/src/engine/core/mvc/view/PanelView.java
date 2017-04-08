@@ -26,29 +26,23 @@ package engine.core.mvc.view;
 
 import javax.swing.JPanel;
 
+import engine.api.IController;
 import engine.api.IView;
 
 public abstract class PanelView extends JPanel implements IView {
 	
-	private final ViewProperties _properties = new ViewProperties();
-
-	public PanelView() {
-		registerListeners();
-	}
+	private final ViewProperties _properties = new ViewProperties(this);
 	
 	@Override public ViewProperties getViewProperties() {
 		return _properties;
-	}
-	
-	@Override public void dispose() {
-		_properties.dispose();
-		IView.super.dispose();
 	}
 	
 	@Override public void render() {
 		IView.super.render();
 	}
 	
-	@Override public void registerListeners() {
+	@Override public void dispose() {
+		_properties.dispose();
+		IView.super.dispose();
 	}
 }

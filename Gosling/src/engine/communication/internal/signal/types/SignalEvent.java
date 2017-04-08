@@ -26,7 +26,7 @@ package engine.communication.internal.signal.types;
 
 import java.util.EventObject;
 
-import engine.communication.internal.signal.ISignalListener;
+import engine.communication.internal.signal.ISignalReceiver;
 
 /**
  * The top-level class to form messages when invoking a signal
@@ -38,7 +38,7 @@ public class SignalEvent<T extends Object> extends EventObject {
 	
 	/**
 	 * The name of the operation which is used to identify
-	 * which {@link ISignalListener } to invoke
+	 * which {@link ISignalReceiver } to invoke
 	 */
 	private String _operationName;
 	

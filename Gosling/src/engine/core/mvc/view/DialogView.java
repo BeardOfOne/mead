@@ -28,15 +28,15 @@ import java.awt.Window;
 
 import javax.swing.JDialog;
 
+import engine.api.IController;
 import engine.api.IView;
 
 public abstract class DialogView extends JDialog implements IView {
 	
-	private final ViewProperties _properties = new ViewProperties();
+	private final ViewProperties _properties = new ViewProperties(this);
 	
-	public DialogView(Window parent, String title) {
+	public <T extends IController> DialogView(Window parent, String title) {
 		super(parent, title);
-		registerListeners();
 	}
 	
 	public DialogView(Window parent, String title, int width, int height) {
@@ -49,7 +49,7 @@ public abstract class DialogView extends JDialog implements IView {
 	}	
 	
 	@Override public void dispose() {
-		IView.super.dispose();
 		_properties.dispose();	
+		IView.super.dispose();
 	}
 }
