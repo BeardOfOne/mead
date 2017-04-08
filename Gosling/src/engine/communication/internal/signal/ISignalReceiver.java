@@ -28,14 +28,6 @@ import java.util.EventListener;
 
 import engine.communication.internal.signal.types.SignalEvent;
 
-/**
- * An interface for tagging event implementations as being capable of being 
- * signaled
- * 
- * @author Daniel Ricci <thedanny09@gmail.com>
- *
- * @param <T> The SignalEvent type expected
- */
 public interface ISignalReceiver<T extends SignalEvent> extends EventListener {
 	
 	/**

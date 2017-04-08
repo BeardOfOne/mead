@@ -24,12 +24,8 @@
 
 package engine.core.mvc.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import engine.api.IController;
 import engine.api.IView;
-import engine.communication.internal.signal.ISignalReceiver;
 
 public abstract class BaseController implements IController  {
 

@@ -30,8 +30,8 @@ import java.awt.event.ComponentEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-import engine.communication.internal.signal.ISignalReceiver;
 import engine.communication.internal.signal.ISignalListener;
+import engine.communication.internal.signal.ISignalReceiver;
 
 /**
  * This contract specifies how views should operate within the framework. 
@@ -86,28 +86,41 @@ public interface IView extends IDestructor, ISignalListener {
 			// Note: Do not touch this line of code, ever.
 			view.getContainerClass().setVisible(false);
 			
+			// Register the view to listen in on the event when it becomes hidden/shown, this
+			// is done so that registration can happen on signals
+			//
+			// Note: This needs to be done after setting the container's visibility to false
+			// or there will be a false positive for the hidden event
 			view.getContainerClass().addComponentListener(new ComponentAdapter() {
+				
+		        // This event is fired when  a view is shown, that is when
+		        // the visibility is set to false
 		        @Override public void componentHidden(ComponentEvent args) {
-		        	// Some views don't have controllers, so this would not apply
-		        	// in this case
+
+		        	// Note: Some views don't have controllers
 		        	if(_controller == null) {
-		        		System.out.println("Cannot invoke controller for hidden component " + args.getSource().getClass().getCanonicalName());
-		        		return;
-		        	}
-		        	_controller.unregisterSignalListeners();
-		        	System.out.println("HIDDEN: " + args.getSource().getClass().getCanonicalName());
-		        }
-		        
-		        @Override public void componentShown(ComponentEvent args) {
-		        	// Some views don't have controllers, so this would not apply
-		        	// in this case
-		        	if(_controller == null) {
-		        		System.out.println("Cannot invoke controller for shown component " + args.getSource().getClass().getCanonicalName());
+		        		System.out.println("Warning: Cannot invoke controller for hidden component " + args.getSource().getClass().getCanonicalName());
 		        		return;
 		        	}
 		        	
+		        	// Unregister all signals being listening by this view's controller
+		        	_controller.unregisterSignalListeners();
+		        	System.out.println(String.format("Component %s is being hidden", args.getSource().getClass().getCanonicalName()));
+		        }
+		        
+		        // This event is fired when  a view is shown, that is when
+		        // the visibility is set to true
+		        @Override public void componentShown(ComponentEvent args) {
+		        	
+		        	// Note: Some views don't have controllers
+		        	if(_controller == null) {
+		        		System.out.println("Warning: Cannot invoke controller for shown component " + args.getSource().getClass().getCanonicalName());
+		        		return;
+		        	}
+		        	
+		        	// Register all signals being listening by this view's controller
 		           	_controller.registerSignalListeners();
-		        	System.out.println("SHOWN: " + args.getSource().getClass().getCanonicalName());
+		        	System.out.println(String.format("Component %s is being shown", args.getSource().getClass().getCanonicalName()));
 		        }
 		        
 		    });
@@ -207,9 +220,11 @@ public interface IView extends IDestructor, ISignalListener {
 	}
 	
 	@Override default void dispose() {
+		// TODO
 	}
 	
 	@Override default void flush() {
+		// TODO
 	}
 	
 	/**

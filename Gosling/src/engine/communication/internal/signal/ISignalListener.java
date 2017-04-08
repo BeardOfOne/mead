@@ -55,7 +55,7 @@ public interface ISignalListener {
 			if(operationName != null && !operationName.trim().isEmpty()) {
 				for(Map.Entry<String, ISignalReceiver> kvp : operations.entrySet()) {
 					if(kvp.getKey().equalsIgnoreCase(operationName)) {
-						System.out.println(String.format("%s <--- %s ---> %s",
+						System.out.println(String.format("%s sends event %s to %s",
 							signalEvent.getSource().getClass().getCanonicalName(),
 							operationName,
 							kvp.getValue().getClass().getCanonicalName()
@@ -82,6 +82,7 @@ public interface ISignalListener {
 		Map<String, ISignalReceiver> listeners = getSignalListeners();
 		if(listeners != null) {
 			if(!listeners.containsKey(signalName)) {
+				System.out.println(String.format("Signal Registration: %s is now listening on signal %s", this.getClass().getCanonicalName(), signalName));
 				listeners.put(signalName, listener);
 			}
 		}

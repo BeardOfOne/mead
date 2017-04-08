@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.utils;
+package engine.utils.globalisation;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -36,7 +36,7 @@ import engine.api.IDestructor;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public abstract class Localization<T extends Enum<T>> implements IDestructor {
+public abstract class Localisation<T extends Enum<T>> implements IDestructor {
 	
 	/**
 	 * 

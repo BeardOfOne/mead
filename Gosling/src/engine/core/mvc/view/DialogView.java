@@ -33,14 +33,33 @@ import engine.api.IView;
 
 public abstract class DialogView extends JDialog implements IView {
 	
+	/**
+	 * The view properties of this view
+	 */
 	private final ViewProperties _properties = new ViewProperties(this);
 	
+	/**
+	 * Constructs a new instance of this class
+	 * 
+	 * @param parent The parent of this dialog
+	 * @param title The title for this dialog
+	 */
 	public <T extends IController> DialogView(Window parent, String title) {
 		super(parent, title);
 	}
 	
+	/**
+	 * Constructs a new instance of this class
+	 * 
+	 * @param parent The parent of this dialog
+	 * @param title The title for this dialog
+	 * @param width The initial width of this dialog
+	 * @param height The initial height of this dialog
+	 */
 	public DialogView(Window parent, String title, int width, int height) {
 		this(parent, title);
+		
+		// Set the size of this dialog
 		setSize(width, height);
 	}
 		

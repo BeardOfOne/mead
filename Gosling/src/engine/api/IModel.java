@@ -27,9 +27,8 @@ package engine.api;
 import java.util.HashMap;
 import java.util.Map;
 
-import engine.communication.internal.signal.ISignalReceiver;
 import engine.communication.internal.signal.ISignalListener;
-import engine.communication.internal.signal.types.SignalEvent;
+import engine.communication.internal.signal.ISignalReceiver;
 
 public interface IModel extends IDestructor, ISignalListener {
 	
@@ -56,7 +55,7 @@ public interface IModel extends IDestructor, ISignalListener {
 			_signalListeners.clear();
 		}	
 	}
-	
+		
 	public ModelProperties getModelProperties();
 	
 	@Override default Map<String, ISignalReceiver> getSignalListeners() {

@@ -26,19 +26,23 @@ package engine.core.mvc.view;
 
 import javax.swing.JPanel;
 
-import engine.api.IController;
 import engine.api.IView;
 
+/**
+ * This class represents a custom panel class that ties into the gosling MVC design pattern
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ */
 public abstract class PanelView extends JPanel implements IView {
 	
+	/**
+	 * The view properties of this view
+	 */
 	private final ViewProperties _properties = new ViewProperties(this);
-	
-	@Override public ViewProperties getViewProperties() {
+		
+	@Override public final ViewProperties getViewProperties() {
 		return _properties;
-	}
-	
-	@Override public void render() {
-		IView.super.render();
 	}
 	
 	@Override public void dispose() {
