@@ -141,7 +141,7 @@ public abstract class BaseModel implements IModel
 	@Override public boolean equals(Object obj) {
 		if(obj instanceof BaseModel) {
 			BaseModel model = (BaseModel) obj;
-			return model.getIdentifier().equals(model.getIdentifier());
+			return model.getIdentifier().equals(this.getIdentifier());
 		}
 		
 		return false;
