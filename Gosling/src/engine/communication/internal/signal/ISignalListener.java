@@ -58,7 +58,7 @@ public interface ISignalListener {
 						System.out.println(String.format("%s sends event %s to %s",
 							signalEvent.getSource().getClass().getCanonicalName(),
 							operationName,
-							kvp.getValue().getClass().getCanonicalName()
+							kvp.getValue().getClass().getName()
 						));						
 						kvp.getValue().signalReceived(signalEvent);
 						break;
