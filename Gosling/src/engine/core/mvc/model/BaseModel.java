@@ -138,10 +138,10 @@ public abstract class BaseModel implements IModel
 		_receivers.clear();
 	}
 	
-	@Override public final boolean equals(Object obj) {
+	@Override public boolean equals(Object obj) {
 		if(obj instanceof BaseModel) {
 			BaseModel model = (BaseModel) obj;
-			return model.getIdentifier() == model.getIdentifier();
+			return model.getIdentifier().equals(model.getIdentifier());
 		}
 		
 		return false;
