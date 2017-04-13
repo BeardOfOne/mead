@@ -28,7 +28,4 @@ import engine.api.IModel;
 
 public final class ModelFactory extends AbstractFactory<IModel> {
 	
-	@Override public boolean isRunning() {
-		return false;
-	}
 }

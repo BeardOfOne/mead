@@ -29,12 +29,14 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.JFrame;
 
+import engine.api.IDestructor;
+
 /**
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public abstract class Application extends JFrame {
+public abstract class Application extends JFrame implements IDestructor {
 
 	/**
 	 * 

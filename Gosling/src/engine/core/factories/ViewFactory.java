@@ -53,8 +53,4 @@ public final class ViewFactory extends AbstractFactory<IView> {
 		// Return the referenced resource
 		return view;
 	}
-	
-	@Override public boolean isRunning() {
-		return true;
-	}
 }

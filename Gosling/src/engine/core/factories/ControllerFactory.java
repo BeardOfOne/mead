@@ -34,7 +34,4 @@ import engine.api.IController;
  */
 public final class ControllerFactory extends AbstractFactory<IController> {
 	
-	@Override public boolean isRunning() {
-		return false;
-	}
 }

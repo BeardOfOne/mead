@@ -26,6 +26,7 @@ package engine.core.factories;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +64,12 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 	 */
 	private final List<T> _resources = new ArrayList<>();
 	
+	public static final void reset() {
+		for(AbstractFactory factory : FACTORIES) {
+			factory.flush();
+		}
+	}
+	
 	//--------------------------------------------------------------
 	/**
 	 * Checks if the factory is running 
@@ -70,7 +77,10 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 	 * @return Flag indicating if the factory is running
 	 */
 	//--------------------------------------------------------------
-	public abstract boolean isRunning();
+	public static boolean isRunning()
+	{
+		return FACTORIES.size() > 0;
+	}
 	
 	//--------------------------------------------------------------
 	/**
@@ -238,11 +248,13 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 	}
 	
 	public final <U extends T, V extends SignalEvent> void multicastSignal(Class<U> classType, V event) {
-		// TODO - Optim can be done here to fully parallelize this call
-		for(T resource : _history.get(classType)) {
-			// Send out a unicast signal to every resource, although 
-			// horribly inefficient the way it is being done right now
-			resource.unicastSignalListener(event);
+		List<T> resources = _history.get(classType);
+		if(resources != null) {
+			for(T resource : _history.get(classType)) {
+				// Send out a unicast signal to every resource, although 
+				// horribly inefficient the way it is being done right now
+				resource.unicastSignalListener(event);
+			}			
 		}
 	}
 	
@@ -271,9 +283,7 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 		
 	@Override public void flush() {
 		_resources.clear();
-		_history.clear();
-		
-		FACTORIES.remove(this);
+		_history.clear();	
 	}
 	
 	@Override public void dispose() {
