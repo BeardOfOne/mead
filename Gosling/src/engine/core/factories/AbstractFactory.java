@@ -26,7 +26,6 @@ package engine.core.factories;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -228,12 +227,9 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 		U createdClass = null;
 		
 		try {
-			
 			// Attempt to create the class by getting the constructor with the 
 			// same number of arguments as the list of resourceParameters passed in
-		    createdClass = resourceClass
-		    		.getConstructor(argsClass)
-		    		.newInstance(resourceParameters);
+		    createdClass = resourceClass.getConstructor(argsClass).newInstance(resourceParameters);
 		    
 		    // Add the newly created resource into the list of 
 		    // created resources so that it can be referenced 
@@ -250,7 +246,8 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 	public final <U extends T, V extends SignalEvent> void multicastSignal(Class<U> classType, V event) {
 		List<T> resources = _history.get(classType);
 		if(resources != null) {
-			for(T resource : _history.get(classType)) {
+			for(T resource : resources) {
+				// TODO - parallelize this!
 				// Send out a unicast signal to every resource, although 
 				// horribly inefficient the way it is being done right now
 				resource.unicastSignalListener(event);

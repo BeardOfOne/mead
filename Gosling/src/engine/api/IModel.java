@@ -27,11 +27,24 @@ package engine.api;
 import java.util.HashMap;
 import java.util.Map;
 
+import engine.communication.internal.persistance.IPersistant;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
 
-public interface IModel extends IDestructor, ISignalListener {
+/**
+ * This interface describes the general contract rules of all model type implementors 
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ */
+public interface IModel extends IDestructor, ISignalListener, IPersistant {
 	
+	/**
+	 * This is the model properties class representation of a particular model
+	 * 
+	 * @author Daniel Ricci <thedanny09@gmail.com>
+	 *
+	 */
 	public final class ModelProperties implements IDestructor {
 				
 		/**
@@ -49,13 +62,19 @@ public interface IModel extends IDestructor, ISignalListener {
 		}
 		
 		@Override public void dispose() {
+			_signalListeners.clear();
 		}
 
 		@Override public void flush() {
 			_signalListeners.clear();
 		}	
 	}
-		
+	
+	/**
+	 * Gets the model properties of the implementor of this interface
+	 * 
+	 * @return The model properties of the implementor
+	 */
 	public ModelProperties getModelProperties();
 	
 	@Override default Map<String, ISignalReceiver> getSignalListeners() {

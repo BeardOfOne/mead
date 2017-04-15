@@ -36,6 +36,17 @@ import engine.communication.internal.signal.types.SignalEvent;
  *
  */
 public interface ISignalListener {
+	
+	/**
+	 * Event string for registering to this model
+	 */
+	public static final String EVENT_REGISTER = "EVENT_REGISTER";
+	
+	/**
+	 * Event string for unregistering from this model
+	 */
+	public static final String EVENT_UNREGISTER = "EVENT_UNREGISTER";
+	
 	/**
 	 * Sends a signal with a specified signal event to the internally defined listener
 	 * 
