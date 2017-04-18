@@ -24,7 +24,7 @@
 
 package engine.communication.internal.signal.types;
 
-import engine.api.IDataPipeline;
+import engine.communication.internal.signal.IDataPipeline;
 
 /**
  * Events specific from an IController source

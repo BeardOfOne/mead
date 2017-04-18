@@ -27,9 +27,9 @@ package engine.core.mvc.model;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import engine.api.IDataPipeline;
 import engine.api.IModel;
 import engine.communication.internal.persistance.ISerializable;
+import engine.communication.internal.signal.IDataPipeline;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
 import engine.communication.internal.signal.types.ModelEvent;
@@ -165,7 +165,7 @@ public abstract class BaseModel implements IModel
 		registerSignalListener(ISerializable.EVENT_SERIALIZE, new ISignalReceiver<PipelinedEvent<IDataPipeline>>() {
 			@Override public void signalReceived(PipelinedEvent<IDataPipeline> event) {
 				String data = serialize();
-				event.getSource().pipeData(getClass(), data);
+				event.getSource().pipeData(data);
 			}
 		});
 	}

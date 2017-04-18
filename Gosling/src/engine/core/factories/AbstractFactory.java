@@ -242,7 +242,34 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 			
 		return createdClass;
 	}
+
+	/**
+	 * Removes the specified resource from this factory.  This will remove
+	 * the reference from both the history list and shared list.
+	 * 
+	 * @param resource The resource to remove
+	 */
+	public final <U extends T> void remove(U resource) {
+		
+		// Get the list of resources based on the class type
+		List<T> resources = _history.get(resource.getClass());
+		if(resources != null) {
+			
+			// Attempt to remove the reference from the history
+			resources.remove(resource);
+		}
+		
+		// If the reference also exists in the shared space then remove it
+		// from there as well.
+		_resources.remove(resource);
+	}
 	
+	/**
+	 * Sends out a signal to a group of the specified types in a multi-cast fashion
+	 * 
+	 * @param classType The type of class to send the event to
+	 * @param event The event to pass in, this is a signal event or one of its derived types
+	 */
 	public final <U extends T, V extends SignalEvent> void multicastSignal(Class<U> classType, V event) {
 		List<T> resources = _history.get(classType);
 		if(resources != null) {

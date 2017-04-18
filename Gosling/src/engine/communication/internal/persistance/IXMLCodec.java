@@ -81,11 +81,8 @@ public interface IXMLCodec extends ISerializable<String> {
     		// Create a marshaller with our context
     		_marshaller = _context.createMarshaller();
     		
+    		// Create the unmarshaller with our context
     		_unmarshaller = _context.createUnmarshaller();
-
-    		// Set the formatting option for ease of debugging, makes the text
-    		// friendlier to read
-    		_marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
     	}
 
     	//---------------------------------------------------------

@@ -27,7 +27,6 @@ package engine.api;
 import java.util.HashMap;
 import java.util.Map;
 
-import engine.communication.internal.persistance.ISerializable;
 import engine.communication.internal.persistance.IXMLCodec;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
