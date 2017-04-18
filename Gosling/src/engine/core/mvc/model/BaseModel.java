@@ -29,7 +29,7 @@ import java.util.UUID;
 
 import engine.api.IDataPipeline;
 import engine.api.IModel;
-import engine.communication.internal.persistance.IPersistant;
+import engine.communication.internal.persistance.ISerializable;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
 import engine.communication.internal.signal.types.ModelEvent;
@@ -162,10 +162,10 @@ public abstract class BaseModel implements IModel
 				removeListener(listener);
 			}
 		});
-		registerSignalListener(IPersistant.EVENT_SERIALIZE, new ISignalReceiver<PipelinedEvent<IDataPipeline>>() {
+		registerSignalListener(ISerializable.EVENT_SERIALIZE, new ISignalReceiver<PipelinedEvent<IDataPipeline>>() {
 			@Override public void signalReceived(PipelinedEvent<IDataPipeline> event) {
 				String data = serialize();
-				event.getSource().pipeData(data);
+				event.getSource().pipeData(getClass(), data);
 			}
 		});
 	}

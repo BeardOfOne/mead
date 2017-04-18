@@ -1,5 +1,5 @@
 package engine.api;
 
 public interface IDataPipeline<T> {
-	public void pipeData(T data);
+	public <U extends Object> void pipeData(Class<U> sender, T data);
 }

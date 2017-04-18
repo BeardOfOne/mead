@@ -24,27 +24,17 @@
 
 package engine.communication.internal.persistance;
 
-import java.io.Serializable;
-
-public interface IPersistant extends Serializable {
+public interface ISerializable<T extends Object> {
 	
 	/**
 	 * Event string for registering to serialized events
 	 */
 	public static final String EVENT_SERIALIZE = "EVENT_SERIALIZE";
 	
-	default public String serialize() {
-		return "";
-	}
-	
-	//default public void writeObject(ObjectOutputStream out) throws IOException
-	//{
-	/*
-	 * private void writeObject(ObjectOutputStream out) throws IOException {
-		out.defaultWriteObject();
-	    out.writeInt(1); // how many images are serialized?
-	    ImageIO.write(_buffer, "png", out); // png is lossless
-	}
+	/**
+	 * This method allows implementors to define a way to serialize an object into a string
+	 * representation using whichever mechanism they want
+	 * @return
 	 */
-	//}
+	public T serialize();
 }

@@ -27,7 +27,8 @@ package engine.api;
 import java.util.HashMap;
 import java.util.Map;
 
-import engine.communication.internal.persistance.IPersistant;
+import engine.communication.internal.persistance.ISerializable;
+import engine.communication.internal.persistance.IXMLCodec;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
 
@@ -37,7 +38,7 @@ import engine.communication.internal.signal.ISignalReceiver;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public interface IModel extends IDestructor, ISignalListener, IPersistant {
+public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	
 	/**
 	 * This is the model properties class representation of a particular model
