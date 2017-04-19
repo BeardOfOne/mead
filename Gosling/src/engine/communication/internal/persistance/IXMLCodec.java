@@ -38,7 +38,7 @@ import javax.xml.bind.Unmarshaller;
  *
  */
 //---------------------------------------------------------
-public interface IXMLCodec extends ISerializable<String> {
+public interface IXMLCodec<T extends Object> extends ISerializable<T> {
 	
 	//---------------------------------------------------------
 	/**
@@ -77,10 +77,13 @@ public interface IXMLCodec extends ISerializable<String> {
 
     		// Create the JAXB context with the specified class
     		_context = JAXBContext.newInstance(classObject);
-    		
+
     		// Create a marshaller with our context
     		_marshaller = _context.createMarshaller();
-    		
+
+    		// Formatting for the marshaller so the generated content looks nice
+    		_marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
     		// Create the unmarshaller with our context
     		_unmarshaller = _context.createUnmarshaller();
     	}
@@ -99,9 +102,5 @@ public interface IXMLCodec extends ISerializable<String> {
     	public Unmarshaller getUnmarshaller() {
     		return _unmarshaller;
     	}
-	}
-
-	@Override default String serialize() {
-		return null;
 	}
 }

@@ -37,7 +37,7 @@ import engine.communication.internal.signal.ISignalReceiver;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
+public interface IModel extends IDestructor, ISignalListener, IXMLCodec<String> {
 	
 	/**
 	 * This is the model properties class representation of a particular model
