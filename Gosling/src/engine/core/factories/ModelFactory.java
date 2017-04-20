@@ -32,7 +32,7 @@ import engine.api.IModel;
 import engine.communication.internal.persistance.IXMLCodec;
 
 public final class ModelFactory extends AbstractFactory<IModel> implements IXMLCodec<String> {
-	@Override public void deserialize(String data) {
+	/*@Override public void deserialize(String data) {
 		try {
 			XMLCodec codec = new XMLCodec(IModel.class);
 			StringReader reader = new StringReader(data); 
@@ -42,5 +42,5 @@ public final class ModelFactory extends AbstractFactory<IModel> implements IXMLC
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
+	}*/
 }

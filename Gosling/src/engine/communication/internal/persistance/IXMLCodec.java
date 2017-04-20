@@ -110,7 +110,4 @@ public interface IXMLCodec<T extends Object> extends ISerializable<T> {
 	@Override default public T serialize() {
 		return null;
 	}
-	
-	default public void deserialize(T data) {
-	}
 }

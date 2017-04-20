@@ -69,14 +69,17 @@ public abstract class BaseModel implements IModel
 	 */
 	private transient SignalEvent _operationEvent;
 	
+	protected BaseModel() {
+		registerSignalListeners();
+	}
+	
 	/**
 	 * The list of receivable objects that can receive messages 
 	 * 
 	 * @param receivers The list of receivers
 	 */
 	protected BaseModel(ISignalListener... receivers) {
-
-		registerSignalListeners();
+		this();
 
 		for(ISignalListener receiver : receivers) {
 			addListener(receiver);
