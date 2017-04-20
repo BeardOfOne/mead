@@ -61,6 +61,9 @@ public interface IXMLCodec<T extends Object> extends ISerializable<T> {
     	 */
 		private Marshaller _marshaller;
 		
+		/**
+		 * 
+		 */
 		private Unmarshaller _unmarshaller;
 		
 		//---------------------------------------------------------
@@ -102,5 +105,12 @@ public interface IXMLCodec<T extends Object> extends ISerializable<T> {
     	public Unmarshaller getUnmarshaller() {
     		return _unmarshaller;
     	}
+	}
+	
+	@Override default public T serialize() {
+		return null;
+	}
+	
+	default public void deserialize(T data) {
 	}
 }
