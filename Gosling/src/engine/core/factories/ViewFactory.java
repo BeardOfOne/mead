@@ -48,6 +48,7 @@ public final class ViewFactory extends AbstractFactory<IView> {
 		// automated and will not need to be called by the programmer 
 		if(numOfElements != getTotalResourcesCount()) {
 			view.initializeComponents();
+			view.initializeComponentBindings();
 		}
 		
 		// Return the referenced resource

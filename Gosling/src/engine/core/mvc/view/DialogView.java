@@ -27,12 +27,24 @@ package engine.core.mvc.view;
 import java.awt.Window;
 
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 import engine.api.IController;
 import engine.api.IView;
 
+/**
+ * A simple dialog that extends from the default swing dialog implementation
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ */
 public abstract class DialogView extends JDialog implements IView {
 	
+	/**
+	 * The dialog result state of this dialog
+	 */
+	private int _dialogResult = JOptionPane.DEFAULT_OPTION;
+
 	/**
 	 * The view properties of this view
 	 */
@@ -63,6 +75,26 @@ public abstract class DialogView extends JDialog implements IView {
 		setSize(width, height);
 	}
 		
+	/**
+	 * Gets the dialog result status.  
+	 * Note: This should correspond to a JOptionPane result
+	 * 
+	 * @return The status of the dialog result
+	 */
+	public final int getDialogResult() { 
+		return _dialogResult; 
+	}
+
+	/**
+	 * Sets the dialog result of this dialog
+	 * Note: This should correspond to a JOptionPane result
+	 * 
+	 * @param result The result to set as the dialog result
+	 */
+	public final void setDialogResult(int result) {
+		_dialogResult = result;
+	}
+	
 	@Override public final ViewProperties getViewProperties() {
 		return _properties;
 	}	

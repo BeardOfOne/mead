@@ -198,22 +198,33 @@ public interface IView extends IDestructor, ISignalListener {
 	public ViewProperties getViewProperties();	
 	
 	/**
-	 * Defines how components in the view are initialized
+	 * Initializes the list of components for the view.
+	 * 
+	 * Note: You should not put bindings in here
+	 * 
+	 * Note: This is where you should put initialization of UI controls/components
+	 * 
+	 * Note: This is called BEFORE the initializeComponentBindings is called
+	 * 
+	 *  
+	 */
+	public void initializeComponents();
+	
+	/**
+	 * Defines how the bindings of the components in the view are initialized
 	 * 
 	 * Note: This is automatically called by the corresponding 
 	 *       factory. This method will be called after the 
 	 *       constructor is done executing
 	 * 
-	 * Note: This method should include both initialization where
-	 *       necessary and most importantly is the best place to put 
-	 *       listener specific code based on UI components
+	 * Note: This method should only include binding specific information about a control
 	 * 
 	 * Note: This is not the place where you should deal with
 	 *       signals from the SignalListener interface and such, 
 	 *       this is really specific to the UI itself and its 
 	 *       JComponent/Container hierarchies 
 	 */
-	public void initializeComponents();
+	public void initializeComponentBindings();
 	
 	@Override default Map<String, ISignalReceiver> getSignalListeners() {
 		return getViewProperties().getSignalListeners();
