@@ -64,9 +64,14 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 	private final List<T> _resources = new ArrayList<>();
 	
 	public static final void reset() {
+		
+		// Flush the contents of the list of created factories
 		for(AbstractFactory factory : FACTORIES) {
 			factory.flush();
 		}
+		
+		// Clear the list of created factories
+		FACTORIES.clear();
 	}
 	
 	//--------------------------------------------------------------

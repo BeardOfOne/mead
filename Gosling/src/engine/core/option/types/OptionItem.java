@@ -44,7 +44,5 @@ public abstract class OptionItem extends AbstractOption{
 				onExecute(actionEvent);
 			}
 		});
-	}
-	
-	
+	}	
 }

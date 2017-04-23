@@ -95,6 +95,7 @@ public abstract class DialogView extends JDialog implements IView {
 		_dialogResult = result;
 	}
 	
+	
 	@Override public final ViewProperties getViewProperties() {
 		return _properties;
 	}	
@@ -103,4 +104,11 @@ public abstract class DialogView extends JDialog implements IView {
 		_properties.dispose();	
 		IView.super.dispose();
 	}
+	
+	/**
+	 * Method for validating that a form is valid
+	 * 
+	 * @return If the dialog is valid 
+	 */
+	protected abstract boolean validateDialog();
 }
