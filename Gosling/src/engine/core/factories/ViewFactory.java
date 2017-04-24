@@ -37,8 +37,8 @@ public final class ViewFactory extends AbstractFactory<IView> {
 	@Override public <U extends IView> U get(Class<U> resourceClass, boolean isShared, Object... resourceParameters) {
 		
 		// Get the total number of resources currently in the factory
-		int numOfElements = getTotalResourcesCount();		
-
+		int numOfResources = getTotalResourcesCount();		
+		
 		// Call the super functionality to get a reference to the desired view
 		// Note: If the view doesn't exist then this will create a new entry
 		U view = super.get(resourceClass, isShared, resourceParameters);
@@ -46,7 +46,7 @@ public final class ViewFactory extends AbstractFactory<IView> {
 		// Compare the current number of resources to see if this was newly created
 		// and if it was then call initialize components so that this procedure is
 		// automated and will not need to be called by the programmer 
-		if(numOfElements != getTotalResourcesCount()) {
+		if(numOfResources != getTotalResourcesCount()) {
 			view.initializeComponents();
 			view.initializeComponentBindings();
 		}

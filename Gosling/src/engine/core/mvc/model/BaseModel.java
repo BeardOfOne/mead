@@ -44,6 +44,8 @@ import engine.communication.internal.signal.types.SignalEvent;
  */
 public abstract class BaseModel implements IModel 
 {
+	private static final String EVENT_REFRESH = "EVENT_REFRESH";
+	
 	/**
 	 * The model properties for this model
 	 */
@@ -69,6 +71,7 @@ public abstract class BaseModel implements IModel
 	 */
 	private transient SignalEvent _operationEvent;
 	
+	// TODO - this should be deleted
 	protected BaseModel() {
 		registerSignalListeners();
 	}
@@ -80,10 +83,7 @@ public abstract class BaseModel implements IModel
 	 */
 	protected BaseModel(ISignalListener... receivers) {
 		this();
-
-		for(ISignalListener receiver : receivers) {
-			addListener(receiver);
-		}		
+		addListener(receivers);
 	}
 		
 	/**
@@ -97,6 +97,12 @@ public abstract class BaseModel implements IModel
 				_receivers.add(receiver);
 			}			
 		}
+		
+		// Perform a refresh whenever listeners are added to ensure they receive whatever
+		// this model has at this point, this is important for example when we deserialize
+		// into a useful model, we need to then push that useful data back towards the listeners
+		setOperation(EVENT_REFRESH);
+		doneUpdating();
 	}
 
 	/**

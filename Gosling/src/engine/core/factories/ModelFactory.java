@@ -24,23 +24,8 @@
 
 package engine.core.factories;
 
-import java.io.StringReader;
-
-import javax.xml.bind.JAXBException;
-
 import engine.api.IModel;
 import engine.communication.internal.persistance.IXMLCodec;
 
 public final class ModelFactory extends AbstractFactory<IModel> implements IXMLCodec<String> {
-	/*@Override public void deserialize(String data) {
-		try {
-			XMLCodec codec = new XMLCodec(IModel.class);
-			StringReader reader = new StringReader(data); 
-			IModel model = (IModel) codec.getUnmarshaller().unmarshal(reader);
-			int x = 55;
-		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}*/
 }
