@@ -25,9 +25,12 @@
 package engine.core.factories;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 
 import engine.api.IDestructor;
 import engine.communication.internal.signal.ISignalListener;
@@ -59,7 +62,14 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 	private final Map<Class, List<T>> _history = new HashMap<>();
 	
 	/**
-	 * The list of resources that are publicly available
+	 * The cache holds items that have been pushed into the factory but that do not
+	 * currently have any association.  These items will take precedence over the creation
+	 * of new items first.
+	 */
+	private final Map<Class, Queue<T>> _cache = new HashMap<>();
+	
+	/**
+	 * The queue of resources that are publicly available
 	 */
 	private final List<T> _resources = new ArrayList<>();
 	
@@ -130,6 +140,35 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 		
 		// Return the newly created factory reference
 		return factory;
+	}
+	
+	/**
+	 * Attempts to the a cached resource 
+	 * 
+	 * @param resourceClass The class of the cached resource
+	 * 
+	 * @return A cached resource if it exists
+	 */
+	private <U extends T> U getCachedResource(Class<U> resourceClass) {
+		Queue<T> cachedResources = _cache.get(resourceClass);
+		if(cachedResources != null && cachedResources.size() > 0 ) {
+		
+			// Remove the item from the queue
+			T resource = cachedResources.remove();
+			
+			// Logging information
+			System.out.println("Using the queue to fetch the resource " + resourceClass.getCanonicalName());
+			
+			// return the result
+			return (U) resource;
+		}
+		else {
+			
+			// Remove the no longer needed entry
+			_cache.remove(resourceClass);
+		}
+		
+		return null;
 	}
 	
 	//--------------------------------------------------------------
@@ -210,6 +249,20 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 	//--------------------------------------------------------------
 	public <U extends T> U get(Class<U> resourceClass, boolean isShared, Object... resourceParameters) {
 		
+		// Attempt to get a cached resource, this has priority over
+		// every other resource
+		U cachedResource = getCachedResource(resourceClass);
+		
+		// Make sure it exists
+		if(cachedResource != null) {
+			
+			// Add it to our factory 
+			add(cachedResource, isShared);
+			
+			// Return the resource
+			return cachedResource;
+		}
+		
 		// If the shared flag is set then make sure it doesn't 
 		// already exist before creating it
 		if(isShared) {
@@ -285,6 +338,22 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 				resource.unicastSignalListener(event);
 			}			
 		}
+	}
+	
+	/**
+	 * Queues the specified resources into the factory
+	 * 
+	 * @param resourceClass The class type of the resource
+	 * @param resource The list of resources
+	 */
+	public final <U extends T> void queueResources(Class<U> resourceClass, U... resource) {
+		Queue<T> resources = _cache.get(resourceClass);
+		if(resources == null) {
+			resources = new LinkedList<>();
+			_cache.put(resourceClass, resources);
+		}
+		
+		resources.addAll(Arrays.asList(resource));
 	}
 	
 	/**
