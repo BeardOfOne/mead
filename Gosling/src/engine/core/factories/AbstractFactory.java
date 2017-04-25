@@ -344,17 +344,42 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 	 * Queues the specified resources into the factory
 	 * 
 	 * @param resourceClass The class type of the resource
-	 * @param resource The list of resources
+	 * @param resources The list of resources
 	 */
-	public final <U extends T> void queueResources(Class<U> resourceClass, U... resource) {
-		Queue<T> resources = _cache.get(resourceClass);
-		if(resources == null) {
-			resources = new LinkedList<>();
-			_cache.put(resourceClass, resources);
+	public final <U extends T> void queueResources(Class<U> resourceClass, U... resources) {
+		
+		// Get the list of queue'd resources based on the resource class
+		Queue<T> cachedResources = _cache.get(resourceClass);
+		
+		// If there is no entry
+		if(cachedResources == null) {
+			
+			// Create a new entry
+			cachedResources = new LinkedList<>();
+			
+			// Insert into the cache the resourceClass and the cached resources empty list
+			_cache.put(resourceClass, cachedResources);
 		}
 		
-		resources.addAll(Arrays.asList(resource));
+		// Populate the list of items using the reference
+		cachedResources.addAll(Arrays.asList(resources));
 	}
+	
+	/**
+	 * Gets the total number of queue'd resources of the specified class type
+	 * 
+	 * @param resourceClass The resource class type
+	 * 
+	 * @return The total number of resources of the specified class type
+	 */
+	public final <U extends T> int getQueuedResourceCount(Class<U> resourceClass) {
+		// Get the list of queue'd resources based on the resource class
+		Queue<T> cachedResources = _cache.get(resourceClass);
+		
+		// Return the total number of resources of the specified class type
+		return cachedResources == null ? 0 : cachedResources.size();
+	}
+
 	
 	/**
 	 * Gets the total count of resources from the factory
