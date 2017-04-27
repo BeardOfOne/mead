@@ -25,8 +25,10 @@
 package engine.communication.internal.signal.types;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import engine.api.IModel;
 
@@ -53,5 +55,8 @@ public class UUIDEvent<T extends IModel> extends SignalEvent<IModel> {
 	 */
 	public UUIDEvent(T sender, String operationName, UUID... uuid) { 
 		super(sender, operationName);
+		
+		// Set the identifiers
+		Identifiers.addAll(Arrays.asList(uuid));
 	}
 }
