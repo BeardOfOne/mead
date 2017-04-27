@@ -27,6 +27,10 @@ package engine.core.mvc.model;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import engine.api.IModel;
 import engine.communication.internal.persistance.ISerializable;
 import engine.communication.internal.signal.IDataPipeline;
@@ -42,6 +46,8 @@ import engine.communication.internal.signal.types.SignalEvent;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name="Base")
 public abstract class BaseModel implements IModel 
 {
 	private static final String EVENT_REFRESH = "EVENT_REFRESH";
@@ -54,7 +60,7 @@ public abstract class BaseModel implements IModel
 	/**
 	 * Identifier for this model
 	 */
-	private transient final UUID _identifier = UUID.randomUUID();
+	private final UUID _identifier = UUID.randomUUID();
 			
 	/**
 	 * The list of receivers that can receive a message from the GameModel
@@ -152,10 +158,10 @@ public abstract class BaseModel implements IModel
 	/**
 	 * Gets the string representation of the unique identifier of this model
 	 * 
-	 * @return The UUID of this class in string form
+	 * @return The UUID of this class
 	 */
-	public final String getIdentifier() {
-		return _identifier.toString();
+	@Override public final UUID getIdentifier() {
+		return _identifier;
 	}
 	
 	@Override public void registerSignalListeners() {
@@ -193,8 +199,8 @@ public abstract class BaseModel implements IModel
 	}
 	
 	@Override public boolean equals(Object obj) {
-		if(obj instanceof BaseModel) {
-			BaseModel model = (BaseModel) obj;
+		if(obj instanceof IModel) {
+			IModel model = (IModel) obj;
 			return model.getIdentifier().equals(this.getIdentifier());
 		}
 		

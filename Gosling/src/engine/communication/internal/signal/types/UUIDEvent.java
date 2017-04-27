@@ -24,24 +24,34 @@
 
 package engine.communication.internal.signal.types;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import engine.api.IModel;
 
 /**
- * Events specific from an IModel source
+ * Event that specifies a UUID
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  * @param <T> The IModel type
  */
-public class ModelEvent<T extends IModel> extends SignalEvent<T> {
+public class UUIDEvent<T extends IModel> extends SignalEvent<IModel> {
+	
+	/**
+	 * The list of unique identifiers
+	 */
+	public final List<UUID> Identifiers = new ArrayList<>();
 	
 	/**
 	 * Constructs a new signal type event
 	 * 
 	 * @param sender The sender source
 	 * @param operationName The name of the operation being performed
+	 * @param uuid The uuid to include in the event
 	 */
-	public ModelEvent(T sender, String operationName) { 
+	public UUIDEvent(T sender, String operationName, UUID... uuid) { 
 		super(sender, operationName);
 	}
 }

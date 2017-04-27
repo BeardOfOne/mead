@@ -59,7 +59,7 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 	/**
 	 * The history of all factory resources that have been created
 	 */
-	private final Map<Class, List<T>> _history = new HashMap<>();
+	protected final Map<Class, List<T>> _history = new HashMap<>();
 	
 	/**
 	 * The cache holds items that have been pushed into the factory but that do not

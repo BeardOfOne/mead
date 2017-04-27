@@ -26,6 +26,7 @@ package engine.api;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import engine.communication.internal.persistance.IXMLCodec;
 import engine.communication.internal.signal.ISignalListener;
@@ -76,6 +77,8 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec<String> 
 	 * @return The model properties of the implementor
 	 */
 	public ModelProperties getModelProperties();
+	
+	public abstract UUID getIdentifier();
 	
 	@Override default Map<String, ISignalReceiver> getSignalListeners() {
 		return getModelProperties().getSignalListeners();

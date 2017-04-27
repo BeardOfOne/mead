@@ -24,8 +24,45 @@
 
 package engine.core.factories;
 
-import engine.api.IModel;
-import engine.communication.internal.persistance.IXMLCodec;
+import java.util.List;
 
-public final class ModelFactory extends AbstractFactory<IModel> implements IXMLCodec<String> {
+import engine.api.IModel;
+import engine.communication.internal.signal.types.SignalEvent;
+import engine.communication.internal.signal.types.UUIDEvent;
+
+/**
+ * The model factory used to create model type resources
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ */
+public final class ModelFactory extends AbstractFactory<IModel> {
+	
+	/**
+	 * Performs a selective multicast on the specified class type
+	 * 
+	 * @param classType The class type to multicast on
+	 * @param event The event to pass to each resource
+	 */
+	public <U extends IModel, V extends SignalEvent, T extends Object> void selectiveMulticastSignal(Class<U> classType, V event) {
+
+		// Get the list of models that have currently been created
+		List<IModel> resources = _history.get(classType);
+		
+		// Verify that the list if valid
+		if(resources != null) {
+			
+			// Unwrap the event and cast it to a model event.
+			// This is a strong assumption, but right now this is what
+			// the assumption is when sending out a signal using this factory.
+			UUIDEvent<U> uuidEvent = (UUIDEvent) event;
+			
+			// For every resource that has been created
+			for(IModel resource : resources) {
+				if(uuidEvent.Identifiers.contains(resource.getIdentifier())) {
+					resource.unicastSignalListener(event);
+				}
+			}			
+		}
+	}
 }
