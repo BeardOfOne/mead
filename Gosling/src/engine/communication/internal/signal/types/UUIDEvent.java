@@ -39,7 +39,7 @@ import engine.api.IModel;
  *
  * @param <T> The IModel type
  */
-public class UUIDEvent<T extends IModel> extends SignalEvent<IModel> {
+public class UUIDEvent<T extends IModel> extends ModelEvent<T> {
 	
 	/**
 	 * The list of unique identifiers
