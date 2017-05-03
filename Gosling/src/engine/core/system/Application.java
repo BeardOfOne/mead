@@ -33,6 +33,12 @@ import javax.swing.JMenuBar;
 import engine.api.IDestructor;
 
 /**
+ * This class provides the entry point for all applications to extend
+ * for their game.  Their main method should be within a class that extends
+ * this class.
+ * 
+ * This class will construct the base listeners for the game, along with the engine
+ * default values (pre-initialization) and other core functionality
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
@@ -40,17 +46,16 @@ import engine.api.IDestructor;
 public abstract class Application extends JFrame implements IDestructor {
 
 	/**
-	 * 
+	 * Constructs a new instance of this class
 	 */
     protected Application() {
         setListeners();
         setEngineDefaults();        
         setJMenuBar(new JMenuBar());
-        
     }
     
     /**
-     * 
+     * Sets the listeners for the game
      */
     private void setListeners() {
         addComponentListener(new ComponentAdapter() {
@@ -67,12 +72,15 @@ public abstract class Application extends JFrame implements IDestructor {
     }
     
     /**
-     * 
+     * Sets the menu functionality for the game
      */
     protected abstract void setWindowedInstanceMenu();
     
     /**
+     * Sets the engine default values for the game
      * 
+     * Note: This is a good place to initialize the resource manager
+     * for localization.
      */
     protected abstract void setEngineDefaults();
 }
