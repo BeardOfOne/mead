@@ -28,6 +28,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
 import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 
 import engine.api.IDestructor;
 
@@ -43,7 +44,9 @@ public abstract class Application extends JFrame implements IDestructor {
 	 */
     protected Application() {
         setListeners();
-        setEngineDefaults();
+        setEngineDefaults();        
+        setJMenuBar(new JMenuBar());
+        
     }
     
     /**
