@@ -260,10 +260,18 @@ public interface IView extends IDestructor, ISignalListener {
 	 * 
 	 * Note: You should register to the update method
 	 * to receive subsequent messages thereafter
+	 * 
+	 * Note: To handle deferred rendering on the first
+	 * pass, simply override the setVisible method and 
+	 * do your pre-processing work, then call super(flag)
 	 */
 	default public void render() {
-		getViewProperties().flagAsRendered();
-		getContainerClass().setVisible(true);
+		// If the render call has already been made then don't do it again
+		// If, however, for whatever reason the view is not visible, then 
+		// try to render it again to make it visible
+		if(!getViewProperties()._hasRendered || !getContainerClass().isVisible()) {
+			getViewProperties().flagAsRendered();
+			getContainerClass().setVisible(true);	
+		}	
 	}
-
 }
