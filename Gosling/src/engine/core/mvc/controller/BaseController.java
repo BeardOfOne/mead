@@ -30,7 +30,7 @@ import engine.api.IView;
 public abstract class BaseController implements IController  {
 
 	private final ControllerProperties _properties = new ControllerProperties();
-
+	
 	public <T extends IView> BaseController(T view) {
 		_properties.setView(view);
 	}

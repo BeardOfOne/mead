@@ -32,6 +32,8 @@ import java.util.Map;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
+import engine.core.factories.AbstractFactory;
+import engine.core.factories.ViewFactory;
 
 /**
  * This contract specifies how views should operate within the framework. 
@@ -39,6 +41,11 @@ import engine.communication.internal.signal.ISignalReceiver;
  * @author Daniel Ricci <thedanny09@gmail.com>
  */
 public interface IView extends IDestructor, ISignalListener {
+	
+	/**
+	 * Helper method to easily get the factory associated to this interface
+	 */
+	public final ViewFactory VIEW_FACTORY = AbstractFactory.getFactory(ViewFactory.class);
 	
 	/**
 	 * The view properties that each IView will have

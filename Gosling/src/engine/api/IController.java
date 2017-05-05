@@ -29,8 +29,15 @@ import java.util.Map;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
+import engine.core.factories.AbstractFactory;
+import engine.core.factories.ControllerFactory;
 
 public interface IController extends IDestructor, ISignalListener {
+	
+	/**
+	 * Helper method to easily get the factory associated to this interface
+	 */
+	public final ControllerFactory CONTROLLER_FACTORY = AbstractFactory.getFactory(ControllerFactory.class);
 	
 	public final class ControllerProperties implements IDestructor {
 		
