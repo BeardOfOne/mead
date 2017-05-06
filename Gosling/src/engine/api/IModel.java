@@ -43,6 +43,13 @@ import engine.core.factories.ModelFactory;
 public interface IModel extends IDestructor, ISignalListener, IXMLCodec<String> {
 	
 	/**
+	 * This event is used to indicate that a listener has been added
+	 * from some entity. You will receive a notifications when this 
+	 * occurs.
+	 */
+	public static final String EVENT_LISTENER_ADDED = "LISTENER_ADDED";
+	
+	/**
 	 * Helper method to easily get the factory associated to this interface
 	 */
 	public final ModelFactory MODEL_FACTORY = AbstractFactory.getFactory(ModelFactory.class);

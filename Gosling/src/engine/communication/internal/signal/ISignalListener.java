@@ -38,12 +38,14 @@ import engine.communication.internal.signal.types.SignalEvent;
 public interface ISignalListener {
 	
 	/**
-	 * Event string for registering to this model
+	 * This event is used to signal listening entities that something
+	 * would like to register to you.
 	 */
 	public static final String EVENT_REGISTER = "EVENT_REGISTER";
 	
 	/**
-	 * Event string for unregistering from this model
+	 * This event is used to signal listening entities that something
+	 * would like to unregister from you
 	 */
 	public static final String EVENT_UNREGISTER = "EVENT_UNREGISTER";
 	

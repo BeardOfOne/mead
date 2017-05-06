@@ -49,9 +49,7 @@ import engine.communication.internal.signal.types.SignalEvent;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name="Base")
 public abstract class BaseModel implements IModel 
-{
-	private static final String EVENT_REFRESH = "EVENT_REFRESH";
-	
+{	
 	/**
 	 * The model properties for this model
 	 */
@@ -107,7 +105,7 @@ public abstract class BaseModel implements IModel
 		// Perform a refresh whenever listeners are added to ensure they receive whatever
 		// this model has at this point, this is important for example when we deserialize
 		// into a useful model, we need to then push that useful data back towards the listeners
-		setOperation(EVENT_REFRESH);
+		setOperation(EVENT_LISTENER_ADDED);
 		doneUpdating();
 	}
 
