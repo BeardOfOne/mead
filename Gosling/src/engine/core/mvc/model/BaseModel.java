@@ -102,10 +102,7 @@ public abstract class BaseModel implements IModel
 			}			
 		}
 		
-		// Perform a refresh whenever listeners are added to ensure they receive whatever
-		// this model has at this point, this is important for example when we deserialize
-		// into a useful model, we need to then push that useful data back towards the listeners
-		setOperation(EVENT_LISTENER_ADDED);
+		// Push an update event to the listeners
 		doneUpdating();
 	}
 
@@ -124,15 +121,20 @@ public abstract class BaseModel implements IModel
 	 */
 	protected final void doneUpdating() {
 		
+		// Create a new operation event to send out to listeners
 		_operationEvent = new ModelEvent(this, _operationName);
 		
+		// Call all signal listeners with the specified event (this takes operation name into account)
+		// and then it will end up calling update after the fact
 		for(ISignalListener receiver : _receivers) {
 			receiver.unicastSignalListener(_operationEvent);
-		}		
-		
+		}
+
+		// reset the contents created
 		_operationName = null;
 		_operationEvent = null;
-	}	
+	}
+	
 	
 	/**
 	 * Sets a particular operation name that will be converted into a signal and
