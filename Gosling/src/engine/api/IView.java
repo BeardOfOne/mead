@@ -100,7 +100,7 @@ public interface IView extends IDestructor, ISignalListener {
 			// or there will be a false positive for the hidden event
 			view.getContainerClass().addComponentListener(new ComponentAdapter() {
 				
-		        // This event is fired when  a view is shown, that is when
+		        // This event is fired when a view is hidden, that is when
 		        // the visibility is set to false
 		        @Override public void componentHidden(ComponentEvent args) {
 
@@ -125,9 +125,24 @@ public interface IView extends IDestructor, ISignalListener {
 		        		return;
 		        	}
 		        	
-		        	// Register all signals being listening by this view's controller
-		           	_controller.registerSignalListeners();
+		        	// Indicate that this view is being shown now
 		        	System.out.println(String.format("Component %s is being shown", args.getSource().getClass().getCanonicalName()));
+		        	
+		        	// If a registration already occurred then log that this is the case and don't register again
+		        	// Note: This can occur if registration occurred before the actual view was about to be shown, this is common
+		        	// so that is why it is an Info and not a Warning.
+		        	Map listeners = _controller.getSignalListeners();
+		        	if(listeners == null || !listeners.isEmpty()) {
+		        		System.out.println(String.format(
+	        				"Info: Signal listeners already detected for %s, not registering again", 
+	        				_controller.getClass().getCanonicalName()
+        				));
+		        		
+		        		return;
+		        	}
+		        	
+		        	// Register all signals being listening by this view's controller
+		           	_controller.registerSignalListeners();       		
 		        }
 		        
 		    });

@@ -102,6 +102,9 @@ public abstract class BaseModel implements IModel
 			}			
 		}
 		
+		// Set the event for listeners
+		setOperation(EVENT_LISTENER_ADDED);
+		
 		// Push an update event to the listeners
 		doneUpdating();
 	}
