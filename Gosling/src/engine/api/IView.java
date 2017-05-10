@@ -110,8 +110,12 @@ public interface IView extends IDestructor, ISignalListener {
 		        		return;
 		        	}
 		        	
-		        	// Unregister all signals being listening by this view's controller
+		        	// Unregister all signals being listened to by this view's controller
 		        	_controller.unregisterSignalListeners();
+		        	
+		           	// Unregister all signals being listened to by the view
+		           	view.unregisterSignalListeners();
+		           	
 		        	System.out.println(String.format("Component %s is being hidden", args.getSource().getClass().getCanonicalName()));
 		        }
 		        
@@ -141,8 +145,11 @@ public interface IView extends IDestructor, ISignalListener {
 		        		return;
 		        	}
 		        	
-		        	// Register all signals being listening by this view's controller
-		           	_controller.registerSignalListeners();       		
+		        	// Register all signals being listened to by the view's controller
+		           	_controller.registerSignalListeners();
+		           	
+		           	// Register all signals being listened to by the view
+		           	view.registerSignalListeners();
 		        }
 		        
 		    });
