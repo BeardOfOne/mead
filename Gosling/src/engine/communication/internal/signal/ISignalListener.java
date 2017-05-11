@@ -57,27 +57,39 @@ public interface ISignalListener {
 	 */
 	default public void unicastSignalListener(SignalEvent signalEvent) {
 		
-		/*
-		 * Get the list of listening events of this receiver, and look
-		 * for the right one to call upon.  Note that a set of events
-		 * is registered by a receiver.
-		 */
+		// Get the list of signal listeners available
 		Map<String, ISignalReceiver> operations = getSignalListeners();
-		if(operations != null) {
-			String operationName = signalEvent.getOperationName();
-			if(operationName != null && !operationName.trim().isEmpty()) {
-				for(Map.Entry<String, ISignalReceiver> kvp : operations.entrySet()) {
-					if(kvp.getKey().equalsIgnoreCase(operationName)) {
-						System.out.println(String.format("%s sends event %s to %s",
-							signalEvent.getSource().getClass().getCanonicalName(),
-							operationName,
-							kvp.getValue().getClass().getName()
-						));						
-						kvp.getValue().signalReceived(signalEvent);
-						break;
-					}
+		if(operations == null) {
+			return;
+		}
+
+		// Get the operation name
+		String operationName = signalEvent.getOperationName();
+		
+		// Verify that the operation name is not null or empty
+		if(operationName != null && !operationName.trim().isEmpty()) {
+
+			// Go through every listener operation and look for the one with'
+			// the matching name, then call that one 
+			for(Map.Entry<String, ISignalReceiver> kvp : operations.entrySet()) {
+				
+				// Verify if the key is the same as the operation name
+				if(kvp.getKey().equalsIgnoreCase(operationName)) {
+					
+					// Debug message indicating the message event being sent
+					System.out.println(String.format("%s sends event %s to %s",
+						signalEvent.getSource().getClass().getCanonicalName(),
+						operationName,
+						kvp.getValue().getClass().getName()
+					));						
+					
+					// Send out a signal receive event
+					kvp.getValue().signalReceived(signalEvent);
+					
+					// Stop executing
+					break;
 				}
-			}
+			}			
 		}
 		
 		// Update the state of the receiver, this is done at the end to 'apply'

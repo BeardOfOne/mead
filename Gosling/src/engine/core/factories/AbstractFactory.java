@@ -26,6 +26,7 @@ package engine.core.factories;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -330,6 +331,23 @@ public abstract class AbstractFactory<T extends ISignalListener> implements IDes
 	 */
 	public final <U extends T, V extends SignalEvent> void multicastSignal(Class<U> classType, V event) {
 		List<T> resources = _history.get(classType);
+		if(resources != null) {
+			for(T resource : resources) {
+				// TODO - parallelize this!
+				// Send out a unicast signal to every resource, although 
+				// horribly inefficient the way it is being done right now
+				resource.unicastSignalListener(event);
+			}			
+		}
+	}
+	
+	/**
+	 * Sends out a signal to a group of the specified types in a multi-cast fashion
+	 * 
+	 * @param resources The list of resources to send the signal to
+	 * @param event The event to pass in, this is a signal event or one of its derived types
+	 */
+	public final <U extends T, V extends SignalEvent> void multicastSignal(Collection<U> resources, V event) {
 		if(resources != null) {
 			for(T resource : resources) {
 				// TODO - parallelize this!

@@ -117,6 +117,23 @@ public abstract class BaseModel implements IModel
 	public final void removeListener(ISignalListener receiver) {
 		_receivers.remove(receiver);
 	}
+	
+	/**
+	 * Refreshes this tile model, effectively doing a doneUpdate 
+	 */
+	public final void refresh() {
+		
+		// Create a new operation event to send out to listeners
+		// In this case we specify a local event as not to disturb 
+		// the done update functionality
+		SignalEvent event = new ModelEvent(this, null);
+		
+		// Call all signal listeners with the specified event (this takes operation name into account)
+		// and then it will end up calling update after the fact
+		for(ISignalListener receiver : _receivers) {
+			receiver.unicastSignalListener(event);
+		}
+	}
 
 	/**
 	 * A convenience method to indicate that an update has been performed
