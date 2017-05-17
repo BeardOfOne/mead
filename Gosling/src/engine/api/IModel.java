@@ -40,7 +40,7 @@ import engine.core.factories.ModelFactory;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public interface IModel extends IDestructor, ISignalListener, IXMLCodec<String> {
+public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	
 	/**
 	 * This event is used to indicate that a listener has been added
@@ -48,6 +48,12 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec<String> 
 	 * occurs.
 	 */
 	public static final String EVENT_LISTENER_ADDED = "LISTENER_ADDED";
+	
+	/**
+	 * This event is used to indicate that the model listens to events that
+	 * need a reference to itself.
+	 */
+	public static final String EVENT_PIPE_DATA = "EVENT_PIPE_DATA";
 	
 	/**
 	 * Helper method to easily get the factory associated to this interface

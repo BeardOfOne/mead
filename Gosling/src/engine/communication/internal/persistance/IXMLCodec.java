@@ -38,7 +38,7 @@ import javax.xml.bind.Unmarshaller;
  *
  */
 //---------------------------------------------------------
-public interface IXMLCodec<T extends Object> extends ISerializable<T> {
+public interface IXMLCodec extends ISerializable<String> {
 	
 	//---------------------------------------------------------
 	/**
@@ -107,7 +107,7 @@ public interface IXMLCodec<T extends Object> extends ISerializable<T> {
     	}
 	}
 	
-	@Override default public T serialize() {
+	@Override default public String serialize() {
 		return null;
 	}
 }

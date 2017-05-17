@@ -203,6 +203,12 @@ public abstract class BaseModel implements IModel
 				event.getSource().pipeData(data);
 			}
 		});
+		registerSignalListener(IModel.EVENT_PIPE_DATA, new ISignalReceiver<PipelinedEvent<IDataPipeline>>() {
+			@Override public void signalReceived(PipelinedEvent<IDataPipeline> event) {				
+				// Send a reference of the BaseModel back to the caller
+				event.getSource().pipeData(BaseModel.this);
+			}
+		});
 	}
 	
 	@Override public final ModelProperties getModelProperties() {
