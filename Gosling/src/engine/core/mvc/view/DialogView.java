@@ -110,5 +110,7 @@ public abstract class DialogView extends JDialog implements IView {
 	 * 
 	 * @return If the dialog is valid 
 	 */
-	protected abstract boolean validateDialog();
+	protected boolean validateDialog() {
+		return true;
+	}
 }
