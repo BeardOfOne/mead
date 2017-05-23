@@ -25,12 +25,6 @@
 package engine.communication.internal.persistance;
 
 public interface ISerializable<T extends Object> {
-	
-	/**
-	 * Event string for registering to serialized events
-	 */
-	public static final String EVENT_SERIALIZE = "EVENT_SERIALIZE";
-	
 	/**
 	 * This method allows implementors to define a way to serialize an object into a string
 	 * representation using whichever mechanism they want

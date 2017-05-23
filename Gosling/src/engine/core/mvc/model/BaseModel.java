@@ -32,7 +32,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import engine.api.IModel;
-import engine.communication.internal.persistance.ISerializable;
 import engine.communication.internal.signal.IDataPipeline;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
@@ -195,12 +194,6 @@ public abstract class BaseModel implements IModel
 			@Override public void signalReceived(SignalEvent event) {
 				ISignalListener listener = (ISignalListener) event.getSource();
 				removeListener(listener);
-			}
-		});
-		registerSignalListener(ISerializable.EVENT_SERIALIZE, new ISignalReceiver<PipelinedEvent<IDataPipeline>>() {
-			@Override public void signalReceived(PipelinedEvent<IDataPipeline> event) {
-				String data = serialize();
-				event.getSource().pipeData(data);
 			}
 		});
 		registerSignalListener(IModel.EVENT_PIPE_DATA, new ISignalReceiver<PipelinedEvent<IDataPipeline>>() {
