@@ -27,6 +27,7 @@ package engine.communication.internal.persistance;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
 
 //---------------------------------------------------------
@@ -35,10 +36,14 @@ import javax.xml.bind.Unmarshaller;
  * using XML
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
- *
  */
 //---------------------------------------------------------
 public interface IXMLCodec extends ISerializable<String> {
+	
+	/**
+	 * File extension representation for all implementors of this codec
+	 */
+	public static final String FILE_EXTENSION = ".xml";
 	
 	//---------------------------------------------------------
 	/**
@@ -46,7 +51,6 @@ public interface IXMLCodec extends ISerializable<String> {
 	 * for JAXB compatible classes
 	 * 
      * @author Daniel Ricci <thedanny09@gmail.com>
-	 *
 	 */
 	//---------------------------------------------------------
 	public final class XMLCodec {
@@ -62,10 +66,10 @@ public interface IXMLCodec extends ISerializable<String> {
 		private Marshaller _marshaller;
 		
 		/**
-		 * 
+		 * The unmarshaller associated to the JAXB Context
 		 */
 		private Unmarshaller _unmarshaller;
-		
+				
 		//---------------------------------------------------------
 		/**
 		 * Constructs a new codec
@@ -76,7 +80,7 @@ public interface IXMLCodec extends ISerializable<String> {
 		 * 						 the JAXB creation/setting process
 		 */
 		//---------------------------------------------------------
-    	public <T extends ISerializable> XMLCodec(Class<T> classObject) throws JAXBException {
+    	public XMLCodec(Class classObject) throws JAXBException {
 
     		// Create the JAXB context with the specified class
     		_context = JAXBContext.newInstance(classObject);
@@ -84,30 +88,42 @@ public interface IXMLCodec extends ISerializable<String> {
     		// Create a marshaller with our context
     		_marshaller = _context.createMarshaller();
 
-    		// Formatting for the marshaller so the generated content looks nice
-    		_marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
     		// Create the unmarshaller with our context
     		_unmarshaller = _context.createUnmarshaller();
+    	}
+    	
+		//---------------------------------------------------------
+    	/**
+    	 * Sets the formatting state of the JAXB context
+    	 * 
+    	 * @param isFormatted If formatting should be done
+    	 * @throws PropertyException 
+    	 */
+		//---------------------------------------------------------
+    	public void setFormatted(boolean isFormatted) throws PropertyException {
+			_marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, (Boolean)isFormatted);
     	}
 
     	//---------------------------------------------------------
     	/**
     	 * Gets the marshaller associated to this context
     	 * 
-    	 * @return The marshaller associated to the created context
+    	 * @return The marshaller associated to the context
     	 */
     	//---------------------------------------------------------
     	public Marshaller getMarshaller() {
     		return _marshaller;
     	}
-    	
+
+    	//---------------------------------------------------------
+    	/**
+    	 * Gets the unmarshaller associated to this context
+    	 * 
+    	 * @return The unmarshaller associated to the context
+    	 */
+    	//---------------------------------------------------------
     	public Unmarshaller getUnmarshaller() {
     		return _unmarshaller;
     	}
-	}
-	
-	@Override default public String serialize() {
-		return null;
 	}
 }
