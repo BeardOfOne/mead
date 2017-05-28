@@ -46,7 +46,6 @@ import engine.communication.internal.signal.types.SignalEvent;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="Base")
 public abstract class BaseModel implements IModel 
 {	
 	/**

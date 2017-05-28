@@ -24,11 +24,15 @@
 
 package engine.communication.internal.persistance;
 
+import java.io.StringWriter;
+
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
+
+import engine.communication.internal.persistance.IXMLCodec.XMLCodec;
 
 //---------------------------------------------------------
 /**
@@ -125,5 +129,22 @@ public interface IXMLCodec extends ISerializable<String> {
     	public Unmarshaller getUnmarshaller() {
     		return _unmarshaller;
     	}
+	}
+
+	@Override default String serialize() {
+	    // Create a string buffer for the xml data
+        StringWriter writer = new StringWriter();
+        try {
+            // Create the XML codec
+            XMLCodec serializer = new XMLCodec(this.getClass());
+            
+            // Get the marshaller and serialize this class
+            serializer.getMarshaller().marshal(this, writer);           
+        } 
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        
+        return writer.toString();
 	}
 }

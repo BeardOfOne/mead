@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import engine.api.IModel;
 import engine.communication.internal.persistance.ISerializable;
+import engine.communication.internal.persistance.IXMLCodec;
 
 /**
  * Abstract functionality for all file system implementations
@@ -45,7 +46,7 @@ import engine.communication.internal.persistance.ISerializable;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public abstract class AbstractFileSystem<T extends ISerializable<IModel>> {
+public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implements IXMLCodec {
 	
 	/**
 	 * The data associated to this file system
@@ -82,10 +83,27 @@ public abstract class AbstractFileSystem<T extends ISerializable<IModel>> {
 	 * 
 	 * @return The list of concrete types of the type specified
 	 */
-	public final <U extends T> List<U> getData(Class<U> classType) {
-		return (List<U>) _data.get(classType);
+	public final List<T> getData(Class<T> classType) {
+		return _data.get(classType);
 	}
 	
+	/**
+	 * Removes all the data within the file system except that specified
+	 * 
+	 * @param classType The class type to keep within the file system
+	 */
+	public final void removeDataExcept(Class<T> classType) {
+	    
+	    // If the file system contains the specified class type
+	    if(_data.containsKey(classType)) {
+	        
+	        // Hold a reference to the list of 
+	        List<T> values = _data.get(classType);   
+	        _data.clear();
+	        _data.put((Class<T>) classType, values);
+	    }
+	}
+	 
 	/**
 	 * Writes the specified data into the file system
 	 * 
