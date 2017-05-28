@@ -32,8 +32,6 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
 
-import engine.communication.internal.persistance.IXMLCodec.XMLCodec;
-
 //---------------------------------------------------------
 /**
  * Defines a codec for performing serialization and deserialization functionality
