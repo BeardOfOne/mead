@@ -25,6 +25,7 @@
 package engine.communication.external.filesystem;
 
 import java.io.File;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -74,6 +75,7 @@ public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implem
 	 */
 	public AbstractFileSystem(File file) {
 		_file = file;
+		_file.getParentFile().mkdirs();
 	}
 
 	/**
@@ -127,4 +129,22 @@ public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implem
 		// Add the specified data
 		dataList.add(data);
 	}
+
+    @Override public String serialize() {
+        
+        // Serialize this class's contents
+        String serializedData = IXMLCodec.super.serialize();
+        
+        // try-with-resource the printwriter statement
+        try(PrintWriter out = new PrintWriter(_file)) {
+        
+            // output the contents of the serialized data into the file
+            out.println(serializedData);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        
+        return serializedData;
+    }
 }

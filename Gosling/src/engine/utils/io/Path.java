@@ -50,4 +50,16 @@ public class Path {
 		// until the dot (non-inclusive), or just the entire name if there is no dot found
 		return file.getName().substring(0, index == -1 ? file.getName().length() : index);
 	}
+	
+	/**
+	 * Converts the class package name to the logical path on disk
+	 * 
+	 * @param classType The class type of the class to be converted
+	 * 
+	 * @return The logical absolute path associated to the class type specified
+	 */
+	public static String packageToPath(Class classType) {
+	    return classType.getPackage().getName().replace(".", "\\");
+	}
+
 }
