@@ -111,7 +111,7 @@ public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implem
 	 * 
 	 * @param data The data to write
 	 */
-	public final void write(T data) {
+	public void write(T data) {
 		
 		// Get the list of data that has already been written
 		List<T> dataList = _data.get(data.getClass());

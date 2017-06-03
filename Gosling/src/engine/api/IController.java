@@ -32,6 +32,13 @@ import engine.communication.internal.signal.ISignalReceiver;
 import engine.core.factories.AbstractFactory;
 import engine.core.factories.ControllerFactory;
 
+/**
+ * This is the top-most controller interface, for all sub-type implemented controller types
+ * and interfaces
+ * 
+ * @author Daniel Ricci <thedanny09@gmail.com>
+ *
+ */
 public interface IController extends IDestructor, ISignalListener {
 	
 	/**
@@ -39,6 +46,12 @@ public interface IController extends IDestructor, ISignalListener {
 	 */
 	public final ControllerFactory CONTROLLER_FACTORY = AbstractFactory.getFactory(ControllerFactory.class);
 	
+	/**
+	 * This class represents the controller properties of each IController implemented type
+	 * 
+	 * @author Daniel Ricci <thedanny09@gmail.com>
+	 *
+	 */
 	public final class ControllerProperties implements IDestructor {
 		
 		/**
@@ -69,7 +82,8 @@ public interface IController extends IDestructor, ISignalListener {
 		}
 
 		@Override public void flush() {
-		
+			_view = null;
+			_signalListeners.clear();
 		}
 		
 		public Map<String, ISignalReceiver> getSignalListeners() {

@@ -59,7 +59,7 @@ public class Path {
 	 * @return The logical absolute path associated to the class type specified
 	 */
 	public static String packageToPath(Class classType) {
-	    return classType.getPackage().getName().replace(".", "\\");
+	    return classType.getPackage().getName().replace(".", File.separator);
 	}
 
 }
