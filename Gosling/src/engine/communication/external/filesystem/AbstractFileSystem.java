@@ -58,6 +58,7 @@ public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implem
 	
 	/**
 	 * The file construct associated to this file system
+	 * Note: This file represents the file of actually serializing the file system
 	 */
 	protected transient final File _file;
 		 
@@ -75,6 +76,8 @@ public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implem
 	 */
 	public AbstractFileSystem(File file) {
 		_file = file;
+		
+		// Make the directories leading up to the file
 		_file.getParentFile().mkdirs();
 	}
 
@@ -102,7 +105,7 @@ public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implem
 	        // Hold a reference to the list of 
 	        List<T> values = _data.get(classType);   
 	        _data.clear();
-	        _data.put((Class<T>) classType, values);
+	        _data.put(classType, values);
 	    }
 	}
 	 

@@ -25,6 +25,7 @@
 package engine.utils.io;
 
 import java.io.File;
+import java.net.URL;
 
 /**
  * Class used for path related operations dealing with files of various sorts
@@ -32,7 +33,7 @@ import java.io.File;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public class Path {
+public final class Paths {
 	
 	/**
 	 * Helper method used to obtain the filename of a file without it's extension
@@ -61,5 +62,63 @@ public class Path {
 	public static String packageToPath(Class classType) {
 	    return classType.getPackage().getName().replace(".", File.separator);
 	}
+	
+	/**
+	 * Gets the absolute path of the specified class type
+	 * 
+	 * @param classType The class type to locate on disk
+	 * 
+	 * @return The absolute path of the specified class type
+	 */
+	public static String getClassLocation(Class classType) {
+		
+		// Get the name of the class
+		String name = getClassName(classType);
+				
+		// Get a reference to the path of the file
+		URL resourcePath = classType.getResource(name + ".class"); 
+		
+		// return the absolute path of the resource found
+		return resourcePath.getFile();
+	}
+	
+	/**
+	 * Gets the name of the class type specified
+	 * 
+	 * @param classType The specified class type
+	 * 
+	 * @return The name of the class type specified
+	 */
+	public static String getClassName(Class classType) {
+		// Get the name of the class
+		String name = classType.getName();
+		
+		// Get the last index of the . within the string since
+		// there could be package references (package1.package2...)
+		int index = name.lastIndexOf('.');
 
+		// If an index was found
+		if(index != -1) {
+			
+			// Take the contents of the string after the last dot
+			// until the end (ClassN
+			name = name.substring(index + 1, name.length());
+		}
+		
+		return name;
+	}
+	
+	/**
+	 * Gets the name of the class type specified
+	 * 
+	 * @param classType The specified class type
+	 * @param includeExtension Specify if the extension should be included in the query
+	 * 
+	 * @return The name of the class type specified
+	 */
+	public static String getClassName(Class classType, boolean includeExtension) {
+		
+		// Return the name of the class, and if the class extension is specified then include it
+		return String.format("%s%s", getClassName(classType), includeExtension ? ".class" : "");
+	}
 }
