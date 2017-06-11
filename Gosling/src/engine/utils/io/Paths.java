@@ -35,6 +35,21 @@ import java.net.URL;
  */
 public final class Paths {
 	
+    /**
+     * Helper method used to treat string as extensions based on the specified
+     * flags
+     * 
+     * @param extension The extension string
+     * 
+     * @return The extension string filtered by the specified flag
+     */
+    public static String cleanExtensionMark(String extension, boolean supressExtension) {
+        if(extension.indexOf('.') == 0) {
+            return supressExtension ? extension.substring(1, extension.length()) : extension;
+        }
+        return supressExtension ? extension : '.' + extension;
+    }
+    
 	/**
 	 * Helper method used to obtain the filename of a file without it's extension
 	 * 
@@ -60,7 +75,8 @@ public final class Paths {
 	 * @return The logical absolute path associated to the class type specified
 	 */
 	public static String packageToPath(Class classType) {
-	    return classType.getPackage().getName().replace(".", File.separator);
+	    String name = classType.getPackage().getName();
+	    return name.indexOf(".") == -1 ? name + File.separator : name.replace(".", File.separator);
 	}
 	
 	/**

@@ -45,7 +45,7 @@ public interface IXMLCodec extends ISerializable<String> {
 	/**
 	 * File extension representation for all implementors of this codec
 	 */
-	public static final String FILE_EXTENSION = ".xml";
+	public static final String EXTENSION_XML = ".xml";
 	
 	//---------------------------------------------------------
 	/**

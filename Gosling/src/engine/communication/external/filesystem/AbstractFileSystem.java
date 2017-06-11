@@ -49,7 +49,7 @@ import engine.communication.internal.persistance.IXMLCodec;
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implements IXMLCodec {
 	
-	/**
+    /**
 	 * The data associated to this file system
 	 */
 	@XmlElement(name = "data")
@@ -61,8 +61,19 @@ public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implem
 	 * Note: This file represents the file of actually serializing the file system
 	 */
 	protected transient final File _file;
-		 
-	/**
+	
+    /**
+     * The extension used for png files
+     */
+    protected static transient final String EXTENSION_PNG = ".png";
+
+    /**
+     * The extension used for jar files 
+     */
+    protected static transient final String EXTENSION_JAR = ".jar";
+	
+    
+    /**
 	 * Default no-arg constructor as-per serialization guidelines dictates
 	 */
 	public AbstractFileSystem() {
