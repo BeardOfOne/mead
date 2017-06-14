@@ -38,12 +38,7 @@ public interface IBuilder {
 	 * @return The success of the user-input to determine if the build process should continue
 	 * 
 	 */
-	public boolean buildDialog();
-	
-	/**
-	 * Builds the contents are the setup of the application
-	 */
-	public void buildSetup();
+	public boolean buildStart();
 	
 	/**
 	 * Builds custom content
@@ -53,5 +48,5 @@ public interface IBuilder {
 	/**
 	 * Finalizes the building of the builder's tasks
 	 */
-	public void buildFinish();
+	public void buildEnd();
 }
