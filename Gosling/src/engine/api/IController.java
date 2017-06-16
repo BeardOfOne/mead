@@ -36,7 +36,7 @@ import engine.core.factories.ControllerFactory;
  * This is the top-most controller interface, for all sub-type implemented controller types
  * and interfaces
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public interface IController extends IDestructor, ISignalListener {
@@ -47,9 +47,16 @@ public interface IController extends IDestructor, ISignalListener {
 	public final ControllerFactory CONTROLLER_FACTORY = AbstractSignalFactory.getFactory(ControllerFactory.class);
 	
 	/**
+	 * Gets the controller properties associated to the type
+	 * 
+	 * @return The controller properties
+	 */
+	public ControllerProperties getControllerProperties();
+	
+	/**
 	 * This class represents the controller properties of each IController implemented type
 	 * 
-	 * @author Daniel Ricci <thedanny09@gmail.com>
+ 	 * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
 	 *
 	 */
 	public final class ControllerProperties implements IDestructor {
@@ -59,26 +66,57 @@ public interface IController extends IDestructor, ISignalListener {
 		 */
 		private final Map<String, ISignalReceiver> _signalListeners = new HashMap<>();
 		
+		/**
+		 * The IView associated to the IController
+		 */
 		private IView _view;
 		
-		@Override public void dispose() {
-			_view.dispose();
-		}
-		
+		/**
+		 * Sets the specified IView in this property object
+		 * 
+		 * @param view The specified view to set in this properties object
+		 */
 		public final void setView(IView view) {
 			this._view = view;
 		}
 		
+		/**
+		 * Gets the specified IView of this property object
+		 * 
+		 * @return The view
+		 */
 		public IView getView() {
 			return _view;
 		}
 		
+		/**
+		 * Gets the specified IView of this property object
+		 * 
+		 * @param viewType The concrete type to cast the view
+		 * @param <T> Any type extending IView
+		 * 
+		 * @return A concrete type of the view associated to this property object 
+		 */
+		public <T extends IView> T getView(Class<T> viewType) {
+			return (T)getView();
+		}
+		
+		/**
+		 * Checks if the view is in a visible state
+		 * 
+		 * @return TRUE if the view is visible, FALSE if the view is not visible
+		 */
 		public boolean isViewVisible() {
 			return getView().getContainerClass().isVisible();
 		}
 		
-		public <T extends IView> T getView(Class<T> viewType) {
-			return (T)getView();
+		/**
+		 * Gets the signal listeners associated to this property object
+		 * 
+		 * @return The signal listeners
+		 */
+		public Map<String, ISignalReceiver> getSignalListeners() {
+			return _signalListeners;
 		}
 
 		@Override public void flush() {
@@ -86,14 +124,12 @@ public interface IController extends IDestructor, ISignalListener {
 			_signalListeners.clear();
 		}
 		
-		public Map<String, ISignalReceiver> getSignalListeners() {
-			return _signalListeners;
+		@Override public void dispose() {
+			_view.dispose();
 		}
 	}
 	
 	@Override default Map<String, ISignalReceiver> getSignalListeners() {
 		return getControllerProperties().getSignalListeners();
 	}
-
-	public ControllerProperties getControllerProperties();
 }

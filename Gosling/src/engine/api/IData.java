@@ -22,7 +22,6 @@
 * IN THE SOFTWARE.
 */
 
-
 package engine.api;
 
 import java.util.ArrayList;
@@ -32,18 +31,10 @@ import java.util.List;
  * Provides a data contract for all data type objects; data related objects
  * should drive your game, they put the 'data' in data-driven game development
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public interface IData {
 	public static final List<IData> DATA = new ArrayList();
 	// TODO - define the methods to be implemented to be able to extract data
-	/*
-	
-	
-	
-	
-	
-	
-	 */
 }

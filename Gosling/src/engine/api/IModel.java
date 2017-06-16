@@ -37,7 +37,7 @@ import engine.core.factories.ModelFactory;
 /**
  * This interface describes the general contract rules of all model type implementors 
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
@@ -63,7 +63,7 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	/**
 	 * This is the model properties class representation of a particular model
 	 * 
-	 * @author Daniel Ricci <thedanny09@gmail.com>
+	 * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
 	 *
 	 */
 	public final class ModelProperties implements IDestructor {

@@ -38,7 +38,7 @@ import engine.core.factories.ViewFactory;
 /**
  * This contract specifies how views should operate within the framework. 
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
 public interface IView extends IDestructor, ISignalListener {
 	
@@ -50,7 +50,7 @@ public interface IView extends IDestructor, ISignalListener {
 	/**
 	 * The view properties that each IView will have
 	 * 
-	 * @author Daniel Ricci <thedanny09@gmail.com>
+	 * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
 	 */
 	public final class ViewProperties implements IDestructor {
 				

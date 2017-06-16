@@ -28,7 +28,7 @@ package engine.api;
  * Specifies a contract for flushing (clearing) resources effectively resetting its state, and
  * disposing of an object properly.
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public interface IDestructor {
@@ -41,7 +41,8 @@ public interface IDestructor {
 	 * effectively reseting the current object.  
 	 * 
 	 */
-	public void flush();
+	default public void flush() {
+	}
 	
 	/**
 	 * Call this method if you want to ready your object for finalize without
@@ -55,5 +56,6 @@ public interface IDestructor {
 	 * This method should bubble up and affect the entire hierarchy from this object
 	 * onwards
 	 */
-	public void dispose();
+	default public void dispose() {
+	}
 }
