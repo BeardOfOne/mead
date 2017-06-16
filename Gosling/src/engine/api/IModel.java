@@ -31,7 +31,7 @@ import java.util.UUID;
 import engine.communication.internal.persistance.IXMLCodec;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
-import engine.core.factories.AbstractFactory;
+import engine.core.factories.AbstractSignalFactory;
 import engine.core.factories.ModelFactory;
 
 /**
@@ -58,7 +58,7 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	/**
 	 * Helper method to easily get the factory associated to this interface
 	 */
-	public final ModelFactory MODEL_FACTORY = AbstractFactory.getFactory(ModelFactory.class);
+	public final ModelFactory MODEL_FACTORY = AbstractSignalFactory.getFactory(ModelFactory.class);
 	
 	/**
 	 * This is the model properties class representation of a particular model

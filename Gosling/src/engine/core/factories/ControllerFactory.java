@@ -32,6 +32,5 @@ import engine.api.IController;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public final class ControllerFactory extends AbstractFactory<IController> {
-	
+public final class ControllerFactory extends AbstractSignalFactory<IController> {
 }

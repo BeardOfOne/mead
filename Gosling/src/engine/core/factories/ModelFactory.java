@@ -35,7 +35,7 @@ import engine.communication.internal.signal.types.UUIDEvent;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public final class ModelFactory extends AbstractFactory<IModel> {
+public final class ModelFactory extends AbstractSignalFactory<IModel> {
 	
 	/**
 	 * Performs a selective multicast on the specified class type

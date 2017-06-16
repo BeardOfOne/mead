@@ -32,7 +32,7 @@ import engine.api.IView;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public final class ViewFactory extends AbstractFactory<IView> {
+public final class ViewFactory extends AbstractSignalFactory<IView> {
 
 	@Override public <U extends IView> U get(Class<U> resourceClass, boolean isShared, Object... resourceParameters) {
 		
