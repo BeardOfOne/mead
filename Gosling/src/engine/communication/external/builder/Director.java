@@ -52,9 +52,12 @@ public final class Director {
 	 * @return The success of the operation
 	 */
 	public boolean construct() {
-		
 		try {
-			_builder.buildStart();
+			if(!_builder.buildStart())
+			{
+				return false;
+			}
+
 			_builder.buildContent();
 			_builder.buildEnd();
 		} 
