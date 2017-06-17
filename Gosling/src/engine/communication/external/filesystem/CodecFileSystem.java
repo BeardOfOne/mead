@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * This filesystem represents the persistant filesystem for saving and loading the tilemap within the editor
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 @XmlRootElement(name = "FileSystem")
@@ -46,7 +46,7 @@ public class CodecFileSystem extends AbstractFileSystem {
 	/**
 	 * Constructs a new instance of this class type
 	 * 
-	 * @param path The path associated to this file system
+	 * @param file The file to associate to this file system
 	 */
 	public CodecFileSystem(File file) {
 		super(file);

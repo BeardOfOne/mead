@@ -32,14 +32,12 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
 
-//---------------------------------------------------------
 /**
  * Defines a codec for performing serialization and deserialization functionality
  * using XML
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
-//---------------------------------------------------------
 public interface IXMLCodec extends ISerializable<String> {
 	
 	/**
@@ -47,14 +45,12 @@ public interface IXMLCodec extends ISerializable<String> {
 	 */
 	public static final String EXTENSION_XML = ".xml";
 	
-	//---------------------------------------------------------
 	/**
 	 * Class that provides codec related functionality 
 	 * for JAXB compatible classes
 	 * 
-     * @author Daniel Ricci <thedanny09@gmail.com>
+     * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
 	 */
-	//---------------------------------------------------------
 	public final class XMLCodec {
 		
 		/**
@@ -72,16 +68,14 @@ public interface IXMLCodec extends ISerializable<String> {
 		 */
 		private Unmarshaller _unmarshaller;
 				
-		//---------------------------------------------------------
 		/**
 		 * Constructs a new codec
 		 * 
-		 * @param classType The type of class associated to the codec
+		 * @param classObject The type of class associated to the codec
 		 * 
 		 * @throws JAXBException This exception will be thrown if there is a problem in
 		 * 						 the JAXB creation/setting process
 		 */
-		//---------------------------------------------------------
     	public XMLCodec(Class classObject) throws JAXBException {
 
     		// Create the JAXB context with the specified class
@@ -94,36 +88,31 @@ public interface IXMLCodec extends ISerializable<String> {
     		_unmarshaller = _context.createUnmarshaller();
     	}
     	
-		//---------------------------------------------------------
     	/**
     	 * Sets the formatting state of the JAXB context
     	 * 
     	 * @param isFormatted If formatting should be done
-    	 * @throws PropertyException 
+    	 * 
+    	 * @throws PropertyException An exception will be thrown if the property could not be set
     	 */
-		//---------------------------------------------------------
     	public void setFormatted(boolean isFormatted) throws PropertyException {
-			_marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, (Boolean)isFormatted);
+			_marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, isFormatted);
     	}
 
-    	//---------------------------------------------------------
     	/**
     	 * Gets the marshaller associated to this context
     	 * 
     	 * @return The marshaller associated to the context
     	 */
-    	//---------------------------------------------------------
     	public Marshaller getMarshaller() {
     		return _marshaller;
     	}
 
-    	//---------------------------------------------------------
     	/**
     	 * Gets the unmarshaller associated to this context
     	 * 
     	 * @return The unmarshaller associated to the context
     	 */
-    	//---------------------------------------------------------
     	public Unmarshaller getUnmarshaller() {
     		return _unmarshaller;
     	}

@@ -29,7 +29,7 @@ import engine.api.IModel;
 /**
  * Events specific from an IModel source
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  * @param <T> The IModel type
  */

@@ -27,14 +27,34 @@ package engine.core.mvc.controller;
 import engine.api.IController;
 import engine.api.IView;
 
+/**
+ * Top-level controller class that holds common controller information
+ * 
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ *
+ */
 public abstract class BaseController implements IController  {
 
+	/**
+	 * The controller properties associated to this controller
+	 */
 	private final ControllerProperties _properties = new ControllerProperties();
 	
+	/**
+	 * Constructs a new instance of this class type
+	 * 
+	 * @param view The view associated to this controller
+	 * @param <T> A type extending any IView implemented class
+	 */
 	public <T extends IView> BaseController(T view) {
 		_properties.setView(view);
 	}
 	
+	/**
+	 * Gets the view associated to this controller
+	 * 
+	 * @return The view associated to this controller
+	 */
 	protected final IView getView() {
 		return _properties.getView();
 	}

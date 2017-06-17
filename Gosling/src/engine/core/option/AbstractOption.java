@@ -31,14 +31,40 @@ import javax.swing.JSeparator;
 
 import engine.core.mvc.controller.BaseController;
 
+/**
+ * Top-level option class used for creating menu items
+ * 
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ *
+ */
 public abstract class AbstractOption implements IOption {
 	
+	/**
+	 * The unique identifier of the menu item
+	 */
 	private final UUID _identifier = UUID.randomUUID();
-	private final String ParentKey = "__parent__";
 	
+	/**
+	 * The parent key associated to this option
+	 */
+	private final String _parentKey = "__parent__";
+	
+	/**
+	 * The component associated to this option
+	 */
 	private final JComponent _component;
+	
+	/**
+	 * The parent jcomponent associated to this option
+	 */
 	private final JComponent _parent;
 	
+	/**
+	 * Constructs a new instance of this class type
+	 * 
+	 * @param component The component to associate to this option
+	 * @param parent The parent component associated to this option
+	 */
 	protected AbstractOption(JComponent component, JComponent parent) {
 
 		_component = component;
@@ -47,8 +73,8 @@ public abstract class AbstractOption implements IOption {
 		_component.putClientProperty(component, this);
 		
 		if(parent != null) {
-			if(_parent.getClientProperty(ParentKey) == null) {
-				_parent.putClientProperty(ParentKey, parent);	
+			if(_parent.getClientProperty(_parentKey) == null) {
+				_parent.putClientProperty(_parentKey, parent);	
 			}
 			_parent.add(_component);
 		}
@@ -56,18 +82,63 @@ public abstract class AbstractOption implements IOption {
 		onInitialize();
 	}
 	
+	/**
+	 * Construcs a new instance of this class type
+	 * 
+	 * @param component The component to associate to this option
+	 * @param parent The abstract option to associate to this option
+	 */
 	protected AbstractOption(JComponent component, AbstractOption parent) {
 		this(component, parent._component);
 	}
 	
+	/**
+	 * Gets the component associated to this option
+	 * 
+	 * @return The associated component of this option
+	 */
 	public final JComponent getComponent() {
 		return _component;
 	}
 	
+	/**
+	 * Gets the parent component associated to this option
+	 * 
+	 * @return The parent component of this option
+	 */
 	public final JComponent getParentComponent() {
 		return _parent;
 	}
+
+	/**
+	 * Gets the specified component type
+	 * 
+	 * @param componentClass The class of the component to get
+	 * @param <T> A type extending a JComponent class
+	 * 
+	 * @return The specified component class
+	 */
+	protected final <T extends JComponent> T get(Class<T> componentClass) {
+		return (T)_component;
+	}
 	
+	/**
+	 * Gets the component associated to this option
+	 * 
+	 * @return The component associated to this option
+	 */
+	protected final JComponent get() {
+		return _component;
+	}
+	
+	/**
+	 * Adds a separator to this option
+	 */
+	public void addSeperator() {
+		JSeparator separator = new JSeparator();
+		_component.add(separator);
+	}
+
 	@Override public final String toString() {
 		return _identifier.toString();
 	}
@@ -81,14 +152,6 @@ public abstract class AbstractOption implements IOption {
 		return component.toString() == this.toString();
 	}
 	
-	protected final <T extends JComponent> T get(Class<T> componentClass) {
-		return (T)_component;
-	}
-	
-	protected final JComponent get() {
-		return _component;
-	}
-	
 	@Override public boolean visibility() {
 		return _component.isVisible();
 	}
@@ -100,10 +163,8 @@ public abstract class AbstractOption implements IOption {
 	@Override public void bind(BaseController controller) {
 	}
 	
-	public void addSeperator() {
-		JSeparator separator = new JSeparator();
-		_component.add(separator);
-	}
-
+	/**
+	 * Defines abstract functionality initializing an option
+	 */
 	protected abstract void onInitialize();
 }

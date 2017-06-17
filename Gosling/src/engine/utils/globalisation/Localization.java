@@ -32,34 +32,37 @@ import java.util.ResourceBundle;
 import engine.api.IDestructor;
 
 /**
+ * Defines the functionality for providing localization in an application 
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class Localisation<T extends Enum<T>> implements IDestructor {
+public abstract class Localization<T extends Enum<T>> implements IDestructor {
 	
 	/**
-	 * 
+	 * The active local of this localization effort
 	 */
 	private Locale _activeLocale;
 	
 	/**
-	 * 
+	 * A mapping of resources of locales to resource bundles
 	 */
 	private final Map<Locale, ResourceBundle> _resources = new HashMap<>();
 	
 	/**
+	 * Adds the specified locale to this localization effort
 	 * 
-	 * @param bundle
+	 * @param bundle The resource bundle to add to this localization effort
 	 */
-	public final void addLocale(ResourceBundle bundle) {
+	private final void addLocale(ResourceBundle bundle) {
 		_resources.put(bundle.getLocale(), bundle);
 	}
 	
 	/**
-	 * 
-	 * @param bundle
-	 * @param setActive
+	 * Adds the specified bundle to the localization and indicates if it is active
+	 *  
+	 * @param bundle The bundle to add to the locale
+	 * @param setActive If the bundle is active
 	 */
 	public final void addLocale(ResourceBundle bundle, boolean setActive) {
 		addLocale(bundle);
@@ -69,25 +72,36 @@ public abstract class Localisation<T extends Enum<T>> implements IDestructor {
 	}
 	
 	/**
+	 * Sets the active locale of this localization effort
 	 * 
-	 * @param locale
+	 * @param locale The locale to set
 	 */
-	public final void setActiveLocale(Locale locale) {
+	private final void setActiveLocale(Locale locale) {
 		if(_resources.containsKey(locale)) {
 			_activeLocale = locale;		
 		}
 	}
 	
+	/**
+	 * Gets a localized string of the specified key
+	 * 
+	 * @param key The key to lookup
+	 * 
+	 * @return The string associated to the key
+	 */
 	public final String getLocalizedString(T key) {
 		return getResource(key.toString());
 	}
 	
 	/**
+	 * Gets a resource associated to the specified key
 	 * 
-	 * @param key
-	 * @return
+	 * @param key The key resource to get
+	 * @param <U> A type extending the class {@link Object}
+	 * 
+	 * @return The object associated to the resource
 	 */
-	public final <U extends Object> U getResource(String key) { 
+	private final <U extends Object> U getResource(String key) { 
 		return (U)_resources.get(_activeLocale).getObject(key);
 	}
 

@@ -36,7 +36,7 @@ import engine.communication.internal.signal.types.ViewEvent;
 /**
  * Factory that serves SignalEvent type objects
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public final class SignalEventFactory {
@@ -52,10 +52,11 @@ public final class SignalEventFactory {
 	 * 
 	 * @param sender The source of where this entity occurs
 	 * @param operationName The name of the operation that will be performed, this is what others will listen for
+	 * @param <T> A type extending the class {@link Object}
 	 * 
 	 * @return A SignalEvent based on the specified parameters
 	 */
-	public static <T> SignalEvent<T> getSignalEvent(T sender, String operationName) {
+	public static <T extends Object> SignalEvent<T> getSignalEvent(T sender, String operationName) {
 
 		SignalEvent event = new NullEvent();
 		

@@ -27,14 +27,11 @@ package engine.communication.internal.signal.types;
 /**
  * Events specific from an IModel source
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
 public final class NullEvent extends SignalEvent {
 	/**
 	 * Constructs a new signal type event
-	 * 
-	 * @param sender The sender source
-	 * @param operationName The name of the operation being performed
 	 */
 	public NullEvent() {
 		super(0, null);

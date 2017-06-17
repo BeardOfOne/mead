@@ -30,7 +30,7 @@ import engine.api.IData;
  * Provides factory related operations for create IData implemented types, very useful for
  * handling external data elements
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  * @param <T> An IData implemented type
  */

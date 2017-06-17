@@ -34,6 +34,13 @@ import java.util.Queue;
 
 import engine.api.IDestructor;
 
+/**
+ * Top-most factory class that defines functionality for persisting/creating/storing objects
+ * 
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ *
+ * @param <T> Any type
+ */
 public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	
 	/**
@@ -95,6 +102,8 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	 * @param factoryClass The class to lookup in the 
 	 * 		  list of already created factories
 	 * 
+	 * @param <T> A type extending AbstractFactory
+	 * 
 	 * @return The factory of the specified concrete type
 	 */
 	public static final <T extends AbstractFactory> T getFactory(Class<T> factoryClass) {
@@ -130,6 +139,7 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	 * Attempts to the a cached resource 
 	 * 
 	 * @param resourceClass The class of the cached resource
+	 * @param <U> A type extending The class template type
 	 * 
 	 * @return A cached resource if it exists
 	 */
@@ -160,6 +170,7 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	 *  
 	 * @param resource The resource that was created to be added
 	 * @param isShared If the resource should be available publicly
+	 * @param <U> A type extending The class template type
 	 * 
 	 */
 	private final <U extends T> void add(U resource, boolean isShared) {
@@ -197,6 +208,7 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	 * Gets the specified concrete class based on the type provided
 	 * 
 	 * @param resourceClass The class of the resource to get
+	 * @param <U> A type extending The class template type 
 	 * 
 	 * @return The concrete class of the specified type
 	 */
@@ -222,6 +234,7 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	 * @param isShared If the resource should be shared when created
 	 * @param resourceParameters The arguments to be passed into 
 	 * 							 the resource class
+	 * @param <U> A type extending The class template type
 	 * 
 	 * @return The created or already created resource
 	 */
@@ -284,6 +297,8 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	 * the reference from both the history list and shared list.
 	 * 
 	 * @param resource The resource to remove
+	 * @param <U> A type extending The class template type
+	 * 
 	 */
 	public final <U extends T> void remove(U resource) {
 		
@@ -305,6 +320,7 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	 * 
 	 * @param resourceClass The class type of the resource
 	 * @param resources The list of resources
+	 * @param <U> A type extending The class template type
 	 */
 	public final <U extends T> void queueResources(Class<U> resourceClass, U... resources) {
 		
@@ -329,6 +345,7 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	 * Gets the total number of queue'd resources of the specified class type
 	 * 
 	 * @param resourceClass The resource class type
+	 * @param <U> A type extending The class template type
 	 * 
 	 * @return The total number of resources of the specified class type
 	 */

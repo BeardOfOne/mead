@@ -28,6 +28,12 @@ import java.util.Vector;
 
 import javax.swing.JComponent;
 
+/**
+ * A builder class for easily creating UI menus
+ * 
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ *
+ */
 public final class OptionBuilder {
 
     /**
@@ -52,7 +58,7 @@ public final class OptionBuilder {
 	/**
 	 * Builder entry-point
 	 *  
-	 * @param root The root component of this menu system
+	 * @param host The root component of this menu system
 	 * 
 	 * @return A reference to this builder
 	 */
@@ -63,7 +69,7 @@ public final class OptionBuilder {
 	/**
 	 * Builder entry-point
 	 * 
-     * @param root The root component of this menu system
+     * @param host The root component of this menu system
      * 
      * @return A reference to this builder
 	 */
@@ -87,6 +93,7 @@ public final class OptionBuilder {
 	 * Adds a new item of the specified component to the builder
 	 * 
 	 * @param component The type of component to construct
+	 * @param <T> A type extending an AbstractOption class
 	 * 
 	 * @return A reference to this builder
 	 */
@@ -107,6 +114,13 @@ public final class OptionBuilder {
 		return this;
 	}
 	
+	/**
+	 * Adds a separator to the list of options
+	 * 
+	 * @param <T> A type extending the class AbstractOption
+	 * 
+	 * @return A reference to this option builder
+	 */
 	public final <T extends AbstractOption> OptionBuilder AddSeparator() {
 		if(_root != null) {
 			T component = (T) _root.getClientProperty(_root);
@@ -116,7 +130,13 @@ public final class OptionBuilder {
 		return this;
 	}
 
-		
+	/**
+	 * Adds an option builder to this option builder
+	 * 
+	 * @param builder The option builder to associate to this option builder's item
+	 * 
+	 * @return A reference to this option builder
+	 */
     public OptionBuilder AddItem(OptionBuilder builder) {
         builder._root = _root;
         _components.addAll(builder._components);

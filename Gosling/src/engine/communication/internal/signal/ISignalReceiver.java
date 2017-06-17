@@ -28,6 +28,13 @@ import java.util.EventListener;
 
 import engine.communication.internal.signal.types.SignalEvent;
 
+/**
+ * Defines the contractual interface for consuming signal events
+ * 
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ *
+ * @param <T> A type extending a signal event
+ */
 public interface ISignalReceiver<T extends SignalEvent> extends EventListener {
 	
 	/**

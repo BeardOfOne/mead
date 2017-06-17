@@ -30,6 +30,13 @@ import java.util.List;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.types.SignalEvent;
 
+/**
+ * Factory that can communicate between signal types
+ * 
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ *
+ * @param <T> Any type extending from the ISignalListener interface
+ */
 public abstract class AbstractSignalFactory<T extends ISignalListener> extends AbstractFactory<T> {
 	
 	/**
@@ -37,6 +44,9 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	 * 
 	 * @param classType The type of class to send the event to
 	 * @param event The event to pass in, this is a signal event or one of its derived types
+	 * @param <U> A type extending The class template type
+	 * @param <V> A type extending The class SignalEvent
+	 * 
 	 */
 	public final <U extends T, V extends SignalEvent> void multicastSignal(Class<U> classType, V event) {
 		List<T> resources = _history.get(classType);
@@ -55,6 +65,8 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	 * 
 	 * @param resources The list of resources to send the signal to
 	 * @param event The event to pass in, this is a signal event or one of its derived types
+	 * @param <U> A type extending The class template type
+	 * @param <V> A type extending a signal event class
 	 */
 	public final <U extends T, V extends SignalEvent> void multicastSignal(Collection<U> resources, V event) {
 		if(resources != null) {

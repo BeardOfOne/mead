@@ -31,7 +31,7 @@ import engine.communication.internal.signal.ISignalReceiver;
 /**
  * The top-level class to form messages when invoking a signal
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public class SignalEvent<T extends Object> extends EventObject {

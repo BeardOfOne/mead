@@ -43,7 +43,7 @@ import engine.communication.internal.persistance.IXMLCodec;
 /**
  * Abstract functionality for all file system implementations
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)

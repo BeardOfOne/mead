@@ -41,7 +41,7 @@ import engine.communication.internal.signal.types.SignalEvent;
 /**
  * A Game Model represents the base class of all model type objects
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -72,7 +72,9 @@ public abstract class BaseModel implements IModel
 	 */
 	private transient SignalEvent _operationEvent;
 	
-	// TODO - this should be deleted
+	/**
+	 * Constructs a new instance of this class type
+	 */
 	protected BaseModel() {
 		registerSignalListeners();
 	}
@@ -172,11 +174,6 @@ public abstract class BaseModel implements IModel
 		return _operationName;
 	}
 	
-	/**
-	 * Gets the string representation of the unique identifier of this model
-	 * 
-	 * @return The UUID of this class
-	 */
 	@Override public final UUID getIdentifier() {
 		return _identifier;
 	}

@@ -27,7 +27,7 @@ package engine.communication.external.builder;
 /**
  * Director class used for directing builder type object
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public final class Director {

@@ -29,7 +29,7 @@ import engine.api.IView;
 /**
  * Events specific from an IView source
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  * @param <T> The IView type
  */

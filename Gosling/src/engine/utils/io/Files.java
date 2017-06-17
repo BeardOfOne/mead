@@ -6,6 +6,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.channels.FileChannel;
 
+/**
+ * Helper class for managing files
+ * 
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ *
+ */
 public class Files {
 	
 	/**

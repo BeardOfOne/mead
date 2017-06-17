@@ -32,7 +32,7 @@ import engine.communication.internal.signal.types.SignalEvent;
  * This interface defines a methodology for communicating signals between different sub-systems using
  * a signaling concept with a custom set of custom event arguments
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public interface ISignalListener {

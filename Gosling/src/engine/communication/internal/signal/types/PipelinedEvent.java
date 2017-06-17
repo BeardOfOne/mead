@@ -29,7 +29,7 @@ import engine.communication.internal.signal.IDataPipeline;
 /**
  * Events specific from an IController source
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  * @param <T> The IController type
  */

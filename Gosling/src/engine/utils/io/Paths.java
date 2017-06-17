@@ -30,7 +30,7 @@ import java.net.URL;
 /**
  * Class used for path related operations dealing with files of various sorts
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public final class Paths {
@@ -40,6 +40,7 @@ public final class Paths {
      * flags
      * 
      * @param extension The extension string
+     * @param supressExtension if the extension should be included or not
      * 
      * @return The extension string filtered by the specified flag
      */

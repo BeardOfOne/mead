@@ -42,7 +42,7 @@ import engine.communication.internal.persistance.IXMLCodec.XMLCodec;
  * This class represents an adapter for the base file system class structure, used to convert the complex
  * file system structure field types into something more basic
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  * @param <T> A serializable typed object
  */

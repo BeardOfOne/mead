@@ -31,7 +31,7 @@ import engine.api.IView;
 /**
  * This class represents a custom panel class that ties into the gosling MVC design pattern
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public abstract class PanelView extends JPanel implements IView {

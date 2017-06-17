@@ -34,8 +34,20 @@ import javax.swing.event.MenuListener;
 
 import engine.core.option.AbstractOption;
 
+/**
+ * Defines an abstract implementation for menu options, this is equivalent to a menu root
+ * 
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ *
+ */
 public abstract class OptionMenu extends AbstractOption {
 
+	/**
+	 * Constructs a new instance of this type
+	 * 
+	 * @param component The component associated to this option menu
+	 * @param parent The parent component associated to this option menu
+	 */
 	protected OptionMenu(JComponent component, JComponent parent) {
 		super(component, parent);
 	}

@@ -24,11 +24,19 @@
 
 package engine.communication.internal.persistance;
 
+/**
+ * Serializable interface defines top-level contractual functionality to serialize an object
+ * 
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ * 
+ * @param <T> A type extending the class {@link Object}
+ */
 public interface ISerializable<T extends Object> {
 	/**
 	 * This method allows implementors to define a way to serialize an object into a string
 	 * representation using whichever mechanism they want
-	 * @return
+	 * 
+	 * @return A serialized object representation
 	 */
 	public T serialize();
 }

@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlElement;
  * Represents a simple file system entry type, similar to an entry
  * within a mad with a simple key-value pair duo
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -60,6 +60,7 @@ public final class FileSystemElement {
 	
 	/**
 	 * Constructs a new instance of this class type
+	 * 
 	 * @param className The name of the class as a string
 	 * @param classValue The value as a string
 	 */

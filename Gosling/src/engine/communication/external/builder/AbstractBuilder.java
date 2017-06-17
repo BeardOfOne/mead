@@ -29,7 +29,7 @@ import engine.communication.external.filesystem.AbstractFileSystem;
 /**
  * The abstract representation of the methods implemented by all builder types
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public abstract class AbstractBuilder<T extends AbstractFileSystem> implements IBuilder {

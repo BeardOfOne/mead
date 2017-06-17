@@ -29,7 +29,7 @@ import engine.api.IView;
 /**
  * Factory for creating and working with IView types
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public final class ViewFactory extends AbstractSignalFactory<IView> {

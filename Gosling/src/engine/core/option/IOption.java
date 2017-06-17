@@ -28,12 +28,39 @@ import java.awt.event.ActionEvent;
 
 import engine.core.mvc.controller.BaseController;
 
+/**
+ * Interface that defines the functionality that must be provided by menu options
+ * 
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ *
+ */
 public interface IOption {
 	
+	/**
+	 * Gets the visibility of the option
+	 * 
+	 * @return TRUE if the option is visible, FALSE if the option is not visible
+	 */
 	public boolean visibility();
+	
+	/**
+	 * Gets if the option is enabled
+	 * 
+	 * @return TRUE if the option is enabled, FALSE if the option is not enabled
+	 */
 	public boolean enabled();
 	
+	/**
+	 * Defines a method for handling an execution of the option
+	 * 
+	 * @param actionEvent The action event associated to the call of this method
+	 */
 	public void onExecute(ActionEvent actionEvent);
 
+	/**
+	 * Binds the specified option to a particular controller
+	 * 
+	 * @param controller The controller to bind 
+	 */
 	public void bind(BaseController controller);
 }

@@ -40,7 +40,7 @@ import engine.api.IDestructor;
  * This class will construct the base listeners for the game, along with the engine
  * default values (pre-initialization) and other core functionality
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public abstract class Application extends JFrame implements IDestructor {

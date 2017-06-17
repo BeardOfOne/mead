@@ -178,6 +178,7 @@ public interface IView extends IDestructor, ISignalListener {
 		 * Note: This method compliments getController in that it does a cast for you
 		 * 
 		 * @param controllerType The type of controller to cast the associating controller to
+		 * @param <T> A type extending the class {@link IController}
 		 * 
 		 * @return The controller associated to view 
 		 */
@@ -194,6 +195,8 @@ public interface IView extends IDestructor, ISignalListener {
 		
 		/**
 		 * Gets a flag indicating if the view has been rendered at least once
+		 * 
+		 * @return If the view has been rendered
 		 */
 		public final boolean hasRendered() {
 			return _hasRendered;
@@ -255,20 +258,10 @@ public interface IView extends IDestructor, ISignalListener {
 	 */
 	public void initializeComponentBindings();
 	
-	@Override default Map<String, ISignalReceiver> getSignalListeners() {
-		return getViewProperties().getSignalListeners();
-	}
-	
-	@Override default void dispose() {
-		// TODO
-	}
-	
-	@Override default void flush() {
-		// TODO
-	}
-	
 	/**
 	 * Gets the containing class of the view, this is the container representation in Swing terms
+	 * 
+	 * @param <T> A type extending the class {@link Container}
 	 * 
 	 * @return The swing container of the view
 	 */
@@ -278,7 +271,8 @@ public interface IView extends IDestructor, ISignalListener {
 	
 	/**
 	 * Gets a flag indicating if the view has been rendered or not
-	 * @return
+	 * 
+	 * @return If the view has been rendered
 	 */
 	default public boolean hasRendered() {
 		return getViewProperties().hasRendered();
@@ -302,5 +296,9 @@ public interface IView extends IDestructor, ISignalListener {
 			getViewProperties().flagAsRendered();
 			getContainerClass().setVisible(true);	
 		}	
+	}
+	
+	@Override default Map<String, ISignalReceiver> getSignalListeners() {
+		return getViewProperties().getSignalListeners();
 	}
 }

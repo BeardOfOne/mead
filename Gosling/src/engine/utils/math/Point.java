@@ -32,19 +32,28 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * Point class that represents a three-dimensional location
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 @XmlRootElement(name = "Point")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Point {
 	
+	/**
+	 * x-axis value
+	 */
 	@XmlElement(name = "x")
 	public int x;
 	
+	/**
+	 * y-axis value
+	 */
 	@XmlElement(name = "y")
 	public int y;
 	
+	/**
+	 * z-axis value
+	 */
 	@XmlElement(name = "z")
 	public int z;
 	

@@ -35,7 +35,7 @@ import engine.api.IView;
 /**
  * A simple dialog that extends from the default swing dialog implementation
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public abstract class DialogView extends JDialog implements IView {
@@ -55,6 +55,8 @@ public abstract class DialogView extends JDialog implements IView {
 	 * 
 	 * @param parent The parent of this dialog
 	 * @param title The title for this dialog
+	 * 
+	 * @param <T> A type extending a class that implements the {@link IController} interface
 	 */
 	public <T extends IController> DialogView(Window parent, String title) {
 		super(parent, title);

@@ -27,7 +27,7 @@ package engine.communication.external.builder;
 /**
  * Interface for all builder related entities.
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public interface IBuilder {
@@ -36,7 +36,6 @@ public interface IBuilder {
 	 * list of automated build processes
 	 * 
 	 * @return The success of the user-input to determine if the build process should continue
-	 * 
 	 */
 	public boolean buildStart();
 	

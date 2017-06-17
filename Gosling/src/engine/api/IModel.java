@@ -98,6 +98,11 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	 */
 	public ModelProperties getModelProperties();
 	
+	/**
+	 * Gets the identifier associated with the model
+	 * 
+	 * @return The unique identifier of the object
+	 */
 	public abstract UUID getIdentifier();
 	
 	@Override default Map<String, ISignalReceiver> getSignalListeners() {

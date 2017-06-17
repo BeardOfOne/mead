@@ -32,7 +32,7 @@ import engine.communication.internal.signal.types.UUIDEvent;
 /**
  * The model factory used to create model type resources
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public final class ModelFactory extends AbstractSignalFactory<IModel> {
@@ -40,9 +40,12 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
 	/**
 	 * Performs a selective multicast on the specified class type
 	 * 
-	 * Note: This performs a selective multicast using the UUID of the 
+	 * Note: This performs a selective multicast using the UUID of the
+	 *  
 	 * @param classType The class type to multicast on
 	 * @param event The event to pass to each resource
+	 * @param <U> A type extending The class template type
+	 * @param <T> A type extending any class type
 	 */
 	public <U extends IModel, T extends Object> void selectiveMulticastSignal(Class<U> classType, UUIDEvent event) {
 

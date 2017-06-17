@@ -27,10 +27,16 @@ package engine.communication.internal.signal;
 /**
  * A simple interface for data exchange using IoC between two components
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  * @param <T> The type of data being piped between both components
  */
 public interface IDataPipeline<T extends Object> {
+	
+	/**
+	 * Piped the specified data back to some caller
+	 * 
+	 * @param data The data to pass through the pipe
+	 */
 	public void pipeData(T data);
 }

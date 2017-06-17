@@ -36,7 +36,7 @@ import engine.communication.internal.persistance.IXMLCodec;
 /**
  * List wrapper used to contain a list of complex objects, used for serialization/deserialization purposes
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)

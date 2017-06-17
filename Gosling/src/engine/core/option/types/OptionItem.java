@@ -32,8 +32,20 @@ import javax.swing.JMenuItem;
 
 import engine.core.option.AbstractOption;
 
+/**
+ * Defines an abstract class for option items, these are equivalent to menu items
+ * 
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ *
+ */
 public abstract class OptionItem extends AbstractOption{
 
+	/**
+	 * Constructs a new instance of this class type
+	 * 
+	 * @param component The component to associate to this option item
+	 * @param parent The parent component associated to this option item
+	 */
 	protected OptionItem(JComponent component, JComponent parent) {
 		super(component, parent);
 	}	
