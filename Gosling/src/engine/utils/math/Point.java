@@ -26,7 +26,7 @@ package engine.utils.math;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -42,28 +42,25 @@ public class Point {
 	/**
 	 * x-axis value
 	 */
-	@XmlElement(name = "x")
+	@XmlAttribute(name = "x")
 	public int x;
 	
 	/**
 	 * y-axis value
 	 */
-	@XmlElement(name = "y")
+	@XmlAttribute(name = "y")
 	public int y;
 	
 	/**
 	 * z-axis value
 	 */
-	@XmlElement(name = "z")
+	@XmlAttribute(name = "z")
 	public int z;
 	
 	/**
 	 * Default constructor as per serialization requirements
 	 */
 	public Point() {
-		x = 0;
-		y = 0;
-		z = 0;
 	}
 
 	/**
