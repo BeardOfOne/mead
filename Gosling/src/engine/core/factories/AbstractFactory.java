@@ -66,27 +66,66 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	protected final List<T> _resources = new ArrayList<>();
 	
 	/**
+	 * Indicates if this factory persists throughout the lifetime of the application
+	 */
+	private boolean _isPersistent;
+	
+	/**
 	 * Resets the factory
 	 */
 	public static final void reset() {
-		
-		// Flush the contents of the list of created factories
-		for(AbstractFactory factory : FACTORIES) {
-			factory.flush();
+		for(int i = FACTORIES.size() - 1; i >= 0; --i) {
+			AbstractFactory factory = FACTORIES.get(i);
+			if(!factory._isPersistent)
+			{
+				factory.flush();
+				FACTORIES.remove(i);
+			}
 		}
-		
-		// Clear the list of created factories
-		FACTORIES.clear();
 	}
 	
 	/**
-	 * Checks if the factory is running 
+	 * Sets if this factory is persistent
+	 * 
+	 * @param isPersistent A flag if the factory is persistent
+	 */
+	public final void setPersitant(boolean isPersistent) {
+		_isPersistent = isPersistent;
+	}
+	
+	/**
+	 * Gets if the factory is a persistent factory
+	 * 
+	 * @return TRUE if the factory is persistent, FALSE if it is not persistent
+	 */
+	public final boolean getIsPersistent() {
+		return _isPersistent;
+	}
+	
+	/**
+	 * Checks if there is a factory that is running
+	 * 
+	 * Note: For a factory to run there must have been something created
+	 *       in the factory, and it cannot be a factory that is non-persistent
 	 * 
 	 * @return Flag indicating if the factory is running
 	 */
-	public static boolean isRunning()
+	public static final boolean isRunning()
 	{
-		return FACTORIES.size() > 0;
+		// Go through the list of factories
+		for(AbstractFactory factory : FACTORIES) {
+			
+			// 1. Factories that cannot persist can be removed
+			// therefore their existence means that they are running
+			//
+			// 2. Even though a factory exists, if its not actually being used
+			//    then it shouldn't necessarily count as "running"
+			if(!factory._isPersistent && factory._history.size() > 0) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 	
 	/**
@@ -356,7 +395,6 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 		// Return the total number of resources of the specified class type
 		return cachedResources == null ? 0 : cachedResources.size();
 	}
-
 	
 	/**
 	 * Gets the total count of resources from the factory

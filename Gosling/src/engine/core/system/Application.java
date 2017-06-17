@@ -49,15 +49,16 @@ public abstract class Application extends JFrame implements IDestructor {
 	 * Constructs a new instance of this class
 	 */
     protected Application() {
-        setListeners();
-        setEngineDefaults();        
+    	initializeWindowListeners();
+        initializeEngineResources();        
+        
         setJMenuBar(new JMenuBar());
     }
     
     /**
      * Sets the listeners for the game
      */
-    private void setListeners() {
+    private void initializeWindowListeners() {
         addComponentListener(new ComponentAdapter() {
             @Override public void componentHidden(ComponentEvent e) {
                 setJMenuBar(null);
@@ -65,6 +66,7 @@ public abstract class Application extends JFrame implements IDestructor {
             @Override public void componentShown(ComponentEvent e) {
                 // Generate menu system
             	setWindowedInstanceMenu();
+            	
             	getJMenuBar().revalidate();
                 getJMenuBar().repaint();
             }
@@ -82,5 +84,5 @@ public abstract class Application extends JFrame implements IDestructor {
      * Note: This is a good place to initialize the resource manager
      * for localization.
      */
-    protected abstract void setEngineDefaults();
+    protected abstract void initializeEngineResources();
 }

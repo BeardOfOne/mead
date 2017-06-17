@@ -34,12 +34,7 @@ package engine.api;
 public interface IDestructor {
 
 	/**
-	 * If you want to reset this object than call this method.  If you 
-	 * want to destroy the object then you are better of calling Dispose
-	 * 
-	 * Sets all fields of this object to its default set of values
-	 * effectively reseting the current object.  
-	 * 
+	 * If you want to reset this object than call this method.  
 	 */
 	default public void flush() {
 	}

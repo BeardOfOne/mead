@@ -30,10 +30,20 @@ import engine.api.IData;
  * Provides factory related operations for create IData implemented types, very useful for
  * handling external data elements
  * 
+ * Note: Data Factories are persistent by default
+ * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  * @param <T> An IData implemented type
  */
 public class DataFactory<T extends IData> extends AbstractFactory<T> {
-	// TODO - this will hook into the proper data stuff to get the information
+	
+	/**
+	 * Constructs a new instance of this class type
+	 */
+	public DataFactory() {
+		
+		// Set this factory to a persistent state
+		setPersitant(true);
+	}
 }
