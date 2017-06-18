@@ -32,6 +32,5 @@ package engine.api;
  *
  */
 public interface IData {
-	//public static final List<IData> DATA = new ArrayList();
-	// TODO - define the methods to be implemented to be able to extract data
+
 }

@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.external.filesystem;
+package engine.communication.external.filesystem.types;
 
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -33,8 +33,6 @@ import java.util.Map.Entry;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
-import engine.communication.external.filesystem.types.FileSystemElement;
-import engine.communication.external.filesystem.types.FileSystemWrapperList;
 import engine.communication.internal.persistance.ISerializable;
 import engine.communication.internal.persistance.IXMLCodec.XMLCodec;
 

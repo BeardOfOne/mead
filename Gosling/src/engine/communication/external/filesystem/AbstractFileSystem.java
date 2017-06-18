@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import engine.api.IModel;
+import engine.communication.external.filesystem.types.FileSystemAdapter;
 import engine.communication.internal.persistance.ISerializable;
 import engine.communication.internal.persistance.IXMLCodec;
 
