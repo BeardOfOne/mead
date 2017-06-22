@@ -41,6 +41,12 @@ public final class DataFactory<T extends IData> extends AbstractDataFactory<T> {
 
 	@Override public void loadData() {
 		
+		String dataPath = EngineProperties.instance().getProperty(Property.DATA_PATH_VALUE);
+		if(dataPath == null || dataPath.length() > 0) {
+			System.out.println("Info: No data has been loaded");
+			return;
+		}
+		
 		// Create a data builder
 		DataBuilder dataBuilder = new DataBuilder(EngineProperties.instance().getProperty(Property.DATA_PATH_VALUE));
 			
