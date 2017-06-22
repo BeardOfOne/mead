@@ -25,7 +25,6 @@
 package engine.core.factories;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,24 +45,24 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	/**
 	 * The list of factories that have been constructed and that are still active 
 	 */
-	protected static final List<AbstractFactory> FACTORIES = new ArrayList<>();
+	static final List<AbstractFactory> FACTORIES = new ArrayList<>();
 	
 	/**
 	 * The history of all factory resources that have been created
 	 */
-	protected final Map<Class, List<T>> _history = new HashMap<>();
+	final Map<Class, List<T>> _history = new HashMap<>();
 	
 	/**
 	 * The cache holds items that have been pushed into the factory but that do not
 	 * currently have any association.  These items will take precedence over the creation
 	 * of new items first.
 	 */
-	protected final Map<Class, Queue<T>> _cache = new HashMap<>();
+	final Map<Class, Queue<T>> _cache = new HashMap<>();
 	
 	/**
 	 * The queue of resources that are publicly available
 	 */
-	protected final List<T> _resources = new ArrayList<>();
+	final List<T> _resources = new ArrayList<>();
 	
 	/**
 	 * Indicates if this factory persists throughout the lifetime of the application
@@ -89,7 +88,7 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	 * 
 	 * @param isPersistent A flag if the factory is persistent
 	 */
-	public final void setPersitant(boolean isPersistent) {
+	public final void setPersitent(boolean isPersistent) {
 		_isPersistent = isPersistent;
 	}
 	
@@ -330,7 +329,7 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 			
 		return createdClass;
 	}
-
+	
 	/**
 	 * Removes the specified resource from this factory.  This will remove
 	 * the reference from both the history list and shared list.
@@ -361,7 +360,20 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	 * @param resources The list of resources
 	 * @param <U> A type extending The class template type
 	 */
-	public final <U extends T> void queueResources(Class<U> resourceClass, U... resources) {
+	public final <U extends T> void queueResources(Class<U> resourceClass, List<U> resources) {
+		for(U resource : resources) {
+			queueResources(resourceClass, resource);
+		}
+	}
+	
+	/**
+	 * Queues the specified resource into the factory
+	 * 
+	 * @param resourceClass The class type of the resource
+	 * @param resources The resource to queue
+	 * @param <U> A type extending The class template type
+	 */
+	public final <U extends T> void queueResources(Class<U> resourceClass, U resource) {
 		
 		// Get the list of queue'd resources based on the resource class
 		Queue<T> cachedResources = _cache.get(resourceClass);
@@ -377,7 +389,28 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 		}
 		
 		// Populate the list of items using the reference
-		cachedResources.addAll(Arrays.asList(resources));
+		cachedResources.add(resource);
+	}
+	/**
+	 * Queue's the list of specified resources, and pushes them into the factory.
+	 * 
+	 * Note: Each resource is not shared.
+	 * 
+	 * @param resourceClass The class type of the resource
+	 * @param resources The resource data to queue
+	 * @param <U> A type extending The class template type
+	 */
+	public <U extends T> void queueResourcesPush(Class<U> resourceClass, U resource) {
+		
+		// Queue the specified resource
+		queueResources(resourceClass, resource);
+		
+		// Call 'get' on the resource, effectively forcing it to 
+		// be added into the queue.
+		// Note: This is done to follow the same conventions as the 'get' method, its good practice
+		if(this.get(resourceClass, false) == null) {
+			System.out.print("Error: Could not fetch one of the queued resources");
+		}
 	}
 	
 	/**
@@ -422,10 +455,6 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	@Override public void flush() {
 		_resources.clear();
 		_history.clear();	
-	}
-	
-	@Override public void dispose() {
-		// TODO - determine if its necessary to call dispose
-	    // on every item in the list first and then flush
-	}
+		_cache.clear();
+	}	
 }

@@ -31,6 +31,8 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
 import engine.api.IDestructor;
+import engine.core.factories.AbstractFactory;
+import engine.core.factories.DataFactory;
 
 /**
  * This class provides the entry point for all applications to extend
@@ -43,15 +45,18 @@ import engine.api.IDestructor;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class Application extends JFrame implements IDestructor {
+public abstract class AbstractApplication extends JFrame implements IDestructor {
 
+	/**
+	 * The singleton instance of this class
+	 */
+	private static AbstractApplication _instance;
+	
 	/**
 	 * Constructs a new instance of this class
 	 */
-    protected Application() {
-    	initializeWindowListeners();
-        initializeEngineResources();        
-        
+    protected AbstractApplication() {
+    	// Set the menu of the application
         setJMenuBar(new JMenuBar());
     }
     
@@ -72,7 +77,64 @@ public abstract class Application extends JFrame implements IDestructor {
             }
         });
     }
+
+    /**
+     * Gets the singleton instance of this application
+     * 
+     * @return The singleton instance
+     */
+    public static AbstractApplication instance() {
+    	return _instance;
+    }
     
+    /**
+     * Initializes the singleton instance, this should be called before the {@code instance()} method
+     * 
+     * @param classType The specified class type to construct
+     * 
+     * @throws Exception If something went wrong, please note that this calls the default constructor of your class type
+     */
+    protected static <T extends AbstractApplication> AbstractApplication initialize(Class<T> classType) throws Exception {
+    	if(_instance == null) {
+    		
+    		// Create the new instance
+    		_instance = classType.getConstructor().newInstance();
+    	
+	    	// Load the engine properties, this must be done before doing anything else
+    		_instance.initializeEngineProperties();
+	
+	    	// Load the window listeners of the application
+    		_instance.initializeWindowListeners();
+	    	
+	    	// Load the engine resources of the application
+    		_instance.initializeEngineResources();      
+    		
+    		// Load the data into the engine
+    		_instance.loadData();
+    	}
+    	
+    	return _instance;
+    }
+
+    /**
+     * Loads data based on the specified engine properties data path into the 
+     * abstract data factory
+     */
+    private void loadData() {
+		try {
+			// Load the data into the game
+			AbstractFactory.getFactory(DataFactory.class).loadData();
+			
+		} catch (Exception exception) {
+
+			// Print the stack trace
+			exception.printStackTrace();
+			
+			// Exit the system with a bad error code
+			System.exit(1);
+		}
+    }
+    	
     /**
      * Sets the menu functionality for the game
      */
@@ -85,4 +147,9 @@ public abstract class Application extends JFrame implements IDestructor {
      * for localization.
      */
     protected abstract void initializeEngineResources();
+    
+    /**
+     * Initializes the engine properties
+     */
+    protected abstract void initializeEngineProperties();
 }

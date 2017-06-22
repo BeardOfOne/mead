@@ -25,10 +25,15 @@
 package engine.communication.external.builder;
 
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 
-import engine.communication.external.builder.AbstractBuilder;
+import engine.api.IData;
 import engine.communication.external.filesystem.DataFileSystem;
 import engine.communication.internal.persistance.IXMLCodec.XMLCodec;
+import engine.core.factories.AbstractFactory;
+import engine.core.factories.DataFactory;
 
 /**
  * Data builder used for building data from the editor and
@@ -50,7 +55,7 @@ public class DataBuilder extends AbstractBuilder<DataFileSystem> {
 	 * @param path The path where the data resides
 	 */
 	public DataBuilder(String path) {
-		_path = path;//"/generated/tilemap.xml"
+		_path = path;
 	}
 	
 	@Override public boolean buildStart() {
@@ -65,11 +70,10 @@ public class DataBuilder extends AbstractBuilder<DataFileSystem> {
 			Object fileSystem = codec.getUnmarshaller().unmarshal(inStream);
 			
 			// Create the file system 
-			_fileSystem = (DataFileSystem) fileSystem;
-
+			setFileSystem((DataFileSystem)fileSystem);
 		} 
-		catch (Exception e) {
-			e.printStackTrace();
+		catch (Exception exception) {
+			exception.printStackTrace();
 			return false;
 		}
 		
@@ -78,6 +82,19 @@ public class DataBuilder extends AbstractBuilder<DataFileSystem> {
 	}
 	
 	@Override public void buildContent() {
+		
+		// Get the list of values in the file system
+		Collection<ArrayList<IData>> collectionSet = getAllData().values();
+		
+		// Go through the list of data within the collection
+		for(Iterator<ArrayList<IData>> iterator = collectionSet.iterator(); iterator.hasNext();) {
+			
+			// Go through the data
+			ArrayList<IData> dataList = iterator.next();
+			
+			// Queue the data in the data factory
+			AbstractFactory.getFactory(DataFactory.class).queueResourcesPush(IData.class, dataList);
+		}		
 	}
 
 	@Override public void buildEnd() {

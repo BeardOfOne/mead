@@ -25,29 +25,28 @@
 package engine.core.factories;
 
 import engine.api.IData;
-import engine.communication.external.builder.DataBuilder;
-import engine.communication.external.builder.Director;
-import engine.core.system.EngineProperties;
-import engine.core.system.EngineProperties.Property;
 
 /**
- * Data factory for extracting data from an external source
- * based on specified types
+ * Provides factory related operations for create IData implemented types, very useful for
+ * handling external data elements
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * Note: Data Factories are persistent by default
+ * 
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
+ * @param <T> An IData implemented type
  */
-public final class DataFactory<T extends IData> extends AbstractDataFactory<T> {
-
-	@Override public void loadData() {
-		
-		// Create a data builder
-		DataBuilder dataBuilder = new DataBuilder(EngineProperties.instance().getProperty(Property.DATA_PATH_VALUE));
-			
-		// Create a director and use the data builder to extract content
-		Director director = new Director(dataBuilder);
-
-		// Construct the content held by the director
-		director.construct();
+public abstract class AbstractDataFactory<T extends IData> extends AbstractFactory<T> {
+	
+	/**
+	 * Constructs a new instance of this class type
+	 */
+	public AbstractDataFactory() {
+		setPersitent(true);
 	}
+	
+	/**
+	 * Loads data into this factory
+	 */
+	public abstract void loadData();
 }

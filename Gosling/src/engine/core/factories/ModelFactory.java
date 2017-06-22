@@ -68,4 +68,16 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
 			}			
 		}
 	}
+	
+	/**
+	 * Gets the list of all models of the specified class type created
+	 * 
+	 * @param classType The class type to lookup
+	 * 
+	 * @return The list of models of the specified type
+	 */
+	public <U extends IModel> List<U> getAll(Class<U> classType) {
+		List<U> resources = (List<U>) _history.get(classType);
+		return resources;
+	}
 }

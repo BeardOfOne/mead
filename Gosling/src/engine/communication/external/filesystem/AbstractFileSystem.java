@@ -105,6 +105,15 @@ public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implem
 	}
 	
 	/**
+	 * Gets the entire data set associated to the file system
+	 * 
+	 * @return The entire data set mapping
+	 */
+	public final Map<Class<T>, List<T>> getAllData() {
+		return _data;
+	}
+	
+	/**
 	 * Removes all the data within the file system except that specified
 	 * 
 	 * @param classType The class type to keep within the file system
