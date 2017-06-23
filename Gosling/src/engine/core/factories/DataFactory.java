@@ -36,10 +36,21 @@ import engine.core.system.EngineProperties.Property;
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
+ * @param <T> An IData implemented type
  */
-public final class DataFactory<T extends IData> extends AbstractDataFactory<T> {
+public final class DataFactory<T extends IData> extends AbstractFactory<T> {
 
-	@Override public void loadData() {
+	/**
+	 * Constructs a new instance of this class type
+	 */
+	public DataFactory() {
+		setPersitent(true);
+	}
+	
+	/**
+	 * Loads the data specified by the engine data path
+	 */
+	public void loadData() {
 		
 		String dataPath = EngineProperties.instance().getProperty(Property.DATA_PATH_VALUE);
 		if(dataPath == null || dataPath.length() == 0) {
