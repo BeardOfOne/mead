@@ -182,25 +182,35 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	 * @return A cached resource if it exists
 	 */
 	private <U extends T> U getCachedResource(Class<U> resourceClass) {
+		
+		// Get the cache list based on the specified resource class
 		Queue<T> cachedResources = _cache.get(resourceClass);
-		if(cachedResources != null && cachedResources.size() > 0 ) {
 		
-			// Remove the item from the queue
-			T resource = cachedResources.remove();
+		T resource = null;
+		
+		// If the cached resources exists 
+		if(cachedResources != null) {
+				
+			// If there are items to get
+			if(cachedResources.size() > 0) {
+				
+				// Remove the item from the queue and get its reference
+				resource = cachedResources.remove();
 			
-			// Logging information
-			System.out.println("Using the queue to fetch the resource " + resourceClass.getCanonicalName());
+				// Logging information
+				System.out.println("Info: Queue'd item " + resourceClass.getCanonicalName() + " being used, items left in queue = " + cachedResources.size());				
+			}
 			
-			// return the result
-			return (U) resource;
-		}
-		else {
-			
-			// Remove the no longer needed entry
-			_cache.remove(resourceClass);
+			// If there are no more entries then just remove the key, it is no longer needed
+			if(cachedResources.isEmpty()) {
+				System.out.print("Info: No more entries in cache for " + resourceClass.getCanonicalName() + ", removing associated key");
+				
+				// Remove the no longer needed entry
+				_cache.remove(resourceClass);			
+			} 		
 		}
 		
-		return null;
+		return resource != null ? (U)resource : null;
 	}
 	
 	/**
