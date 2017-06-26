@@ -73,6 +73,10 @@ public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implem
      */
     protected static transient final String EXTENSION_JAR = ".jar";
 	
+    /**
+     * The extension used for java files
+     */
+    protected static transient final String EXTENSION_JAVA = ".java";
     
     /**
 	 * Default no-arg constructor as-per serialization guidelines dictates

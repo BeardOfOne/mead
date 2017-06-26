@@ -24,6 +24,8 @@
 
 package engine.core.factories;
 
+import java.util.List;
+
 import engine.api.IData;
 import engine.communication.external.builder.DataBuilder;
 import engine.communication.external.builder.Director;
@@ -36,7 +38,7 @@ import engine.core.system.EngineProperties.Property;
  * 
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
- * @param <T> An IData implemented type
+ * @param <T> An {@link IData} implemented type
  */
 public final class DataFactory<T extends IData> extends AbstractFactory<T> {
 
@@ -48,11 +50,43 @@ public final class DataFactory<T extends IData> extends AbstractFactory<T> {
 	}
 	
 	/**
+	 * Gets a data resource based on the specified class type and name
+	 * 
+	 * @param classType The class type to get
+	 * @param name The name of the resource
+	 * 
+	 * @return A data resource of type {@link IData}
+	 */
+	public T getByName(Class<T> classType, String name) {
+		
+		// Get the list of resource associated to the class type
+		List<T> resources = _history.get(classType);
+		
+		// If the resources exist
+		if(resources != null) {
+			
+			// Go through the list of resources and try to find the
+			// resource with the specified name
+			for(T resource : resources) {
+				if(resource.getName().equalsIgnoreCase(name)) {
+					return resource;
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Loads the data specified by the engine data path
 	 */
 	public void loadData() {
 		
+		// Get the value set within the engine properties for where to fetch 
+		// the data from
 		String dataPath = EngineProperties.instance().getProperty(Property.DATA_PATH_VALUE);
+		
+		// If the data path has not been set or it was set inappropriately
 		if(dataPath == null || dataPath.length() == 0) {
 			System.out.println("Info: No data has been loaded");
 			return;

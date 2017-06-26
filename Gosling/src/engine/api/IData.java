@@ -33,4 +33,17 @@ package engine.api;
  */
 public interface IData {
 
+	/**
+	 * Gets the name of the IData implemented type
+	 * 
+	 * @return The name of the IData implemented type
+	 */
+	public String getName();
+	
+	/**
+	 * Gets the name of the layer associated to the data
+	 * 
+	 * @return The name, if any, of the layer.
+	 */
+	public String getLayerName();
 }
