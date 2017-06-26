@@ -203,7 +203,7 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 			
 			// If there are no more entries then just remove the key, it is no longer needed
 			if(cachedResources.isEmpty()) {
-				System.out.print("Info: No more entries in cache for " + resourceClass.getCanonicalName() + ", removing associated key");
+				System.out.println("Info: No more entries in cache for " + resourceClass.getCanonicalName() + ", removing associated key");
 				
 				// Remove the no longer needed entry
 				_cache.remove(resourceClass);			

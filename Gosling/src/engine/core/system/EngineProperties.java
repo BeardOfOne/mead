@@ -52,7 +52,16 @@ public final class EngineProperties {
 	 *
 	 */
 	public enum Property {
-		DATA_PATH_VALUE
+		
+		/**
+		 * The path where the .xml is stored for marshalling/unmarshalling 
+		 */
+		DATA_PATH_XML,
+		
+		/**
+		 * The path where the sheet is stored, this is all the images (tilemap or atlas, etc)
+		 */
+		DATA_PATH_SHEET
 	}
 	
 	/**

@@ -24,6 +24,8 @@
 
 package engine.api;
 
+import java.awt.Image;
+
 /**
  * Provides a data contract for all data type objects; data related objects
  * should drive your game, they put the 'data' in data-driven game development
@@ -46,4 +48,11 @@ public interface IData {
 	 * @return The name, if any, of the layer.
 	 */
 	public String getLayerName();
+
+	/**
+	 * Gets the image data associated to the implemented data type
+	 * 
+	 * @return The image data
+	 */
+	public Image getImageData();
 }

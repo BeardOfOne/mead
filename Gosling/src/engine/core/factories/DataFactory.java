@@ -84,7 +84,7 @@ public final class DataFactory<T extends IData> extends AbstractFactory<T> {
 		
 		// Get the value set within the engine properties for where to fetch 
 		// the data from
-		String dataPath = EngineProperties.instance().getProperty(Property.DATA_PATH_VALUE);
+		String dataPath = EngineProperties.instance().getProperty(Property.DATA_PATH_XML);
 		
 		// If the data path has not been set or it was set inappropriately
 		if(dataPath == null || dataPath.length() == 0) {
@@ -93,7 +93,7 @@ public final class DataFactory<T extends IData> extends AbstractFactory<T> {
 		}
 		
 		// Create a data builder
-		DataBuilder dataBuilder = new DataBuilder(EngineProperties.instance().getProperty(Property.DATA_PATH_VALUE));
+		DataBuilder dataBuilder = new DataBuilder(dataPath);
 			
 		// Create a director and use the data builder to extract content
 		Director director = new Director(dataBuilder);
