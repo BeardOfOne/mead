@@ -410,16 +410,18 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	 * @param resources The resource data to queue
 	 * @param <U> A type extending The class template type
 	 */
-	public <U extends T> void queueResourcesPush(Class<U> resourceClass, U resource) {
+	public <U extends T> void queueResourcesPush(Class<U> resourceClass, List<U> resources) {
 		
 		// Queue the specified resource
-		queueResources(resourceClass, resource);
+		queueResources(resourceClass, resources);
 		
-		// Call 'get' on the resource, effectively forcing it to 
-		// be added into the queue.
-		// Note: This is done to follow the same conventions as the 'get' method, its good practice
-		if(this.get(resourceClass, false) == null) {
-			System.out.print("Error: Could not fetch one of the queued resources");
+		for(int i = 0, size = resources.size(); i < size; ++i) {
+			// Call 'get' on the resource, effectively forcing it to 
+			// be added into the queue.
+			// Note: This is done to follow the same conventions as the 'get' method, its good practice
+			if(this.get(resourceClass, false) == null) {
+				System.out.print("Error: Could not fetch one of the queued resources");
+			}		
 		}
 	}
 	

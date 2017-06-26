@@ -89,11 +89,10 @@ public class DataBuilder extends AbstractBuilder<DataFileSystem> {
 		// Go through the list of data within the collection
 		for(Iterator<ArrayList<IData>> iterator = collectionSet.iterator(); iterator.hasNext();) {
 			
-			// Go through the data
 			ArrayList<IData> dataList = iterator.next();
 			
 			// Queue the data in the data factory
-			AbstractFactory.getFactory(DataFactory.class).queueResourcesPush(IData.class, dataList);
+			AbstractFactory.getFactory(DataFactory.class).queueResourcesPush(dataList.get(0).getClass(), dataList);				
 		}		
 	}
 
