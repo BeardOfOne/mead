@@ -63,12 +63,20 @@ public abstract class PanelView extends JPanel implements IView {
 	
 	/**
 	 * Renders the contents currently held in the render cache
-	 * @param graphics
+	 * 
+	 * @param context The graphics context
 	 */
-	protected final void renderContent(Graphics graphics) {
+	protected final void renderContent(Graphics context) {
 		for(IRenderable content : _renderCache) {
-			content.render(this, graphics);
+			content.render(this, context);
 		}
+	}
+	
+	@Override protected void paintComponent(Graphics graphics) {
+		super.paintComponent(graphics);
+		
+		// Render the contents attached to the view
+		renderContent(graphics);
 	}
 	
 	@Override public void update(SignalEvent signalEvent) {
