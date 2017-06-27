@@ -22,44 +22,25 @@
 * IN THE SOFTWARE.
 */
 
-package engine.api;
+package game.api;
 
-import java.awt.Image;
+import java.awt.Graphics;
+
+import engine.api.IView;
 
 /**
- * Provides a data contract for all data type objects; data related objects
- * should drive your game, they put the 'data' in data-driven game development
+ * Provides a rendering contract for rendering various types into
+ * an {@link IView} context type
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
- *
  */
-public interface IData {
-
-	/**
-	 * Gets the name of the IData implemented type
-	 * 
-	 * @return The name of the IData implemented type
-	 */
-	public String getName();
+public interface IRenderable {
 	
 	/**
-	 * Gets the friendly name of the data
+	 * Renders contents into the specified {@link IView} context
 	 * 
-	 * @return The friendly name of the data 
+	 * @param view The IView where the rendering occurs
+	 * @param context The context of the graphics.  This should be the graphics from paint component method
 	 */
-	public String getFriendlyName();
-	
-	/**
-	 * Gets the name of the layer associated to the data
-	 * 
-	 * @return The name, if any, of the layer.
-	 */
-	public String getLayerName();
-
-	/**
-	 * Gets the image data associated to the implemented data type
-	 * 
-	 * @return The image data
-	 */
-	public Image getImageData();
+	public void render(IView view, Graphics context);
 }

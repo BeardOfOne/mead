@@ -24,9 +24,15 @@
 
 package engine.core.mvc.view;
 
+import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.swing.JPanel;
 
 import engine.api.IView;
+import engine.communication.internal.signal.types.SignalEvent;
+import game.api.IRenderable;
 
 /**
  * This class represents a custom panel class that ties into the gosling MVC design pattern
@@ -41,6 +47,36 @@ public abstract class PanelView extends JPanel implements IView {
 	 */
 	private final ViewProperties _properties = new ViewProperties(this);
 		
+	/**
+	 * The list of IRenderable content that can be draw to the panel
+	 */
+	private final List<IRenderable> _renderCache = new ArrayList();
+	
+	/**
+	 * Adds renderable content to be rendered in the paint pipeline
+	 * 
+	 * @param content The content to be rendered
+	 */
+	protected final void addRenderableContent(IRenderable content) {
+		_renderCache.add(content);
+	}
+	
+	/**
+	 * Renders the contents currently held in the render cache
+	 * @param graphics
+	 */
+	protected final void renderContent(Graphics graphics) {
+		for(IRenderable content : _renderCache) {
+			content.render(this, graphics);
+		}
+	}
+	
+	@Override public void update(SignalEvent signalEvent) {
+		if(signalEvent.getSource() instanceof IRenderable) {
+			_renderCache.clear();		
+		}
+	}
+	
 	@Override public final ViewProperties getViewProperties() {
 		return _properties;
 	}
