@@ -29,8 +29,6 @@ import java.util.Map;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
-import engine.core.factories.AbstractSignalFactory;
-import engine.core.factories.ControllerFactory;
 
 /**
  * This is the top-most controller interface, for all sub-type implemented controller types

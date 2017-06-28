@@ -31,8 +31,6 @@ import java.util.UUID;
 import engine.communication.internal.persistance.IXMLCodec;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
-import engine.core.factories.AbstractSignalFactory;
-import engine.core.factories.ModelFactory;
 
 /**
  * This interface describes the general contract rules of all model type implementors 

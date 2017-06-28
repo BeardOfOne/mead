@@ -32,8 +32,6 @@ import java.util.Map;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
-import engine.core.factories.AbstractSignalFactory;
-import engine.core.factories.ViewFactory;
 
 /**
  * This contract specifies how views should operate within the framework. 
