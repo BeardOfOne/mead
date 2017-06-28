@@ -42,11 +42,6 @@ import engine.core.factories.ControllerFactory;
 public interface IController extends IDestructor, ISignalListener {
 	
 	/**
-	 * Helper method to easily get the factory associated to this interface
-	 */
-	public final ControllerFactory CONTROLLER_FACTORY = AbstractSignalFactory.getFactory(ControllerFactory.class);
-	
-	/**
 	 * Gets the controller properties associated to the type
 	 * 
 	 * @return The controller properties

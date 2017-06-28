@@ -43,11 +43,6 @@ import engine.core.factories.ViewFactory;
 public interface IView extends IDestructor, ISignalListener {
 	
 	/**
-	 * Helper method to easily get the factory associated to this interface
-	 */
-	public final ViewFactory VIEW_FACTORY = AbstractSignalFactory.getFactory(ViewFactory.class);
-	
-	/**
 	 * The view properties that each IView will have
 	 * 
 	 * @author Daniel Ricci {@literal <thedanny09@gmail.com>}

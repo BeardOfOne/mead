@@ -56,11 +56,6 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	public static final String EVENT_PIPE_DATA = "EVENT_PIPE_DATA";
 	
 	/**
-	 * Helper method to easily get the factory associated to this interface
-	 */
-	public final ModelFactory MODEL_FACTORY = AbstractSignalFactory.getFactory(ModelFactory.class);
-	
-	/**
 	 * This is the model properties class representation of a particular model
 	 * 
 	 * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
