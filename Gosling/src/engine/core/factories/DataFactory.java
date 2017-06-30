@@ -24,7 +24,11 @@
 
 package engine.core.factories;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import engine.api.IData;
 import engine.communication.external.builder.DataBuilder;
@@ -43,24 +47,33 @@ import engine.core.system.EngineProperties.Property;
 public final class DataFactory<T extends IData> extends AbstractFactory<T> {
 
 	/**
+	 * Holds the mappings of layer names to data resources.
+	 * Key = The name of the layer
+	 * Value = All the IData types that have that layer name
+	 * 
+	 * Note: The key should be lowercase at all times for normalization reasons
+	 */
+	private final Map<String, List<T>> _data = new HashMap();
+	
+	/**
 	 * Constructs a new instance of this class type
 	 */
 	public DataFactory() {
-		setPersitent(true);
+		isPersistent = true;
 	}
 	
 	/**
-	 * Gets a data resource based on the specified class type and name
+	 * Gets a data resource based on the specified layer name and the data name
 	 * 
-	 * @param classType The class type to get
-	 * @param name The name of the resource
+	 * @param layerName The name of the layer to perform the lookup on
+	 * @param dataName The name of the resource to lookup with the specified layer
 	 * 
 	 * @return A data resource of type {@link IData}
 	 */
-	public T getByName(Class<T> classType, String name) {
+	public T getByName(String layerName, String dataName) {
 		
 		// Get the list of resource associated to the class type
-		List<T> resources = _history.get(classType);
+		List<T> resources = getByLayer(layerName);
 		
 		// If the resources exist
 		if(resources != null) {
@@ -68,12 +81,34 @@ public final class DataFactory<T extends IData> extends AbstractFactory<T> {
 			// Go through the list of resources and try to find the
 			// resource with the specified name
 			for(T resource : resources) {
-				if(resource.getName().equalsIgnoreCase(name)) {
+				if(resource.getName().equalsIgnoreCase(dataName.toLowerCase())) {
 					return resource;
 				}
 			}
 		}
 		
+		return null;
+	}
+	
+	/**
+	 * Gets the list of resources associated to the specified layer name
+	 * 
+	 * @param layerName The name of the layer to lookup
+	 * 
+	 * @return The list of {@link IData} types associated to the specified layer name
+	 */
+	public List<T> getByLayer(String layerName) {
+
+		// Get the list of data
+		List<T> data = _data.get(layerName.toLowerCase());
+		
+		// If there is a valid entry then return a new list 
+		// of its results
+		if(data != null) {
+			return new ArrayList(data); 
+		}
+
+		// Nothing found
 		return null;
 	}
 	
@@ -100,5 +135,24 @@ public final class DataFactory<T extends IData> extends AbstractFactory<T> {
 
 		// Construct the content held by the director
 		director.construct();
+	}
+	
+	/**
+	 * Adds the specified data resources in this factory.  The current structure of the data resources
+	 * consists of a mapping of layer names to {@link IData} implemented concrete types
+	 * 
+	 * @param resources The list of resources
+	 */
+	public <U extends T> void addDataResources(List<U> resources)  {
+		
+		// Create a mapping of layer name to IData types
+		Map<String, List<U>> mappings = resources.stream().collect(Collectors.groupingBy(U::getLayerName));
+		
+		// Go through each kvp and add its contents into the factory
+		for(Map.Entry<String, List<U>> mapping : mappings.entrySet()) {
+			
+			// Add the data entry into the mappings structure
+			_data.put(mapping.getKey().toLowerCase(), (List<T>) mapping.getValue());
+		}
 	}
 }

@@ -22,16 +22,14 @@
 * IN THE SOFTWARE.
 */
 
-package game;
+package game.core;
 
-import java.awt.Container;
-import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 
 import engine.api.IData;
-import engine.api.IView;
 import engine.core.factories.AbstractFactory;
 import engine.core.factories.DataFactory;
-import engine.core.mvc.model.BaseModel;
 import game.api.IRenderable;
 
 /**
@@ -39,30 +37,26 @@ import game.api.IRenderable;
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
-public abstract class AbstractEntity<T extends IData> extends BaseModel implements IRenderable {
-
+public abstract class AbstractEntity<T extends IData> implements IRenderable {
+	
 	/**
 	 * The data associated to the data entity
 	 */
-	private final T _data;
+	private final List<T> _data = new ArrayList();
 	
-	/**
-	 * Constructs a new instance of this class type
-	 * 
-	 * @param classType The class type associated to the data
-	 * @param name The name of the data entity for lookup
-	 */
-	protected AbstractEntity(Class<T> classType, Enum name) {
-		_data = (T) AbstractFactory.getFactory(DataFactory.class).getByName(classType, name.toString());
+	protected final void addData(String layerName, String dataName) {
+		_data.add((T) AbstractFactory.getFactory(DataFactory.class).getByName(layerName, dataName));
 	}
 	
-	@Override public void render(IView view, Graphics context) {
-		
-		// Get a reference to the container of the context provided
-		Container container = view.getContainerClass();
-		
-		// Draw into the graphics of the context provided the data
-		// being held in this data entity.
-		context.drawImage(_data.getImageData(), 0, 0, container.getWidth(), container.getHeight(), container);
+	protected final void addData(String layerName) {
+		_data.addAll(AbstractFactory.getFactory(DataFactory.class).getByLayer(layerName));
 	}
+	
+	protected final int getDataSize() {
+		return _data.size();
+	}
+	
+	protected abstract String getLayerName();
+	
+	protected abstract List<String> getDataNames();
 }

@@ -34,7 +34,8 @@ package engine.api;
 public interface IDestructor {
 
 	/**
-	 * If you want to reset this object than call this method.  
+	 * This method should clear the contents of the underlying class where implemented
+	 * but should not remove handles  
 	 */
 	default public void flush() {
 	}
@@ -46,10 +47,7 @@ public interface IDestructor {
 	 * Sets all fields of this object to its default set of values
 	 * effectively reseting the current object.  
 	 * 
-	 * This method should release all handles  
-	 * 
-	 * This method should bubble up and affect the entire hierarchy from this object
-	 * onwards
+	 * This method should also release all handles  
 	 */
 	default public void dispose() {
 	}

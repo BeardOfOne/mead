@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.components;
+package engine.utils.filters;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
