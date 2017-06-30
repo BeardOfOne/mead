@@ -187,24 +187,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	        _resources.add(resource);
 	    }
 	}
-	
-	/**
-	 * Gets the total number of queue'd resources of the specified class type
-	 * 
-	 * @param resourceClass The resource class type
-	 * @param <U> A type extending The class template type
-	 * 
-	 * @return The total number of resources of the specified class type
-	 */
-	// TODO Remove this
-	public final <U extends T> int getQueuedResourceCount(Class<U> resourceClass) {
-		// Get the list of queue'd resources based on the resource class
-		Queue<T> cachedResources = _cache.get(resourceClass);
-		
-		// Return the total number of resources of the specified class type
-		return cachedResources == null ? 0 : cachedResources.size();
-	}
-	
+
 	/**
 	 * Attempts to the a cached resource 
 	 * 
@@ -314,6 +297,49 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 		
 		// Populate the list of items using the reference
 		cachedResources.addAll(resources);		
+	}
+	
+	/**
+	 * Pushes the queue'd resources for the specifies resource class, and returns its contents to the caller
+	 * 
+	 * 
+	 * @param resourceClass The class type of the resource
+	 * @param <U> A type extending The class template type
+	 * 
+	 * @return The list of resources that were pushed
+	 */
+	public final <U extends T> List<U> pushQueuedResources(Class<U> resourceClass) {
+		
+		// Get the list of queue'd resources
+		Queue<T> queuedResources = _cache.remove(resourceClass);
+		
+		// If there are queue'd elements
+		if(queuedResources != null) {
+			
+			// Get the reference to the list in the history field
+			List<T> resources = _history.get(resourceClass);
+			
+			// If there is none, then create one
+			if(resources == null) {
+				
+				// Create a new list and put the queue'd contents in it
+				resources = new ArrayList(queuedResources);
+				
+				// Apply the array list into the history field
+				_history.put(resourceClass, resources);
+			} 
+			else {
+				
+				// There is an entry, just append the queue'd contents
+				resources.addAll(queuedResources);
+			}
+			
+			// Return a new list, I do not want to give a reference to the 
+			// actual list within the factory
+			return new ArrayList(queuedResources);
+		}
+		
+		return null;
 	}
 	
 	/**
