@@ -24,10 +24,11 @@
 
 package game.core;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Container;
+import java.awt.Graphics;
 
 import engine.api.IData;
+import engine.api.IView;
 import engine.core.factories.AbstractFactory;
 import engine.core.factories.DataFactory;
 import game.api.IRenderable;
@@ -42,21 +43,25 @@ public abstract class AbstractEntity<T extends IData> implements IRenderable {
 	/**
 	 * The data associated to the data entity
 	 */
-	private final List<T> _data = new ArrayList();
+	private final T _data;
 	
-	protected final void addData(String layerName, String dataName) {
-		_data.add((T) AbstractFactory.getFactory(DataFactory.class).getByName(layerName, dataName));
+	/**
+	 * Constructs a new instance of this class type
+	 * 
+	 * @param layerName The name of the layer
+	 * @param dataName The name of the data
+	 */
+	protected AbstractEntity(String layerName, String dataName) {
+		_data = (T) AbstractFactory.getFactory(DataFactory.class).getByName(layerName, dataName);
 	}
 	
-	protected final void addData(String layerName) {
-		_data.addAll(AbstractFactory.getFactory(DataFactory.class).getByLayer(layerName));
+	@Override public void render(IView view, Graphics context) {
+		
+		// Get a reference to the container of the context provided
+		Container container = view.getContainerClass();
+		
+		// Draw into the graphics of the context provided the data
+		// being held in this data entity.
+		context.drawImage(_data.getImageData(), 0, 0, container.getWidth(), container.getHeight(), container);
 	}
-	
-	protected final int getDataSize() {
-		return _data.size();
-	}
-	
-	protected abstract String getLayerName();
-	
-	protected abstract List<String> getDataNames();
 }
