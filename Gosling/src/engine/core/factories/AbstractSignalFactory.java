@@ -157,7 +157,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	 * @param <U> A type extending The class template type
 	 * 
 	 */
-	private final <U extends T> void add(U resource, boolean isShared) {
+	private <U extends T> void add(U resource, boolean isShared) {
 		
 		// Get the list of classes based on the type of controller 
 		// that is being added
@@ -382,11 +382,11 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 		}
 	}
 	
-	@Override public void flush() {
-		super.flush();
-		
+	@Override public boolean flush() {
 		_history.clear();
 		_resources.clear();
 		_cache.clear();
+		
+		return true;
 	}
 }

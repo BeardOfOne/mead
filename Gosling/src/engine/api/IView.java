@@ -210,8 +210,9 @@ public interface IView extends IDestructor, ISignalListener {
 			}
 		}
 
-		@Override public void flush() {
+		@Override public boolean flush() {
 			_signalListeners.clear();
+			return true;
 		}		
 	}
 		

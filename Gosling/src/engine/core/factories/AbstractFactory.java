@@ -69,8 +69,7 @@ public abstract class AbstractFactory<T extends Object> implements IDestructor {
 	 * 
 	 * @return Flag indicating if the factory is running
 	 */
-	public static final boolean isRunning()
-	{
+	public static final boolean isRunning() {
 		// Go through the list of factories
 		for(AbstractFactory factory : FACTORIES) {
 			if(!factory.isPersistent) {

@@ -36,8 +36,10 @@ public interface IDestructor {
 	/**
 	 * This method should clear the contents of the underlying class where implemented
 	 * but should not remove handles  
+	 * @return 
 	 */
-	default public void flush() {
+	default public boolean flush() {
+		return true;
 	}
 	
 	/**

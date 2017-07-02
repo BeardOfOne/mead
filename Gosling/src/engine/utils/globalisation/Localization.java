@@ -105,9 +105,10 @@ public abstract class Localization<T extends Enum<T>> implements IDestructor {
 		return (U)_resources.get(_activeLocale).getObject(key);
 	}
 
-	@Override public void flush() {
+	@Override public boolean flush() {
 		_resources.clear();
 		_activeLocale = null;
+		return true;
 	}
 
 	@Override public void dispose() {

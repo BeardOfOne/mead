@@ -79,8 +79,9 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 			_signalListeners.clear();
 		}
 
-		@Override public void flush() {
+		@Override public boolean flush() {
 			_signalListeners.clear();
+			return true;
 		}	
 	}
 	

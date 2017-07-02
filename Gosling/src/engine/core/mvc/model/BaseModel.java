@@ -203,8 +203,9 @@ public abstract class BaseModel implements IModel
 		return _modelProperties;
 	}
 
-	@Override public void flush() {
+	@Override public boolean flush() {
 		_receivers.clear();
+		return true;
 	}
 	
 	@Override public void dispose() {

@@ -112,9 +112,11 @@ public interface IController extends IDestructor, ISignalListener {
 			return _signalListeners;
 		}
 
-		@Override public void flush() {
+		@Override public boolean flush() {
 			_view = null;
 			_signalListeners.clear();
+			
+			return true;
 		}
 		
 		@Override public void dispose() {
