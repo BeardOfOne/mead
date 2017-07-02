@@ -24,8 +24,6 @@
 
 package engine.communication.external.builder;
 
-import java.util.Map;
-
 import engine.communication.external.filesystem.AbstractFileSystem;
 
 /**
@@ -40,22 +38,4 @@ public abstract class AbstractBuilder<T extends AbstractFileSystem> implements I
 	 * File system used by the builder
 	 */
 	protected T _fileSystem;
-	
-	/**
-	 * Gets the data associated to the file system
-	 * 
-	 * @return The data associated to the file system
-	 */
-	protected final Map getAllData() {
-		return _fileSystem.getAllData();
-	}
-	
-	/**
-	 * Sets the file system of the builder
-	 * 
-	 * @param fileSystem The file system entity
-	 */
-	public final void setFileSystem(T fileSystem) {
-		_fileSystem = fileSystem;
-	}
 }

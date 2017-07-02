@@ -70,7 +70,7 @@ public class DataBuilder extends AbstractBuilder<DataFileSystem> {
 			Object fileSystem = codec.getUnmarshaller().unmarshal(inStream);
 			
 			// Create the file system 
-			setFileSystem((DataFileSystem)fileSystem);
+			_fileSystem = (DataFileSystem)fileSystem;
 		} 
 		catch (Exception exception) {
 			exception.printStackTrace();
@@ -82,9 +82,8 @@ public class DataBuilder extends AbstractBuilder<DataFileSystem> {
 	}
 	
 	@Override public void buildContent() {
-		
 		// Get the list of values in the file system
-		Collection<ArrayList<IData>> collectionSet = getAllData().values();
+		Collection<ArrayList<IData>> collectionSet = _fileSystem.getAllData().values();
 		
 		// Go through the list of data within the collection
 		for(Iterator<ArrayList<IData>> iterator = collectionSet.iterator(); iterator.hasNext();) {

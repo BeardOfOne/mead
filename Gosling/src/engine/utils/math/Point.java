@@ -43,19 +43,19 @@ public class Point {
 	 * x-axis value
 	 */
 	@XmlAttribute(name = "x")
-	public int x;
+	public double x;
 	
 	/**
 	 * y-axis value
 	 */
 	@XmlAttribute(name = "y")
-	public int y;
+	public double y;
 	
 	/**
 	 * z-axis value
 	 */
 	@XmlAttribute(name = "z")
-	public int z;
+	public double z;
 	
 	/**
 	 * Default constructor as per serialization requirements
@@ -71,7 +71,7 @@ public class Point {
 	 * @param x The x-axis value
 	 * @param y The y-axis value
 	 */
-	public Point(int x, int y) {
+	public Point(double x, double y) {
 		this.x = x;
 		this.y = y;
 	}
@@ -84,7 +84,7 @@ public class Point {
 	 * @param y The y-axis value
 	 * @param z The z-axis value
 	 */
-	public Point(int x, int y, int z) {
+	public Point(double x, double y, double z) {
 		this(x, y);
 		this.z = z;
 	}
