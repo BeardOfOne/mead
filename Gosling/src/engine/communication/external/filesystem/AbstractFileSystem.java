@@ -24,6 +24,8 @@
 
 package engine.communication.external.filesystem;
 
+import java.awt.Dimension;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -31,6 +33,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.imageio.ImageIO;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -40,6 +43,7 @@ import engine.api.IModel;
 import engine.communication.external.filesystem.types.FileSystemAdapter;
 import engine.communication.internal.persistance.ISerializable;
 import engine.communication.internal.persistance.IXMLCodec;
+import engine.utils.math.Point;
 
 /**
  * Abstract functionality for all file system implementations
@@ -156,6 +160,52 @@ public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implem
 		
 		// Add the specified data
 		dataList.add(data);
+	}
+	
+	/**
+	 * Extracts the list of images based on the file associated to this file system
+	 * 
+	 * @param rows The number of rows
+	 * @param columns The number of columns
+	 * 
+	 * @return A list of images associated to the partitions of the entire image
+	 */
+	public List<BufferedImage> extractImages(int rows, int columns) {
+
+		List<BufferedImage> images = new ArrayList();
+		
+		try {
+			
+			BufferedImage buffer = ImageIO.read(_file);
+			Dimension dimensions = new Dimension(buffer.getWidth(), buffer.getHeight());
+			
+			for(int i = 0, size = rows * columns; i < size; ++i) {
+
+				// get the current row and column that we are currently on
+		        int row = i / columns;
+  		        int column = i % columns;
+		        
+		        // Set the top-left point
+ 		        Point topLeft = new Point(
+ 		            column * (dimensions.width / columns),
+ 		            row * (dimensions.height / rows)
+		        );
+		        
+		        BufferedImage image = buffer.getSubimage(
+ 	        		(int)topLeft.x, 
+	        		(int)topLeft.y, 
+	        		dimensions.width / columns, 
+	        		dimensions.height / rows
+	    		);
+		        
+		        images.add(image);
+			}
+			
+		} catch (Exception exception) {
+			exception.printStackTrace();
+		}
+		
+		return images;
 	}
 
     @Override public String serialize() {

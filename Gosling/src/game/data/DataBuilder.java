@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.external.builder;
+package game.data;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -30,7 +30,8 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import engine.api.IData;
-import engine.communication.external.filesystem.DataFileSystem;
+import engine.communication.external.builder.AbstractBuilder;
+import engine.communication.external.filesystem.FileSystem;
 import engine.communication.internal.persistance.IXMLCodec.XMLCodec;
 import engine.core.factories.AbstractFactory;
 import engine.core.factories.DataFactory;
@@ -42,7 +43,7 @@ import engine.core.factories.DataFactory;
  * @author Daniel Ricci <thedanny09@gmail.com>
  *
  */
-public class DataBuilder extends AbstractBuilder<DataFileSystem> {
+public class DataBuilder extends AbstractBuilder<FileSystem> {
 	
 	/**
 	 * The path where the data resides
@@ -61,7 +62,7 @@ public class DataBuilder extends AbstractBuilder<DataFileSystem> {
 	@Override public boolean buildStart() {
 		try {
 			// Create the codec for the file system
-			XMLCodec codec = new XMLCodec(DataFileSystem.class);
+			XMLCodec codec = new XMLCodec(FileSystem.class);
 				
 			// Reference the data file
 			InputStream inStream = getClass().getResourceAsStream(_path);
@@ -70,7 +71,7 @@ public class DataBuilder extends AbstractBuilder<DataFileSystem> {
 			Object fileSystem = codec.getUnmarshaller().unmarshal(inStream);
 			
 			// Create the file system 
-			_fileSystem = (DataFileSystem)fileSystem;
+			_fileSystem = (FileSystem)fileSystem;
 		} 
 		catch (Exception exception) {
 			exception.printStackTrace();

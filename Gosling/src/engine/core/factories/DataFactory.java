@@ -31,10 +31,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import engine.api.IData;
-import engine.communication.external.builder.DataBuilder;
 import engine.communication.external.builder.Director;
 import engine.core.system.EngineProperties;
 import engine.core.system.EngineProperties.Property;
+import game.data.DataBuilder;
 
 /**
  * Data factory for extracting data from an external source
