@@ -61,7 +61,12 @@ public final class EngineProperties {
 		/**
 		 * The path where the sheet is stored, this is all the images (tilemap or atlas, etc)
 		 */
-		DATA_PATH_SHEET
+		DATA_PATH_SHEET,
+		
+		/**
+		 * The path where the logging will be directed
+		 */
+		LOG_PATH
 	}
 	
 	/**
