@@ -188,7 +188,7 @@ public final class Tracelog {
 	}
 	
 	/**
-	 * Print contents using the standard output stream
+	 * Print contents using the standard output stream any external handles present
 	 * 
 	 * @param level The level of the log
 	 * @param text The text to print out
