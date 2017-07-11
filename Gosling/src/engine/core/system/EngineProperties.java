@@ -66,7 +66,7 @@ public final class EngineProperties {
 		/**
 		 * The path where the logging will be directed
 		 */
-		LOG_PATH
+		LOG_DIRECTORY
 	}
 	
 	/**

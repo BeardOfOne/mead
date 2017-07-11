@@ -26,6 +26,8 @@ package engine.core.system;
 
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -33,6 +35,7 @@ import javax.swing.JMenuBar;
 import engine.api.IDestructor;
 import engine.core.factories.AbstractFactory;
 import engine.core.factories.DataFactory;
+import engine.utils.io.Tracelog;
 
 /**
  * This class provides the entry point for all applications to extend
@@ -46,7 +49,7 @@ import engine.core.factories.DataFactory;
  *
  */
 public abstract class AbstractApplication extends JFrame implements IDestructor {
-
+	
 	/**
 	 * The singleton instance of this class
 	 */
@@ -57,25 +60,32 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 	 */
     protected AbstractApplication() {
     	// Set the menu of the application
-        setJMenuBar(new JMenuBar());
+        setJMenuBar(new JMenuBar());    
     }
     
     /**
      * Sets the listeners for the game
      */
     private void initializeWindowListeners() {
-        addComponentListener(new ComponentAdapter() {
-            @Override public void componentHidden(ComponentEvent e) {
-                setJMenuBar(null);
-            }
-            @Override public void componentShown(ComponentEvent e) {
-                // Generate menu system
-            	setWindowedInstanceMenu();
-            	
-            	getJMenuBar().revalidate();
-                getJMenuBar().repaint();
-            }
-        });
+		addComponentListener(new ComponentAdapter() {
+		    @Override public void componentHidden(ComponentEvent e) {
+		        setJMenuBar(null);
+		    }
+		    @Override public void componentShown(ComponentEvent e) {
+		        // Generate menu system
+		    	setWindowedInstanceMenu();
+		    	
+		    	getJMenuBar().revalidate();
+		        getJMenuBar().repaint();
+		    }
+		});
+		addWindowListener(new WindowAdapter() {
+			@Override public void windowClosed(WindowEvent e) {
+				Tracelog.log("Engine shutting down...");
+				engineShutdown();
+				System.exit(0);
+			}
+		});
     }
 
     /**
@@ -102,12 +112,15 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     	
 	    	// Load the engine properties, this must be done before doing anything else
     		_instance.initializeEngineProperties();
-	
+    		Tracelog.log("Initialized Engine Properties");
+    			
 	    	// Load the window listeners of the application
     		_instance.initializeWindowListeners();
-	    	
+    		Tracelog.log("Initialized Window Listeners");
+    		
 	    	// Load the engine resources of the application
     		_instance.initializeEngineResources();      
+    		Tracelog.log("Initialized Engine Resources");
     		
     		// Load the data into the engine
     		_instance.loadData();
@@ -134,11 +147,14 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 			System.exit(1);
 		}
     }
-    	
+
     /**
-     * Sets the menu functionality for the game
+     * Defines the Engine Shutdown procedure
      */
-    protected abstract void setWindowedInstanceMenu();
+    private void engineShutdown() {
+    	// Shut down logger
+    	Tracelog.close();
+    }
     
     /**
      * Sets the engine default values for the game
@@ -147,6 +163,11 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * for localization.
      */
     protected abstract void initializeEngineResources();
+    
+    /**
+     * Sets the menu functionality for the game
+     */
+    protected abstract void setWindowedInstanceMenu();
     
     /**
      * Initializes the engine properties
