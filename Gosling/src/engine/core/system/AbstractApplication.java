@@ -35,7 +35,7 @@ import javax.swing.JMenuBar;
 import engine.api.IDestructor;
 import engine.core.factories.AbstractFactory;
 import engine.core.factories.DataFactory;
-import engine.utils.io.Tracelog;
+import engine.utils.io.logging.Tracelog;
 
 /**
  * This class provides the entry point for all applications to extend
@@ -112,18 +112,19 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     	
 	    	// Load the engine properties, this must be done before doing anything else
     		_instance.initializeEngineProperties();
-    		Tracelog.log("Initialized Engine Properties");
+    		Tracelog.log("--Initialized Engine Properties Completed--");
     			
 	    	// Load the window listeners of the application
     		_instance.initializeWindowListeners();
-    		Tracelog.log("Initialized Window Listeners");
+    		Tracelog.log("--Initialized Window Listeners Completed--");
     		
 	    	// Load the engine resources of the application
     		_instance.initializeEngineResources();      
-    		Tracelog.log("Initialized Engine Resources");
+    		Tracelog.log("--Initialized Engine Resources--");
     		
     		// Load the data into the engine
     		_instance.loadData();
+    		Tracelog.log("--Load Data Completed--");
     	}
     	
     	return _instance;

@@ -34,6 +34,7 @@ import engine.api.IData;
 import engine.communication.external.builder.Director;
 import engine.core.system.EngineProperties;
 import engine.core.system.EngineProperties.Property;
+import engine.utils.io.logging.Tracelog;
 import game.data.DataBuilder;
 
 /**
@@ -123,7 +124,7 @@ public final class DataFactory<T extends IData> extends AbstractFactory<T> {
 		
 		// If the data path has not been set or it was set inappropriately
 		if(dataPath == null || dataPath.length() == 0) {
-			System.out.println("Info: No data has been loaded");
+			Tracelog.logWarning("No data has been loaded");
 			return;
 		}
 		
