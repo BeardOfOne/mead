@@ -81,7 +81,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 		});
 		addWindowListener(new WindowAdapter() {
 			@Override public void windowClosed(WindowEvent e) {
-				Tracelog.log("Engine shutting down...");
+				Tracelog.log("Engine shutting down");
 				engineShutdown();
 				System.exit(0);
 			}
@@ -112,19 +112,19 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     	
 	    	// Load the engine properties, this must be done before doing anything else
     		_instance.initializeEngineProperties();
-    		Tracelog.log("--Initialized Engine Properties Completed--");
+    		Tracelog.log("--Initializing Engine Properties Completed--");
     			
 	    	// Load the window listeners of the application
     		_instance.initializeWindowListeners();
-    		Tracelog.log("--Initialized Window Listeners Completed--");
+    		Tracelog.log("--Initializing Window Listeners Completed--");
     		
 	    	// Load the engine resources of the application
     		_instance.initializeEngineResources();      
-    		Tracelog.log("--Initialized Engine Resources--");
+    		Tracelog.log("--Initializing Engine Resources--");
     		
     		// Load the data into the engine
     		_instance.loadData();
-    		Tracelog.log("--Load Data Completed--");
+    		Tracelog.log("--Loading Data Completed--");
     	}
     	
     	return _instance;
