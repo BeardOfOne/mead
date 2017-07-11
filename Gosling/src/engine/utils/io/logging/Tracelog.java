@@ -212,9 +212,6 @@ public final class Tracelog {
 				level.toString(),
 				text
 			));		
-			
-			// Note: Do not close the stream, just flush it.
-			stream.flush();
 		}
 	}
 }
