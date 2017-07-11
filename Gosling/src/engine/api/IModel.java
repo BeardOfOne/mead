@@ -24,13 +24,13 @@
 
 package engine.api;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 import engine.communication.internal.persistance.IXMLCodec;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
+import engine.core.mvc.common.CommonProperties;
 
 /**
  * This interface describes the general contract rules of all model type implementors 
@@ -52,52 +52,21 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	 * need a reference to itself.
 	 */
 	public static final String EVENT_PIPE_DATA = "EVENT_PIPE_DATA";
-	
-	/**
-	 * This is the model properties class representation of a particular model
-	 * 
-	 * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
-	 *
-	 */
-	public final class ModelProperties implements IDestructor {
-				
-		/**
-		 * The mapping of signal names to signal implementations
-		 */
-		private final Map<String, ISignalReceiver> _signalListeners = new HashMap<>();
 		
-		/**
-		 * Gets the list of signal listeners associated to the view
-		 * 
-		 * @return The list of signal listeners 
-		 */
-		public Map<String, ISignalReceiver> getSignalListeners() {
-			return _signalListeners;
-		}
-		
-		@Override public void dispose() {
-			_signalListeners.clear();
-		}
-
-		@Override public boolean flush() {
-			_signalListeners.clear();
-			return true;
-		}	
-	}
-	
-	/**
-	 * Gets the model properties of the implementor of this interface
-	 * 
-	 * @return The model properties of the implementor
-	 */
-	public ModelProperties getModelProperties();
-	
 	/**
 	 * Gets the identifier associated with the model
 	 * 
 	 * @return The unique identifier of the object
 	 */
 	public abstract UUID getIdentifier();
+	
+	/**
+	 * Gets the model properties of the implementor of this interface
+	 * 
+	 * @return The model properties of the implementor
+	 */
+	public CommonProperties getModelProperties();
+
 	
 	@Override default Map<String, ISignalReceiver> getSignalListeners() {
 		return getModelProperties().getSignalListeners();

@@ -110,13 +110,4 @@ public abstract class Localization<T extends Enum<T>> implements IDestructor {
 		_activeLocale = null;
 		return true;
 	}
-
-	@Override public void dispose() {
-		try {
-			finalize();
-		} 
-		catch (Throwable exception) {
-			exception.printStackTrace();
-		}
-	}
 }

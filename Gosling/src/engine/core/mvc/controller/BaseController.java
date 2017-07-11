@@ -47,7 +47,7 @@ public abstract class BaseController implements IController  {
 	 * @param <T> A type extending any IView implemented class
 	 */
 	public <T extends IView> BaseController(T view) {
-		_properties.setView(view);
+		_properties.setListener(view);
 	}
 	
 	/**
@@ -56,12 +56,7 @@ public abstract class BaseController implements IController  {
 	 * @return The view associated to this controller
 	 */
 	protected final IView getView() {
-		return _properties.getView();
-	}
-	
-	@Override public void dispose() {
-		unregisterSignalListeners();
-		_properties.dispose();
+		return _properties.getListener();
 	}
 	
 	@Override public final ControllerProperties getControllerProperties() {

@@ -37,6 +37,7 @@ import engine.communication.internal.signal.ISignalReceiver;
 import engine.communication.internal.signal.types.ModelEvent;
 import engine.communication.internal.signal.types.PipelinedEvent;
 import engine.communication.internal.signal.types.SignalEvent;
+import engine.core.mvc.common.CommonProperties;
 
 /**
  * A Game Model represents the base class of all model type objects
@@ -50,7 +51,7 @@ public abstract class BaseModel implements IModel
 	/**
 	 * The model properties for this model
 	 */
-	private transient final ModelProperties _modelProperties = new ModelProperties();
+	private transient final CommonProperties _modelProperties = new CommonProperties();
 	
 	/**
 	 * Identifier for this model
@@ -199,18 +200,13 @@ public abstract class BaseModel implements IModel
 		});
 	}
 	
-	@Override public final ModelProperties getModelProperties() {
+	@Override public final CommonProperties getModelProperties() {
 		return _modelProperties;
 	}
 
 	@Override public boolean flush() {
 		_receivers.clear();
 		return true;
-	}
-	
-	@Override public void dispose() {
-		_receivers.clear();
-		_modelProperties.dispose();
 	}
 	
 	@Override public boolean equals(Object obj) {

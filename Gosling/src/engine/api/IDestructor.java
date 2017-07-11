@@ -41,16 +41,4 @@ public interface IDestructor {
 	default public boolean flush() {
 		return true;
 	}
-	
-	/**
-	 * Call this method if you want to ready your object for finalize without
-	 * having to do anything special with it before-hand
-	 * 
-	 * Sets all fields of this object to its default set of values
-	 * effectively reseting the current object.  
-	 * 
-	 * This method should also release all handles  
-	 */
-	default public void dispose() {
-	}
 }

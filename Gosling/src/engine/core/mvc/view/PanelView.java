@@ -88,9 +88,4 @@ public abstract class PanelView extends JPanel implements IView {
 	@Override public final ViewProperties getViewProperties() {
 		return _properties;
 	}
-	
-	@Override public void dispose() {
-		_properties.dispose();
-		IView.super.dispose();
-	}
 }

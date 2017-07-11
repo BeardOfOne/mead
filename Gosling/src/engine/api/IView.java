@@ -27,11 +27,11 @@ package engine.api;
 import java.awt.Container;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.HashMap;
 import java.util.Map;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
+import engine.core.mvc.common.CommonProperties;
 
 /**
  * This contract specifies how views should operate within the framework. 
@@ -45,25 +45,15 @@ public interface IView extends IDestructor, ISignalListener {
 	 * 
 	 * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
 	 */
-	public final class ViewProperties implements IDestructor {
-				
-		/**
-		 * The controller that is associated to the view
-		 */
-		private IController _controller;		
-		
+	public final class ViewProperties extends CommonProperties<IController>  {
+						
 		/**
 		 * Flag indicating if the view has performed a render operation
 		 * Note: For this to be properly set it is imperative that the programmer
 		 * call the super of the render() method or this flag will not be properly registered
 		 */
 		private boolean _hasRendered = false;
-		
-		/**
-		 * The mapping of signal names to signal implementations
-		 */
-		private final Map<String, ISignalReceiver> _signalListeners = new HashMap<>();
-		
+
 		/**
 		 * Constructs a new view properties object in charge of holding
 		 * information about the view such as the controller
@@ -97,14 +87,16 @@ public interface IView extends IDestructor, ISignalListener {
 		        // the visibility is set to false
 		        @Override public void componentHidden(ComponentEvent args) {
 
+		        	IController controller = getListener(IController.class);
+		        	
 		        	// Note: Some views don't have controllers
-		        	if(_controller == null) {
+		        	if(controller == null) {
 		        		System.out.println("Warning: Cannot invoke controller for hidden component " + args.getSource().getClass().getCanonicalName());
 		        		return;
 		        	}
 		        	
 		        	// Unregister all signals being listened to by this view's controller
-		        	_controller.unregisterSignalListeners();
+		        	controller.unregisterSignalListeners();
 		        	
 		           	// Unregister all signals being listened to by the view
 		           	view.unregisterSignalListeners();
@@ -116,8 +108,10 @@ public interface IView extends IDestructor, ISignalListener {
 		        // the visibility is set to true
 		        @Override public void componentShown(ComponentEvent args) {
 		        	
+		        	IController controller = getListener(IController.class);
+		        	
 		        	// Note: Some views don't have controllers
-		        	if(_controller == null) {
+		        	if(controller == null) {
 		        		System.out.println("Warning: Cannot invoke controller for shown component " + args.getSource().getClass().getCanonicalName());
 		        		return;
 		        	}
@@ -128,55 +122,24 @@ public interface IView extends IDestructor, ISignalListener {
 		        	// If a registration already occurred then log that this is the case and don't register again
 		        	// Note: This can occur if registration occurred before the actual view was about to be shown, this is common
 		        	// so that is why it is an Info and not a Warning.
-		        	Map listeners = _controller.getSignalListeners();
+		        	Map listeners = controller.getSignalListeners();
 		        	if(listeners == null || !listeners.isEmpty()) {
 		        		System.out.println(String.format(
 	        				"Info: Signal listeners already detected for %s, not registering again", 
-	        				_controller.getClass().getCanonicalName()
+	        				controller.getClass().getCanonicalName()
         				));
 		        		
 		        		return;
 		        	}
 		        	
 		        	// Register all signals being listened to by the view's controller
-		           	_controller.registerSignalListeners();
+		        	controller.registerSignalListeners();
 		           	
 		           	// Register all signals being listened to by the view
 		           	view.registerSignalListeners();
 		        }
 		        
 		    });
-		}
-		
-		/**
-		 * Sets the controller of the view property
-		 * 
-		 * @param controller The controller
-		 */
-		public final void setController(IController controller) {
-			this._controller = controller;
-		}
-		
-		/**
-		 * Gets the controller associated to the view
-		 *  
-		 * @return The controller associated to the view
-		 */
-		public IController getController() {
-			return _controller;
-		}
-		
-		/**
-		 * Gets the controller associated to the view
-		 * Note: This method compliments getController in that it does a cast for you
-		 * 
-		 * @param controllerType The type of controller to cast the associating controller to
-		 * @param <T> A type extending the class {@link IController}
-		 * 
-		 * @return The controller associated to view 
-		 */
-		public <T extends IController> T getController(Class<T> controllerType) {
-			return (T)getController();
 		}
 		
 		/**
@@ -194,26 +157,6 @@ public interface IView extends IDestructor, ISignalListener {
 		public final boolean hasRendered() {
 			return _hasRendered;
 		}
-		
-		/**
-		 * Gets the list of signal listeners associated to the view
-		 * 
-		 * @return The list of signal listeners 
-		 */
-		public Map<String, ISignalReceiver> getSignalListeners() {
-			return _signalListeners;
-		}
-		
-		@Override public void dispose() {
-			if(_controller != null) {
-				_controller.dispose();	
-			}
-		}
-
-		@Override public boolean flush() {
-			_signalListeners.clear();
-			return true;
-		}		
 	}
 		
 	/**
