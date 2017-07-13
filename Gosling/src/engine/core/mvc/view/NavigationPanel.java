@@ -29,7 +29,6 @@ import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.JPanel;
 import javax.swing.Scrollable;
 import javax.swing.SwingConstants;
 
@@ -39,13 +38,11 @@ import javax.swing.SwingConstants;
  * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
  *
  */
-public class NavigationPanel extends JPanel implements Scrollable, MouseMotionListener {
+public class NavigationPanel extends PanelView implements Scrollable, MouseMotionListener {
 
-    private int _unitIncrement = 1;
+    private int _unitIncrement = 20;
 
-    public NavigationPanel(int unitIncrement) {
-        _unitIncrement = unitIncrement;
-
+    public NavigationPanel() {
         setOpaque(true);
         setAutoscrolls(true);
         addMouseMotionListener(this);
@@ -106,4 +103,10 @@ public class NavigationPanel extends JPanel implements Scrollable, MouseMotionLi
             return ((currentPosition / _unitIncrement) + 1) * _unitIncrement - currentPosition;
         }
     }
+
+	@Override public void initializeComponents() {
+	}
+
+	@Override public void initializeComponentBindings() {
+	}
 }
