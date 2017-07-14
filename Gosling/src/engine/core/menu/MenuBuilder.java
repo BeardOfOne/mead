@@ -22,11 +22,14 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.option;
+package engine.core.menu;
 
 import java.util.Vector;
 
 import javax.swing.JComponent;
+
+import engine.core.menu.types.MenuComponent;
+import engine.core.menu.types.MenuItem;
 
 /**
  * A builder class for easily creating UI menus
@@ -34,7 +37,7 @@ import javax.swing.JComponent;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public final class OptionBuilder {
+public final class MenuBuilder {
 
     /**
      * The host of this builder
@@ -51,7 +54,7 @@ public final class OptionBuilder {
 	 */
 	private Vector<JComponent> _components = new Vector<>();
 	
-	private OptionBuilder(JComponent host) {
+	private MenuBuilder(JComponent host) {
 	    _host = host;
 	}
 	
@@ -62,8 +65,8 @@ public final class OptionBuilder {
 	 * 
 	 * @return A reference to this builder
 	 */
-	public static OptionBuilder start(JComponent host) {
-		return new OptionBuilder(host);
+	public static MenuBuilder start(JComponent host) {
+		return new MenuBuilder(host);
 	}
 	
 	/**
@@ -73,7 +76,7 @@ public final class OptionBuilder {
      * 
      * @return A reference to this builder
 	 */
-	public static OptionBuilder start(OptionBuilder host) {
+	public static MenuBuilder start(MenuBuilder host) {
 	    return start(host._root);
 	}
 	
@@ -84,9 +87,22 @@ public final class OptionBuilder {
 	 * 
 	 * @return A reference to this builder
 	 */
-	public OptionBuilder root(JComponent root) {
+	public MenuBuilder root(JComponent root) {
 	    _root = root;
 	    return this;
+	}
+	
+	public MenuBuilder AddMenu(String text) {
+		MenuComponent component = new MenuComponent(_root == null ? _host : _root, text);
+	
+		if(_components.isEmpty() && _root == null) {
+			_root = component.getComponent();
+	    }
+	    else {
+	        _components.add(component.getComponent());    
+	    }
+	 
+		return this;
 	}
 	
 	/**
@@ -97,7 +113,7 @@ public final class OptionBuilder {
 	 * 
 	 * @return A reference to this builder
 	 */
-	public final <T extends AbstractOption> OptionBuilder AddItem(Class<T> component) {
+	public final <T extends MenuItem> MenuBuilder AddMenuItem(Class<T> component) {
 		try {
 		    T baseComponent = component.getConstructor(JComponent.class).newInstance(_root == null ? _host : _root);
 		    if(_components.isEmpty() && _root == null) {
@@ -121,7 +137,7 @@ public final class OptionBuilder {
 	 * 
 	 * @return A reference to this option builder
 	 */
-	public final <T extends AbstractOption> OptionBuilder AddSeparator() {
+	public final <T extends AbstractMenu> MenuBuilder AddSeparator() {
 		if(_root != null) {
 			T component = (T) _root.getClientProperty(_root);
 			component.addSeperator();			
@@ -137,7 +153,7 @@ public final class OptionBuilder {
 	 * 
 	 * @return A reference to this option builder
 	 */
-    public OptionBuilder AddItem(OptionBuilder builder) {
+    public MenuBuilder AddItem(MenuBuilder builder) {
         builder._root = _root;
         _components.addAll(builder._components);
         

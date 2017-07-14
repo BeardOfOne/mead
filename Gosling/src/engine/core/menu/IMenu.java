@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.option;
+package engine.core.menu;
 
 import java.awt.event.ActionEvent;
 
@@ -34,7 +34,7 @@ import engine.core.mvc.controller.BaseController;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public interface IOption {
+public interface IMenu {
 	
 	/**
 	 * Gets the visibility of the option

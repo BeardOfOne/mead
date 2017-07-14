@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.option;
+package engine.core.menu;
 
 import java.util.UUID;
 
@@ -37,7 +37,7 @@ import engine.core.mvc.controller.BaseController;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class AbstractOption implements IOption {
+public abstract class AbstractMenu implements IMenu {
 	
 	/**
 	 * The unique identifier of the menu item
@@ -65,7 +65,7 @@ public abstract class AbstractOption implements IOption {
 	 * @param component The component to associate to this option
 	 * @param parent The parent component associated to this option
 	 */
-	protected AbstractOption(JComponent component, JComponent parent) {
+	protected AbstractMenu(JComponent component, JComponent parent) {
 
 		_component = component;
 		_parent = parent;
@@ -88,7 +88,7 @@ public abstract class AbstractOption implements IOption {
 	 * @param component The component to associate to this option
 	 * @param parent The abstract option to associate to this option
 	 */
-	protected AbstractOption(JComponent component, AbstractOption parent) {
+	protected AbstractMenu(JComponent component, AbstractMenu parent) {
 		this(component, parent._component);
 	}
 	
@@ -144,11 +144,11 @@ public abstract class AbstractOption implements IOption {
 	}
 	
 	@Override public final boolean equals(Object obj) {
-		if(obj == null || obj instanceof AbstractOption) {
+		if(obj == null || obj instanceof AbstractMenu) {
 			return false;
 		}
 		
-		AbstractOption component = (AbstractOption) obj;
+		AbstractMenu component = (AbstractMenu) obj;
 		return component.toString() == this.toString();
 	}
 	

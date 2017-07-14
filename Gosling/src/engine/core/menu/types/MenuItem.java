@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.option.types;
+package engine.core.menu.types;
 
 import java.awt.event.ActionEvent;
 
@@ -30,7 +30,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 
-import engine.core.option.AbstractOption;
+import engine.core.menu.AbstractMenu;
 
 /**
  * Defines an abstract class for option items, these are equivalent to menu items
@@ -38,7 +38,7 @@ import engine.core.option.AbstractOption;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class OptionItem extends AbstractOption{
+public abstract class MenuItem extends AbstractMenu {
 
 	/**
 	 * Constructs a new instance of this class type
@@ -46,7 +46,7 @@ public abstract class OptionItem extends AbstractOption{
 	 * @param component The component to associate to this option item
 	 * @param parent The parent component associated to this option item
 	 */
-	protected OptionItem(JComponent component, JComponent parent) {
+	protected MenuItem(JComponent component, JComponent parent) {
 		super(component, parent);
 	}	
 	
