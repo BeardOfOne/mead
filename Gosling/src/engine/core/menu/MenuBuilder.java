@@ -153,7 +153,7 @@ public final class MenuBuilder {
 	 * 
 	 * @return A reference to this option builder
 	 */
-    public MenuBuilder AddItem(MenuBuilder builder) {
+    public MenuBuilder AddBuilder(MenuBuilder builder) {
         builder._root = _root;
         _components.addAll(builder._components);
         
