@@ -98,6 +98,14 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     }
     
     /**
+     * Performs a shutdown of the application, closing all necessary
+     * components and sub-components in the process
+     */
+    public static void shutdown() {
+    	 _instance.dispose();
+    }
+    
+    /**
      * Initializes the singleton instance, this should be called before the {@code instance()} method
      * 
      * @param classType The specified class type to construct

@@ -67,9 +67,9 @@ public abstract class PanelView extends JPanel implements IView {
 	 * @param context The graphics context
 	 */
 	protected final void renderContent(Graphics context) {
-		for(IRenderable content : _renderCache) {
-			content.render(this, context);
-		}
+		//for(IRenderable content : _renderCache) {
+		//	content.render(this, context);
+		//}
 	}
 	
 	@Override protected void paintComponent(Graphics graphics) {

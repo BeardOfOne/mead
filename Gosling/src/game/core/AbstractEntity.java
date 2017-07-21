@@ -26,11 +26,15 @@ package game.core;
 
 import java.awt.Container;
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
 
 import engine.api.IData;
 import engine.api.IView;
 import engine.core.factories.AbstractFactory;
 import engine.core.factories.DataFactory;
+import engine.core.mvc.model.BaseModel;
+import engine.utils.io.logging.Tracelog;
 import game.api.IRenderable;
 
 /**
@@ -38,30 +42,49 @@ import game.api.IRenderable;
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
-public abstract class AbstractEntity<T extends IData> implements IRenderable {
+public abstract class AbstractEntity<T extends IData> extends BaseModel implements IRenderable {
+	
+	/**
+	 * The data associated to the initially specified active data
+	 */
+	private final List<T> _layerData = new ArrayList();
 	
 	/**
 	 * The data associated to the data entity
 	 */
-	private final T _data;
+	private T _activeData;
+	
+	/**
+	 * Constructs a new instance of this class type
+	 */
+	protected AbstractEntity() {
+	}
 	
 	/**
 	 * Constructs a new instance of this class type
 	 * 
 	 * @param layerName The name of the layer
-	 * @param dataName The name of the data
 	 */
-	protected AbstractEntity(String layerName, String dataName) {
-		_data = (T) AbstractFactory.getFactory(DataFactory.class).getByName(layerName, dataName);
+	protected AbstractEntity(String layerName) {
+		
+		// Get the list of data associated to active data specified. This is
+		// used so that the abstract entity has a reference to the layer data
+		// for switching purposes
+		_layerData.addAll(AbstractFactory.getFactory(DataFactory.class)
+			.getByLayer(layerName));
 	}
 	
 	@Override public void render(IView view, Graphics context) {
+		if(_activeData == null) {
+			Tracelog.logError("Trying to render to view without data");
+			return;
+		}
 		
 		// Get a reference to the container of the context provided
 		Container container = view.getContainerClass();
 		
 		// Draw into the graphics of the context provided the data
 		// being held in this data entity.
-		context.drawImage(_data.getImageData(), 0, 0, container.getWidth(), container.getHeight(), container);
+		context.drawImage(_activeData.getImageData(), 0, 0, container.getWidth(), container.getHeight(), container);
 	}
 }

@@ -147,13 +147,15 @@ public final class DataFactory<T extends IData> extends AbstractFactory<T> {
 	public <U extends T> void addDataResources(List<U> resources)  {
 		
 		// Create a mapping of layer name to IData types
-		Map<String, List<U>> mappings = resources.stream().collect(Collectors.groupingBy(U::getLayerName));
+		Map<List<String>, List<U>> mappings = resources.stream().collect(Collectors.groupingBy(U::getLayerNames));
 		
 		// Go through each kvp and add its contents into the factory
-		for(Map.Entry<String, List<U>> mapping : mappings.entrySet()) {
+		for(Map.Entry<List<String>, List<U>> mapping : mappings.entrySet()) {
 			
-			// Add the data entry into the mappings structure
-			_data.put(mapping.getKey().toLowerCase(), (List<T>) mapping.getValue());
+			for(String layer : mapping.getKey()) {
+				// Add the data entry into the mappings structure
+				_data.put(layer.toLowerCase(), (List<T>) mapping.getValue());
+			}
 		}
 	}
 }

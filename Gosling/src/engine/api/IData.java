@@ -25,6 +25,7 @@
 package engine.api;
 
 import java.awt.Image;
+import java.util.List;
 
 /**
  * Provides a data contract for all data type objects; data related objects
@@ -54,7 +55,7 @@ public interface IData {
 	 * 
 	 * @return The name, if any, of the layer.
 	 */
-	public String getLayerName();
+	public List<String> getLayerNames();
 
 	/**
 	 * Gets the image data associated to the implemented data type
