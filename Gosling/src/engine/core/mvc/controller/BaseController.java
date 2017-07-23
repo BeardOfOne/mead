@@ -56,7 +56,7 @@ public abstract class BaseController implements IController  {
 	 * @return The view associated to this controller
 	 */
 	protected final IView getView() {
-		return _properties.getListener();
+		return _properties.getEntity();
 	}
 	
 	@Override public final ControllerProperties getControllerProperties() {

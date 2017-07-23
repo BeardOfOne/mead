@@ -43,7 +43,7 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
 	/**
 	 * The listener entity
 	 */
-	private T _listener;
+	private T _entity;
 	
 	/**
 	 * The mapping of signal names to signal implementations
@@ -51,11 +51,12 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
 	private final Map<String, ISignalReceiver> _signalListeners = new HashMap<>();
 	
 	/**
-	 * Gets the listener
-	 * @return
+	 * Gets the listener entity
+	 * 
+	 * @return The listener entity
 	 */
-	public final T getListener() {
-		return _listener;
+	public final T getEntity() {
+		return _entity;
 	}
 	
 	/**
@@ -66,7 +67,7 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
 	 * @return The listener as the specified type
 	 */
 	public final <U extends T> U getListener(Class<U> classType) {
-		return _listener != null ? (U)_listener : null;
+		return _entity != null ? (U)_entity : null;
 	}
 
 	/**
@@ -81,10 +82,10 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
 	/**
 	 * Sets the specified listener
 	 * 
-	 * @param listener The listener
+	 * @param entity The listener
 	 */
-	public final void setListener(T listener) {
-		this._listener = listener;
+	public final void setListener(T entity) {
+		this._entity = entity;
 	}
 
 	@Override public boolean flush() {

@@ -152,9 +152,20 @@ public final class DataFactory<T extends IData> extends AbstractFactory<T> {
 		// Go through each kvp and add its contents into the factory
 		for(Map.Entry<List<String>, List<U>> mapping : mappings.entrySet()) {
 			
+			// Go through the list of layers, since there can be more than one layer
+			// per entity
 			for(String layer : mapping.getKey()) {
+
+				// If the entry does not exist then create a new list
+				// and insert it into the map
+				List<T> dataList = _data.get(layer.toLowerCase());
+				if(dataList == null) {
+					dataList = new ArrayList();
+					_data.put(layer.toLowerCase(), dataList);
+				}
+
 				// Add the data entry into the mappings structure
-				_data.put(layer.toLowerCase(), (List<T>) mapping.getValue());
+				dataList.addAll(mapping.getValue());
 			}
 		}
 	}

@@ -38,7 +38,7 @@ import engine.utils.io.logging.Tracelog;
 import game.api.IRenderable;
 
 /**
- * Top-most class for dealing with data as an entity within the gameplay framework
+ * Top-most class for dealing with data as an entity within the game play framework
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
@@ -56,22 +56,14 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 	
 	/**
 	 * Constructs a new instance of this class type
-	 */
-	protected AbstractEntity() {
-	}
-	
-	/**
-	 * Constructs a new instance of this class type
 	 * 
 	 * @param layerName The name of the layer
 	 */
 	protected AbstractEntity(String layerName) {
-		
 		// Get the list of data associated to active data specified. This is
 		// used so that the abstract entity has a reference to the layer data
 		// for switching purposes
-		_layerData.addAll(AbstractFactory.getFactory(DataFactory.class)
-			.getByLayer(layerName));
+		_layerData.addAll(AbstractFactory.getFactory(DataFactory.class).getByLayer(layerName));
 	}
 	
 	@Override public void render(IView view, Graphics context) {
