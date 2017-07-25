@@ -87,7 +87,7 @@ public interface IView extends IDestructor, ISignalListener {
 		        // the visibility is set to false
 		        @Override public void componentHidden(ComponentEvent args) {
 
-		        	IController controller = getListener(IController.class);
+		        	IController controller = getEntity(IController.class);
 		        	
 		        	// Note: Some views don't have controllers
 		        	if(controller == null) {
@@ -108,7 +108,7 @@ public interface IView extends IDestructor, ISignalListener {
 		        // the visibility is set to true
 		        @Override public void componentShown(ComponentEvent args) {
 		        	
-		        	IController controller = getListener(IController.class);
+		        	IController controller = getEntity(IController.class);
 		        	
 		        	// Note: Some views don't have controllers
 		        	if(controller == null) {

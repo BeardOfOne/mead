@@ -60,13 +60,13 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
 	}
 	
 	/**
-	 * Gets the specified listener type as a convenience method
+	 * Gets the specified listener entity type as a convenience method
 	 * 
 	 * @param classType The type to get
 	 * 
 	 * @return The listener as the specified type
 	 */
-	public final <U extends T> U getListener(Class<U> classType) {
+	public final <U extends T> U getEntity(Class<U> classType) {
 		return _entity != null ? (U)_entity : null;
 	}
 

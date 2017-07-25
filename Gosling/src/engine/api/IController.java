@@ -52,7 +52,7 @@ public interface IController extends IDestructor, ISignalListener {
 		 * @return TRUE if the view is visible, FALSE if the view is not visible
 		 */
 		public boolean isViewVisible() {
-			return getListener(IView.class).getContainerClass().isVisible();
+			return getEntity(IView.class).getContainerClass().isVisible();
 		}
 	}
 	
