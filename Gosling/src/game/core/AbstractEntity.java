@@ -66,7 +66,40 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 		_layerData.addAll(AbstractFactory.getFactory(DataFactory.class).getByLayer(layerName));
 	}
 	
+	/**
+	 * Gets the names of the data held by this entity, used for lookup purposes
+	 * 
+	 * @return The list of data names
+	 */
+	protected final List<String> getDataNames() {
+		List<String> names = new ArrayList();
+		for(T data : _layerData) {
+			names.add(data.getName());
+		}
+		
+		return names;
+	}
+	
+	/**
+	 * Sets the currently active data element of this entity
+	 * 
+	 * @param dataName The data name, one that would be retrieved if calling getDataNames for example
+	 */
+	protected void setActiveData(String dataName) {
+		if(dataName != null) {
+			for(T data : _layerData) {
+				if(data.getName().equalsIgnoreCase(dataName)) {
+					Tracelog.log("Active data being set to " + dataName);
+					_activeData = data;
+					break;
+				}
+			}
+		}
+	}
+	
 	@Override public void render(IView view, Graphics context) {
+		
+		// If there is no active data then stop
 		if(_activeData == null) {
 			Tracelog.logError("Trying to render to view without data");
 			return;
