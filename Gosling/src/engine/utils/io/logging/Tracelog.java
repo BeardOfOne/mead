@@ -59,7 +59,7 @@ public final class Tracelog {
 	/**
 	 * The time formatter, this is used for hours, minutes, seconds formatting
 	 */
-	private static DateFormat LogTimeFormat = new SimpleDateFormat("HH:mm:ss");
+	private static DateFormat LogTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	/**
 	 * Flag that specifies if output to the console should be disabled completely 
@@ -159,7 +159,7 @@ public final class Tracelog {
 			isGame ? "GAME" : "ENGINE",
 			level.toString(),
 			text
-		);		
+		);
 	
 		// Attempt to log to an output file
 		if(Log != null) {

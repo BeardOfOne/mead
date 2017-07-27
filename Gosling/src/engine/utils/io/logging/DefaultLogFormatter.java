@@ -23,9 +23,6 @@
 */
 package engine.utils.io.logging;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.logging.Formatter;
 import java.util.logging.LogRecord;
 
@@ -37,16 +34,7 @@ import java.util.logging.LogRecord;
  */
 public class DefaultLogFormatter extends Formatter {
 	
-	/**
-	 * The time formatter, this used for time-specific logging
-	 */
-	private DateFormat _logTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	
 	@Override public String format(LogRecord record) {
-		return String.format("%s [%s]:\t%s",
-			_logTimeFormat.format(new Date()),
-			record.getLevel().toString(),
-			record.getMessage() + System.lineSeparator()
-		);
+		return record.getMessage() + System.lineSeparator();
 	}
 }

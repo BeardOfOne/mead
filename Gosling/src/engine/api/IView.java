@@ -28,10 +28,12 @@ import java.awt.Container;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.Map;
+import java.util.logging.Level;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
 import engine.core.mvc.common.CommonProperties;
+import engine.utils.io.logging.Tracelog;
 
 /**
  * This contract specifies how views should operate within the framework. 
@@ -91,7 +93,7 @@ public interface IView extends IDestructor, ISignalListener {
 		        	
 		        	// Note: Some views don't have controllers
 		        	if(controller == null) {
-		        		System.out.println("Warning: Cannot invoke controller for hidden component " + args.getSource().getClass().getCanonicalName());
+		        		Tracelog.log(Level.WARNING, false, "Cannot invoke controller for hidden component " + args.getSource().getClass().getCanonicalName());
 		        		return;
 		        	}
 		        	
@@ -108,26 +110,30 @@ public interface IView extends IDestructor, ISignalListener {
 		        // the visibility is set to true
 		        @Override public void componentShown(ComponentEvent args) {
 		        	
-		        	IController controller = getEntity(IController.class);
-		        	
+		        	// Indicate that this view is being shown now
+		        	Tracelog.log(Level.INFO, false, String.format("Component %s is being shown", args.getSource().getClass().getCanonicalName()));
+
 		        	// Note: Some views don't have controllers
+		        	IController controller = getEntity(IController.class);
 		        	if(controller == null) {
-		        		System.out.println("Warning: Cannot invoke controller for shown component " + args.getSource().getClass().getCanonicalName());
+		        		Tracelog.log(Level.WARNING, false, "Cannot invoke controller for shown component " + args.getSource().getClass().getCanonicalName());
 		        		return;
 		        	}
-		        	
-		        	// Indicate that this view is being shown now
-		        	System.out.println(String.format("Component %s is being shown", args.getSource().getClass().getCanonicalName()));
 		        	
 		        	// If a registration already occurred then log that this is the case and don't register again
 		        	// Note: This can occur if registration occurred before the actual view was about to be shown, this is common
 		        	// so that is why it is an Info and not a Warning.
 		        	Map listeners = controller.getSignalListeners();
 		        	if(listeners == null || !listeners.isEmpty()) {
-		        		System.out.println(String.format(
-	        				"Info: Signal listeners already detected for %s, not registering again", 
-	        				controller.getClass().getCanonicalName()
-        				));
+		        		
+		        		Tracelog.log(
+	        				Level.INFO, 
+	        				false, 
+	        				String.format(
+    	        				"Signal listeners already detected for %s, not registering again", 
+    	        				controller.getClass().getCanonicalName()
+            				)
+        				);
 		        		
 		        		return;
 		        	}

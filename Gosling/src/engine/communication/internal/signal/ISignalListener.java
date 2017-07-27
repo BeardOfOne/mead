@@ -25,8 +25,10 @@
 package engine.communication.internal.signal;
 
 import java.util.Map;
+import java.util.logging.Level;
 
 import engine.communication.internal.signal.types.SignalEvent;
+import engine.utils.io.logging.Tracelog;
 
 /**
  * This interface defines a methodology for communicating signals between different sub-systems using
@@ -76,13 +78,16 @@ public interface ISignalListener {
 				// Verify if the key is the same as the operation name
 				if(kvp.getKey().equalsIgnoreCase(operationName)) {
 					
-					// Debug message indicating the message event being sent
-					System.out.println(String.format("%s sends event %s to %s",
-						signalEvent.getSource().getClass().getCanonicalName(),
-						operationName,
-						kvp.getValue().getClass().getName()
-					));						
-					
+					Tracelog.log(
+						Level.INFO, 
+						false,
+						String.format("%s sends event %s to %s",
+							signalEvent.getSource().getClass().getCanonicalName(),
+							operationName,
+							kvp.getValue().getClass().getName()
+						)
+					);
+
 					// Send out a signal receive event
 					kvp.getValue().signalReceived(signalEvent);
 					
@@ -107,7 +112,7 @@ public interface ISignalListener {
 		Map<String, ISignalReceiver> listeners = getSignalListeners();
 		if(listeners != null) {
 			if(!listeners.containsKey(signalName)) {
-				System.out.println(String.format("Signal Registration: %s is now listening on signal %s", this.getClass().getCanonicalName(), signalName));
+				Tracelog.log(Level.INFO, false, String.format("Signal Registration: %s is now listening on signal %s", this.getClass().getCanonicalName(), signalName));
 				listeners.put(signalName, listener);
 			}
 		}
