@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 import engine.api.IData;
@@ -124,7 +125,7 @@ public final class DataFactory<T extends IData> extends AbstractFactory<T> {
 		
 		// If the data path has not been set or it was set inappropriately
 		if(dataPath == null || dataPath.length() == 0) {
-			Tracelog.logWarning("No data has been loaded");
+			Tracelog.log(Level.WARNING, false, "No data has been loaded");
 			return;
 		}
 		

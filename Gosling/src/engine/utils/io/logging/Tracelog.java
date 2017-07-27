@@ -27,8 +27,6 @@ package engine.utils.io.logging;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -64,7 +62,9 @@ public final class Tracelog {
 	private static DateFormat LogTimeFormat = new SimpleDateFormat("HH:mm:ss");
 	
 	/**
-	 * Flag that specifies if output to the console should be disabled
+	 * Flag that specifies if output to the console should be disabled completely 
+	 * 
+	 * Note: This will not affect the output to file if that was specified before
 	 */
 	private static boolean OutputDisabled;
 	
@@ -78,7 +78,7 @@ public final class Tracelog {
 		
 		// If there is not a valid path then do not continue logging
 		if(path == null || path.isEmpty()) {
-			Tracelog.logWarning("Logging disabled, no log path has been specified");
+			System.out.println("Logging disabled, no log path has been specified");
 		}
 		else {
 			try {
@@ -88,7 +88,7 @@ public final class Tracelog {
 				// there by creating them.
 				File file = new File(path);
 				if(file.isFile()) {
-					Tracelog.logError("Log files must point to a directory, not a file.");
+					Tracelog.log(Level.SEVERE, false, "Log files must point to a directory, not a file.");
 				}
 				else {
 					file.mkdirs();
@@ -126,51 +126,7 @@ public final class Tracelog {
 	public static void disableOutputStream(boolean disabled) {
 		OutputDisabled = disabled;
 	}
-		
-	/**
-	 * Logs an error message
-	 * 
-	 * @param text The text to log
-	 */
-	public static void logError(String text) {
-		Tracelog.println(Level.SEVERE, text);
-	}
-	
-	/**
-	 * Logs the specified exception
-	 * 
-	 * @param exception The exception to log
-	 */
-	public static void logException(Exception exception) {
-		
-		// Create a string writer and print writer to get the
-		// contents of the specified exception
-		StringWriter stringWriter = new StringWriter();
-		PrintWriter printWriter = new PrintWriter(stringWriter);
-		exception.printStackTrace(printWriter);
-		
-		// Log the exception contents
-		Tracelog.println(Level.SEVERE, stringWriter.toString());
-	}
-
-	/**
-	 * Logs a warning message
-	 * 
-	 * @param text The text to log
-	 */
-	public static void logWarning(String text) {
-		Tracelog.println(Level.WARNING, text);
-	}
-	
-	/**
-	 * Logs generic text
-	 * 
-	 * @param text The text to log
-	 */
-	public static void log(String text) {
-		Tracelog.println(Level.INFO, text);
-	}
-	
+			
 	/**
 	 * Closes and cleans up the logger, this should be called before the application terminates
 	 */
@@ -187,17 +143,32 @@ public final class Tracelog {
 		}
 	}
 	
+	
 	/**
 	 * Print contents using the standard output stream any external handles present
 	 * 
 	 * @param level The level of the log
+	 * @param isGame Indicates if the log originates from the game or engine
 	 * @param text The text to print out
 	 */
-	private static void println(Level level, String text) {
-		
+	public static void log(Level level, boolean isGame, String text) {
+
+		// Format the text accordingly
+		String formattedText = String.format("%s [%s] [%s]: \t %s",
+			LogTimeFormat.format(new Date()),
+			isGame ? "GAME" : "ENGINE",
+			level.toString(),
+			text
+		);		
+	
 		// Attempt to log to an output file
 		if(Log != null) {
-			Log.log(level, text);	
+			Log.log(level, formattedText);	
+		}
+		
+		// Check if engine logging to the output window has been disabled
+		if(!isGame && !Boolean.valueOf(EngineProperties.instance().getProperty(Property.ENGINE_OUTPUT))) {
+			return;
 		}
 		
 		// Attempt to log to the console output
@@ -207,11 +178,7 @@ public final class Tracelog {
 			PrintStream stream = new PrintStream(level == Level.SEVERE ? System.err : System.out);
 			
 			// Print the contents to the stream
-			stream.println(String.format("%s [%s]:\t%s",
-				LogTimeFormat.format(new Date()),
-				level.toString(),
-				text
-			));		
+			stream.println(formattedText);
 		}
 	}
 }

@@ -28,6 +28,7 @@ import java.awt.Container;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import engine.api.IData;
 import engine.api.IView;
@@ -89,7 +90,7 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 		if(dataName != null) {
 			for(T data : _layerData) {
 				if(data.getName().equalsIgnoreCase(dataName)) {
-					Tracelog.log("Active data being set to " + dataName);
+					Tracelog.log(Level.INFO, false, "Active data being set to " + dataName);
 					_activeData = data;
 					break;
 				}
@@ -101,7 +102,7 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 		
 		// If there is no active data then stop
 		if(_activeData == null) {
-			Tracelog.logError("Trying to render to view without data");
+			Tracelog.log(Level.SEVERE, false, "Trying to render to view without data");
 			return;
 		}
 		

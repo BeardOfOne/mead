@@ -28,6 +28,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.logging.Level;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -81,7 +82,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 		});
 		addWindowListener(new WindowAdapter() {
 			@Override public void windowClosed(WindowEvent e) {
-				Tracelog.log("Engine shutting down");
+				Tracelog.log(Level.INFO, false, "Engine shutting down");
 				engineShutdown();
 				System.exit(0);
 			}
@@ -120,19 +121,19 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     	
 	    	// Load the engine properties, this must be done before doing anything else
     		_instance.initializeEngineProperties();
-    		Tracelog.log("--Initializing Engine Properties Completed--");
+    		Tracelog.log(Level.INFO, false, "--Initializing Engine Properties Completed--");
     			
 	    	// Load the window listeners of the application
     		_instance.initializeWindowListeners();
-    		Tracelog.log("--Initializing Window Listeners Completed--");
+    		Tracelog.log(Level.INFO, false, "--Initializing Window Listeners Completed--");
     		
 	    	// Load the engine resources of the application
     		_instance.initializeEngineResources();      
-    		Tracelog.log("--Initializing Engine Resources--");
+    		Tracelog.log(Level.INFO, false, "--Initializing Engine Resources--");
     		
     		// Load the data into the engine
     		_instance.loadData();
-    		Tracelog.log("--Loading Data Completed--");
+    		Tracelog.log(Level.INFO, false, "--Loading Data Completed--");
     	}
     	
     	return _instance;

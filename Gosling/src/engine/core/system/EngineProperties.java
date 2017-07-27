@@ -66,7 +66,12 @@ public final class EngineProperties {
 		/**
 		 * The path where the logging will be directed
 		 */
-		LOG_DIRECTORY
+		LOG_DIRECTORY,
+		
+		/**
+		 * If the engine logging should be ommited from the standard output stream of the console
+		 */
+		ENGINE_OUTPUT
 	}
 	
 	/**
