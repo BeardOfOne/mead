@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.api;
+package engine.core.mvc;
 
 /**
  * Specifies a contract for flushing (clearing) resources effectively resetting its state, and
@@ -35,8 +35,9 @@ public interface IDestructor {
 
 	/**
 	 * This method should clear the contents of the underlying class where implemented
-	 * but should not remove handles  
-	 * @return 
+	 * but should not remove handles
+	 *   
+	 * @return TRUE if it was successful, FALSE if it was not 
 	 */
 	default public boolean flush() {
 		return true;

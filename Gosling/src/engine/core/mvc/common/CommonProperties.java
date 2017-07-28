@@ -27,9 +27,9 @@ package engine.core.mvc.common;
 import java.util.HashMap;
 import java.util.Map;
 
-import engine.api.IDestructor;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
+import engine.core.mvc.IDestructor;
 
 /**
  * This class provides common properties that are used to query between common

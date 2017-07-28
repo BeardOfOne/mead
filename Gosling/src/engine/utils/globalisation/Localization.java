@@ -29,7 +29,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import engine.api.IDestructor;
+import engine.core.mvc.IDestructor;
 
 /**
  * Defines the functionality for providing localization in an application 

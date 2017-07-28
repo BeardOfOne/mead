@@ -28,6 +28,7 @@ import java.util.Map;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
+import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
 
 /**

@@ -27,7 +27,7 @@ package engine.core.factories;
 import java.util.ArrayList;
 import java.util.List;
 
-import engine.api.IDestructor;
+import engine.core.mvc.IDestructor;
 
 /**
  * Top-most factory class that defines primitive functionality for other factories

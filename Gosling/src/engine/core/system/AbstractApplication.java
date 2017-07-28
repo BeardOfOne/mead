@@ -33,9 +33,9 @@ import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
-import engine.api.IDestructor;
 import engine.core.factories.AbstractFactory;
 import engine.core.factories.DataFactory;
+import engine.core.mvc.IDestructor;
 import engine.utils.io.logging.Tracelog;
 
 /**
