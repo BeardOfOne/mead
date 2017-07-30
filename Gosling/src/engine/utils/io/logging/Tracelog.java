@@ -27,6 +27,8 @@ package engine.utils.io.logging;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -145,7 +147,7 @@ public final class Tracelog {
 	
 	
 	/**
-	 * Print contents using the standard output stream any external handles present
+	 * Print contents using the standard output stream and any external handles present
 	 * 
 	 * @param level The level of the log
 	 * @param isGame Indicates if the log originates from the game or engine
@@ -180,5 +182,20 @@ public final class Tracelog {
 			// Print the contents to the stream
 			stream.println(formattedText);
 		}
+	}
+	
+	/**
+	 * Print contents using the standard output stream and any external handles present
+	 * 
+	 * @param level The level of the log
+	 * @param isGame Indicates if the log originates from the game or engine
+	 * @param exception The exception that was thrown
+	 */
+	public static void log(Level level, boolean isGame, Exception exception) {
+		StringWriter stringWriter = new StringWriter();
+		PrintWriter printWriter = new PrintWriter(stringWriter);
+		exception.printStackTrace(printWriter);
+			
+		log(level, isGame, stringWriter.toString());
 	}
 }

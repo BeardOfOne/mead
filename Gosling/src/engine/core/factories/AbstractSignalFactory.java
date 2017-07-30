@@ -24,6 +24,7 @@
 
 package engine.core.factories;
 
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -31,9 +32,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Queue;
+import java.util.logging.Level;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.types.SignalEvent;
+import engine.utils.io.logging.Tracelog;
 
 /**
  * Factory that can communicate between signal types
@@ -133,22 +136,49 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 		U createdClass = null;
 		
 		try {
-			// Attempt to create the class by getting the constructor with the 
-			// same number of arguments as the list of resourceParameters passed in
-		    createdClass = resourceClass.getConstructor(argsClass).newInstance(resourceParameters);
-		    
-		    // Add the newly created resource into the list of 
-		    // created resources so that it can be referenced 
-		    // later on
-			add(createdClass, isShared);
+			
+			// Attempt to get an exact match for the constructor with the provided arguments
+			Constructor<U> exactMatchConstructor = resourceClass.getConstructor(argsClass);
+			
+			// If an exact match was found then it is business as usual
+			if(exactMatchConstructor != null) {
+				
+				// Create the new class
+				createdClass = exactMatchConstructor.newInstance(resourceParameters);
+				
+				// Add the newly created class into the factory for later reference
+				add(createdClass, isShared);
+			}
+			// No exact match found, attempt to find a constructor that has an IoC parameter match
+			else {
+			
+				Constructor<T>[] constructors = (Constructor<T>[]) resourceClass.getConstructors();
+				
+			}
 			
 		} catch (Exception exception) {
-			exception.printStackTrace();
+			Tracelog.log(Level.SEVERE, false, exception);
 		}
-			
+		
+		if(createdClass == null) {
+			Tracelog.log(Level.SEVERE, false, "Could not get the specified resource from the factory");
+		}
+		
 		return createdClass;
 	}
 	
+	private Constructor getConstructor(Class[] args) {
+		Constructor exactMatchConstructor = null;
+		try {
+			
+		}
+		catch(Exception exception) {
+			
+		}
+		
+		return exactMatchConstructor;
+	}
+
 	/**
 	 * Helper method to add the created resource for retrieval
 	 *  
