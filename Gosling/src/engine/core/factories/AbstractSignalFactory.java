@@ -124,6 +124,9 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 				return resource;
 			}
 		}
+		
+		// Create a fresh instance of the class specified
+		U createdClass = null;
 
 		// Construct the list of arguments that were provided
 		// Note: This is used to pass into the proper constructor
@@ -132,50 +135,59 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 			argsClass[i] = resourceParameters[i].getClass();
 		}
 		
-		// Create a fresh instance of the class specified
-		U createdClass = null;
 		try {
-			// No exact match found, attempt to find a constructor that has an IoC parameter match
-			Constructor<U>[] constructors = (Constructor<U>[]) resourceClass.getConstructors();
 			
-			// Go through the list of constructors to find another match
-			for(Constructor<U> constructor : constructors) {
+			// Attempt to create the instance with the exact match constructor
+			createdClass = resourceClass.getConstructor(argsClass).newInstance(resourceParameters);
+		}
+		catch(Exception exception) {
+			Tracelog.log(Level.WARNING, false, "No exact matching constructor found, attempting to find alternatives...");
+		}
+		
+		// If the exact match constructor was not successful, then try to find a better constructor
+		if(createdClass == null) {
+			try {
 				
-				// Make sure that the constructor count matches, else this is not the valid constructor
-				Class[] params = constructor.getParameterTypes();
-				if(params.length != argsClass.length) {
-					continue;
-				}
-				
-				// Check to make sure that all parameters can be properly
-				// invoked implicitly.
-				// TODO This could have some serious side effects that need to be properly tested
-				boolean isValid = true;
-				for(int i = 0; i < params.length; ++i) {
+				// Go through the list of constructors to find another match
+				Constructor<U>[] constructors = (Constructor<U>[]) resourceClass.getConstructors();
+				for(Constructor<U> constructor : constructors) {
 					
-					// If the parameter cannot be properly assigned from what was passed into
-					// to the parameter that is being accepted at the destination, then don't
-					// count the constructor currently being iterated upon
-					if(!params[i].isAssignableFrom(argsClass[i])) {
-						isValid = false;
+					// Make sure that the constructor count matches, else this is not the valid constructor
+					Class[] params = constructor.getParameterTypes();
+					if(params.length != argsClass.length) {
+						continue;
+					}
+					
+					// Check to make sure that all parameters can be properly
+					// invoked implicitly.
+					// TODO This could have some serious side effects that need to be properly tested
+					boolean isValid = true;
+					for(int i = 0; i < params.length; ++i) {
+						
+						// If the parameter cannot be properly assigned from what was passed into
+						// to the parameter that is being accepted at the destination, then don't
+						// count the constructor currently being iterated upon
+						if(!params[i].isAssignableFrom(argsClass[i])) {
+							isValid = false;
+							break;
+						}
+					}
+					
+					// If the constructor is a valid constructor then use that one
+					if(isValid) {
+						createdClass = constructor.newInstance(resourceParameters);
+						
+						// Add the newly created class into the factory for later reference
+						add(createdClass, isShared);
+						
+						// Now that a constructor was found, we need to break out of the loop
 						break;
 					}
 				}
-				
-				// If the constructor is a valid constructor then use that one
-				if(isValid) {
-					createdClass = constructor.newInstance(resourceParameters);
-					
-					// Add the newly created class into the factory for later reference
-					add(createdClass, isShared);
-					
-					// Now that a constructor was found, we need to break out of the loop
-					break;
-				}
 			}
-		}
-		catch(Exception exception) {
-			Tracelog.log(Level.SEVERE, false, "Could not get the specified resource from the factory");				
+			catch(Exception exception) {
+				Tracelog.log(Level.SEVERE, false, "Could not get the specified resource from the factory");				
+			}
 		}
 		
 		// Add the newly created class into the factory for later reference
