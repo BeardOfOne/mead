@@ -134,49 +134,57 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 		
 		// Create a fresh instance of the class specified
 		U createdClass = null;
-		
 		try {
-			
-			// Attempt to get an exact match for the constructor with the provided arguments
-			Constructor<U> exactMatchConstructor = resourceClass.getConstructor(argsClass);
-			
-			// If an exact match was found then it is business as usual
-			if(exactMatchConstructor != null) {
-				
-				// Create the new class
-				createdClass = exactMatchConstructor.newInstance(resourceParameters);
-				
-				// Add the newly created class into the factory for later reference
-				add(createdClass, isShared);
-			}
 			// No exact match found, attempt to find a constructor that has an IoC parameter match
-			else {
+			Constructor<U>[] constructors = (Constructor<U>[]) resourceClass.getConstructors();
 			
-				Constructor<T>[] constructors = (Constructor<T>[]) resourceClass.getConstructors();
+			// Go through the list of constructors to find another match
+			for(Constructor<U> constructor : constructors) {
 				
+				// Make sure that the constructor count matches, else this is not the valid constructor
+				Class[] params = constructor.getParameterTypes();
+				if(params.length != argsClass.length) {
+					continue;
+				}
+				
+				// Check to make sure that all parameters can be properly
+				// invoked implicitly.
+				// TODO This could have some serious side effects that need to be properly tested
+				boolean isValid = true;
+				for(int i = 0; i < params.length; ++i) {
+					
+					// If the parameter cannot be properly assigned from what was passed into
+					// to the parameter that is being accepted at the destination, then don't
+					// count the constructor currently being iterated upon
+					if(!params[i].isAssignableFrom(argsClass[i])) {
+						isValid = false;
+						break;
+					}
+				}
+				
+				// If the constructor is a valid constructor then use that one
+				if(isValid) {
+					createdClass = constructor.newInstance(resourceParameters);
+					
+					// Add the newly created class into the factory for later reference
+					add(createdClass, isShared);
+					
+					// Now that a constructor was found, we need to break out of the loop
+					break;
+				}
 			}
-			
-		} catch (Exception exception) {
-			Tracelog.log(Level.SEVERE, false, exception);
-		}
-		
-		if(createdClass == null) {
-			Tracelog.log(Level.SEVERE, false, "Could not get the specified resource from the factory");
-		}
-		
-		return createdClass;
-	}
-	
-	private Constructor getConstructor(Class[] args) {
-		Constructor exactMatchConstructor = null;
-		try {
-			
 		}
 		catch(Exception exception) {
-			
+			Tracelog.log(Level.SEVERE, false, "Could not get the specified resource from the factory");				
 		}
 		
-		return exactMatchConstructor;
+		// Add the newly created class into the factory for later reference
+		if(createdClass != null) {
+			add(createdClass, isShared);			
+		}
+
+		// return the newly created class
+		return createdClass;
 	}
 
 	/**
