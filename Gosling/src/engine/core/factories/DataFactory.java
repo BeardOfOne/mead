@@ -46,7 +46,7 @@ import game.data.DataBuilder;
  *
  * @param <T> An {@link IData} implemented type
  */
-public final class DataFactory<T extends IData> extends AbstractFactory<T> {
+public final class DataFactory<T extends IData> extends AbstractFactory {
 
 	/**
 	 * Holds the mappings of layer names to data resources.

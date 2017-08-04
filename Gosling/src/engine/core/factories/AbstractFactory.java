@@ -36,7 +36,7 @@ import engine.core.mvc.IDestructor;
  *
  * @param <T> Any type
  */
-public abstract class AbstractFactory<T extends Object> implements IDestructor {
+public abstract class AbstractFactory implements IDestructor {
 	
 	/**
 	 * The list of factories that have been constructed and that are still active 

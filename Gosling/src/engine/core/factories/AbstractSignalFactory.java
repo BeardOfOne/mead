@@ -45,7 +45,7 @@ import engine.utils.io.logging.Tracelog;
  *
  * @param <T> Any type extending from the ISignalListener interface
  */
-public abstract class AbstractSignalFactory<T extends ISignalListener> extends AbstractFactory<T> {
+public abstract class AbstractSignalFactory<T extends ISignalListener> extends AbstractFactory {
 	
 	/**
 	 * The history of all factory resources that have been created
