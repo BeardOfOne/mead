@@ -90,6 +90,7 @@ public interface IView extends IDestructor, ISignalListener {
 		        // the visibility is set to false
 		        @Override public void componentHidden(ComponentEvent args) {
 
+		        	// Get a reference to the controller of our view
 		        	IController controller = getEntity(IController.class);
 		        	
 		        	// Note: Some views don't have controllers
@@ -104,7 +105,8 @@ public interface IView extends IDestructor, ISignalListener {
 		           	// Unregister all signals being listened to by the view
 		           	view.unregisterSignalListeners();
 		           	
-		        	System.out.println(String.format("Component %s is being hidden", args.getSource().getClass().getCanonicalName()));
+		           	// log that the component is being hidden
+		        	Tracelog.log(Level.INFO, false, String.format("Component %s is being hidden", args.getSource().getClass().getCanonicalName()));
 		        }
 		        
 		        // This event is fired when  a view is shown, that is when
