@@ -51,6 +51,11 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 	private final List<T> _layerData = new ArrayList();
 	
 	/**
+	 * The layer name of this abstract entity
+	 */
+	private final String _layerName;
+	
+	/**
 	 * The data associated to the data entity
 	 */
 	private T _activeData;
@@ -61,10 +66,20 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 	 * @param layerName The name of the layer
 	 */
 	protected AbstractEntity(String layerName) {
+	    
+	    _layerName = layerName;
+	    
 		// Get the list of data associated to active data specified. This is
 		// used so that the abstract entity has a reference to the layer data
 		// for switching purposes
 		_layerData.addAll(AbstractFactory.getFactory(DataFactory.class).getByLayer(layerName));
+	}
+	
+	/**
+	 * @return The layer name
+	 */
+	public final String getLayerName() {
+	    return _layerName;
 	}
 	
 	/**
