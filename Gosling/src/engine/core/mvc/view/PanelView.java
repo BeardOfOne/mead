@@ -25,6 +25,7 @@
 package engine.core.mvc.view;
 
 import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,7 @@ import javax.swing.JPanel;
 import engine.api.IView;
 import engine.communication.internal.signal.types.SignalEvent;
 import game.api.IRenderable;
+import game.api.IRenderer;
 
 /**
  * This class represents a custom panel class that ties into the gosling MVC design pattern
@@ -40,7 +42,7 @@ import game.api.IRenderable;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class PanelView extends JPanel implements IView {
+public abstract class PanelView extends JPanel implements IView, IRenderer {
 	
 	/**
 	 * The view properties of this view
@@ -53,14 +55,12 @@ public abstract class PanelView extends JPanel implements IView {
 	private final List<IRenderable> _renderCache = new ArrayList();
 	
 	/**
-	 * Adds renderable content to be rendered in the paint pipeline
+	 * Adds renderable content to the queue of content to be rendered
 	 * 
-	 * @param content The content to be rendered
+	 * @param content The content to render
 	 */
 	protected final void addRenderableContent(IRenderable content) {
-		if(content != null) {
-			_renderCache.add(content);
-		}
+		_renderCache.add(content);
 	}
 	
 	/**
@@ -69,11 +69,18 @@ public abstract class PanelView extends JPanel implements IView {
 	 * @param context The graphics context
 	 */
 	protected final void renderContent(Graphics context) {
-		if(_renderCache != null) {
-			for(IRenderable content : _renderCache) {
-				content.render(this, context);
-			}
+		for(IRenderable content : _renderCache) {
+			this.render(content, context);
 		}
+	}
+	
+	@Override public void render(IRenderable renderable, Graphics context) {
+		Image image = null;
+		if(renderable != null) {
+			image = renderable.getRenderableContent();
+		}
+		
+		context.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 	}
 	
 	@Override protected void paintComponent(Graphics graphics) {
@@ -82,11 +89,9 @@ public abstract class PanelView extends JPanel implements IView {
 		// Render the contents attached to the view
 		renderContent(graphics);
 	}
-	
+
 	@Override public void update(SignalEvent signalEvent) {
-		if(signalEvent.getSource() instanceof IRenderable) {
-			_renderCache.clear();		
-		}
+		_renderCache.clear();
 	}
 	
 	@Override public final ViewProperties getViewProperties() {

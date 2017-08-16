@@ -24,14 +24,13 @@
 
 package game.core;
 
-import java.awt.Container;
-import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
 import engine.api.IData;
-import engine.api.IView;
+
 import engine.core.factories.AbstractFactory;
 import engine.core.factories.DataFactory;
 import engine.core.mvc.model.BaseModel;
@@ -51,7 +50,7 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 	private final List<T> _layerData = new ArrayList();
 	
 	/**
-	 * The layer name of this abstract entity
+	 * The layer name associated to this entity
 	 */
 	private final String _layerName;
 	
@@ -66,19 +65,20 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 	 * @param layerName The name of the layer
 	 */
 	protected AbstractEntity(String layerName) {
-	    
-	    _layerName = layerName;
-	    
 		// Get the list of data associated to active data specified. This is
 		// used so that the abstract entity has a reference to the layer data
 		// for switching purposes
 		_layerData.addAll(AbstractFactory.getFactory(DataFactory.class).getByLayer(layerName));
+		
+		_layerName = layerName;
 	}
 	
 	/**
+	 * Gets the layer name associated to this entity
+	 * 
 	 * @return The layer name
 	 */
-	public final String getLayerName() {
+	protected final String getLayerName() {
 	    return _layerName;
 	}
 	
@@ -113,19 +113,7 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 		}
 	}
 	
-	@Override public void render(IView view, Graphics context) {
-		
-		// If there is no active data then stop
-		if(_activeData == null) {
-			Tracelog.log(Level.SEVERE, false, "Trying to render to view without data");
-			return;
-		}
-		
-		// Get a reference to the container of the context provided
-		Container container = view.getContainerClass();
-		
-		// Draw into the graphics of the context provided the data
-		// being held in this data entity.
-		context.drawImage(_activeData.getImageData(), 0, 0, container.getWidth(), container.getHeight(), container);
+	@Override public Image getRenderableContent() {
+		return _activeData != null ? _activeData.getImageData() : null;
 	}
 }
