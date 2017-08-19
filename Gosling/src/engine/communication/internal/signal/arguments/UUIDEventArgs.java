@@ -22,25 +22,40 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.internal.signal.types;
+package engine.communication.internal.signal.arguments;
 
-import engine.api.IView;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+
+import engine.api.IModel;
 
 /**
- * Events specific from an IView source
+ * Event that specifies a UUID
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
- * @param <T> The IView type
+ * @param <T> The IModel type
  */
-public final class ViewEvent<T extends IView> extends SignalEvent<T> {
+public class UUIDEventArgs<T extends IModel> extends ModelEventArgs<T> {
+	
+	/**
+	 * The list of unique identifiers
+	 */
+	public final List<UUID> Identifiers = new ArrayList<>();
+	
 	/**
 	 * Constructs a new signal type event
 	 * 
 	 * @param sender The sender source
 	 * @param operationName The name of the operation being performed
+	 * @param uuid The uuid to include in the event
 	 */
-	public ViewEvent(T sender, String operationName) {
+	public UUIDEventArgs(T sender, String operationName, UUID... uuid) { 
 		super(sender, operationName);
-	}	
+		
+		// Set the identifiers
+		Identifiers.addAll(Arrays.asList(uuid));
+	}
 }

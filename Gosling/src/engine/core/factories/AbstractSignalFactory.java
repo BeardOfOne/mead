@@ -35,7 +35,7 @@ import java.util.Queue;
 import java.util.logging.Level;
 
 import engine.communication.internal.signal.ISignalListener;
-import engine.communication.internal.signal.types.SignalEvent;
+import engine.communication.internal.signal.arguments.SignalEventArgs;
 import engine.utils.io.logging.Tracelog;
 
 /**
@@ -401,7 +401,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	 * @param <V> A type extending The class SignalEvent
 	 * 
 	 */
-	public final <U extends T, V extends SignalEvent> void multicastSignal(Class<U> classType, V event) {
+	public final <U extends T, V extends SignalEventArgs> void multicastSignal(Class<U> classType, V event) {
 		List<T> resources = _history.get(classType);
 		if(resources != null) {
 			for(T resource : resources) {
@@ -421,7 +421,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	 * @param <U> A type extending The class template type
 	 * @param <V> A type extending a signal event class
 	 */
-	public final <U extends T, V extends SignalEvent> void multicastSignal(Collection<U> resources, V event) {
+	public final <U extends T, V extends SignalEventArgs> void multicastSignal(Collection<U> resources, V event) {
 		if(resources != null) {
 			for(T resource : resources) {
 				// TODO - parallelize this!

@@ -34,9 +34,9 @@ import engine.api.IModel;
 import engine.communication.internal.signal.IDataPipeline;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
-import engine.communication.internal.signal.types.ModelEvent;
-import engine.communication.internal.signal.types.PipelinedEvent;
-import engine.communication.internal.signal.types.SignalEvent;
+import engine.communication.internal.signal.arguments.ModelEventArgs;
+import engine.communication.internal.signal.arguments.PipelinedEventArgs;
+import engine.communication.internal.signal.arguments.SignalEventArgs;
 import engine.core.mvc.common.CommonProperties;
 
 /**
@@ -71,7 +71,7 @@ public abstract class BaseModel implements IModel
 	/**
 	 * The event to submit when performing the request to do the operation
 	 */
-	private transient SignalEvent _operationEvent;
+	private transient SignalEventArgs _operationEvent;
 	
 	/**
 	 * Constructs a new instance of this class type
@@ -126,7 +126,7 @@ public abstract class BaseModel implements IModel
 		// Create a new operation event to send out to listeners
 		// In this case we specify a local event as not to disturb 
 		// the done update functionality
-		SignalEvent event = new ModelEvent(this, null);
+		SignalEventArgs event = new ModelEventArgs(this, null);
 		
 		// Call all signal listeners with the specified event (this takes operation name into account)
 		// and then it will end up calling update after the fact
@@ -142,7 +142,7 @@ public abstract class BaseModel implements IModel
 	protected final void doneUpdating() {
 		
 		// Create a new operation event to send out to listeners
-		_operationEvent = new ModelEvent(this, _operationName);
+		_operationEvent = new ModelEventArgs(this, _operationName);
 		
 		// Call all signal listeners with the specified event (this takes operation name into account)
 		// and then it will end up calling update after the fact
@@ -180,20 +180,20 @@ public abstract class BaseModel implements IModel
 	}
 	
 	@Override public void registerSignalListeners() {
-		registerSignalListener(ISignalListener.EVENT_REGISTER, new ISignalReceiver<SignalEvent>() {
-			@Override public void signalReceived(SignalEvent event) {
+		registerSignalListener(ISignalListener.EVENT_REGISTER, new ISignalReceiver<SignalEventArgs>() {
+			@Override public void signalReceived(SignalEventArgs event) {
 				ISignalListener listener = (ISignalListener) event.getSource();
 				addListener(listener);
 			}
 		});
-		registerSignalListener(ISignalListener.EVENT_UNREGISTER, new ISignalReceiver<SignalEvent>() {
-			@Override public void signalReceived(SignalEvent event) {
+		registerSignalListener(ISignalListener.EVENT_UNREGISTER, new ISignalReceiver<SignalEventArgs>() {
+			@Override public void signalReceived(SignalEventArgs event) {
 				ISignalListener listener = (ISignalListener) event.getSource();
 				removeListener(listener);
 			}
 		});
-		registerSignalListener(IModel.EVENT_PIPE_DATA, new ISignalReceiver<PipelinedEvent<IDataPipeline>>() {
-			@Override public void signalReceived(PipelinedEvent<IDataPipeline> event) {				
+		registerSignalListener(IModel.EVENT_PIPE_DATA, new ISignalReceiver<PipelinedEventArgs<IDataPipeline>>() {
+			@Override public void signalReceived(PipelinedEventArgs<IDataPipeline> event) {				
 				// Send a reference of the BaseModel back to the caller
 				event.getSource().pipeData(BaseModel.this);
 			}

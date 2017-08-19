@@ -27,7 +27,7 @@ package engine.core.factories;
 import java.util.List;
 
 import engine.api.IModel;
-import engine.communication.internal.signal.types.UUIDEvent;
+import engine.communication.internal.signal.arguments.UUIDEventArgs;
 
 /**
  * The model factory used to create model type resources
@@ -47,7 +47,7 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
 	 * @param <U> A type extending The class template type
 	 * @param <T> A type extending any class type
 	 */
-	public <U extends IModel, T extends Object> void selectiveMulticastSignal(Class<U> classType, UUIDEvent event) {
+	public <U extends IModel, T extends Object> void selectiveMulticastSignal(Class<U> classType, UUIDEventArgs event) {
 
 		// Get the list of models that have currently been created
 		List<IModel> resources = _history.get(classType);
@@ -58,7 +58,7 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
 			// Unwrap the event and cast it to a model event.
 			// This is a strong assumption, but right now this is what
 			// the assumption is when sending out a signal using this factory.
-			UUIDEvent<U> uuidEvent = event;
+			UUIDEventArgs<U> uuidEvent = event;
 			
 			// For every resource that has been created
 			for(IModel resource : resources) {

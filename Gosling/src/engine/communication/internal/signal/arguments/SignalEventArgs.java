@@ -22,18 +22,29 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.internal.signal.types;
+package engine.communication.internal.signal.arguments;
 
-import engine.api.IModel;
+import java.util.EventObject;
+
+import engine.communication.internal.signal.ISignalReceiver;
 
 /**
- * Events specific from an IModel source
+ * The top-level class to form messages when invoking a signal
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
- * @param <T> The IModel type
  */
-public class ModelEvent<T extends IModel> extends SignalEvent<T> {
+public class SignalEventArgs<T extends Object> extends EventObject {
+	
+	/**
+	 * The name of the operation which is used to identify
+	 * which {@link ISignalReceiver } to invoke
+	 */
+	private String _operationName;
+	
+	private SignalEventArgs(T sender) {
+		super(sender);
+	}
 	
 	/**
 	 * Constructs a new signal type event
@@ -41,7 +52,34 @@ public class ModelEvent<T extends IModel> extends SignalEvent<T> {
 	 * @param sender The sender source
 	 * @param operationName The name of the operation being performed
 	 */
-	public ModelEvent(T sender, String operationName) { 
-		super(sender, operationName);
+	public SignalEventArgs(T sender, String operationName) {
+		this(sender);	
+		_operationName = operationName;
+	}
+	
+	/**
+	 * Verifies the validity of the signal event.  Validity is determined
+	 * by the expected usage of SignalEvent reference in a general case.
+	 * 
+	 * @return The validity of this SignalEvent
+	 */
+	public final boolean isValid() {
+		return !(this instanceof NullEventArgs || _operationName == null || _operationName.trim().isEmpty());
+	}
+	
+	/**
+	 * Gets the operation name
+	 * 
+	 * @return The name of the operation
+	 */
+	public final String getOperationName() {
+		return _operationName;
+	}	
+	
+	/**
+	 * Gets the source with respect to the specified type
+	 */
+	@Override public final T getSource() {
+		return (T)super.getSource();
 	}
 }

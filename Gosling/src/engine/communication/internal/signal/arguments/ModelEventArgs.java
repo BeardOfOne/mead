@@ -22,18 +22,18 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.internal.signal.types;
+package engine.communication.internal.signal.arguments;
 
-import engine.communication.internal.signal.IDataPipeline;
+import engine.api.IModel;
 
 /**
- * Events specific from an IController source
+ * Events specific from an IModel source
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
- * @param <T> The IController type
+ * @param <T> The IModel type
  */
-public final class PipelinedEvent<T extends IDataPipeline> extends SignalEvent<T> {
+public class ModelEventArgs<T extends IModel> extends SignalEventArgs<T> {
 	
 	/**
 	 * Constructs a new signal type event
@@ -41,7 +41,7 @@ public final class PipelinedEvent<T extends IDataPipeline> extends SignalEvent<T
 	 * @param sender The sender source
 	 * @param operationName The name of the operation being performed
 	 */
-	public PipelinedEvent(T sender, String operationName) {
+	public ModelEventArgs(T sender, String operationName) { 
 		super(sender, operationName);
 	}
 }

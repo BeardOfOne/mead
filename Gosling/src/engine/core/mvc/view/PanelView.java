@@ -32,7 +32,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import engine.api.IView;
-import engine.communication.internal.signal.types.SignalEvent;
+import engine.communication.internal.signal.arguments.SignalEventArgs;
 import game.api.IRenderable;
 import game.api.IRenderer;
 
@@ -90,7 +90,7 @@ public abstract class PanelView extends JPanel implements IView, IRenderer {
 		renderContent(graphics);
 	}
 
-	@Override public void update(SignalEvent signalEvent) {
+	@Override public void update(SignalEventArgs signalEvent) {
 		_renderCache.clear();
 	}
 	

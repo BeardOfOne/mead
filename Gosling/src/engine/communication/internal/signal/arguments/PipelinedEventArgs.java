@@ -22,18 +22,26 @@
 * IN THE SOFTWARE.
 */
 
-package engine.communication.internal.signal.types;
+package engine.communication.internal.signal.arguments;
+
+import engine.communication.internal.signal.IDataPipeline;
 
 /**
- * Events specific from an IModel source
+ * Events specific from an IController source
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ *
+ * @param <T> The IController type
  */
-public final class NullEvent extends SignalEvent {
+public final class PipelinedEventArgs<T extends IDataPipeline> extends SignalEventArgs<T> {
+	
 	/**
 	 * Constructs a new signal type event
+	 * 
+	 * @param sender The sender source
+	 * @param operationName The name of the operation being performed
 	 */
-	public NullEvent() {
-		super(0, null);
+	public PipelinedEventArgs(T sender, String operationName) {
+		super(sender, operationName);
 	}
 }

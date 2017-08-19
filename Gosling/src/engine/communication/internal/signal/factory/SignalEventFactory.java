@@ -27,11 +27,11 @@ package engine.communication.internal.signal.factory;
 import engine.api.IController;
 import engine.api.IModel;
 import engine.api.IView;
-import engine.communication.internal.signal.types.ControllerEvent;
-import engine.communication.internal.signal.types.ModelEvent;
-import engine.communication.internal.signal.types.NullEvent;
-import engine.communication.internal.signal.types.SignalEvent;
-import engine.communication.internal.signal.types.ViewEvent;
+import engine.communication.internal.signal.arguments.ControllerEventArgs;
+import engine.communication.internal.signal.arguments.ModelEventArgs;
+import engine.communication.internal.signal.arguments.NullEventArgs;
+import engine.communication.internal.signal.arguments.SignalEventArgs;
+import engine.communication.internal.signal.arguments.ViewEventArgs;
 
 /**
  * Factory that serves SignalEvent type objects
@@ -56,22 +56,22 @@ public final class SignalEventFactory {
 	 * 
 	 * @return A SignalEvent based on the specified parameters
 	 */
-	public static <T extends Object> SignalEvent<T> getSignalEvent(T sender, String operationName) {
+	public static <T extends Object> SignalEventArgs<T> getSignalEvent(T sender, String operationName) {
 
-		SignalEvent event = new NullEvent();
+		SignalEventArgs event = new NullEventArgs();
 		
 		if(sender != null && operationName != null && operationName.trim().length() > 0) {
 			if(sender instanceof IModel) {
-				event = new ModelEvent<IModel>((IModel)sender, operationName);
+				event = new ModelEventArgs<IModel>((IModel)sender, operationName);
 			}
 			else if(sender instanceof IController) {
-				event = new ControllerEvent<IController>((IController)sender, operationName);
+				event = new ControllerEventArgs<IController>((IController)sender, operationName);
 			}
 			else if(sender instanceof IView) {
-				event = new ViewEvent<IView>((IView)sender, operationName);
+				event = new ViewEventArgs<IView>((IView)sender, operationName);
 			}
 			else {
-				event = new SignalEvent<Object>(sender, operationName);
+				event = new SignalEventArgs<Object>(sender, operationName);
 			}
 		}
 			
