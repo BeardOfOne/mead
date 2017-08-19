@@ -124,13 +124,12 @@ public interface IView extends IDestructor, ISignalListener {
 		        	}
 		        	
 		        	// If a registration already occurred then log that this is the case and don't register again
-		        	// Note: This can occur if registration occurred before the actual view was about to be shown, this is common
-		        	// so that is why it is an Info and not a Warning.
+		        	// Note: This can occur if registration occurred before the actual view was about to be shown
 		        	Map listeners = controller.getSignalListeners();
 		        	if(listeners == null || !listeners.isEmpty()) {
 		        		
 		        		Tracelog.log(
-	        				Level.INFO, 
+	        				Level.WARNING, 
 	        				false, 
 	        				String.format(
     	        				"Signal listeners already detected for %s, not registering again", 
