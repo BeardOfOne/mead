@@ -133,6 +133,7 @@ public interface ISignalListener {
 			for(Map.Entry<String, ISignalReceiver> kvp : listeners.entrySet()) {
 				if(kvp.getValue() == listener) {
 					listeners.remove(kvp.getKey());
+		            Tracelog.log(Level.INFO, false, String.format("Signal Unregistration: %s is no longer listening on signal %s", this.getClass().getCanonicalName(), kvp.getKey()));
 					return kvp.getKey();
 				}
 			}
@@ -173,5 +174,6 @@ public interface ISignalListener {
 	 * @param signalEvent An event that holds information about the action being performed
 	 */
 	default public void update(SignalEventArgs signalEvent) {
+	    // INFO:::Putting something here as default could have dire consequences, make sure to test like crazy beforehand
 	}
 }
