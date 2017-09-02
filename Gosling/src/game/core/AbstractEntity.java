@@ -101,7 +101,7 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 	 * 
 	 * @param dataName The data name, one that would be retrieved if calling getDataNames for example
 	 */
-	protected void setActiveData(String dataName) {
+	protected final void setActiveData(String dataName) {
 		if(dataName != null) {
 			for(T data : _layerData) {
 				if(data.getName().equalsIgnoreCase(dataName)) {
