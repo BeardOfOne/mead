@@ -72,6 +72,11 @@ public abstract class BaseModel implements IModel
 	 * The event to submit when performing the request to do the operation
 	 */
 	private transient SignalEventArgs _operationEvent;
+
+	/**
+	 * Indicates if this model should suppress updates to its listeners
+	 */
+	private boolean _suppressUpdates;
 	
 	/**
 	 * Constructs a new instance of this class type
@@ -123,6 +128,12 @@ public abstract class BaseModel implements IModel
 	 */
 	public final void refresh() {
 		
+		// Do not continue with the update if there is a suppression
+		// of the updates
+		if(isSuppressingUpdates()) {
+			return;
+		}
+		
 		// Create a new operation event to send out to listeners
 		// In this case we specify a local event as not to disturb 
 		// the done update functionality
@@ -134,12 +145,36 @@ public abstract class BaseModel implements IModel
 			receiver.unicastSignalListener(event);
 		}
 	}
+	
+	/**
+	 * Sets if this model should suppress updates
+	 * 
+	 * @param suppressUpdates The state of the suppress update flag
+	 */
+	public final void setSuppressUpdates(boolean suppressUpdates) {
+		_suppressUpdates = suppressUpdates;
+	}
+	
+	/**
+	 * Indicates if this model is suppressing updates
+	 * 
+	 * @return TRUE if this model is suppressing updates
+	 */
+	public final boolean isSuppressingUpdates() {
+		return _suppressUpdates;
+	}
 
 	/**
 	 * A convenience method to indicate that an update has been performed
 	 * and that this model should notify its receivers by issuing a signal
 	 */
 	protected final void doneUpdating() {
+		
+		// Do not continue with the update if there is a suppression
+		// of the updates
+		if(isSuppressingUpdates()) {
+			return;
+		}
 		
 		// Create a new operation event to send out to listeners
 		_operationEvent = new ModelEventArgs(this, _operationName);
