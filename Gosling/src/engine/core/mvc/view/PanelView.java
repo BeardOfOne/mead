@@ -91,7 +91,14 @@ public abstract class PanelView extends JPanel implements IView, IRenderer {
 	}
 
 	@Override public void update(SignalEventArgs signalEvent) {
-		_renderCache.clear();
+		
+		// If the view is set to be redrawn then do not clear the cached render contents
+		if(!getViewProperties().shouldRedraw()) {
+			_renderCache.clear();
+		}
+		
+		// Set the flag back to be redrawn the next time around
+		getViewProperties().setRedraw(false);
 	}
 	
 	@Override public final ViewProperties getViewProperties() {

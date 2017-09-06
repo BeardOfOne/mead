@@ -49,7 +49,12 @@ public interface IView extends IDestructor, ISignalListener {
 	 * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
 	 */
 	public final class ViewProperties extends CommonProperties<IController>  {
-						
+				
+		/**
+		 * Indicates if the view should be redrawn
+		 */
+		private boolean _shouldRedraw = false;
+		
 		/**
 		 * Flag indicating if the view has performed a render operation
 		 * Note: For this to be properly set it is imperative that the programmer
@@ -164,6 +169,24 @@ public interface IView extends IDestructor, ISignalListener {
 		 */
 		public final boolean hasRendered() {
 			return _hasRendered;
+		}
+		
+		/**
+		 * Gets a flag indicating if the view should be redrawn
+		 * 
+		 * @return TRUE if the view should be redrawn
+		 */
+		public final boolean shouldRedraw() {
+			return _shouldRedraw;
+		}
+		
+		/**
+		 * Sets if the view should be redrawn
+		 * 
+		 * @param shouldRedraw If the view should be redrawn
+		 */
+		public final void setRedraw(boolean shouldRedraw) {
+			_shouldRedraw = shouldRedraw;
 		}
 	}
 		
