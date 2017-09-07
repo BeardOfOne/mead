@@ -60,11 +60,28 @@ public class MenuComponent extends AbstractMenu {
 	public void setMnemonic(int mnemonic) {
 		super.get(JMenu.class).setMnemonic(mnemonic);
 	}
+
+	/**
+	 * Resets this menu and its sub-items to their default states
+	 */
+	public final void reset() {
+		JMenu menu = (JMenu)super.getComponent();
+		for(Component component : menu.getMenuComponents()) {
+			if(component instanceof JComponent) {
+				JComponent jComponent = (JComponent) component;
+				Object clientProperty = jComponent.getClientProperty(jComponent);
+				if(clientProperty instanceof MenuItem) {
+				    MenuItem menuItem = (MenuItem) jComponent.getClientProperty(jComponent);
+				    menuItem.onReset();
+				}
+			}
+		}
+	}
 	
 	@Override public final boolean enabled() {
 		return super.enabled();
 	}
-
+	
 	@Override public final boolean visibility() {
 		return super.visibility();
 	}
@@ -93,5 +110,8 @@ public class MenuComponent extends AbstractMenu {
 			@Override public void menuDeselected(MenuEvent e) {
 			}			
 		});
+	}
+
+	@Override protected void onReset() {
 	}
 }

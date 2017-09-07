@@ -57,4 +57,7 @@ public abstract class MenuItem extends AbstractMenu {
 			}
 		});
 	}	
+	
+	@Override protected void onReset() {
+	}
 }

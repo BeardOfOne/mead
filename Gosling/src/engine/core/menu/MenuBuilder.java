@@ -24,9 +24,12 @@
 
 package engine.core.menu;
 
+import java.awt.Component;
 import java.util.Vector;
 
 import javax.swing.JComponent;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 
 import engine.core.menu.types.MenuComponent;
 import engine.core.menu.types.MenuItem;
@@ -70,6 +73,24 @@ public final class MenuBuilder {
 	}
 	
 	/**
+	 * Resets the specified menu bar
+	 * 
+	 * @param jMenuBar The menu bar to reset
+	 */
+	public static void reset(JMenuBar jMenuBar) {
+		for(Component component : jMenuBar.getComponents()) {
+			if(component instanceof JMenu) {
+				JMenu menu = (JMenu)component;
+				Object obj = menu.getClientProperty(menu);
+				if(obj instanceof MenuComponent) {
+					MenuComponent menuComponent = (MenuComponent) obj;
+					menuComponent.reset();
+				}
+			}
+		}
+	}
+	
+	/**
 	 * Builder entry-point
 	 * 
      * @param host The root component of this menu system
@@ -92,6 +113,13 @@ public final class MenuBuilder {
 	    return this;
 	}
 	
+	/**
+	 * Adds a menu with the specified text to the currently active menu
+	 * 
+	 * @param text The text to set as the menu title
+	 * 
+	 * @return A refrence to the menu builder
+	 */
 	public MenuBuilder AddMenu(String text) {
 		MenuComponent component = new MenuComponent(_root == null ? _host : _root, text);
 	

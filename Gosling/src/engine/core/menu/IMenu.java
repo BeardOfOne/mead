@@ -26,8 +26,6 @@ package engine.core.menu;
 
 import java.awt.event.ActionEvent;
 
-import engine.core.mvc.controller.BaseController;
-
 /**
  * Interface that defines the functionality that must be provided by menu options
  * 
@@ -56,11 +54,4 @@ public interface IMenu {
 	 * @param actionEvent The action event associated to the call of this method
 	 */
 	public void onExecute(ActionEvent actionEvent);
-
-	/**
-	 * Binds the specified option to a particular controller
-	 * 
-	 * @param controller The controller to bind 
-	 */
-	public void bind(BaseController controller);
 }

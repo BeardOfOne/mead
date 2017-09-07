@@ -29,8 +29,6 @@ import java.util.UUID;
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
 
-import engine.core.mvc.controller.BaseController;
-
 /**
  * Top-level option class used for creating menu items
  * 
@@ -55,7 +53,7 @@ public abstract class AbstractMenu implements IMenu {
 	private final JComponent _component;
 	
 	/**
-	 * The parent jcomponent associated to this option
+	 * The parent component associated to this option
 	 */
 	private final JComponent _parent;
 	
@@ -83,7 +81,7 @@ public abstract class AbstractMenu implements IMenu {
 	}
 	
 	/**
-	 * Construcs a new instance of this class type
+	 * Constructs a new instance of this class type
 	 * 
 	 * @param component The component to associate to this option
 	 * @param parent The abstract option to associate to this option
@@ -160,11 +158,13 @@ public abstract class AbstractMenu implements IMenu {
 		return _component.isEnabled();
 	}
 	
-	@Override public void bind(BaseController controller) {
-	}
-	
 	/**
 	 * Defines abstract functionality initializing an option
 	 */
 	protected abstract void onInitialize();
+	
+	/**
+	 * Defines abstract functionality for resetting the menu
+	 */
+	protected abstract void onReset();
 }
