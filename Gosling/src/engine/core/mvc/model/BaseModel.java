@@ -126,7 +126,7 @@ public abstract class BaseModel implements IModel
 	/**
 	 * Refreshes this tile model, effectively doing a doneUpdate 
 	 */
-	public final void refresh() {
+	public void refresh() {
 		
 		// Do not continue with the update if there is a suppression
 		// of the updates
