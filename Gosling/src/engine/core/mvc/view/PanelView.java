@@ -33,8 +33,8 @@ import javax.swing.JPanel;
 
 import engine.api.IView;
 import engine.communication.internal.signal.arguments.SignalEventArgs;
-import game.api.IRenderable;
-import game.api.IRenderer;
+import engine.core.graphics.IRenderable;
+import engine.core.graphics.IRenderer;
 
 /**
  * This class represents a custom panel class that ties into the gosling MVC design pattern
@@ -84,8 +84,11 @@ public abstract class PanelView extends JPanel implements IView, IRenderer {
 		if(renderable != null) {
 			image = renderable.getRenderableContent();
 		}
-		
-		context.drawImage(image, 0, 0, getWidth(), getHeight(), null);
+		render(image, context);
+	}
+	
+	@Override public void render(Image renderableData, Graphics context) {
+		context.drawImage(renderableData, 0, 0, getWidth(), getHeight(), null);		
 	}
 	
 	@Override protected void paintComponent(Graphics graphics) {

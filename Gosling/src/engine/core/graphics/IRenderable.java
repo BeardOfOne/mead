@@ -22,22 +22,21 @@
 * IN THE SOFTWARE.
 */
 
-package game.api;
+package engine.core.graphics;
 
-import java.awt.Graphics;
+import java.awt.Image;
 
 /**
- * This interface defines methods for compenents that provide the ability to render content
+ * This interface defines methods for components which have resources that they would like rendered.
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
-public interface IRenderer {
+public interface IRenderable {
 	
 	/**
-	 * Renders the specified renderable data using the specified graphics context
+	 * Gets the renderable content provided by the implementor
 	 * 
-	 * @param renderableData The renderable data
-	 * @param context The graphics context
+	 * @return The renderable content as an image
 	 */
-	public void render(IRenderable renderableData, Graphics context);
+	public Image getRenderableContent();
 }

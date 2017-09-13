@@ -33,9 +33,9 @@ import engine.api.IData;
 
 import engine.core.factories.AbstractFactory;
 import engine.core.factories.DataFactory;
+import engine.core.graphics.IRenderable;
 import engine.core.mvc.model.BaseModel;
 import engine.utils.io.logging.Tracelog;
-import game.api.IRenderable;
 
 /**
  * Top-most class for dealing with data as an entity within the game play framework
