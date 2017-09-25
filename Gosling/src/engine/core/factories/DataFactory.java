@@ -42,7 +42,7 @@ import game.data.DataBuilder;
  * Data factory for extracting data from an external source
  * based on specified types
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  * @param <T> An {@link IData} implemented type
  */
@@ -144,6 +144,7 @@ public final class DataFactory<T extends IData> extends AbstractFactory {
 	 * consists of a mapping of layer names to {@link IData} implemented concrete types
 	 * 
 	 * @param resources The list of resources
+	 * @param <U> IData type
 	 */
 	public <U extends T> void addDataResources(List<U> resources)  {
 		

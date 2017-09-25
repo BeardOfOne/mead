@@ -40,7 +40,7 @@ import engine.core.factories.DataFactory;
  * Data builder used for building data from the editor and
  * other data places
  * 
- * @author Daniel Ricci <thedanny09@gmail.com>
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 public class DataBuilder extends AbstractBuilder<FileSystem> {

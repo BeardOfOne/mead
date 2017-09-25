@@ -33,8 +33,6 @@ import engine.core.mvc.IDestructor;
  * Top-most factory class that defines primitive functionality for other factories
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
- *
- * @param <T> Any type
  */
 public abstract class AbstractFactory implements IDestructor {
 	

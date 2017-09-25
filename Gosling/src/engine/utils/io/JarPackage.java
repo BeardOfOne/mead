@@ -72,7 +72,7 @@ public class JarPackage {
 	 * Adds the provided data into the jar file at the location within the jar file specified
 	 * 
 	 * @param data The data that will be written into the jar file.
-	 * @param jarDirectory The location within the jar where the written data will reside
+	 * @param location The location within the jar where the written data will reside
 	 */
 	public void addEntry(File data, String location) {
 		

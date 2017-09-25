@@ -116,8 +116,11 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * 
      * @param classType The specified class type to construct
      * @param isDebug The debug state of the application
+     * @param <T> AbstractApplication type
      * 
      * @throws Exception If something went wrong, please note that this calls the default constructor of your class type
+     * 
+     * @return The application
      */
     protected static <T extends AbstractApplication> AbstractApplication initialize(Class<T> classType, boolean isDebug) throws Exception {
     	if(_instance == null) {
