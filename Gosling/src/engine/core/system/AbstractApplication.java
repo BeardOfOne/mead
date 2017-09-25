@@ -57,11 +57,16 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 	private static AbstractApplication _instance;
 	
 	/**
+	 * Debug state of the application
+	 */
+	private boolean _isDebug;
+	
+	/**
 	 * Constructs a new instance of this class
 	 */
     protected AbstractApplication() {
     	// Set the menu of the application
-        setJMenuBar(new JMenuBar());    
+        setJMenuBar(new JMenuBar());
     }
     
     /**
@@ -110,14 +115,16 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * Initializes the singleton instance, this should be called before the {@code instance()} method
      * 
      * @param classType The specified class type to construct
+     * @param isDebug The debug state of the application
      * 
      * @throws Exception If something went wrong, please note that this calls the default constructor of your class type
      */
-    protected static <T extends AbstractApplication> AbstractApplication initialize(Class<T> classType) throws Exception {
+    protected static <T extends AbstractApplication> AbstractApplication initialize(Class<T> classType, boolean isDebug) throws Exception {
     	if(_instance == null) {
     		
     		// Create the new instance
     		_instance = classType.getConstructor().newInstance();
+    		_instance._isDebug = isDebug;
     	
 	    	// Load the engine properties, this must be done before doing anything else
     		_instance.initializeEngineProperties();
@@ -137,6 +144,15 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     	}
     	
     	return _instance;
+    }
+    
+    /**
+     * Gets the debug state of the application
+     * 
+     * @return TRUE if the application is running in a debug state, FALSE otherwise
+     */
+    public boolean isDebug() {
+    	return _isDebug;
     }
 
     /**
