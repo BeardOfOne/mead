@@ -1,9 +1,25 @@
-<h1>Gosling Engine</h1>
+# Gosling Engine
+
+### Build Status
 <img src="https://travis-ci.org/danielricci/gosling-engine.svg?branch=master" />
 
-This is the repository for the Gosling Engine, an engine used to make video games
+### Description
 
-<p>Please see the releases section and read the release notes in the wiki if applicable for more details</p>
+### Development
 
-<h3>Requests</h3>
-<p>For all bug reports, feature/enhancement requests, please email me at thedanny09 at gmail dot com</p>
+### Features
+- [x] Localization System
+- [x] Signaling System
+- [x] Data Assets Loading
+- [x] MVC Architecture
+- [x] Events System
+- [x] Build System Integration
+- [x] Logging System
+- [ ] Multi-Threaded Support
+- [ ] Physics System
+- [ ] Network System
+- [ ] Audio System
+- [ ] Animation System
+
+### Contributors
+* [Daniel Ricci] (https://github.com/danielricci)
