@@ -4,8 +4,13 @@
 <img src="https://travis-ci.org/danielricci/gosling-engine.svg?branch=master" />
 
 ### Description
+This is the game engine that I custom built for myself.  Here are the games that I have currently made with this engine
 
 ### Development
+- [x] Tic-Tac-Toe
+- [x] Checkers
+- [x] Chess
+- [ ] Minesweeper
 
 ### Features
 - [x] Localization System
