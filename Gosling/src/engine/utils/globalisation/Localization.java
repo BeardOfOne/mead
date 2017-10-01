@@ -24,12 +24,17 @@
 
 package engine.utils.globalisation;
 
+import java.awt.Image;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+
+import javax.imageio.ImageIO;
 
 import engine.core.mvc.IDestructor;
+import engine.utils.io.logging.Tracelog;
 
 /**
  * Defines the functionality for providing localization in an application 
@@ -92,6 +97,26 @@ public abstract class Localization<T extends Enum<T>> implements IDestructor {
 	public final String getLocalizedString(T key) {
 		return getResource(key.toString());
 	}
+	
+	/**
+	 * Gets the localized data of the specified key
+	 * 
+	 * @param key The key to lookup
+	 * 
+	 * @return The image associated to the key
+	 */
+    public Image getLocalizedData(T key) {
+        
+        Image image = null;
+        try {
+            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(getLocalizedString(key)));
+        }
+        catch(Exception exception) {
+            Tracelog.log(Level.SEVERE, false, exception);
+        }
+        
+        return image;
+    }
 	
 	/**
 	 * Gets a resource associated to the specified key

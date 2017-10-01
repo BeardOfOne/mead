@@ -78,7 +78,7 @@ public interface IView extends IDestructor, ISignalListener {
 			// are already visible when they are created and because of this no event
 			// will ever be sent out that a JPanel or some other container is being shown
 			//
-			// Note: The render at this point in time is now in charge is setting a container
+			// Note: The render at this point in time is now in charge of setting a container
 			// class to visible, but the implementor must call super
 			// 
 			// Note: Do not touch this line of code, ever.
