@@ -1,11 +1,7 @@
 /** PLUGINS **/
 //-------------------------------
 apply plugin: 'java'
-//apply plugin: 'application'
 //-------------------------------
-
-//mainClassName = 'main.Chess'
-//sourceSets.main.java.srcDirs = ['game.main']
 
 /** ANT **/
 //-------------------------------
