@@ -42,7 +42,7 @@ import engine.utils.io.logging.Tracelog;
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
-public abtract class AbstractEntity<T extends IData> extends BaseModel implements IRenderable {
+public abstract class AbstractEntity<T extends IData> extends BaseModel implements IRenderable {
 	
 	/**
 	 * The data associated to the initially specified active data
