@@ -80,7 +80,7 @@ public final class Tracelog {
 		
 		// If there is not a valid path then do not continue logging
 		if(path == null || path.isEmpty()) {
-			System.out.println("Logging disabled, no log path has been specified");
+			Tracelog.log(Level.WARNING, false, "Logging to disk disabled, no log path has been specified");
 		}
 		else {
 			try {
@@ -133,32 +133,31 @@ public final class Tracelog {
 	 * Closes and cleans up the logger, this should be called before the application terminates
 	 */
 	public static void close() {
-		
 		// Go through the list of loggers and get handlers so 
 		// that they can be closed, this will flush whatever data is
 		// left within them and remove any temporary lock files
 		// that are hanging around
 		if(Log != null) {
 			for(Handler handle : Log.getHandlers()) {
-			    handle.close();   
+			    handle.flush();
+				handle.close();
 			}
 		}
 	}
-	
 	
 	/**
 	 * Print contents using the standard output stream and any external handles present
 	 * 
 	 * @param level The level of the log
-	 * @param isGame Indicates if the log originates from the game or engine
+	 * @param isEngine Indicates if the log originates from the engine
 	 * @param text The text to print out
 	 */
-	public static void log(Level level, boolean isGame, String text) {
+	public static void log(Level level, boolean isEngine, String text) {
 
 		// Format the text accordingly
 		String formattedText = String.format("%s [%s] [%s]: \t %s",
 			LogTimeFormat.format(new Date()),
-			isGame ? "GAME" : "ENGINE",
+			isEngine ? "ENGINE" : "GAME",
 			level.toString(),
 			text
 		);
@@ -169,7 +168,7 @@ public final class Tracelog {
 		}
 		
 		// Check if engine logging to the output window has been disabled
-		if(!isGame && !Boolean.valueOf(EngineProperties.instance().getProperty(Property.ENGINE_OUTPUT))) {
+		if(isEngine && !Boolean.valueOf(EngineProperties.instance().getProperty(Property.ENGINE_OUTPUT))) {
 			return;
 		}
 		

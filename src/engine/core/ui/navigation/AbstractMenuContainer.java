@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.menu.types;
+package engine.core.ui.navigation;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -32,30 +32,29 @@ import javax.swing.JMenu;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 
-import engine.core.menu.AbstractMenu;
-
 /**
- * Defines an abstract implementation for menu options, this is equivalent to a menu root
+ * Defines the abstract implementation for the menu container.  A menu container is similar 
+ * in nature to a JMenu
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public class MenuComponent extends AbstractMenu {
-
+class AbstractMenuContainer extends AbstractMenu {
+	
 	/**
 	 * Constructs a new instance of this type
 	 * 
 	 * @param parent The parent component associated to this option menu
 	 * @param text The text of the menu component that will be displayed 
 	 */
-	public MenuComponent(JComponent parent, String text) {
+	public AbstractMenuContainer(JComponent parent, String text) {
 		super(new JMenu(text), parent);
 	}
 	
 	/**
 	 * Sets the mnemonic of this menu component
 	 * 
-	 * @param mnemonic The mnemonic to set to this menu component (KeyEvent.*) 
+	 * @param mnemonic The mnemonic to set to this menu component
 	 */
 	public void setMnemonic(int mnemonic) {
 		super.get(JMenu.class).setMnemonic(mnemonic);
@@ -65,30 +64,23 @@ public class MenuComponent extends AbstractMenu {
 	 * Resets this menu and its sub-items to their default states
 	 */
 	public final void reset() {
-		JMenu menu = (JMenu)super.getComponent();
-		for(Component component : menu.getMenuComponents()) {
+		for(Component component : super.get(JMenu.class).getMenuComponents()) {
 			if(component instanceof JComponent) {
 				JComponent jComponent = (JComponent) component;
 				Object clientProperty = jComponent.getClientProperty(jComponent);
-				if(clientProperty instanceof MenuItem) {
-				    MenuItem menuItem = (MenuItem) jComponent.getClientProperty(jComponent);
+				if(clientProperty instanceof AbstractMenuItem) {
+				    AbstractMenuItem menuItem = (AbstractMenuItem) jComponent.getClientProperty(jComponent);
 				    menuItem.onReset();
 				}
 			}
 		}
 	}
 	
-	@Override public final boolean enabled() {
-		return super.enabled();
-	}
-	
-	@Override public final boolean visibility() {
-		return super.visibility();
-	}
-	
+
 	@Override public final void onExecute(ActionEvent actionEvent) {
 	}
 	
+
 	@Override protected void onInitialize() {
 		super.get(JMenu.class).addMenuListener(new MenuListener() {
 			@Override public void menuSelected(MenuEvent e) {
@@ -97,8 +89,8 @@ public class MenuComponent extends AbstractMenu {
 					if(component instanceof JComponent) {
 						JComponent jComponent = (JComponent) component;
 						Object clientProperty = jComponent.getClientProperty(jComponent);
-						if(clientProperty instanceof MenuItem) {
-						    MenuItem itemComponent = (MenuItem) jComponent.getClientProperty(jComponent);
+						if(clientProperty instanceof AbstractMenuItem) {
+						    AbstractMenuItem itemComponent = (AbstractMenuItem) jComponent.getClientProperty(jComponent);
 	                        jComponent.setEnabled(itemComponent.enabled());
 	                        jComponent.setVisible(itemComponent.visibility());    
 						}
@@ -112,6 +104,4 @@ public class MenuComponent extends AbstractMenu {
 		});
 	}
 
-	@Override protected void onReset() {
-	}
 }

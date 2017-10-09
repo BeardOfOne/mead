@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.graphics;
+package engine.core.ui.graphics;
 
 import java.awt.Graphics;
 import java.awt.Image;

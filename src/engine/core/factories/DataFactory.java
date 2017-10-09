@@ -125,7 +125,7 @@ public final class DataFactory<T extends IData> extends AbstractFactory {
 		
 		// If the data path has not been set or it was set inappropriately
 		if(dataPath == null || dataPath.length() == 0) {
-			Tracelog.log(Level.WARNING, false, "No data has been loaded");
+			Tracelog.log(Level.WARNING, false, "No data path has been specified for the DATA_PATH_XML, data will not be loaded for the application");
 			return;
 		}
 		

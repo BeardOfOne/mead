@@ -39,12 +39,8 @@ import engine.core.mvc.IDestructor;
 import engine.utils.io.logging.Tracelog;
 
 /**
- * This class provides the entry point for all applications to extend
- * for their game.  Their main method should be within a class that extends
- * this class.
- * 
- * This class will construct the base listeners for the game, along with the engine
- * default values (pre-initialization) and other core functionality
+ * This class provides the entry point for all applications to extend for their game.  
+ * Your main method should be within a class that extends this class.
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
@@ -62,33 +58,33 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 	private boolean _isDebug;
 	
 	/**
-	 * Constructs a new instance of this class
+	 * Constructs a new instance of this class type
 	 */
     protected AbstractApplication() {
-    	// Set the menu of the application
+    		// Set the menu of the application
         setJMenuBar(new JMenuBar());
     }
     
     /**
-     * Sets the listeners for the game
+     * Sets the window listeners for the application
      */
     private void initializeWindowListeners() {
 		addComponentListener(new ComponentAdapter() {
-		    @Override public void componentHidden(ComponentEvent e) {
+		    @Override public void componentHidden(ComponentEvent event) {
 		        setJMenuBar(null);
 		    }
-		    @Override public void componentShown(ComponentEvent e) {
-		        // Generate menu system
-		    	setWindowedInstanceMenu();
-		    	
-		    	getJMenuBar().revalidate();
-		        getJMenuBar().repaint();
+		    
+		    @Override public void componentShown(ComponentEvent event) {
+		        onApplicationShown();
+		    	    	getJMenuBar().revalidate();
+			    getJMenuBar().repaint();
 		    }
 		});
+		
 		addWindowListener(new WindowAdapter() {
-			@Override public void windowClosed(WindowEvent e) {
+			@Override public void windowClosed(WindowEvent event) {
 				Tracelog.log(Level.INFO, false, "Engine shutting down");
-				engineShutdown();
+				onEngineShutdown();
 				System.exit(0);
 			}
 		});
@@ -100,7 +96,10 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * @return The singleton instance
      */
     public static AbstractApplication instance() {
-    	return _instance;
+    		if(_instance == null) {
+    			Tracelog.log(Level.WARNING, false, "Application instance was requested but was not initialized.");
+    		}
+    		return _instance;
     }
     
     /**
@@ -108,11 +107,11 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * components and sub-components in the process
      */
     public static void shutdown() {
-    	 _instance.dispose();
+    	 	_instance.dispose();
     }
     
     /**
-     * Initializes the singleton instance, this should be called before the {@code instance()} method
+     * Initializes the singleton instance
      * 
      * @param classType The specified class type to construct
      * @param isDebug The debug state of the application
@@ -123,30 +122,29 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * @return The application
      */
     protected static <T extends AbstractApplication> AbstractApplication initialize(Class<T> classType, boolean isDebug) throws Exception {
-    	if(_instance == null) {
-    		
-    		// Create the new instance
-    		_instance = classType.getConstructor().newInstance();
-    		_instance._isDebug = isDebug;
+	    	
+    		if(_instance == null) {
+
+    			// Create the new instance
+	    		_instance = classType.getConstructor().newInstance();
+	    		_instance._isDebug = isDebug;
+
+	    		// This is what users can hook onto before the data is actually loaded up
+	    		_instance.onBeforeEngineDataInitialized();  
+	    		
+		    	// Load the window listeners of the application
+	    		Tracelog.log(Level.INFO, false, "--Engine Window Listeners Initializing--");
+	    		_instance.initializeWindowListeners();
+	    		Tracelog.log(Level.INFO, false, "--Engine Window Listeners Initialization Completed--");
+	    		
+	    		// Load any engine data
+	    		Tracelog.log(Level.INFO, false, "--Engine Data Initializing--");
+	    		_instance.loadData();
+	    		Tracelog.log(Level.INFO, false, "--Engine Data Initialization Completed--");	    		
+	    		Tracelog.log(Level.INFO, false, "--Engine Bootup Finished--");
+	    	}
     	
-	    	// Load the engine properties, this must be done before doing anything else
-    		_instance.initializeEngineProperties();
-    		Tracelog.log(Level.INFO, false, "--Initializing Engine Properties Completed--");
-    			
-	    	// Load the window listeners of the application
-    		_instance.initializeWindowListeners();
-    		Tracelog.log(Level.INFO, false, "--Initializing Window Listeners Completed--");
-    		
-	    	// Load the engine resources of the application
-    		_instance.initializeEngineResources();      
-    		Tracelog.log(Level.INFO, false, "--Initializing Engine Resources--");
-    		
-    		// Load the data into the engine
-    		_instance.loadData();
-    		Tracelog.log(Level.INFO, false, "--Loading Data Completed--");
-    	}
-    	
-    	return _instance;
+	    	return _instance;
     }
     
     /**
@@ -155,7 +153,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * @return TRUE if the application is running in a debug state, FALSE otherwise
      */
     public boolean isDebug() {
-    	return _isDebug;
+    		return _isDebug;
     }
 
     /**
@@ -165,9 +163,9 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     private void loadData() {
 		try {
 			// Load the data into the game
-			AbstractFactory.getFactory(DataFactory.class).loadData();
-			
-		} catch (Exception exception) {
+			AbstractFactory.getFactory(DataFactory.class).loadData();			
+		} 
+		catch (Exception exception) {
 
 			// Print the stack trace
 			exception.printStackTrace();
@@ -178,28 +176,22 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     }
 
     /**
-     * Defines the Engine Shutdown procedure
+     * Called when the engine is being shut down
      */
-    private void engineShutdown() {
-    	// Shut down logger
-    	Tracelog.close();
+    private void onEngineShutdown() {
+	    	Tracelog.close();
     }
     
     /**
      * Sets the engine default values for the game
+     */
+    protected abstract void onBeforeEngineDataInitialized();
+    
+    /**
+     * Called when the application is shown.  
      * 
-     * Note: This is a good place to initialize the resource manager
-     * for localization.
+     * Note: A shown application is when the application's visibility is TRUE
      */
-    protected abstract void initializeEngineResources();
-    
-    /**
-     * Sets the menu functionality for the game
-     */
-    protected abstract void setWindowedInstanceMenu();
-    
-    /**
-     * Initializes the engine properties
-     */
-    protected abstract void initializeEngineProperties();
+    protected void onApplicationShown() {
+    }
 }

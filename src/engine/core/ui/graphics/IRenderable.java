@@ -22,36 +22,21 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.menu;
+package engine.core.ui.graphics;
 
-import java.awt.event.ActionEvent;
+import java.awt.Image;
 
 /**
- * Interface that defines the functionality that must be provided by menu options
+ * This interface defines methods for components which have resources that they would like rendered.
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
- *
  */
-public interface IMenu {
+public interface IRenderable {
 	
 	/**
-	 * Gets the visibility of the option
+	 * Gets the renderable content provided by the implementor
 	 * 
-	 * @return TRUE if the option is visible, FALSE if the option is not visible
+	 * @return The renderable content as an image
 	 */
-	public boolean visibility();
-	
-	/**
-	 * Gets if the option is enabled
-	 * 
-	 * @return TRUE if the option is enabled, FALSE if the option is not enabled
-	 */
-	public boolean enabled();
-	
-	/**
-	 * Defines a method for handling an execution of the option
-	 * 
-	 * @param actionEvent The action event associated to the call of this method
-	 */
-	public void onExecute(ActionEvent actionEvent);
+	public Image getRenderableContent();
 }

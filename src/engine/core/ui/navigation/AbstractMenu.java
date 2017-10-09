@@ -22,20 +22,21 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.menu;
+package engine.core.ui.navigation;
 
+import java.awt.event.ActionEvent;
 import java.util.UUID;
 
 import javax.swing.JComponent;
 import javax.swing.JSeparator;
 
 /**
- * Top-level option class used for creating menu items
+ * Defines the abstract implementation for the menu.
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class AbstractMenu implements IMenu {
+abstract class AbstractMenu {
 	
 	/**
 	 * The unique identifier of the menu item
@@ -91,21 +92,20 @@ public abstract class AbstractMenu implements IMenu {
 	}
 	
 	/**
-	 * Gets the component associated to this option
-	 * 
-	 * @return The associated component of this option
+	 * Adds a separator to this option
 	 */
-	public final JComponent getComponent() {
-		return _component;
+	protected void addSeperator() {
+		JSeparator separator = new JSeparator();
+		_component.add(separator);
 	}
-	
+
 	/**
-	 * Gets the parent component associated to this option
+	 * Gets if the option is enabled
 	 * 
-	 * @return The parent component of this option
+	 * @return TRUE if the option is enabled, FALSE if the option is not enabled
 	 */
-	public final JComponent getParentComponent() {
-		return _parent;
+	protected boolean enabled() {
+		return _component.isEnabled();
 	}
 
 	/**
@@ -119,7 +119,25 @@ public abstract class AbstractMenu implements IMenu {
 	protected final <T extends JComponent> T get(Class<T> componentClass) {
 		return (T)_component;
 	}
+
+	/**
+	 * Gets the component associated to this option
+	 * 
+	 * @return The associated component of this option
+	 */
+	protected final JComponent getComponent() {
+		return _component;
+	}
 	
+	/**
+	 * Gets the parent component associated to this option
+	 * 
+	 * @return The parent component of this option
+	 */
+	protected final JComponent getParentComponent() {
+		return _parent;
+	}
+
 	/**
 	 * Gets the component associated to this option
 	 * 
@@ -130,13 +148,32 @@ public abstract class AbstractMenu implements IMenu {
 	}
 	
 	/**
-	 * Adds a separator to this option
+	 * Defines functionality for reseting the menu
 	 */
-	public void addSeperator() {
-		JSeparator separator = new JSeparator();
-		_component.add(separator);
+	protected void onReset() {
 	}
 
+	/**
+	 * Gets the visibility of the component
+	 * 
+	 * @return TRUE if the component is visible, FALSE otherwise
+	 */
+	protected boolean visibility() {
+		return _component.isVisible();
+	}
+
+	/**
+	 * Defines abstract functionality for initializing the menu entity
+	 */
+	protected abstract void onInitialize();
+	
+	/**
+	 * Defines a method for handling an execution of the option
+	 * 
+	 * @param actionEvent The action event associated to the call of this method
+	 */
+	protected abstract void onExecute(ActionEvent actionEvent);
+	
 	@Override public final String toString() {
 		return _identifier.toString();
 	}
@@ -149,22 +186,4 @@ public abstract class AbstractMenu implements IMenu {
 		AbstractMenu component = (AbstractMenu) obj;
 		return component.toString() == this.toString();
 	}
-	
-	@Override public boolean visibility() {
-		return _component.isVisible();
-	}
-
-	@Override public boolean enabled() {
-		return _component.isEnabled();
-	}
-	
-	/**
-	 * Defines abstract functionality initializing an option
-	 */
-	protected abstract void onInitialize();
-	
-	/**
-	 * Defines abstract functionality for resetting the menu
-	 */
-	protected abstract void onReset();
 }

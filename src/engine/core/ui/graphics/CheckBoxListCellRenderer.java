@@ -1,4 +1,4 @@
-package engine.core.graphics;
+package engine.core.ui.graphics;
 
 import java.awt.Component;
 

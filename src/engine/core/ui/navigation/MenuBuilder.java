@@ -22,17 +22,14 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.menu;
+package engine.core.ui.navigation;
 
 import java.awt.Component;
-import java.util.Vector;
+import java.util.ArrayList;
 
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-
-import engine.core.menu.types.MenuComponent;
-import engine.core.menu.types.MenuItem;
 
 /**
  * A builder class for easily creating UI menus
@@ -55,73 +52,40 @@ public final class MenuBuilder {
 	/**
 	 * The list of components in chronologically added order
 	 */
-	private Vector<JComponent> _components = new Vector<>();
+	private ArrayList<JComponent> _components = new ArrayList();
 	
+	/**
+	 * Constructs a new instance of this class type
+	 *
+	 * @param host The host component of this menu
+	 */
 	private MenuBuilder(JComponent host) {
 	    _host = host;
 	}
 	
 	/**
-	 * Builder entry-point
-	 *  
-	 * @param host The root component of this menu system
+	 * Adds an option builder to this option builder
 	 * 
-	 * @return A reference to this builder
+	 * @param builder The option builder to associate to this option builder's item
+	 * 
+	 * @return A reference to this option builder
 	 */
-	public static MenuBuilder start(JComponent host) {
-		return new MenuBuilder(host);
-	}
-	
-	/**
-	 * Resets the specified menu bar
-	 * 
-	 * @param jMenuBar The menu bar to reset
-	 */
-	public static void reset(JMenuBar jMenuBar) {
-		for(Component component : jMenuBar.getComponents()) {
-			if(component instanceof JMenu) {
-				JMenu menu = (JMenu)component;
-				Object obj = menu.getClientProperty(menu);
-				if(obj instanceof MenuComponent) {
-					MenuComponent menuComponent = (MenuComponent) obj;
-					menuComponent.reset();
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Builder entry-point
-	 * 
-     * @param host The root component of this menu system
-     * 
-     * @return A reference to this builder
-	 */
-	public static MenuBuilder start(MenuBuilder host) {
-	    return start(host._root);
-	}
-	
-	/**
-	 * Sets the root of this builder
-	 * 
-	 * @param root The root of this builder
-	 * 
-	 * @return A reference to this builder
-	 */
-	public MenuBuilder root(JComponent root) {
-	    _root = root;
+	public MenuBuilder addBuilder(MenuBuilder builder) {
+	    builder._root = _root;
+	    _components.addAll(builder._components);
+	    
 	    return this;
 	}
-	
+
 	/**
 	 * Adds a menu with the specified text to the currently active menu
 	 * 
 	 * @param text The text to set as the menu title
 	 * 
-	 * @return A refrence to the menu builder
+	 * @return A reference to the menu builder
 	 */
-	public MenuBuilder AddMenu(String text) {
-		MenuComponent component = new MenuComponent(_root == null ? _host : _root, text);
+	public MenuBuilder addMenu(String text) {
+		AbstractMenuContainer component = new AbstractMenuContainer(_root == null ? _host : _root, text);
 	
 		if(_components.isEmpty() && _root == null) {
 			_root = component.getComponent();
@@ -129,10 +93,10 @@ public final class MenuBuilder {
 	    else {
 	        _components.add(component.getComponent());    
 	    }
-	 
+	
 		return this;
 	}
-	
+
 	/**
 	 * Adds a new item of the specified component to the builder
 	 * 
@@ -141,7 +105,7 @@ public final class MenuBuilder {
 	 * 
 	 * @return A reference to this builder
 	 */
-	public final <T extends MenuItem> MenuBuilder AddMenuItem(Class<T> component) {
+	public <T extends AbstractMenuItem> MenuBuilder addMenuItem(Class<T> component) {
 		try {
 		    T baseComponent = component.getConstructor(JComponent.class).newInstance(_root == null ? _host : _root);
 		    if(_components.isEmpty() && _root == null) {
@@ -157,7 +121,7 @@ public final class MenuBuilder {
 	
 		return this;
 	}
-	
+
 	/**
 	 * Adds a separator to the list of options
 	 * 
@@ -165,7 +129,7 @@ public final class MenuBuilder {
 	 * 
 	 * @return A reference to this option builder
 	 */
-	public final <T extends AbstractMenu> MenuBuilder AddSeparator() {
+	public <T extends AbstractMenu> MenuBuilder addSeparator() {
 		if(_root != null) {
 			T component = (T) _root.getClientProperty(_root);
 			component.addSeperator();			
@@ -175,16 +139,56 @@ public final class MenuBuilder {
 	}
 
 	/**
-	 * Adds an option builder to this option builder
+	 * Sets the root of this builder
 	 * 
-	 * @param builder The option builder to associate to this option builder's item
+	 * @param root The root of this builder
 	 * 
-	 * @return A reference to this option builder
+	 * @return A reference to this builder
 	 */
-    public MenuBuilder AddBuilder(MenuBuilder builder) {
-        builder._root = _root;
-        _components.addAll(builder._components);
-        
-        return this;
-    }
+	public MenuBuilder root(JComponent root) {
+	    _root = root;
+	    return this;
+	}
+
+	/**
+	 * Resets the specified menu bar. The resetting of each portion of the menu is implementation
+	 * specific per menu item for example, therefore the state of the said menu should be back
+	 * in the 'original' starting state that it would normally be in
+	 * 
+	 * @param jMenuBar The menu bar to reset
+	 */
+	public static void reset(JMenuBar jMenuBar) {
+		for(Component component : jMenuBar.getComponents()) {
+			if(component instanceof JMenu) {
+				JMenu menu = (JMenu)component;
+				Object obj = menu.getClientProperty(menu);
+				if(obj instanceof AbstractMenuContainer) {
+					AbstractMenuContainer menuComponent = (AbstractMenuContainer) obj;
+					menuComponent.reset();
+				}
+			}
+		}
+	}
+
+	/**
+	 * Builder entry-point
+	 *  
+	 * @param host The root component of this menu system
+	 * 
+	 * @return A reference to this builder
+	 */
+	public static MenuBuilder start(JComponent host) {
+		return new MenuBuilder(host);
+	}
+	
+	/**
+	 * Builder entry-point
+	 * 
+     * @param host The root component of this menu system
+     * 
+     * @return A reference to this builder
+	 */
+	public static MenuBuilder start(MenuBuilder host) {
+	    return start(host._root);
+	}
 }
