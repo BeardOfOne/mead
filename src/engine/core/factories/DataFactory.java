@@ -171,4 +171,8 @@ public final class DataFactory<T extends IData> extends AbstractFactory {
 			}
 		}
 	}
+	
+	@Override protected boolean hasEntities() {
+		return !_data.isEmpty();
+	}
 }

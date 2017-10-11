@@ -24,6 +24,10 @@
 
 package engine.communication.external.builder;
 
+import java.util.logging.Level;
+
+import engine.utils.io.logging.Tracelog;
+
 /**
  * Director class used for directing builder type object
  * 
@@ -62,7 +66,7 @@ public final class Director {
 			_builder.buildEnd();
 		} 
 		catch(Exception exception) {
-			exception.printStackTrace();
+			Tracelog.log(Level.SEVERE, false, exception);
 			return false;
 		}
 

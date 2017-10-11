@@ -46,18 +46,22 @@ import engine.utils.io.logging.Tracelog;
  * @param <T> Any type extending from the ISignalListener interface
  */
 public abstract class AbstractSignalFactory<T extends ISignalListener> extends AbstractFactory {
+
+	/**
+	 * The cache holds items that have been pushed into the factory but that do not
+	 * currently have any association with anything. They remain dormant until there is 
+	 * a request for a resource of it's type, then it is used in place of creating another
+	 * resource.  
+	 * 
+	 * Note: These items will take precedence over the creation of new items first.
+	 */
+	final Map<Class, Queue<T>> _cache = new HashMap<>();
+
 	
 	/**
 	 * The history of all factory resources that have been created
 	 */
 	final Map<Class, List<T>> _history = new HashMap<>();
-	
-	/**
-	 * The cache holds items that have been pushed into the factory but that do not
-	 * currently have any association.  These items will take precedence over the creation
-	 * of new items first.
-	 */
-	final Map<Class, Queue<T>> _cache = new HashMap<>();
 	
 	/**
 	 * The queue of resources that are publicly available
@@ -430,6 +434,10 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 				resource.unicastSignalListener(event);
 			}			
 		}
+	}
+	
+	@Override protected boolean hasEntities() {
+		return !_history.isEmpty() || !_cache.isEmpty();
 	}
 	
 	@Override public boolean flush() {

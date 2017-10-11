@@ -61,7 +61,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 	 * Constructs a new instance of this class type
 	 */
     protected AbstractApplication() {
-    		// Set the menu of the application
+    	// Set the menu of the application
         setJMenuBar(new JMenuBar());
     }
     
@@ -76,7 +76,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 		    
 		    @Override public void componentShown(ComponentEvent event) {
 		        onApplicationShown();
-		    	    	getJMenuBar().revalidate();
+		    	getJMenuBar().revalidate();
 			    getJMenuBar().repaint();
 		    }
 		});
@@ -96,18 +96,17 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * @return The singleton instance
      */
     public static AbstractApplication instance() {
-    		if(_instance == null) {
-    			Tracelog.log(Level.WARNING, false, "Application instance was requested but was not initialized.");
-    		}
-    		return _instance;
+		if(_instance == null) {
+			Tracelog.log(Level.WARNING, false, "Application instance was requested but was not initialized.");
+		}
+		return _instance;
     }
     
     /**
-     * Performs a shutdown of the application, closing all necessary
-     * components and sub-components in the process
+     * Performs a shutdown of the application, closing all necessary components and sub-components in the process
      */
     public static void shutdown() {
-    	 	_instance.dispose();
+	 	_instance.dispose();
     }
     
     /**
@@ -123,28 +122,28 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      */
     protected static <T extends AbstractApplication> AbstractApplication initialize(Class<T> classType, boolean isDebug) throws Exception {
 	    	
-    		if(_instance == null) {
+		if(_instance == null) {
 
-    			// Create the new instance
-	    		_instance = classType.getConstructor().newInstance();
-	    		_instance._isDebug = isDebug;
+			// Create the new instance
+    		_instance = classType.getConstructor().newInstance();
+    		_instance._isDebug = isDebug;
 
-	    		// This is what users can hook onto before the data is actually loaded up
-	    		_instance.onBeforeEngineDataInitialized();  
-	    		
-		    	// Load the window listeners of the application
-	    		Tracelog.log(Level.INFO, false, "--Engine Window Listeners Initializing--");
-	    		_instance.initializeWindowListeners();
-	    		Tracelog.log(Level.INFO, false, "--Engine Window Listeners Initialization Completed--");
-	    		
-	    		// Load any engine data
-	    		Tracelog.log(Level.INFO, false, "--Engine Data Initializing--");
-	    		_instance.loadData();
-	    		Tracelog.log(Level.INFO, false, "--Engine Data Initialization Completed--");	    		
-	    		Tracelog.log(Level.INFO, false, "--Engine Bootup Finished--");
-	    	}
-    	
-	    	return _instance;
+    		// This is what users can hook onto before the data is actually loaded up
+    		_instance.onBeforeEngineDataInitialized();  
+    		
+	    	// Load the window listeners of the application
+    		Tracelog.log(Level.INFO, false, "--Engine Window Listeners Initializing--");
+    		_instance.initializeWindowListeners();
+    		Tracelog.log(Level.INFO, false, "--Engine Window Listeners Initialization Completed--");
+    		
+    		// Load any engine data
+    		Tracelog.log(Level.INFO, false, "--Engine Data Initializing--");
+    		_instance.loadData();
+    		Tracelog.log(Level.INFO, false, "--Engine Data Initialization Completed--");	    		
+    		Tracelog.log(Level.INFO, false, "--Engine Bootup Finished--");
+    	}
+	
+    	return _instance;
     }
     
     /**
@@ -153,7 +152,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * @return TRUE if the application is running in a debug state, FALSE otherwise
      */
     public boolean isDebug() {
-    		return _isDebug;
+		return _isDebug;
     }
 
     /**
@@ -166,7 +165,6 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 			AbstractFactory.getFactory(DataFactory.class).loadData();			
 		} 
 		catch (Exception exception) {
-
 			// Print the stack trace
 			exception.printStackTrace();
 			
@@ -179,7 +177,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * Called when the engine is being shut down
      */
     private void onEngineShutdown() {
-	    	Tracelog.close();
+    	Tracelog.close();
     }
     
     /**

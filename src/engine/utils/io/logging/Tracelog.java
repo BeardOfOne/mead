@@ -149,15 +149,15 @@ public final class Tracelog {
 	 * Print contents using the standard output stream and any external handles present
 	 * 
 	 * @param level The level of the log
-	 * @param isEngine Indicates if the log originates from the engine
+	 * @param isGame Indicates if the log originates from the engine
 	 * @param text The text to print out
 	 */
-	public static void log(Level level, boolean isEngine, String text) {
+	public static void log(Level level, boolean isGame, String text) {
 
 		// Format the text accordingly
 		String formattedText = String.format("%s [%s] [%s]: \t %s",
 			LogTimeFormat.format(new Date()),
-			isEngine ? "ENGINE" : "GAME",
+			isGame ? "GAME" : "ENGINE",
 			level.toString(),
 			text
 		);
@@ -168,7 +168,7 @@ public final class Tracelog {
 		}
 		
 		// Check if engine logging to the output window has been disabled
-		if(isEngine && !Boolean.valueOf(EngineProperties.instance().getProperty(Property.ENGINE_OUTPUT))) {
+		if(!isGame && !Boolean.valueOf(EngineProperties.instance().getProperty(Property.ENGINE_OUTPUT))) {
 			return;
 		}
 		

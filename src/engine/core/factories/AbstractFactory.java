@@ -26,8 +26,10 @@ package engine.core.factories;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import engine.core.mvc.IDestructor;
+import engine.utils.io.logging.Tracelog;
 
 /**
  * Top-most factory class that defines primitive functionality for other factories
@@ -70,7 +72,7 @@ public abstract class AbstractFactory implements IDestructor {
 	public static final boolean isRunning() {
 		// Go through the list of factories
 		for(AbstractFactory factory : FACTORIES) {
-			if(!factory.isPersistent) {
+			if(!factory.isPersistent && factory.hasEntities()) {
 				return true;
 			}
 		}
@@ -117,10 +119,18 @@ public abstract class AbstractFactory implements IDestructor {
 			FACTORIES.add(factory);
 		} 
 		catch (Exception exception) {
-			exception.printStackTrace();
+			Tracelog.log(Level.SEVERE, false, exception);
 		}	
 		
 		// Return the newly created factory reference
 		return factory;
 	}
+	
+	/**
+	 * Indicates if the factory has entities that it currently being used.  An entity is in use
+	 * if it is stored in a buffer/cache of some sort and can be called from outside the factory
+	 * 
+	 * @return TRUE if the factory has entities that are currently being used, FALSE otherwise
+	 */
+	protected abstract boolean hasEntities();
 }
