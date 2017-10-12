@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 /**
  * A builder class for easily creating UI menus
@@ -190,5 +191,32 @@ public final class MenuBuilder {
 	 */
 	public static MenuBuilder start(MenuBuilder host) {
 	    return start(host._root);
+	}
+
+	/**
+	 * Searches for the specified class type within the specified menu bar
+	 * 
+	 * @param jMenuBar The JMenu bar to perform the search
+	 * @param classType The type of class to look for within the menu
+	 * @param <T> A type which is of type AbstractMenuItem
+	 * 
+	 * @return The first entry found of the specified class type
+	 */
+	public static <T extends AbstractMenuItem> T search(JMenuBar jMenuBar, Class<T> classType) {
+		for(Component component : jMenuBar.getComponents()) {
+			if(component instanceof JMenu) {
+				JMenu menu = (JMenu)component;
+				for(Component menuComponent : menu.getMenuComponents()) {
+					if(menuComponent instanceof JMenuItem) {
+						Object obj = ((JMenuItem)menuComponent).getClientProperty(menuComponent);
+						if(obj.getClass() == classType) {
+							return (T)obj;
+						}
+					}
+				}
+			}
+		}
+		
+		return null;
 	}
 }
