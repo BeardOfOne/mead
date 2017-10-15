@@ -53,6 +53,11 @@ public final class EngineProperties {
 	 */
 	public enum Property {
 		
+	    /**
+	     * The path where the .cvs (comma-separated-value) is stored for localization management
+	     */
+	    LOCALIZATION_PATH_CVS,
+	    
 		/**
 		 * The path where the .xml is stored for marshalling/unmarshalling 
 		 */
