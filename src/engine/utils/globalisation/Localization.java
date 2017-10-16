@@ -25,15 +25,16 @@
 package engine.utils.globalisation;
 
 import java.awt.Image;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 
-import engine.core.mvc.IDestructor;
+import engine.core.system.EngineProperties;
+import engine.core.system.EngineProperties.Property;
 import engine.utils.io.logging.Tracelog;
 
 /**
@@ -42,97 +43,116 @@ import engine.utils.io.logging.Tracelog;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class Localization<T extends Enum<T>> implements IDestructor {
+public class Localization {
 	
 	/**
-	 * The active local of this localization effort
+	 * The singleton instance of this class type
 	 */
-	private Locale _activeLocale;
-	
-	/**
-	 * A mapping of resources of locales to resource bundles
-	 */
-	private final Map<Locale, ResourceBundle> _resources = new HashMap<>();
-	
-	/**
-	 * Adds the specified locale to this localization effort
-	 * 
-	 * @param bundle The resource bundle to add to this localization effort
-	 */
-	private final void addLocale(ResourceBundle bundle) {
-		_resources.put(bundle.getLocale(), bundle);
-	}
-	
-	/**
-	 * Adds the specified bundle to the localization and indicates if it is active
+    private static Localization _instance;
+    
+    /**
+     * The resources mapping list.  The key is the key column in the resources file, and the value is
+     * whatever the localized string is.
+     */
+    private final Map<String, String> _resources = new HashMap();
+        
+    /**
+     * Constructs a new instance of this class type
+     */
+    private Localization() {
+    	    try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(EngineProperties.instance().getProperty(Property.LOCALIZATION_PATH_CVS)))))  {
+
+    	    		// Hack to skip the first row, which is the header.  This will eventually be moved
+    	    		// when multi language is supported
+    	    		reader.readLine();
+    	    		
+    	    		// Note: Right now, the only supported language is whatever is in the second
+    	    		//       column of the .csv.  Eventually there will be support for more than
+    	    		// 		 one language
+    	    		String line = null;
+    	    		while((line = reader.readLine()) != null) {
+    	    			String[] data = line.split(",");
+    	    			_resources.put(data[0], data[1]);
+    	    		}
+        }
+        catch(Exception exception) {
+            Tracelog.log(Level.SEVERE, false, "Cannot load any localized strings.  Make sure that you are pointing to a valid resources file.");
+            System.exit(1);
+        }
+    }
+    
+    /**
+     * Gets the singleton instance reference of this class type
+     * 
+     * @return The singleton reference of this class type
+     */
+    public static synchronized Localization instance() {
+        if(_instance == null) {
+            _instance = new Localization();
+        }
+        return _instance;        
+    }
+    
+    /**
+	 * Gets the localized data of the specified key
 	 *  
-	 * @param bundle The bundle to add to the locale
-	 * @param setActive If the bundle is active
-	 */
-	public final void addLocale(ResourceBundle bundle, boolean setActive) {
-		addLocale(bundle);
-		if(setActive) {
-			setActiveLocale(bundle.getLocale());
+     * Note: This will toString() the provided enum.
+     * 
+     * @param key The key to use for lookup
+     * 
+     * @return The localized string
+     */
+    public String getLocalizedString(Enum key) {
+    		return getLocalizedString(key.toString());
+    }
+    
+    /**
+     * Gets the localized string of the provided key
+     * 
+     * @param key The key to use for lookup
+     * 
+     * @return The localized string
+     */
+	public String getLocalizedString(String key) {
+		String result = _resources.get(key);
+		if(result == null) {
+			result = "<!__PLACEHOLDER_TEXT__!>";
 		}
-	}
-	
-	/**
-	 * Sets the active locale of this localization effort
-	 * 
-	 * @param locale The locale to set
-	 */
-	private final void setActiveLocale(Locale locale) {
-		if(_resources.containsKey(locale)) {
-			_activeLocale = locale;		
-		}
-	}
-	
-	/**
-	 * Gets a localized string of the specified key
-	 * 
-	 * @param key The key to lookup
-	 * 
-	 * @return The string associated to the key
-	 */
-	public final String getLocalizedString(T key) {
-		return getResource(key.toString());
+		return result;
 	}
 	
 	/**
 	 * Gets the localized data of the specified key
 	 * 
-	 * @param key The key to lookup
+	 * Note: This will toString() the provided enum.
 	 * 
-	 * @return The image associated to the key
+	 * @param value The key to use for lookup.
+	 * 
+	 * @return The image of the specified key
 	 */
-    public Image getLocalizedData(T key) {
-        
-        Image image = null;
-        try {
-            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(getLocalizedString(key)));
-        }
-        catch(Exception exception) {
-            Tracelog.log(Level.SEVERE, false, exception);
-        }
-        
-        return image;
-    }
-	
-	/**
-	 * Gets a resource associated to the specified key
-	 * 
-	 * @param key The key resource to get
-	 * @param <U> A type extending the class {@link Object}
-	 * 
-	 * @return The object associated to the resource
-	 */
-	private final <U extends Object> U getResource(String key) { 
-		return (U)_resources.get(_activeLocale).getObject(key);
+	public Image getLocalizedData(Enum key) {
+		return getLocalizedData(key.toString());
 	}
 
-	@Override public boolean flush() {
-		_resources.clear();
-		_activeLocale = null;
-		return true;
+	/**
+	 * Gets the localized data of the specified key
+	 * 
+	 * Note: This will toString() the provided enum.
+	 * 
+	 * @param value The key to use for lookup.
+	 * 
+	 * @return The image of the specified key	 
+	 */
+	public Image getLocalizedData(String key) {
+	    
+	    Image image = null;
+	    try {
+	        image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(getLocalizedString(key)));
+	    }
+	    catch(Exception exception) {
+	        Tracelog.log(Level.SEVERE, false, exception);
+	    }
+	    
+	    return image;
 	}
 }
