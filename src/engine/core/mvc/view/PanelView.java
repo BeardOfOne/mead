@@ -33,8 +33,8 @@ import javax.swing.JPanel;
 
 import engine.api.IView;
 import engine.communication.internal.signal.arguments.SignalEventArgs;
-import engine.core.ui.graphics.IRenderable;
-import engine.core.ui.graphics.IRenderer;
+import engine.core.mvc.ui.graphics.IRenderable;
+import engine.core.mvc.ui.graphics.IRenderer;
 
 /**
  * This class represents a custom panel class that ties into the gosling MVC design pattern

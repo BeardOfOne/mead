@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.ui.navigation;
+package engine.core.mvc.ui.navigation;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;

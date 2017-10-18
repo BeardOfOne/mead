@@ -33,16 +33,19 @@ import javax.swing.Scrollable;
 import javax.swing.SwingConstants;
 
 /**
- * This panel gives the ability to be able to navigate content that is placed within this panel.
+ * This panel gives the ability to be able to scroll content that is placed within this panel.
  * 
  * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
  *
  */
-public class NavigationPanel extends PanelView implements Scrollable, MouseMotionListener {
+public class ScrollablePanel extends PanelView implements Scrollable, MouseMotionListener {
 
     private int _unitIncrement = 20;
 
-    public NavigationPanel() {
+    /**
+     * Constructs a new instance of this class type
+     */
+    public ScrollablePanel() {
         setOpaque(true);
         setAutoscrolls(true);
         addMouseMotionListener(this);

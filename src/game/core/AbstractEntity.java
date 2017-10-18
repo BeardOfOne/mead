@@ -34,7 +34,7 @@ import engine.api.IData;
 import engine.core.factories.AbstractFactory;
 import engine.core.factories.DataFactory;
 import engine.core.mvc.model.BaseModel;
-import engine.core.ui.graphics.IRenderable;
+import engine.core.mvc.ui.graphics.IRenderable;
 import engine.utils.io.logging.Tracelog;
 
 /**
