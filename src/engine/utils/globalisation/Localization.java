@@ -60,20 +60,19 @@ public class Localization {
      * Constructs a new instance of this class type
      */
     private Localization() {
-    	    try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(EngineProperties.instance().getProperty(Property.LOCALIZATION_PATH_CVS)))))  {
-
-    	    		// Hack to skip the first row, which is the header.  This will eventually be moved
-    	    		// when multi language is supported
-    	    		reader.readLine();
-    	    		
-    	    		// Note: Right now, the only supported language is whatever is in the second
-    	    		//       column of the .csv.  Eventually there will be support for more than
-    	    		// 		 one language
-    	    		String line = null;
-    	    		while((line = reader.readLine()) != null) {
-    	    			String[] data = line.split(",");
-    	    			_resources.put(data[0], data[1]);
-    	    		}
+	    try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(EngineProperties.instance().getProperty(Property.LOCALIZATION_PATH_CVS)))))  {
+    		// Hack to skip the first row, which is the header.  This will eventually be moved
+    		// when multi language is supported
+    		reader.readLine();
+    		
+    		// Note: Right now, the only supported language is whatever is in the second
+    		//       column of the .csv.  Eventually there will be support for more than
+    		// 		 one language
+    		String line = null;
+    		while((line = reader.readLine()) != null) {
+    			String[] data = line.split(",");
+    			_resources.put(data[0], data[1]);
+    		}
         }
         catch(Exception exception) {
             Tracelog.log(Level.SEVERE, false, "Cannot load any localized strings.  Make sure that you are pointing to a valid resources file.");
@@ -103,7 +102,7 @@ public class Localization {
      * @return The localized string
      */
     public String getLocalizedString(Enum key) {
-    		return getLocalizedString(key.toString());
+    	return getLocalizedString(key.toString());
     }
     
     /**

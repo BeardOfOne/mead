@@ -42,12 +42,19 @@ public abstract class BaseController implements IController  {
 	
 	/**
 	 * Constructs a new instance of this class type
+	 */
+	public BaseController() {
+	}
+	
+	/**
+	 * Constructs a new instance of this class type
 	 * 
 	 * @param view The view associated to this controller
 	 * @param <T> A type extending any IView implemented class
 	 */
+	@Deprecated
 	public <T extends IView> BaseController(T view) {
-		_properties.setListener(view);
+		_properties.setEntity(view);
 	}
 	
 	/**

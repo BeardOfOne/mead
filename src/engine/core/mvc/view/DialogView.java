@@ -78,7 +78,8 @@ public abstract class DialogView extends JDialog implements IView {
 	}
 		
 	/**
-	 * Gets the dialog result status.  
+	 * Gets the dialog result status.
+	 * 
 	 * Note: This should correspond to a JOptionPane result
 	 * 
 	 * @return The status of the dialog result
@@ -108,5 +109,5 @@ public abstract class DialogView extends JDialog implements IView {
 	 */
 	protected boolean validateDialog() {
 		return true;
-	}
+	}	
 }

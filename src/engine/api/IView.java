@@ -27,11 +27,16 @@ package engine.api;
 import java.awt.Container;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
+import engine.core.factories.AbstractFactory;
+import engine.core.factories.ControllerFactory;
+import engine.core.factories.ModelFactory;
+import engine.core.factories.ViewFactory;
 import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
 import engine.utils.io.logging.Tracelog;
@@ -268,5 +273,24 @@ public interface IView extends IDestructor, ISignalListener {
 	
 	@Override default Map<String, ISignalReceiver> getSignalListeners() {
 		return getViewProperties().getSignalListeners();
+	}
+	
+
+	/**
+	 * Removes the view from the view factory.  Also attempts to clean up the controller associated to this
+	 * view if any, and also attempts to clean up any models that are associated to the controller.
+	 */
+	default public void remove() {
+		AbstractFactory.getFactory(ViewFactory.class).remove(this);
+		IController controller = getViewProperties().getEntity();
+		if(controller != null) {
+			AbstractFactory.getFactory(ControllerFactory.class).remove(controller);
+			List<IModel> controllerModels = controller.getModels();
+			if(controllerModels != null) {
+				for(IModel model : controllerModels) {
+					AbstractFactory.getFactory(ModelFactory.class).remove(model);
+				}				
+			}
+		}
 	}
 }

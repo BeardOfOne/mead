@@ -155,7 +155,7 @@ public final class Tracelog {
 	public static void log(Level level, boolean isGame, String text) {
 
 		// Format the text accordingly
-		String formattedText = String.format("%s [%s] [%s]: \t %s",
+		String formattedText = String.format("%s [%s] [%s]: %s",
 			LogTimeFormat.format(new Date()),
 			isGame ? "GAME" : "ENGINE",
 			level.toString(),

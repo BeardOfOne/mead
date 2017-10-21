@@ -293,17 +293,19 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	// TODO - remove this and have the resource implement IDestructor and handle it from there?
 	public final <U extends T> void remove(U resource) {
 		
-		// Get the list of resources based on the class type
-		List<T> resources = _history.get(resource.getClass());
-		if(resources != null) {
+		List<T> history = _history.get(resource.getClass());
+		if(history != null) {
 			
 			// Attempt to remove the reference from the history
-			resources.remove(resource);
+			if(history.remove(resource)) {
+				Tracelog.log(Level.INFO, false, "Successfully removed " + resource.getClass().toString() + " from the history within the " + this.getClass().toString() + " factory");
+			}
 		}
 		
-		// If the reference also exists in the shared space then remove it
-		// from there as well.
-		_resources.remove(resource);
+		// If the reference also exists in the shared space then remove it from there as well.
+		if(_resources.remove(resource)) {
+			Tracelog.log(Level.INFO, false, "Successfully removed " + resource.getClass().toString() + " from the resources within the " + this.getClass().toString() + " factory");
+		}
 	}
 	
 	/**

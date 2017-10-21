@@ -24,6 +24,7 @@
 
 package engine.api;
 
+import java.util.List;
 import java.util.Map;
 
 import engine.communication.internal.signal.ISignalListener;
@@ -64,7 +65,16 @@ public interface IController extends IDestructor, ISignalListener {
 	 */
 	public ControllerProperties getControllerProperties();
 	
+	/**
+	 * Gets the list of models that the current controller has
+	 *  
+	 * @return The list of models associated to the controller
+	 */
+	default public List<IModel> getModels() {
+		return null;
+	}
+	
 	@Override default Map<String, ISignalReceiver> getSignalListeners() {
 		return getControllerProperties().getSignalListeners();
-	}
+	} 
 }

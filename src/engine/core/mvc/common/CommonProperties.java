@@ -51,9 +51,18 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
 	private final Map<String, ISignalReceiver> _signalListeners = new HashMap<>();
 	
 	/**
-	 * Gets the listener entity
+	 * Gets the list of signal listeners associated to the view
 	 * 
-	 * @return The listener entity
+	 * @return The list of signal listeners 
+	 */
+	public final Map<String, ISignalReceiver> getSignalListeners() {
+		return _signalListeners;
+	}
+
+	/**
+	 * Gets the entity
+	 * 
+	 * @return The entity
 	 */
 	public final T getEntity() {
 		return _entity;
@@ -70,22 +79,13 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
 	public final <U extends T> U getEntity(Class<U> classType) {
 		return _entity != null ? (U)_entity : null;
 	}
-
+	
 	/**
-	 * Gets the list of signal listeners associated to the view
+	 * Sets the specified entity
 	 * 
-	 * @return The list of signal listeners 
+	 * @param entity The entity
 	 */
-	public final Map<String, ISignalReceiver> getSignalListeners() {
-		return _signalListeners;
-	}
-
-	/**
-	 * Sets the specified listener
-	 * 
-	 * @param entity The listener
-	 */
-	public final void setListener(T entity) {
+	public final void setEntity(T entity) {
 		this._entity = entity;
 	}
 
