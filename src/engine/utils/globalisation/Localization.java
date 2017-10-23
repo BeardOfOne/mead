@@ -35,7 +35,7 @@ import javax.imageio.ImageIO;
 
 import engine.core.system.EngineProperties;
 import engine.core.system.EngineProperties.Property;
-import engine.utils.io.logging.Tracelog;
+import engine.utils.logging.Tracelog;
 
 /**
  * Defines the functionality for providing localization in an application 

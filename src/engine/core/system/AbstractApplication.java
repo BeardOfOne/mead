@@ -36,7 +36,7 @@ import javax.swing.JMenuBar;
 import engine.core.factories.AbstractFactory;
 import engine.core.factories.DataFactory;
 import engine.core.mvc.IDestructor;
-import engine.utils.io.logging.Tracelog;
+import engine.utils.logging.Tracelog;
 
 /**
  * This class provides the entry point for all applications to extend for their game.  

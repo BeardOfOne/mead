@@ -1,4 +1,4 @@
-package engine.core.mvc.layout;
+package engine.core.mvc.view.layout;
 
 import java.awt.Component;
 import java.awt.Container;

@@ -35,7 +35,7 @@ import engine.api.IData;
 import engine.communication.external.builder.Director;
 import engine.core.system.EngineProperties;
 import engine.core.system.EngineProperties.Property;
-import engine.utils.io.logging.Tracelog;
+import engine.utils.logging.Tracelog;
 import game.data.DataBuilder;
 
 /**

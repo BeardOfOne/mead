@@ -21,20 +21,22 @@
 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 * IN THE SOFTWARE.
 */
-package engine.utils.io.logging;
 
-import java.util.logging.Formatter;
-import java.util.logging.LogRecord;
+package engine.core.graphics;
+
+import java.awt.Image;
 
 /**
- * The default log formatter for the logging functionality in the engine.
+ * This interface defines methods for components which have resources that they would like rendered.
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
- *
  */
-public class DefaultLogFormatter extends Formatter {
+public interface IRenderable {
 	
-	@Override public String format(LogRecord record) {
-		return record.getMessage() + System.lineSeparator();
-	}
+	/**
+	 * Gets the renderable content provided by the implementor
+	 * 
+	 * @return The renderable content as an image
+	 */
+	public Image getRenderableContent();
 }

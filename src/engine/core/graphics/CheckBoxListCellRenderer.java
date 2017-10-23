@@ -1,4 +1,4 @@
-package engine.core.mvc.ui.graphics;
+package engine.core.graphics;
 
 import java.awt.Component;
 

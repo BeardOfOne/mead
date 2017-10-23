@@ -26,7 +26,7 @@ package engine.communication.external.builder;
 
 import java.util.logging.Level;
 
-import engine.utils.io.logging.Tracelog;
+import engine.utils.logging.Tracelog;
 
 /**
  * Director class used for directing builder type object

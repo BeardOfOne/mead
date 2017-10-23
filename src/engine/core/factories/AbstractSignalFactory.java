@@ -24,7 +24,6 @@
 
 package engine.core.factories;
 
-import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -36,7 +35,7 @@ import java.util.logging.Level;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.arguments.SignalEventArgs;
-import engine.utils.io.logging.Tracelog;
+import engine.utils.logging.Tracelog;
 
 /**
  * Factory that can communicate between signal types
@@ -57,7 +56,6 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	 */
 	final Map<Class, Queue<T>> _cache = new HashMap<>();
 
-	
 	/**
 	 * The history of all factory resources that have been created
 	 */
@@ -90,120 +88,6 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	}
 	
 	/**
-	 * Gets the specified concrete class based on type provided. 
-	 * Note: This will create the resource if it does not 
-     *       already exist. 
-	 * 
-	 * @param resourceClass The class of the resource to get
-	 * @param isShared If the resource should be shared when created
-	 * @param resourceParameters The arguments to be passed into 
-	 * 							 the resource class
-	 * @param <U> A type extending The class template type
-	 * 
-	 * @return The created or already created resource
-	 */
-	public <U extends T> U get(Class<U> resourceClass, boolean isShared, Object... resourceParameters) {
-		
-		// Attempt to get a cached resource, this has priority over
-		// every other resource
-		U cachedResource = getCachedResource(resourceClass);
-		
-		// Make sure it exists
-		if(cachedResource != null) {
-			
-			// Add it to our factory 
-			add(cachedResource, isShared);
-			
-			// Return the resource
-			return cachedResource;
-		}
-		
-		// If the shared flag is set then make sure it doesn't 
-		// already exist before creating it
-		if(isShared) {
-
-			// Try to get the resource to see if it already exists
-			U resource = get(resourceClass);
-			if(resource != null) {
-				return resource;
-			}
-		}
-		
-		// Create a fresh instance of the class specified
-		U createdClass = null;
-
-		// Construct the list of arguments that were provided
-		// Note: This is used to pass into the proper constructor
-		Class[] argsClass = new Class[resourceParameters.length];
-		for(int i = 0; i < resourceParameters.length; ++i) {
-			argsClass[i] = resourceParameters[i].getClass();
-		}
-		
-		try {
-			
-			// Attempt to create the instance with the exact match constructor
-			createdClass = resourceClass.getConstructor(argsClass).newInstance(resourceParameters);
-		}
-		catch(Exception exception) {
-			Tracelog.log(Level.WARNING, false, "No exact matching constructor found, attempting to find alternatives...");
-		}
-		
-		// If the exact match constructor was not successful, then try to find a better constructor
-		if(createdClass == null) {
-			try {
-				
-				// Go through the list of constructors to find another match
-				Constructor<U>[] constructors = (Constructor<U>[]) resourceClass.getConstructors();
-				for(Constructor<U> constructor : constructors) {
-					
-					// Make sure that the constructor count matches, else this is not the valid constructor
-					Class[] params = constructor.getParameterTypes();
-					if(params.length != argsClass.length) {
-						continue;
-					}
-					
-					// Check to make sure that all parameters can be properly
-					// invoked implicitly.
-					// TODO This could have some serious side effects that need to be properly tested
-					boolean isValid = true;
-					for(int i = 0; i < params.length; ++i) {
-						
-						// If the parameter cannot be properly assigned from what was passed into
-						// to the parameter that is being accepted at the destination, then don't
-						// count the constructor currently being iterated upon
-						if(!params[i].isAssignableFrom(argsClass[i])) {
-							isValid = false;
-							break;
-						}
-					}
-					
-					// If the constructor is a valid constructor then use that one
-					if(isValid) {
-						createdClass = constructor.newInstance(resourceParameters);
-						
-						// Add the newly created class into the factory for later reference
-						add(createdClass, isShared);
-						
-						// Now that a constructor was found, we need to break out of the loop
-						break;
-					}
-				}
-			}
-			catch(Exception exception) {
-				Tracelog.log(Level.SEVERE, false, "Could not get the specified resource from the factory");				
-			}
-		}
-		
-		// Add the newly created class into the factory for later reference
-		if(createdClass != null) {
-			add(createdClass, isShared);			
-		}
-
-		// return the newly created class
-		return createdClass;
-	}
-
-	/**
 	 * Helper method to add the created resource for retrieval
 	 *  
 	 * @param resource The resource that was created to be added
@@ -211,7 +95,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	 * @param <U> A type extending The class template type
 	 * 
 	 */
-	private <U extends T> void add(U resource, boolean isShared) {
+	public <U extends T> U add(U resource, boolean isShared) {
 		
 		// Get the list of classes based on the type of controller 
 		// that is being added
@@ -240,46 +124,8 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	    if(isShared) {
 	        _resources.add(resource);
 	    }
-	}
-
-	/**
-	 * Attempts to the a cached resource 
-	 * 
-	 * @param resourceClass The class of the cached resource
-	 * @param <U> A type extending The class template type
-	 * 
-	 * @return A cached resource if it exists
-	 */
-	private <U extends T> U getCachedResource(Class<U> resourceClass) {
-		
-		// Get the cache list based on the specified resource class
-		Queue<T> cachedResources = _cache.get(resourceClass);
-		
-		T resource = null;
-		
-		// If the cached resources exists 
-		if(cachedResources != null) {
-				
-			// If there are items to get
-			if(cachedResources.size() > 0) {
-				
-				// Remove the item from the queue and get its reference
-				resource = cachedResources.remove();
-			
-				// Logging information
-				System.out.println("Info: Queue'd item " + resourceClass.getCanonicalName() + " being used, items left in queue = " + cachedResources.size());				
-			}
-			
-			// If there are no more entries then just remove the key, it is no longer needed
-			if(cachedResources.isEmpty()) {
-				System.out.println("Info: No more entries in cache for " + resourceClass.getCanonicalName() + ", removing associated key");
-				
-				// Remove the no longer needed entry
-				_cache.remove(resourceClass);			
-			} 		
-		}
-		
-		return resource != null ? (U)resource : null;
+	    
+	    return resource;
 	}
 	
 	/**
@@ -299,6 +145,11 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 			// Attempt to remove the reference from the history
 			if(history.remove(resource)) {
 				Tracelog.log(Level.INFO, false, "Successfully removed " + resource.getClass().toString() + " from the history within the " + this.getClass().toString() + " factory");
+				
+				// If there are no more items in the list then clean out the key as well
+				if(history.size() == 0) {
+					_history.remove(resource.getClass());
+				}
 			}
 		}
 		

@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.utils.io.logging;
+package engine.utils.logging;
 
 import java.io.File;
 import java.io.IOException;

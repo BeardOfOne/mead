@@ -39,7 +39,7 @@ import engine.core.factories.ModelFactory;
 import engine.core.factories.ViewFactory;
 import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
-import engine.utils.io.logging.Tracelog;
+import engine.utils.logging.Tracelog;
 
 /**
  * This contract specifies how views should operate within the framework. 
@@ -254,11 +254,9 @@ public interface IView extends IDestructor, ISignalListener {
 	/**
 	 * Renders the view. This should be only called once.
 	 * 
-	 * Note: You should register to the update method
-	 * to receive subsequent messages thereafter
+	 * Note: You should register to the update method to receive subsequent messages thereafter
 	 * 
-	 * Note: To handle deferred rendering on the first
-	 * pass, simply override the setVisible method and 
+	 * Note: To handle deferred rendering on the first pass, simply override the setVisible method and 
 	 * do your pre-processing work, then call super(flag)
 	 */
 	default public void render() {

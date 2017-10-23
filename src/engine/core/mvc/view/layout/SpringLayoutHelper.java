@@ -1,4 +1,4 @@
-package engine.core.mvc.layout;
+package engine.core.mvc.view.layout;
 
 /*
  * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.

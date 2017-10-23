@@ -28,7 +28,7 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import engine.communication.internal.signal.arguments.SignalEventArgs;
-import engine.utils.io.logging.Tracelog;
+import engine.utils.logging.Tracelog;
 
 /**
  * This interface defines a methodology for communicating signals between different sub-systems using

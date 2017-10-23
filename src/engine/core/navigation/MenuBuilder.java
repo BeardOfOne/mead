@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.mvc.ui.navigation;
+package engine.core.navigation;
 
 import java.awt.Component;
 import java.util.ArrayList;

@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.mvc.ui.navigation;
+package engine.core.navigation;
 
 import java.awt.event.ActionEvent;
 import java.util.HashMap;

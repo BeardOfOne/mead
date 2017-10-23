@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import engine.core.mvc.IDestructor;
-import engine.utils.io.logging.Tracelog;
+import engine.utils.logging.Tracelog;
 
 /**
  * Top-most factory class that defines primitive functionality for other factories

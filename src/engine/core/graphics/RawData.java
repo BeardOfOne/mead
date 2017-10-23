@@ -22,31 +22,32 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.mvc.ui.graphics;
+package engine.core.graphics;
 
-import java.awt.Graphics;
 import java.awt.Image;
 
 /**
- * This interface defines methods for compenents that provide the ability to render content
+ * This class deals with holding raw data used for rendering
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
-public interface IRenderer {
-	
-	/**
-	 * Renders the specified renderable data using the specified graphics context
-	 * 
-	 * @param renderableData The renderable data
-	 * @param context The graphics context
-	 */
-	public void render(IRenderable renderableData, Graphics context);
+public class RawData implements IRenderable {
 
 	/**
-	 * Renders the specified renderable image data using the specified graphics context
-	 * 
-	 * @param renderableData The renderable image data
-	 * @param context The graphics context
+	 * The raw data
 	 */
-	public void render(Image renderableData, Graphics context);
+	private final Image _rawData;
+	
+	/**
+	 * Constructs a new instance of this class type
+	 *
+	 * @param rawData The raw data
+	 */
+	public RawData(Image rawData) {
+		_rawData = rawData;
+	}
+	
+	@Override public Image getRenderableContent() {
+		return _rawData;
+	}
 }
