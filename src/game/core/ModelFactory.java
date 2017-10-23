@@ -22,12 +22,13 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.factories;
+package game.core;
 
 import java.util.List;
 
 import engine.api.IModel;
 import engine.communication.internal.signal.arguments.UUIDEventArgs;
+import engine.core.factories.AbstractSignalFactory;
 
 /**
  * The model factory used to create model type resources

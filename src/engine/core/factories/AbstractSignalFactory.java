@@ -54,12 +54,12 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	 * 
 	 * Note: These items will take precedence over the creation of new items first.
 	 */
-	final Map<Class, Queue<T>> _cache = new HashMap<>();
+	protected final Map<Class, Queue<T>> _cache = new HashMap<>();
 
 	/**
 	 * The history of all factory resources that have been created
 	 */
-	final Map<Class, List<T>> _history = new HashMap<>();
+	protected final Map<Class, List<T>> _history = new HashMap<>();
 	
 	/**
 	 * The queue of resources that are publicly available
@@ -261,11 +261,14 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	public final <U extends T, V extends SignalEventArgs> void multicastSignal(Class<U> classType, V event) {
 		List<T> resources = _history.get(classType);
 		if(resources != null) {
+			Object source = event.getSource();
 			for(T resource : resources) {
 				// TODO - parallelize this!
 				// Send out a unicast signal to every resource, although 
 				// horribly inefficient the way it is being done right now
-				resource.unicastSignalListener(event);
+				if(!source.equals(resource)) {
+					resource.unicastSignalListener(event);	
+				}
 			}			
 		}
 	}

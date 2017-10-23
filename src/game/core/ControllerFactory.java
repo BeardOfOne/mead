@@ -22,9 +22,10 @@
 * IN THE SOFTWARE.
 */
 
-package engine.core.factories;
+package game.core;
 
 import engine.api.IController;
+import engine.core.factories.AbstractSignalFactory;
 
 /**
  * Factory for creating and working with IController types

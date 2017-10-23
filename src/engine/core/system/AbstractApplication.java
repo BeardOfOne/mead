@@ -33,8 +33,8 @@ import java.util.logging.Level;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
+import engine.core.factories.AbstractDataFactory;
 import engine.core.factories.AbstractFactory;
-import engine.core.factories.DataFactory;
 import engine.core.mvc.IDestructor;
 import engine.utils.logging.Tracelog;
 
@@ -138,7 +138,12 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     		
     		// Load any engine data
     		Tracelog.log(Level.INFO, false, "--Engine Data Initializing--");
-    		_instance.loadData();
+    		if(!EngineProperties.instance().hasDataValues()) {
+    			Tracelog.log(Level.WARNING, false, "Cannot load the data files, no data values specified");
+    		}
+    		else {
+    			_instance.loadData();
+    		}
     		Tracelog.log(Level.INFO, false, "--Engine Data Initialization Completed--");	    		
     		Tracelog.log(Level.INFO, false, "--Engine Bootup Finished--");
     	}
@@ -160,16 +165,11 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * abstract data factory
      */
     private void loadData() {
-		try {
-			// Load the data into the game
-			AbstractFactory.getFactory(DataFactory.class).loadData();			
+    	try {
+			AbstractFactory.getFactory(AbstractDataFactory.class).loadData();			
 		} 
 		catch (Exception exception) {
-			// Print the stack trace
 			exception.printStackTrace();
-			
-			// Exit the system with a bad error code
-			System.exit(1);
 		}
     }
 

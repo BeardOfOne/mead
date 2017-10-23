@@ -118,4 +118,13 @@ public final class EngineProperties {
 	public String getProperty(Property property) {
 		return _properties.get(property);
 	}
+
+	/**
+	 * Gets if the engine properties has enough information to load data for the current session
+	 * 
+	 * TRUE if the engine properties holds property values for the data paths, FALSE otherwise
+	 */
+	public boolean hasDataValues() {
+		return _properties.containsKey(Property.DATA_PATH_SHEET) || _properties.containsKey(Property.DATA_PATH_XML);
+	}
 }

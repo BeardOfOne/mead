@@ -46,7 +46,7 @@ import game.data.DataBuilder;
  *
  * @param <T> An {@link IData} implemented type
  */
-public final class DataFactory<T extends IData> extends AbstractFactory {
+public abstract class AbstractDataFactory<T extends IData> extends AbstractFactory {
 
 	/**
 	 * Holds the mappings of layer names to data resources.
@@ -60,7 +60,7 @@ public final class DataFactory<T extends IData> extends AbstractFactory {
 	/**
 	 * Constructs a new instance of this class type
 	 */
-	public DataFactory() {
+	public AbstractDataFactory() {
 		isPersistent = true;
 	}
 	

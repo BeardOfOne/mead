@@ -34,7 +34,7 @@ import engine.communication.external.builder.AbstractBuilder;
 import engine.communication.external.filesystem.FileSystem;
 import engine.communication.internal.persistance.IXMLCodec.XMLCodec;
 import engine.core.factories.AbstractFactory;
-import engine.core.factories.DataFactory;
+import engine.core.factories.AbstractDataFactory;
 
 /**
  * Data builder used for building data from the editor and
@@ -92,7 +92,7 @@ public class DataBuilder extends AbstractBuilder<FileSystem> {
 			ArrayList<IData> dataList = iterator.next();
 			
 			// Queue the data in the data factory
-			AbstractFactory.getFactory(DataFactory.class).addDataResources(dataList);				
+			AbstractFactory.getFactory(AbstractDataFactory.class).addDataResources(dataList);				
 		}		
 	}
 

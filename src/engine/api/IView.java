@@ -34,12 +34,12 @@ import java.util.logging.Level;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
 import engine.core.factories.AbstractFactory;
-import engine.core.factories.ControllerFactory;
-import engine.core.factories.ModelFactory;
-import engine.core.factories.ViewFactory;
 import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
 import engine.utils.logging.Tracelog;
+import game.core.ControllerFactory;
+import game.core.ModelFactory;
+import game.core.ViewFactory;
 
 /**
  * This contract specifies how views should operate within the framework. 
