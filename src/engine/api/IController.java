@@ -48,15 +48,6 @@ public interface IController extends IDestructor, ISignalListener {
 	 *
 	 */
 	public final class ControllerProperties extends CommonProperties<IView> {
-		/**
-		 * Checks if the view is in a visible state
-		 * 
-		 * @return TRUE if the view is visible, FALSE if the view is not visible
-		 */
-		public boolean isViewVisible() {
-			// TODO - get rid of this
-			return getEntity(IView.class).getContainerClass().isVisible();
-		}
 	}
 	
 	/**

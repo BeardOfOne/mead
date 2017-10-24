@@ -113,6 +113,23 @@ public abstract class BaseModel implements IModel
 		// Push an update event to the listeners
 		doneUpdating();
 	}
+	
+	/**
+	 * Gets the specified listener based on its class type
+	 * 
+	 * @param classType The class type of the listener
+	 * 
+	 * @return The listener associated to this class type
+	 */
+	public final <T extends ISignalListener> T getListener(Class<T> classType) {
+		for(ISignalListener listener : _receivers) {
+			if(listener.getClass().equals(classType)) {
+				return (T) listener;
+			}
+		}
+		
+		return null;
+	}
 
 	/**
 	 * Removes a particular receiver from the list of listeners of this model
