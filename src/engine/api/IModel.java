@@ -59,7 +59,7 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	 * 
 	 * @return The unique identifier of the object
 	 */
-	public abstract UUID getIdentifier();
+	public abstract UUID getUUID();
 	
 	/**
 	 * Gets the model properties of the implementor of this interface

@@ -25,10 +25,12 @@
 package engine.core.mvc.model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
 
 import engine.api.IModel;
 import engine.communication.internal.signal.IDataPipeline;
@@ -40,29 +42,30 @@ import engine.communication.internal.signal.arguments.SignalEventArgs;
 import engine.core.mvc.common.CommonProperties;
 
 /**
- * A Game Model represents the base class of all model type objects
+ * The base model representation of all models in the application
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class BaseModel implements IModel 
-{	
+{
+	/**
+	 * The universally unique identifier associated to this model
+	 */
+	@XmlAttribute(name="UUID")
+	private final UUID _uuid = UUID.randomUUID();
+
 	/**
 	 * The model properties for this model
 	 */
 	private transient final CommonProperties _modelProperties = new CommonProperties();
-	
-	/**
-	 * Identifier for this model
-	 */
-	private final UUID _identifier = UUID.randomUUID();
-			
-	/**
-	 * The list of receivers that can receive a message from the GameModel
-	 */
-	private transient final ArrayList<ISignalListener> _receivers = new ArrayList<>();
 
+	/**
+	 * The list of receivers that can receive a message from the model
+	 */
+	private transient final List<ISignalListener> _receivers = new ArrayList<>();
+				
 	/**
 	 * The name of the operation to be performed
 	 */
@@ -76,7 +79,7 @@ public abstract class BaseModel implements IModel
 	/**
 	 * Indicates if this model should suppress updates to its listeners
 	 */
-	private boolean _suppressUpdates;
+	private transient boolean _suppressUpdates;
 	
 	/**
 	 * Constructs a new instance of this class type
@@ -129,6 +132,22 @@ public abstract class BaseModel implements IModel
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Gets if the specified listener is listening in on this model for messages
+	 * 
+	 * @param listener The listener
+	 * 
+	 * @return TRUE if this model is sending messages to the specified listener, FALSE otherwise
+	 */
+	public final <T extends ISignalListener> boolean isModelListening(T listener) {
+		for(ISignalListener receiver : _receivers) {
+			if(receiver.equals(listener)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -227,8 +246,8 @@ public abstract class BaseModel implements IModel
 		return _operationName;
 	}
 	
-	@Override public final UUID getIdentifier() {
-		return _identifier;
+	@Override public final UUID getUUID() {
+		return _uuid;
 	}
 	
 	@Override public void registerSignalListeners() {
@@ -264,7 +283,7 @@ public abstract class BaseModel implements IModel
 	@Override public boolean equals(Object obj) {
 		if(obj instanceof IModel) {
 			IModel model = (IModel) obj;
-			return model.getIdentifier().equals(this.getIdentifier());
+			return model.getUUID().equals(this.getUUID());
 		}
 		
 		return false;

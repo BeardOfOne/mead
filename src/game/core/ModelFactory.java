@@ -63,7 +63,7 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
 			
 			// For every resource that has been created
 			for(IModel resource : resources) {
-				if(uuidEvent.Identifiers.contains(resource.getIdentifier())) {
+				if(uuidEvent.Identifiers.contains(resource.getUUID())) {
 					resource.unicastSignalListener(event);
 				}
 			}			
