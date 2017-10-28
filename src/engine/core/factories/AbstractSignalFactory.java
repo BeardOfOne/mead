@@ -25,7 +25,6 @@
 package engine.core.factories;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -54,37 +53,49 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	 * 
 	 * Note: These items will take precedence over the creation of new items first.
 	 */
+	// TODO - Remove this.
 	protected final Map<Class, Queue<T>> _cache = new HashMap<>();
 
 	/**
-	 * The history of all factory resources that have been created
+	 * The mappings of all signals that have been declared and marked as private
 	 */
-	protected final Map<Class, List<T>> _history = new HashMap<>();
+	protected final Map<Class, List<T>> _privateSignals = new HashMap<>();
 	
 	/**
-	 * The queue of resources that are publicly available
+	 * The list of all signals that have been declared and marked as public
 	 */
-	final List<T> _resources = new ArrayList<>();
+	private final List<T> _publicSignals = new ArrayList<>();
 	
 	/**
-	 * Gets the specified concrete class based on the type provided
+	 * Gets the specified concrete signal class based on the type provided
 	 * 
-	 * @param resourceClass The class of the resource to get
+	 * Note: This will return the singular publicly shared entity (if it exists)
+	 * 
+	 * @param signalClass The class of the resource to get
 	 * @param <U> A type extending The class template type 
 	 * 
 	 * @return The concrete class of the specified type
 	 */
-	public final <U extends T> U get(Class<U> resourceClass) {
-		
-		// Go through all the resources and try to find
-		// the concrete class with the same resource class 
-		for(T resource : _resources) {
-			if(resource.getClass() == resourceClass) {
+	public final <U extends T> U get(Class<U> signalClass) {
+		for(T resource : _publicSignals) {
+			if(resource.getClass().equals(signalClass)) {
 				return (U)resource;
 			}
 		}
-		
 		return null;
+	}
+	
+	/**
+	 * Gets the list of signals associated to the specified signal class type
+	 * 
+	 * Note: This will return the private resources associated to the factory
+	 * 
+	 * @param signalClass The signal class type
+	 * 
+	 * @return The list of private signals of the specified type
+	 */
+	public final <U extends T> List<U> getAll(Class<U> signalClass) {
+		return (List<U>) _privateSignals.get(signalClass);
 	}
 	
 	/**
@@ -99,7 +110,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 		
 		// Get the list of classes based on the type of controller 
 		// that is being added
-	    List resources = _history.get(resource.getClass());
+	    List resources = _privateSignals.get(resource.getClass());
 	    
 	    // If there is no entry then create a new entry and add to it
 	    if(resources == null) {
@@ -110,7 +121,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	        
 	        // Add the new entry into the history structure
 	        // for future reference
-	        _history.put(resource.getClass(), resources);
+	        _privateSignals.put(resource.getClass(), resources);
 	    }
 	    // There was in fact an entry which means the resource 
 	    // needs to be added into the list if it does not already
@@ -122,7 +133,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	    // If the resource is marked to be shared then it is
 	    // stored in a separate list 
 	    if(isShared) {
-	        _resources.add(resource);
+	        _publicSignals.add(resource);
 	    }
 	    
 	    return resource;
@@ -139,7 +150,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	// TODO - remove this and have the resource implement IDestructor and handle it from there?
 	public final <U extends T> void remove(U resource) {
 		
-		List<T> history = _history.get(resource.getClass());
+		List<T> history = _privateSignals.get(resource.getClass());
 		if(history != null) {
 			
 			// Attempt to remove the reference from the history
@@ -148,13 +159,13 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 				
 				// If there are no more items in the list then clean out the key as well
 				if(history.size() == 0) {
-					_history.remove(resource.getClass());
+					_privateSignals.remove(resource.getClass());
 				}
 			}
 		}
 		
 		// If the reference also exists in the shared space then remove it from there as well.
-		if(_resources.remove(resource)) {
+		if(_publicSignals.remove(resource)) {
 			Tracelog.log(Level.INFO, false, "Successfully removed " + resource.getClass().toString() + " from the resources within the " + this.getClass().toString() + " factory");
 		}
 	}
@@ -174,7 +185,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 		
 		// For every list within the history structure
 		// get the total number of entries
-		for(List list : _history.values()) {
+		for(List list : _privateSignals.values()) {
 			count += list.size();
 		}
 		
@@ -224,7 +235,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 		if(queuedResources != null) {
 			
 			// Get the reference to the list in the history field
-			List<T> resources = _history.get(resourceClass);
+			List<T> resources = _privateSignals.get(resourceClass);
 			
 			// If there is none, then create one
 			if(resources == null) {
@@ -233,7 +244,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 				resources = new ArrayList(queuedResources);
 				
 				// Apply the array list into the history field
-				_history.put(resourceClass, resources);
+				_privateSignals.put(resourceClass, resources);
 			} 
 			else {
 				
@@ -252,53 +263,34 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	/**
 	 * Sends out a signal to a group of the specified types in a multi-cast fashion
 	 * 
-	 * @param classType The type of class to send the event to
-	 * @param event The event to pass in, this is a signal event or one of its derived types
+	 * @param signalClass The type of class to send the event to
+	 * @param signalEvent The event to pass in, this is a signal event or one of its derived types
 	 * @param <U> A type extending The class template type
 	 * @param <V> A type extending The class SignalEvent
 	 * 
 	 */
-	public final <U extends T, V extends SignalEventArgs> void multicastSignal(Class<U> classType, V event) {
-		List<T> resources = _history.get(classType);
+	public final <U extends T, V extends SignalEventArgs> void multicastSignalListeners(Class<U> signalClass, V signalEvent) {
+		List<T> resources = _privateSignals.get(signalClass);
 		if(resources != null) {
-			Object source = event.getSource();
+			Object source = signalEvent.getSource();
 			for(T resource : resources) {
 				// TODO - parallelize this!
 				// Send out a unicast signal to every resource, although 
 				// horribly inefficient the way it is being done right now
 				if(!source.equals(resource)) {
-					resource.unicastSignalListener(event);	
+					resource.sendSignalEvent(signalEvent);	
 				}
-			}			
-		}
-	}
-		
-	/**
-	 * Sends out a signal to a group of the specified types in a multi-cast fashion
-	 * 
-	 * @param resources The list of resources to send the signal to
-	 * @param event The event to pass in, this is a signal event or one of its derived types
-	 * @param <U> A type extending The class template type
-	 * @param <V> A type extending a signal event class
-	 */
-	public final <U extends T, V extends SignalEventArgs> void multicastSignal(Collection<U> resources, V event) {
-		if(resources != null) {
-			for(T resource : resources) {
-				// TODO - parallelize this!
-				// Send out a unicast signal to every resource, although 
-				// horribly inefficient the way it is being done right now
-				resource.unicastSignalListener(event);
-			}			
+			}		
 		}
 	}
 	
 	@Override protected boolean hasEntities() {
-		return !_history.isEmpty() || !_cache.isEmpty();
+		return !_privateSignals.isEmpty() || !_cache.isEmpty();
 	}
 	
 	@Override public boolean flush() {
-		_history.clear();
-		_resources.clear();
+		_privateSignals.clear();
+		_publicSignals.clear();
 		_cache.clear();
 		
 		return true;

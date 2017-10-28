@@ -178,7 +178,7 @@ public abstract class BaseModel implements IModel
 		// Call all signal listeners with the specified event (this takes operation name into account)
 		// and then it will end up calling update after the fact
 		for(ISignalListener receiver : _receivers) {
-			receiver.unicastSignalListener(event);
+			receiver.sendSignalEvent(event);
 		}
 	}
 	
@@ -218,7 +218,7 @@ public abstract class BaseModel implements IModel
 		// Call all signal listeners with the specified event (this takes operation name into account)
 		// and then it will end up calling update after the fact
 		for(ISignalListener receiver : _receivers) {
-			receiver.unicastSignalListener(_operationEvent);
+			receiver.sendSignalEvent(_operationEvent);
 		}
 
 		// reset the contents created

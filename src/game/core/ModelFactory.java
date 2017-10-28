@@ -51,7 +51,7 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
 	public <U extends IModel, T extends Object> void selectiveMulticastSignal(Class<U> classType, UUIDEventArgs event) {
 
 		// Get the list of models that have currently been created
-		List<IModel> resources = _history.get(classType);
+		List<IModel> resources = _privateSignals.get(classType);
 		
 		// Verify that the list if valid
 		if(resources != null) {
@@ -64,22 +64,9 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
 			// For every resource that has been created
 			for(IModel resource : resources) {
 				if(uuidEvent.Identifiers.contains(resource.getUUID())) {
-					resource.unicastSignalListener(event);
+					resource.sendSignalEvent(event);
 				}
 			}			
 		}
-	}
-	
-	/**
-	 * Gets the list of all models of the specified class type created
-	 * 
-	 * @param classType The class type to lookup
-	 * @param <U> IModel type
-	 * 
-	 * @return The list of models of the specified type
-	 */
-	public <U extends IModel> List<U> getAll(Class<U> classType) {
-		List<U> resources = (List<U>) _history.get(classType);
-		return resources;
 	}
 }

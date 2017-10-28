@@ -57,7 +57,7 @@ public interface ISignalListener {
 	 * @param signalEvent signalEvent An event that holds information about the action being performed
 	 * 
 	 */
-	default public void unicastSignalListener(SignalEventArgs signalEvent) {
+	default public void sendSignalEvent(SignalEventArgs signalEvent) {
 		
 		// Get the list of signal listeners available
 		Map<String, ISignalReceiver> operations = getSignalListeners();
@@ -165,6 +165,12 @@ public interface ISignalListener {
 	 * Registers the handlers that will listen in for messages that are called
 	 */
 	default public void registerSignalListeners() {
+	}
+	
+	/**
+	 * Performs a refresh that sub-systems can hook onto to refresh their contents
+	 */
+	default public void refresh() {
 	}
 	
 	/**
