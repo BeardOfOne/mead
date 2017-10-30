@@ -45,7 +45,7 @@ public class FileSystemWrapperList implements IXMLCodec {
 	/**
 	 * Holds the list of file system elements
 	 */
-	@XmlElement(name = "entries")
+	@XmlElement(name = "entry")
 	public final List<FileSystemElement> ENTRIES = new ArrayList();
 	
 	/**

@@ -30,11 +30,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.logging.Level;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import engine.communication.internal.persistance.ISerializable;
 import engine.communication.internal.persistance.IXMLCodec.XMLCodec;
+import engine.utils.logging.Tracelog;
 
 /**
  * This class represents an adapter for the base file system class structure, used to convert the complex
@@ -64,9 +66,8 @@ public class FileSystemAdapter<T extends ISerializable<String>> extends XmlAdapt
 			    	value.serialize()
 				);
 				
-				// A debug statement, this will need to be funneled into the debug trace
-				// when it is implemented
-				System.out.println(String.format("Serialize: Key=%s", entry.getKey().getName()));
+				Tracelog.log(Level.INFO, true, String.format("Serialize Key:%s", entry.getKey().getName()));
+				Tracelog.log(Level.INFO, true, String.format("Serialize Value:%s", entry.getValue().toString()));
 		        
 		    	// Add the new object into our new map type list
 		    	myMapType.ENTRIES.add(entryType);

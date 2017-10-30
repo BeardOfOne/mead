@@ -32,10 +32,28 @@ import engine.communication.external.filesystem.AbstractFileSystem;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class AbstractBuilder<T extends AbstractFileSystem> implements IBuilder {
+public abstract class AbstractBuilder<T extends AbstractFileSystem>  {
 		
 	/**
 	 * File system used by the builder
 	 */
 	protected T _fileSystem;
+	
+	/**
+	 * Performs all user-input related tasks before going through the 
+	 * list of automated build processes
+	 * 
+	 * @return The success of the user-input to determine if the build process should continue
+	 */
+	public abstract boolean buildStart();
+	
+	/**
+	 * Builds custom content
+	 */
+	public abstract void buildContent();
+	
+	/**
+	 * Finalizes the building of the builder's tasks
+	 */
+	public abstract void buildEnd();
 }

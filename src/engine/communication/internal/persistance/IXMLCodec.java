@@ -33,8 +33,7 @@ import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
 
 /**
- * Defines a codec for performing serialization and deserialization functionality
- * using XML
+ * Defines a codec for performing serialization and deserialization functionality using XML
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
@@ -46,87 +45,81 @@ public interface IXMLCodec extends ISerializable<String> {
 	public static final String EXTENSION_XML = ".xml";
 	
 	/**
-	 * Class that provides codec related functionality 
-	 * for JAXB compatible classes
+	 * Class that provides codec related functionality for JAXB compatible classes
 	 * 
-     * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
+	 * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
 	 */
 	public final class XMLCodec {
 		
 		/**
 		 * The JAXB Context
 		 */
-    	private JAXBContext _context;
-    	
-    	/**
-    	 * The Marshaller associated to the JAXB Context
-    	 */
-		private Marshaller _marshaller;
+		private final JAXBContext _context;
+		
+		/**
+		 * The marshaller associated to the JAXB Context
+		 */
+		private final Marshaller _marshaller;
 		
 		/**
 		 * The unmarshaller associated to the JAXB Context
 		 */
-		private Unmarshaller _unmarshaller;
-				
+		private final Unmarshaller _unmarshaller;
+			
 		/**
-		 * Constructs a new codec
 		 * 
-		 * @param classObject The type of class associated to the codec
+		 * Constructs a new instance of this class type
+		 *
+		 * @param classObject The type of class to serialize/deserialize
 		 * 
-		 * @throws JAXBException This exception will be thrown if there is a problem in
-		 * 						 the JAXB creation/setting process
+		 * @throws JAXBException If an error occured during the instance creation 
 		 */
-    	public XMLCodec(Class classObject) throws JAXBException {
-
-    		// Create the JAXB context with the specified class
-    		_context = JAXBContext.newInstance(classObject);
-
-    		// Create a marshaller with our context
-    		_marshaller = _context.createMarshaller();
-
-    		// Create the unmarshaller with our context
-    		_unmarshaller = _context.createUnmarshaller();
-    	}
-    	
-    	/**
-    	 * Sets the formatting state of the JAXB context
-    	 * 
-    	 * @param isFormatted If formatting should be done
-    	 * 
-    	 * @throws PropertyException An exception will be thrown if the property could not be set
-    	 */
-    	public void setFormatted(boolean isFormatted) throws PropertyException {
+		public XMLCodec(Class classObject) throws JAXBException {
+			_context = JAXBContext.newInstance(classObject);
+			_marshaller = _context.createMarshaller();
+			_unmarshaller = _context.createUnmarshaller();
+		}
+		
+		/**
+		 * Sets the formatting state of the JAXB context
+		 * 
+		 * @param isFormatted If formatting should be done
+		 * 
+		 * @throws PropertyException An exception will be thrown if the property could not be set
+		 */
+		public void setFormatted(boolean isFormatted) throws PropertyException {
 			_marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, isFormatted);
-    	}
+		}
 
-    	/**
-    	 * Gets the marshaller associated to this context
-    	 * 
-    	 * @return The marshaller associated to the context
-    	 */
-    	public Marshaller getMarshaller() {
-    		return _marshaller;
-    	}
+		/**
+		 * Gets the marshaller associated to this context
+		 * 
+		 * @return The marshaller associated to the context
+		 */
+		public Marshaller getMarshaller() {
+			return _marshaller;
+		}
 
-    	/**
-    	 * Gets the unmarshaller associated to this context
-    	 * 
-    	 * @return The unmarshaller associated to the context
-    	 */
-    	public Unmarshaller getUnmarshaller() {
-    		return _unmarshaller;
-    	}
+		/**
+		 * Gets the unmarshaller associated to this context
+		 * 
+		 * @return The unmarshaller associated to the context
+		 */
+		public Unmarshaller getUnmarshaller() {
+			return _unmarshaller;
+		}
 	}
-
+	
 	@Override default String serialize() {
 	    // Create a string buffer for the xml data
         StringWriter writer = new StringWriter();
         try {
             // Create the XML codec
             XMLCodec serializer = new XMLCodec(this.getClass());
+            serializer.setFormatted(true);
             
             // Get the marshaller and serialize this class
-            serializer.getMarshaller().marshal(this, writer);           
+            serializer.getMarshaller().marshal(this, writer);
         } 
         catch (Exception exception) {
             exception.printStackTrace();

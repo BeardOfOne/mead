@@ -138,13 +138,16 @@ public abstract class BaseModel implements IModel
 	 * Gets if the specified listener is listening in on this model for messages
 	 * 
 	 * @param listener The listener
+	 * @param T ISignalListener derived type
 	 * 
 	 * @return TRUE if this model is sending messages to the specified listener, FALSE otherwise
 	 */
 	public final <T extends ISignalListener> boolean isModelListening(T listener) {
-		for(ISignalListener receiver : _receivers) {
-			if(receiver.equals(listener)) {
-				return true;
+		if(listener != null)  {
+			for(ISignalListener receiver : _receivers) {
+				if(receiver.equals(listener)) {
+					return true;
+				}
 			}
 		}
 		return false;
@@ -162,6 +165,7 @@ public abstract class BaseModel implements IModel
 	/**
 	 * Refreshes this tile model, effectively doing a doneUpdate 
 	 */
+	@Override
 	public void refresh() {
 		
 		// Do not continue with the update if there is a suppression

@@ -31,6 +31,7 @@ public class FileSystem extends AbstractFileSystem {
 		
 		// Attempt to serialize the file system
 		try {
+				
 			// Create the XML codec and have it set to 
 			// this class type
 			XMLCodec codec = new XMLCodec(this.getClass());

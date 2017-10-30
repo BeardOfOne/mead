@@ -32,11 +32,5 @@ package engine.communication.internal.persistance;
  * @param <T> A type extending the class {@link Object}
  */
 public interface ISerializable<T extends Object> {
-	/**
-	 * This method allows implementors to define a way to serialize an object into a string
-	 * representation using whichever mechanism they want
-	 * 
-	 * @return A serialized object representation
-	 */
 	public T serialize();
 }

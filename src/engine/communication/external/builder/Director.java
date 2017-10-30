@@ -26,6 +26,7 @@ package engine.communication.external.builder;
 
 import java.util.logging.Level;
 
+import engine.communication.external.filesystem.AbstractFileSystem;
 import engine.utils.logging.Tracelog;
 
 /**
@@ -39,14 +40,14 @@ public final class Director {
 	/**
 	 * The Builder type
 	 */
-	private IBuilder _builder;
+	private final AbstractBuilder<AbstractFileSystem> _builder;
 	
 	/**
 	 * Constructs a new instance of this class type
 	 * 
 	 * @param builder The builder to direct
 	 */
-	public Director(IBuilder builder) {
+	public Director(AbstractBuilder builder) {
 		_builder = builder;
 	}
 	
@@ -57,8 +58,7 @@ public final class Director {
 	 */
 	public boolean construct() {
 		try {
-			if(!_builder.buildStart())
-			{
+			if(!_builder.buildStart()) {
 				return false;
 			}
 
