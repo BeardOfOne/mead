@@ -53,7 +53,6 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	 * 
 	 * Note: These items will take precedence over the creation of new items first.
 	 */
-	// TODO - Remove this.
 	protected final Map<Class, Queue<T>> _cache = new HashMap<>();
 
 	/**
@@ -115,7 +114,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	    // If there is no entry then create a new entry and add to it
 	    if(resources == null) {
 	    	
-	    	// Create a new list and populate it with the specified resource
+	    		// Create a new list and populate it with the specified resource
 	        resources = new ArrayList<>();
 	        resources.add(resource);
 	        
@@ -123,11 +122,12 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	        // for future reference
 	        _privateSignals.put(resource.getClass(), resources);
 	    }
+	    
 	    // There was in fact an entry which means the resource 
 	    // needs to be added into the list if it does not already
 	    // exist
-	    else if(!resources.contains(resource)){
-	    	resources.add(resource);
+	    else if(!resources.contains(resource)) {
+	    		resources.add(resource);
 	    }
 	    
 	    // If the resource is marked to be shared then it is
@@ -192,16 +192,10 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 		return count;
 	}
 	
-	/**
-	 * Queues the specified resources into the factory
-	 * 
-	 * @param resourceClass The class type of the resource
-	 * @param resources The list of resources
-	 * @param <U> A type extending The class template type
-	 */
-	public final <U extends T> void queueResources(Class<U> resourceClass, List<U> resources) {
+	
+	public final <U extends T> void queueResource(U resource) {
 		// Get the list of queue'd resources based on the resource class
-		Queue<T> cachedResources = _cache.get(resourceClass);
+		Queue<T> cachedResources = _cache.get(resource.getClass());
 		
 		// If there is no entry
 		if(cachedResources == null) {
@@ -210,56 +204,13 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 			cachedResources = new LinkedList<>();
 			
 			// Insert into the cache the resourceClass and the cached resources empty list
-			_cache.put(resourceClass, cachedResources);
+			_cache.put(resource.getClass(), cachedResources);
 		}
 		
 		// Populate the list of items using the reference
-		cachedResources.addAll(resources);		
+		cachedResources.add(resource);		
 	}
-	
-	/**
-	 * Pushes the queue'd resources for the specifies resource class, and returns its contents to the caller
-	 * 
-	 * 
-	 * @param resourceClass The class type of the resource
-	 * @param <U> A type extending The class template type
-	 * 
-	 * @return The list of resources that were pushed
-	 */
-	public final <U extends T> List<U> pushQueuedResources(Class<U> resourceClass) {
 		
-		// Get the list of queue'd resources
-		Queue<T> queuedResources = _cache.remove(resourceClass);
-		
-		// If there are queue'd elements
-		if(queuedResources != null) {
-			
-			// Get the reference to the list in the history field
-			List<T> resources = _privateSignals.get(resourceClass);
-			
-			// If there is none, then create one
-			if(resources == null) {
-				
-				// Create a new list and put the queue'd contents in it
-				resources = new ArrayList(queuedResources);
-				
-				// Apply the array list into the history field
-				_privateSignals.put(resourceClass, resources);
-			} 
-			else {
-				
-				// There is an entry, just append the queue'd contents
-				resources.addAll(queuedResources);
-			}
-			
-			// Return a new list, I do not want to give a reference to the 
-			// actual list within the factory
-			return new ArrayList(queuedResources);
-		}
-		
-		return null;
-	}
-	
 	/**
 	 * Sends out a signal to a group of the specified types in a multi-cast fashion
 	 * 

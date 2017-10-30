@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-@XmlRootElement(name = "FileSystem")
+@XmlRootElement(name = "system")
 public class FileSystem extends AbstractFileSystem {
 	
 	/**
@@ -27,26 +27,26 @@ public class FileSystem extends AbstractFileSystem {
 		super(file);
 	}
 	
-	@Override public String serialize() {
+//	@Override public String serialize() {
 		
-		// Attempt to serialize the file system
-		try {
-				
-			// Create the XML codec and have it set to 
-			// this class type
-			XMLCodec codec = new XMLCodec(this.getClass());
-			
-			// Enable formatting of this object's xml
-			codec.setFormatted(true);
-			
-			// Get the marshaller and marshal this class
-			// into the file resource
-			codec.getMarshaller().marshal(this, _file);
-		} 
-	    catch (Exception exception) {
-			exception.printStackTrace();
-	    }
-		
-		return null;
-	}
+//		// Attempt to serialize the file system
+//		try {
+//				
+//			// Create the XML codec and have it set to 
+//			// this class type
+//			XMLCodec codec = new XMLCodec(this.getClass());
+//			
+//			// Enable formatting of this object's xml
+//			codec.setFormatted(true);
+//			
+//			// Get the marshaller and marshal this class
+//			// into the file resource
+//			codec.getMarshaller().marshal(this, _file);
+//		} 
+//	    catch (Exception exception) {
+//			exception.printStackTrace();
+//	    }
+//		
+//		return null;
+//	}
 }

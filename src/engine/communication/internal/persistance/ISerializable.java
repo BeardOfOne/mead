@@ -31,6 +31,6 @@ package engine.communication.internal.persistance;
  * 
  * @param <T> A type extending the class {@link Object}
  */
-public interface ISerializable<T extends Object> {
+public interface ISerializable<T extends Object> {	
 	public T serialize();
 }

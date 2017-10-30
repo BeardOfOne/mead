@@ -25,6 +25,7 @@
 package game.core;
 
 import java.util.List;
+import java.util.Queue;
 
 import engine.api.IModel;
 import engine.communication.internal.signal.arguments.UUIDEventArgs;
@@ -37,6 +38,17 @@ import engine.core.factories.AbstractSignalFactory;
  *
  */
 public final class ModelFactory extends AbstractSignalFactory<IModel> {
+	
+	@Override public <U extends IModel> U add(U resource, boolean isShared) {
+		
+		Queue<U> cachedResources = (Queue<U>) _cache.get(resource.getClass());
+		if(cachedResources != null) {
+			U cachedResource = cachedResources.remove();
+			resource.loadSerializedContents(cachedResource);
+		}
+		
+		return super.add(resource, isShared);
+	}
 	
 	/**
 	 * Performs a selective multicast on the specified class type
