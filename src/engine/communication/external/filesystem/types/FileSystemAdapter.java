@@ -63,15 +63,16 @@ public class FileSystemAdapter<T extends ISerializable<String>> extends XmlAdapt
 				// and the actual value as a serialized string
 				FileSystemElement entryType =  new FileSystemElement(
 					entry.getKey().getName(),
-			    	value.serialize()
+			    		value == null ? "" : value.serialize()
 				);
 				
-				Tracelog.log(Level.INFO, true, String.format("Serialize Key:%s", entry.getKey().getName()));
-				Tracelog.log(Level.INFO, true, String.format("Serialize Value:%s", entry.getValue().toString()));
+				Tracelog.log(Level.INFO, true, String.format("Serialize Key: %s", entryType.className));
+				Tracelog.log(Level.INFO, true, String.format("Serialize Value: %s", entryType.classValue));
 		        
-		    	// Add the new object into our new map type list
-		    	myMapType.ENTRIES.add(entryType);
-		    }
+		    		// Add the new object into our new map type list
+		    		myMapType.ENTRIES.add(entryType);
+		   
+			}
 		}
 	    
 		// Return the newly populated map type
