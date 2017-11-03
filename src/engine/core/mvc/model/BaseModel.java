@@ -62,9 +62,9 @@ public abstract class BaseModel implements IModel
 	private transient final CommonProperties _modelProperties = new CommonProperties();
 
 	/**
-	 * The list of receivers that can receive a message from the model
+	 * The list of listeners that can receive a message from the model
 	 */
-	private transient final List<ISignalListener> _receivers = new ArrayList<>();
+	private transient final List<ISignalListener> _listeners = new ArrayList();
 				
 	/**
 	 * The name of the operation to be performed
@@ -89,32 +89,42 @@ public abstract class BaseModel implements IModel
 	}
 	
 	/**
-	 * The list of receivable objects that can receive messages 
 	 * 
-	 * @param receivers The list of receivers
+	 * Constructs a new instance of this class type
+	 *
+	 * @param listeners The list of receivers
 	 */
-	protected BaseModel(ISignalListener... receivers) {
+	protected BaseModel(ISignalListener... listeners) {
 		this();
-		addListener(receivers);
+		addListeners(listeners);
 	}
 		
 	/**
 	 * Adds the specified listeners to listen in on signals fired by this model
 	 * 
-	 * @param receivers The list of receivers 
+	 * @param listeners The list of listeners 
 	 */
-	public final void addListener(ISignalListener... receivers) {
-		for(ISignalListener receiver : receivers) {
-			if(!(receiver == null || _receivers.contains(receiver))) {
-				_receivers.add(receiver);
-			}			
-		}
+	public final void addListener(ISignalListener... listeners) {
+		addListeners(listeners);
 		
 		// Set the event for listeners
 		setOperation(EVENT_LISTENER_ADDED);
 		
 		// Push an update event to the listeners
 		doneUpdating();
+	}
+	
+	/**
+	 * Adds the specified listeners to this model
+	 * 
+	 * @param listeners The listeners to add to this model
+	 */
+	private void addListeners(ISignalListener... listeners) {
+		for(ISignalListener listener : listeners) {
+			if(!(listener == null || _listeners.contains(listener))) {
+				_listeners.add(listener);
+			}			
+		}
 	}
 	
 	/**
@@ -125,7 +135,7 @@ public abstract class BaseModel implements IModel
 	 * @return The listener associated to this class type
 	 */
 	public final <T extends ISignalListener> T getListener(Class<T> classType) {
-		for(ISignalListener listener : _receivers) {
+		for(ISignalListener listener : _listeners) {
 			if(listener.getClass().equals(classType)) {
 				return (T) listener;
 			}
@@ -144,7 +154,7 @@ public abstract class BaseModel implements IModel
 	 */
 	public final <T extends ISignalListener> boolean isModelListening(T listener) {
 		if(listener != null)  {
-			for(ISignalListener receiver : _receivers) {
+			for(ISignalListener receiver : _listeners) {
 				if(receiver.equals(listener)) {
 					return true;
 				}
@@ -159,7 +169,7 @@ public abstract class BaseModel implements IModel
 	 * @param receiver The receiver to remove
 	 */
 	public final void removeListener(ISignalListener receiver) {
-		_receivers.remove(receiver);
+		_listeners.remove(receiver);
 	}
 	
 	/**
@@ -181,7 +191,7 @@ public abstract class BaseModel implements IModel
 		
 		// Call all signal listeners with the specified event (this takes operation name into account)
 		// and then it will end up calling update after the fact
-		for(ISignalListener receiver : _receivers) {
+		for(ISignalListener receiver : _listeners) {
 			receiver.sendSignalEvent(event);
 		}
 	}
@@ -221,7 +231,7 @@ public abstract class BaseModel implements IModel
 		
 		// Call all signal listeners with the specified event (this takes operation name into account)
 		// and then it will end up calling update after the fact
-		for(ISignalListener receiver : _receivers) {
+		for(ISignalListener receiver : _listeners) {
 			receiver.sendSignalEvent(_operationEvent);
 		}
 
@@ -284,7 +294,7 @@ public abstract class BaseModel implements IModel
 	}
 
 	@Override public boolean flush() {
-		_receivers.clear();
+		_listeners.clear();
 		return true;
 	}
 	

@@ -42,20 +42,30 @@ import engine.utils.logging.Tracelog;
 public final class ModelFactory extends AbstractSignalFactory<IModel> {
 	
 	@Override public <U extends IModel> U add(U resource, boolean isShared) {
-		
+
+		// Add the actual resource
+		super.add(resource, isShared);
+
 		Queue<U> cachedResources = (Queue<U>) _cache.get(resource.getClass());
 		if(cachedResources != null && !cachedResources.isEmpty()) {
 			U cachedResource = cachedResources.remove();
 			if(cachedResource != null) {
+
+				// Copy the data that has been cached over to the model
 				resource.copyData(cachedResource);
+				
+				// Perform a refresh of the model to show the updated contents
+				resource.refresh();
+
 				cachedResource.flush();	
 			}
 			else {
 				Tracelog.log(Level.SEVERE, false, "Could not inject the specified model");
 			}
 		}
+
 		
-		return super.add(resource, isShared);
+		return resource;
 	}
 	
 	/**
