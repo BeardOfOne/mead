@@ -61,11 +61,6 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	 */
 	public abstract UUID getUUID();
 	
-	//todo
-	default public void loadSerializedContents(IModel model) {
-		System.out.println("loadSerializedContents");
-	}
-	
 	/**
 	 * Gets the model properties of the implementor of this interface
 	 * 
@@ -73,6 +68,7 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	 */
 	public CommonProperties getModelProperties();
 
+	public void copyData(IModel model);
 	
 	@Override default Map<String, ISignalReceiver> getSignalListeners() {
 		return getModelProperties().getSignalListeners();

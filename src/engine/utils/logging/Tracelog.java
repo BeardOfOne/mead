@@ -191,10 +191,13 @@ public final class Tracelog {
 	 * @param exception The exception that was thrown
 	 */
 	public static void log(Level level, boolean isGame, Exception exception) {
-		StringWriter stringWriter = new StringWriter();
-		PrintWriter printWriter = new PrintWriter(stringWriter);
-		exception.printStackTrace(printWriter);
-			
-		log(level, isGame, stringWriter.toString());
+		
+		try(StringWriter stringWriter = new StringWriter(); PrintWriter printWriter = new PrintWriter(stringWriter)) {
+			exception.printStackTrace(printWriter);
+			log(level, isGame, stringWriter.toString());
+		}
+		catch(Exception exception2) {
+			Tracelog.log(Level.SEVERE, false, exception2);
+		}
 	}
 }

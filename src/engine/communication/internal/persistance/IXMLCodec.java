@@ -110,6 +110,8 @@ public interface IXMLCodec extends ISerializable<String> {
 		}
 	}
 	
+	// TODO - deserialize here?
+	
 	@Override default String serialize() {
 	    // Create a string buffer for the xml data
         StringWriter writer = new StringWriter();

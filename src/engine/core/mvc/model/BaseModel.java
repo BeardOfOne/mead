@@ -54,7 +54,7 @@ public abstract class BaseModel implements IModel
 	 * The universally unique identifier associated to this model
 	 */
 	@XmlAttribute(name="UUID")
-	private final UUID _uuid = UUID.randomUUID();
+	private UUID _uuid = UUID.randomUUID();
 
 	/**
 	 * The model properties for this model
@@ -273,6 +273,10 @@ public abstract class BaseModel implements IModel
 				event.getSource().pipeData(BaseModel.this);
 			}
 		});
+	}
+	
+	@Override public void copyData(IModel model) {
+		_uuid = model.getUUID();
 	}
 	
 	@Override public final CommonProperties getModelProperties() {
