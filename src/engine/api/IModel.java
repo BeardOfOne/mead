@@ -30,8 +30,10 @@ import java.util.UUID;
 import engine.communication.internal.persistance.IXMLCodec;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
+import engine.core.factories.AbstractFactory;
 import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
+import game.core.ModelFactory;
 
 /**
  * This interface describes the general contract rules of all model type implementors 
@@ -69,7 +71,13 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	public CommonProperties getModelProperties();
 
 	public void copyData(IModel model);
-	
+
+	// TODO - add comments, and put this somewhere better, like in ISignalListener?
+	default public void remove() {
+		unregisterSignalListeners();
+		AbstractFactory.getFactory(ModelFactory.class).remove(this);
+	}
+
 	@Override default Map<String, ISignalReceiver> getSignalListeners() {
 		return getModelProperties().getSignalListeners();
 	}

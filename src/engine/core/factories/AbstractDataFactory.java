@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
@@ -55,7 +56,7 @@ public abstract class AbstractDataFactory<T extends IData> extends AbstractFacto
 	 * 
 	 * Note: The key should be lowercase at all times for normalization reasons
 	 */
-	private final Map<String, List<T>> _data = new HashMap();
+	private final Map<UUID, List<T>> _data = new HashMap();
 	
 	/**
 	 * Constructs a new instance of this class type
@@ -72,10 +73,10 @@ public abstract class AbstractDataFactory<T extends IData> extends AbstractFacto
 	 * 
 	 * @return A data resource of type {@link IData}
 	 */
-	public T getByName(String layerName, String dataName) {
+	public T getByName(UUID layer, String dataName) {
 		
 		// Get the list of resource associated to the class type
-		List<T> resources = getByLayer(layerName);
+		List<T> resources = getByLayer(layer);
 		
 		// If the resources exist
 		if(resources != null) {
@@ -99,10 +100,10 @@ public abstract class AbstractDataFactory<T extends IData> extends AbstractFacto
 	 * 
 	 * @return The list of {@link IData} types associated to the specified layer name
 	 */
-	public List<T> getByLayer(String layerName) {
+	public List<T> getByLayer(UUID layer) {
 
 		// Get the list of data
-		List<T> data = _data.get(layerName.toLowerCase());
+		List<T> data = _data.get(layer);
 		
 		// If there is a valid entry then return a new list 
 		// of its results
@@ -149,21 +150,21 @@ public abstract class AbstractDataFactory<T extends IData> extends AbstractFacto
 	public <U extends T> void addDataResources(List<U> resources)  {
 		
 		// Create a mapping of layer name to IData types
-		Map<List<String>, List<U>> mappings = resources.stream().collect(Collectors.groupingBy(U::getLayerNames));
+		Map<List<UUID>, List<U>> mappings = resources.stream().collect(Collectors.groupingBy(U::getLayers));
 		
 		// Go through each kvp and add its contents into the factory
-		for(Map.Entry<List<String>, List<U>> mapping : mappings.entrySet()) {
+		for(Map.Entry<List<UUID>, List<U>> mapping : mappings.entrySet()) {
 			
 			// Go through the list of layers, since there can be more than one layer
 			// per entity
-			for(String layer : mapping.getKey()) {
+			for(UUID layer : mapping.getKey()) {
 
 				// If the entry does not exist then create a new list
 				// and insert it into the map
-				List<T> dataList = _data.get(layer.toLowerCase());
+				List<T> dataList = _data.get(layer);
 				if(dataList == null) {
 					dataList = new ArrayList();
-					_data.put(layer.toLowerCase(), dataList);
+					_data.put(layer, dataList);
 				}
 
 				// Add the data entry into the mappings structure

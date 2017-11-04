@@ -27,12 +27,12 @@ package game.gameplay;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import engine.api.IData;
-
-import engine.core.factories.AbstractFactory;
 import engine.core.factories.AbstractDataFactory;
+import engine.core.factories.AbstractFactory;
 import engine.core.graphics.IRenderable;
 import engine.core.mvc.model.BaseModel;
 import engine.utils.logging.Tracelog;
@@ -52,7 +52,7 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 	/**
 	 * The layer name associated to this entity
 	 */
-	private final String _layerName;
+	private final UUID _layer;
 	
 	/**
 	 * The data associated to the data entity
@@ -64,13 +64,13 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 	 * 
 	 * @param layerName The name of the layer
 	 */
-	protected AbstractEntity(String layerName) {
+	protected AbstractEntity(UUID layer) {
 		// Get the list of data associated to active data specified. This is
 		// used so that the abstract entity has a reference to the layer data
 		// for switching purposes
-		_layerData.addAll(AbstractFactory.getFactory(AbstractDataFactory.class).getByLayer(layerName));
+		_layerData.addAll(AbstractFactory.getFactory(AbstractDataFactory.class).getByLayer(layer));
 		
-		_layerName = layerName;
+		_layer = layer;
 	}
 	
 	/**
@@ -78,8 +78,8 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 	 * 
 	 * @return The layer name
 	 */
-	protected final String getLayerName() {
-	    return _layerName;
+	protected final UUID getLayerName() {
+	    return _layer;
 	}
 	
 	/**
