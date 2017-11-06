@@ -56,14 +56,20 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
 				
 				// Perform a refresh of the model to show the updated contents
 				resource.refresh();
-
+				
+				// Flush the contents of what was in the cache
 				cachedResource.flush();	
+				
+				// Remove the cache entry if there are no more elements left
+				if(cachedResources.isEmpty()) {
+					Tracelog.log(Level.INFO, false, "Removing the key " + resource.getClass() + " from the cache");
+					_cache.remove(resource.getClass());
+				}				
 			}
 			else {
 				Tracelog.log(Level.SEVERE, false, "Could not inject the specified model");
 			}
 		}
-
 		
 		return resource;
 	}
@@ -71,7 +77,7 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
 	/**
 	 * Performs a selective multicast on the specified class type
 	 * 
-	 * Note: This performs a selective multicast using the UUID of the
+	 * Note: This performs a selective multicast using the specified UUID
 	 *  
 	 * @param classType The class type to multicast on
 	 * @param event The event to pass to each resource

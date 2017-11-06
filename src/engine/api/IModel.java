@@ -76,6 +76,7 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	default public void remove() {
 		unregisterSignalListeners();
 		AbstractFactory.getFactory(ModelFactory.class).remove(this);
+		flush();
 	}
 
 	@Override default Map<String, ISignalReceiver> getSignalListeners() {

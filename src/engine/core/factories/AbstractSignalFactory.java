@@ -114,7 +114,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	    // If there is no entry then create a new entry and add to it
 	    if(resources == null) {
 	    	
-	    		// Create a new list and populate it with the specified resource
+	    	// Create a new list and populate it with the specified resource
 	        resources = new ArrayList<>();
 	        resources.add(resource);
 	        
@@ -192,6 +192,17 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 		return count;
 	}
 	
+	/**
+	 * Gets the number of resources
+	 * 
+	 * @param resource The resource class type
+	 * 
+	 * @return The number of queued resources
+	 */
+	public final <U extends T> int getQueuedResourcesCount(Class<U> classType) {
+		Queue<T> resources = _cache.get(classType);
+		return resources == null ? 0 : resources.size();
+	}
 	
 	public final <U extends T> void queueResource(U resource) {
 		// Get the list of queue'd resources based on the resource class
