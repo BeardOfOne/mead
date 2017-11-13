@@ -95,7 +95,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	 */
 	public final <U extends T> List<U> getAll(Class<U> signalClass) {
 		List<T> signals = _privateSignals.get(signalClass);
-		return signals == null ? new ArrayList<U>() : (ArrayList<U>) signals;
+		return signals == null ? new ArrayList() : new ArrayList(signals);
 	}
 	
 	/**

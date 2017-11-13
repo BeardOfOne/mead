@@ -67,6 +67,7 @@ public abstract class AbstractMenuItem extends AbstractMenu {
 		return null;
 	}
 	
+	
 	/**
 	 * Initializes the grouping of the menu item if any
 	 * 
@@ -101,7 +102,8 @@ public abstract class AbstractMenuItem extends AbstractMenu {
 		super.get(JMenuItem.class).addActionListener(new AbstractAction(super.toString()) {
 			@Override public void actionPerformed(ActionEvent actionEvent) {
 				onExecute(actionEvent);
+				onReset();
 			}
 		});
-	}	
+	}		
 }

@@ -125,7 +125,7 @@ abstract class AbstractMenu {
 	 * 
 	 * @return The associated component of this option
 	 */
-	protected final JComponent getComponent() {
+	public final JComponent getComponent() {
 		return _component;
 	}
 	
@@ -137,20 +137,11 @@ abstract class AbstractMenu {
 	protected final JComponent getParentComponent() {
 		return _parent;
 	}
-
-	/**
-	 * Gets the component associated to this option
-	 * 
-	 * @return The component associated to this option
-	 */
-	protected final JComponent get() {
-		return _component;
-	}
 	
 	/**
 	 * Defines functionality for reseting the menu
 	 */
-	protected void onReset() {
+	public void onReset() {
 	}
 
 	/**
