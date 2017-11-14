@@ -25,12 +25,15 @@
 package engine.communication.internal.persistance;
 
 import java.io.StringWriter;
+import java.util.logging.Level;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
+
+import engine.utils.logging.Tracelog;
 
 /**
  * Defines a codec for performing serialization and deserialization functionality using XML
@@ -124,7 +127,7 @@ public interface IXMLCodec extends ISerializable<String> {
             serializer.getMarshaller().marshal(this, writer);
         } 
         catch (Exception exception) {
-            exception.printStackTrace();
+        	Tracelog.log(Level.SEVERE, false, exception);
         }
         
         return writer.toString();
