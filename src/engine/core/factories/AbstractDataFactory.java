@@ -56,6 +56,7 @@ public abstract class AbstractDataFactory<T extends IData> extends AbstractFacto
 	 * 
 	 * Note: The key should be lowercase at all times for normalization reasons
 	 */
+	// TODO - this is no longer valid since it is not a name but a UUID
 	private final Map<UUID, List<T>> _data = new HashMap();
 	
 	/**

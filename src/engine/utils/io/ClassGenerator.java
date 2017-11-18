@@ -27,6 +27,7 @@ package engine.utils.io;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -91,9 +92,9 @@ public class ClassGenerator {
 	 * @param enumName The name of the enum
 	 * @param values The values of the enum 
 	 */
-	public void appendEnum(String enumName, List<String> values) {
+	public void appendEnum(String enumName, List<UUID> values) {
     	_enumBuilder.append(String.format(
-    		"\tpublic enum %s { %s }", enumName, values.stream().map(z -> z.toUpperCase()).collect(Collectors.joining(",")))
+    		"\tpublic enum %s { %s }", enumName, values.stream().map(z -> z.toString()).collect(Collectors.joining(",")))
 		);
     	appendNewLine(_enumBuilder);
 	}
