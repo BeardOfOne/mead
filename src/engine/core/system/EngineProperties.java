@@ -74,7 +74,7 @@ public final class EngineProperties {
 		LOG_DIRECTORY,
 		
 		/**
-		 * If the engine logging should be ommited from the standard output stream of the console
+		 * If the engine logging should be omitted from the standard output stream of the console
 		 */
 		ENGINE_OUTPUT
 	}

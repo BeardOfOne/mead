@@ -93,6 +93,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	 * 
 	 * @return The list of private signals of the specified type
 	 */
+	@Deprecated
 	public final <U extends T> List<U> getAll(Class<U> signalClass) {
 		List<T> signals = _privateSignals.get(signalClass);
 		return signals == null ? new ArrayList() : new ArrayList(signals);

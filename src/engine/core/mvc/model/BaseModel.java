@@ -259,7 +259,7 @@ public abstract class BaseModel implements IModel
 	protected final String getOperation() {
 		return _operationName;
 	}
-	
+
 	@Override public final UUID getUUID() {
 		return _uuid;
 	}

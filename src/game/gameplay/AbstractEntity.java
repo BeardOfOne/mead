@@ -27,7 +27,6 @@ package game.gameplay;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 
 import engine.api.IData;
@@ -52,7 +51,7 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 	/**
 	 * The layer name associated to this entity
 	 */
-	private final UUID _layer;
+	private final String _layer;
 	
 	/**
 	 * The data associated to the data entity
@@ -64,7 +63,7 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 	 * 
 	 * @param layerName The name of the layer
 	 */
-	protected AbstractEntity(UUID layer) {
+	protected AbstractEntity(String layer) {
 		// Get the list of data associated to active data specified. This is
 		// used so that the abstract entity has a reference to the layer data
 		// for switching purposes
@@ -78,7 +77,7 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 	 * 
 	 * @return The layer name
 	 */
-	protected final UUID getLayerName() {
+	protected final String getLayerName() {
 	    return _layer;
 	}
 	
