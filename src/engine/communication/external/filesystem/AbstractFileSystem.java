@@ -109,7 +109,8 @@ public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implem
 	 * @return The list of concrete types of the type specified
 	 */
 	public final List<T> getData(Class<T> classType) {
-		return _data.get(classType);
+		List<T> data = _data.get(classType);
+		return data == null ? new ArrayList<T>() : data;
 	}
 	
 	/**
