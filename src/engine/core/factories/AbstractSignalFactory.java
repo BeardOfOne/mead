@@ -147,11 +147,8 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	 * 
 	 * @param resource The resource to remove
 	 * @param <U> A type extending The class template type
-	 * 
 	 */
-	// TODO - remove this and have the resource implement IDestructor and handle it from there?
 	public final <U extends T> void remove(U resource) {
-		
 		List<T> history = _privateSignals.get(resource.getClass());
 		if(history != null) {
 			
@@ -238,7 +235,6 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 		if(resources != null) {
 			Object source = signalEvent.getSource();
 			for(T resource : resources) {
-				// TODO - parallelize this!
 				// Send out a unicast signal to every resource, although 
 				// horribly inefficient the way it is being done right now
 				if(!source.equals(resource)) {

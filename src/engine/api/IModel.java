@@ -70,9 +70,16 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	 */
 	public CommonProperties getModelProperties();
 
+	/**
+	 * Performs a copy of the specified model
+	 * 
+	 * @param model The model to copy
+	 */
 	public void copyData(IModel model);
 
-	// TODO - add comments, and put this somewhere better, like in ISignalListener?
+	/**
+	 * Removes this model from the context of the application
+	 */
 	default public void remove() {
 		unregisterSignalListeners();
 		AbstractFactory.getFactory(ModelFactory.class).remove(this);
