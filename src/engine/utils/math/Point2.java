@@ -27,7 +27,6 @@ package engine.utils.math;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * Point class that represents a two-dimensional location
@@ -35,20 +34,19 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-@XmlRootElement(name = "Point")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Point {
+public class Point2 extends Point {
 	
 	/**
-	 * x-axis value
+	 * y-axis value
 	 */
-	@XmlAttribute(name = "x")
-	private double _x;
+	@XmlAttribute(name = "y")
+	private double _y;
 	
 	/**
 	 * Default constructor as per serialization requirements
 	 */
-	public Point() {
+	public Point2() {
 	}
 
 	/**
@@ -57,22 +55,24 @@ public class Point {
 	 * specified values
 	 * 
 	 * @param x The x-axis value
+	 * @param y The y-axis value
 	 */
-	public Point(double x) {
-		_x = x;
+	public Point2(double x, double y) {
+		super(x);
+		_y = y;
+	}
+
+	/**
+	 * Gets the y coordinate
+	 */
+	public final double getY() {
+		return _y;
 	}
 	
 	/**
 	 * @return An empty point of this type
 	 */
-	public static Point Empty() {
-		return new Point(0);
-	}
-	
-	/**
-	 * Gets the X coordinate
-	 */
-	public final double getX() {
-		return _x;
-	}
+	public static Point2 Empty() {
+		return new Point2(0,0);
+	}	
 }

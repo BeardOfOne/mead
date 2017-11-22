@@ -27,52 +27,53 @@ package engine.utils.math;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Point class that represents a two-dimensional location
+ * Point class that represents a three-dimensional location
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-@XmlRootElement(name = "Point")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Point {
+public class Point3 extends Point2 {
 	
 	/**
-	 * x-axis value
+	 * z-axis value
 	 */
-	@XmlAttribute(name = "x")
-	private double _x;
+	@XmlAttribute(name = "z")
+	private double _z;
 	
 	/**
 	 * Default constructor as per serialization requirements
 	 */
-	public Point() {
+	public Point3() {
 	}
 
 	/**
-	 * 
 	 * This overloaded constructor will initialize the points to their 
 	 * specified values
 	 * 
 	 * @param x The x-axis value
+	 * @param y The y-axis value
+	 * @param z The z-axis value
 	 */
-	public Point(double x) {
-		_x = x;
+	public Point3(double x, double y, double z) {
+		super(x, y);
+		_z = z;
+	}
+	
+	/**
+	 * @return Gets the z value
+	 */
+	public final double getZ() {
+		return _z;
 	}
 	
 	/**
 	 * @return An empty point of this type
 	 */
-	public static Point Empty() {
-		return new Point(0);
+	public static Point3 Empty() {
+		return new Point3(0,0,0);
 	}
-	
-	/**
-	 * Gets the X coordinate
-	 */
-	public final double getX() {
-		return _x;
-	}
+
 }

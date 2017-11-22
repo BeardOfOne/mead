@@ -43,7 +43,7 @@ import engine.api.IModel;
 import engine.communication.external.filesystem.types.FileSystemAdapter;
 import engine.communication.internal.persistance.ISerializable;
 import engine.communication.internal.persistance.IXMLCodec;
-import engine.utils.math.Point;
+import engine.utils.math.Point2;
 
 /**
  * Abstract functionality for all file system implementations
@@ -187,14 +187,14 @@ public abstract class AbstractFileSystem<T extends ISerializable<IModel>> implem
   		        int column = i % columns;
 		        
 		        // Set the top-left point
- 		        Point topLeft = new Point(
+ 		        Point2 topLeft = new Point2(
  		            column * (dimensions.width / columns),
  		            row * (dimensions.height / rows)
 		        );
 		        
 		        BufferedImage image = buffer.getSubimage(
- 	        		(int)topLeft.x, 
-	        		(int)topLeft.y, 
+ 	        		(int)topLeft.getX(), 
+	        		(int)topLeft.getY(), 
 	        		dimensions.width / columns, 
 	        		dimensions.height / rows
 	    		);
