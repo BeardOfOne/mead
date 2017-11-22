@@ -66,6 +66,17 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 	private final List<T> _publicSignals = new ArrayList<>();
 	
 	/**
+	 * Returns a flag indicating if the specified public signal class exists
+	 *   
+	 * @param signalClass The class of the resource to verify
+	 * 
+	 * @return TRUE if the specified signal class exists, FALSE otherwise
+	 */
+	public final <U extends T> boolean exists(Class<U> signalClass) {
+		return get(signalClass) != null;
+	}
+	
+	/**
 	 * Gets the specified concrete signal class based on the type provided
 	 * 
 	 * Note: This will return the singular publicly shared entity (if it exists)
