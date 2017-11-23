@@ -50,6 +50,8 @@ import engine.core.mvc.common.CommonProperties;
 @XmlAccessorType(XmlAccessType.FIELD)
 public abstract class BaseModel implements IModel 
 {
+	public static final String MODEL_REFRESH = "MODEL_REFRESH";
+	
 	/**
 	 * The universally unique identifier associated to this model
 	 */
@@ -175,8 +177,7 @@ public abstract class BaseModel implements IModel
 	/**
 	 * Refreshes this tile model, effectively doing a doneUpdate 
 	 */
-	@Override
-	public void refresh() {
+	@Override public void refresh() {
 		
 		// Do not continue with the update if there is a suppression
 		// of the updates
@@ -187,7 +188,7 @@ public abstract class BaseModel implements IModel
 		// Create a new operation event to send out to listeners
 		// In this case we specify a local event as not to disturb 
 		// the done update functionality
-		SignalEventArgs event = new ModelEventArgs(this, null);
+		SignalEventArgs event = new ModelEventArgs(this, MODEL_REFRESH);
 		
 		// Call all signal listeners with the specified event (this takes operation name into account)
 		// and then it will end up calling update after the fact
