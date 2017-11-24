@@ -40,6 +40,66 @@ import engine.utils.logging.Tracelog;
 public interface ISignalListener {
 	
 	/**
+	 * Container class used for holding signal names to signal listener relationships
+	 * 
+	 * This container is usually used when keeping track of which signals are attached to a particular
+	 * entity, and sometimes the state of this container might be toggle off and then on depending on 
+	 * to prevent circular loops from occuring
+	 * 
+	 * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+	 *
+	 */
+	public class SignalListenerContainer {
+
+		/**
+		 * The signal name 
+		 */
+		public final String signalName;
+		
+		/**
+		 * The signal listener
+		 */
+		public final ISignalListener signalListener;
+		
+		/**
+		 * If this signal relationship is active
+		 */
+		private boolean _isEnabled;
+
+		/**
+		 * Constructs a new instance of this class type
+		 *
+		 * @param signalName The signal name
+		 * @param signalListener The signal listener
+		 */
+		public SignalListenerContainer(String signalName, ISignalListener signalListener) {
+			this.signalName = signalName;
+			this.signalListener = signalListener;
+			
+			// By default, all relationships are enabled
+			_isEnabled = true;
+		}
+		
+		/**
+		 * Sets the flag indicating if this relation is enabled
+		 * 
+		 * @param isEnabled The flag to set
+		 */
+		public void setIsEnabled(boolean isEnabled) {
+			_isEnabled = isEnabled;
+		}
+		
+		/**
+		 * Gets if this signal relation is enabled
+		 * 
+		 * @return TRUE if this signal relation is enabled, FALSE otherwise
+		 */
+		public boolean getIsEnabled() {
+			return _isEnabled;
+		}
+	}
+	
+	/**
 	 * This event is used to signal listening entities that something
 	 * would like to register to you.
 	 */
