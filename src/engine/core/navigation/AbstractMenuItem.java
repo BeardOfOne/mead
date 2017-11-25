@@ -101,8 +101,11 @@ public abstract class AbstractMenuItem extends AbstractMenu {
 	@Override protected final void onInitialize() {
 		super.get(JMenuItem.class).addActionListener(new AbstractAction(super.toString()) {
 			@Override public void actionPerformed(ActionEvent actionEvent) {
-				onExecute(actionEvent);
-				onReset();
+			    // Make sure that the action is enabled before proceeding
+			    if(enabled()) {
+	                onExecute(actionEvent);
+	                onReset();			        
+			    }
 			}
 		});
 	}		
