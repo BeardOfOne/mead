@@ -266,19 +266,19 @@ public abstract class BaseModel implements IModel
 	}
 	
 	@Override public void registerSignalListeners() {
-		registerSignalListener(ISignalListener.EVENT_REGISTER, new ISignalReceiver<SignalEventArgs>() {
+		addSignalListener(ISignalListener.EVENT_REGISTER, new ISignalReceiver<SignalEventArgs>() {
 			@Override public void signalReceived(SignalEventArgs event) {
 				ISignalListener listener = (ISignalListener) event.getSource();
 				addListener(listener);
 			}
 		});
-		registerSignalListener(ISignalListener.EVENT_UNREGISTER, new ISignalReceiver<SignalEventArgs>() {
+		addSignalListener(ISignalListener.EVENT_UNREGISTER, new ISignalReceiver<SignalEventArgs>() {
 			@Override public void signalReceived(SignalEventArgs event) {
 				ISignalListener listener = (ISignalListener) event.getSource();
 				removeListener(listener);
 			}
 		});
-		registerSignalListener(IModel.EVENT_PIPE_DATA, new ISignalReceiver<PipelinedEventArgs<IDataPipeline>>() {
+		addSignalListener(IModel.EVENT_PIPE_DATA, new ISignalReceiver<PipelinedEventArgs<IDataPipeline>>() {
 			@Override public void signalReceived(PipelinedEventArgs<IDataPipeline> event) {				
 				// Send a reference of the BaseModel back to the caller
 				event.getSource().pipeData(BaseModel.this);

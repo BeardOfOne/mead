@@ -28,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import engine.communication.internal.signal.ISignalListener;
-import engine.communication.internal.signal.ISignalReceiver;
+import engine.communication.internal.signal.SignalListenerContainer;
 import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
 
@@ -66,7 +66,7 @@ public interface IController extends IDestructor, ISignalListener {
 		return null;
 	}
 	
-	@Override default Map<String, ISignalReceiver> getSignalListeners() {
+	@Override default Map<String, SignalListenerContainer> getSignalListeners() {
 		return getControllerProperties().getSignalListeners();
 	} 
 }

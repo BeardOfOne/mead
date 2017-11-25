@@ -32,7 +32,7 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import engine.communication.internal.signal.ISignalListener;
-import engine.communication.internal.signal.ISignalReceiver;
+import engine.communication.internal.signal.SignalListenerContainer;
 import engine.core.factories.AbstractFactory;
 import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
@@ -110,10 +110,10 @@ public interface IView extends IDestructor, ISignalListener {
 		        	}
 		        	
 		        	// Unregister all signals being listened to by this view's controller
-		        	controller.unregisterSignalListeners();
+		        	controller.clearSignalListeners();
 		        	
 		           	// Unregister all signals being listened to by the view
-		           	view.unregisterSignalListeners();
+		           	view.clearSignalListeners();
 		           	
 		           	// log that the component is being hidden
 		        	Tracelog.log(Level.INFO, false, String.format("Component %s is being hidden", args.getSource().getClass().getCanonicalName()));
@@ -269,7 +269,7 @@ public interface IView extends IDestructor, ISignalListener {
 		}	
 	}
 	
-	@Override default Map<String, ISignalReceiver> getSignalListeners() {
+	@Override default Map<String, SignalListenerContainer> getSignalListeners() {
 		return getViewProperties().getSignalListeners();
 	}
 	

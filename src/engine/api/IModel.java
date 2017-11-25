@@ -29,7 +29,7 @@ import java.util.UUID;
 
 import engine.communication.internal.persistance.IXMLCodec;
 import engine.communication.internal.signal.ISignalListener;
-import engine.communication.internal.signal.ISignalReceiver;
+import engine.communication.internal.signal.SignalListenerContainer;
 import engine.core.factories.AbstractFactory;
 import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
@@ -81,12 +81,12 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	 * Removes this model from the context of the application
 	 */
 	default public void remove() {
-		unregisterSignalListeners();
+		clearSignalListeners();
 		AbstractFactory.getFactory(ModelFactory.class).remove(this);
 		flush();
 	}
 
-	@Override default Map<String, ISignalReceiver> getSignalListeners() {
+	@Override default Map<String, SignalListenerContainer> getSignalListeners() {
 		return getModelProperties().getSignalListeners();
 	}
 }

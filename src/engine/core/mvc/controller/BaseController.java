@@ -71,7 +71,7 @@ public abstract class BaseController implements IController  {
 	}
 
 	@Override public boolean flush() {
-		unregisterSignalListeners();
+		clearSignalListeners();
 		return _properties.flush();
 	}
 }

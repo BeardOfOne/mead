@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import engine.communication.internal.signal.ISignalListener;
-import engine.communication.internal.signal.ISignalReceiver;
+import engine.communication.internal.signal.SignalListenerContainer;
 import engine.core.mvc.IDestructor;
 
 /**
@@ -48,14 +48,14 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
 	/**
 	 * The mapping of signal names to signal implementations
 	 */
-	private final Map<String, ISignalReceiver> _listeners = new HashMap<>();
+	private final Map<String, SignalListenerContainer> _listeners = new HashMap<>();
 	
 	/**
 	 * Gets the list of signal listeners associated to the view
 	 * 
 	 * @return The list of signal listeners 
 	 */
-	public final Map<String, ISignalReceiver> getSignalListeners() {
+	public final Map<String, SignalListenerContainer> getSignalListeners() {
 		return _listeners;
 	}
 

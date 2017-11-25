@@ -40,66 +40,6 @@ import engine.utils.logging.Tracelog;
 public interface ISignalListener {
 	
 	/**
-	 * Container class used for holding signal names to signal listener relationships
-	 * 
-	 * This container is usually used when keeping track of which signals are attached to a particular
-	 * entity, and sometimes the state of this container might be toggle off and then on depending on 
-	 * to prevent circular loops from occuring
-	 * 
-	 * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
-	 *
-	 */
-	public class SignalListenerContainer {
-
-		/**
-		 * The signal name 
-		 */
-		public final String signalName;
-		
-		/**
-		 * The signal listener
-		 */
-		public final ISignalListener signalListener;
-		
-		/**
-		 * If this signal relationship is active
-		 */
-		private boolean _isEnabled;
-
-		/**
-		 * Constructs a new instance of this class type
-		 *
-		 * @param signalName The signal name
-		 * @param signalListener The signal listener
-		 */
-		public SignalListenerContainer(String signalName, ISignalListener signalListener) {
-			this.signalName = signalName;
-			this.signalListener = signalListener;
-			
-			// By default, all relationships are enabled
-			_isEnabled = true;
-		}
-		
-		/**
-		 * Sets the flag indicating if this relation is enabled
-		 * 
-		 * @param isEnabled The flag to set
-		 */
-		public void setIsEnabled(boolean isEnabled) {
-			_isEnabled = isEnabled;
-		}
-		
-		/**
-		 * Gets if this signal relation is enabled
-		 * 
-		 * @return TRUE if this signal relation is enabled, FALSE otherwise
-		 */
-		public boolean getIsEnabled() {
-			return _isEnabled;
-		}
-	}
-	
-	/**
 	 * This event is used to signal listening entities that something
 	 * would like to register to you.
 	 */
@@ -120,7 +60,7 @@ public interface ISignalListener {
 	default public void sendSignalEvent(SignalEventArgs signalEvent) {
 		
 		// Get the list of signal listeners available
-		Map<String, ISignalReceiver> operations = getSignalListeners();
+		Map<String, SignalListenerContainer> operations = getSignalListeners();
 		if(operations == null) {
 			return;
 		}
@@ -133,10 +73,10 @@ public interface ISignalListener {
 
 			// Go through every listener operation and look for the one with'
 			// the matching name, then call that one 
-			for(Map.Entry<String, ISignalReceiver> kvp : operations.entrySet()) {
+			for(Map.Entry<String, SignalListenerContainer> kvp : operations.entrySet()) {
 				
-				// Verify if the key is the same as the operation name
-				if(kvp.getKey().equalsIgnoreCase(operationName)) {
+				// Verify if the key is the same as the operation name and that the signal is active
+				if(kvp.getKey().equalsIgnoreCase(operationName) && kvp.getValue().getIsEnabled()) {
 					
 					Tracelog.log(
 						Level.INFO, 
@@ -149,7 +89,7 @@ public interface ISignalListener {
 					);
 
 					// Send out a signal receive event
-					kvp.getValue().signalReceived(signalEvent);
+					kvp.getValue().signalReceiver.signalReceived(signalEvent);
 					
 					// Stop executing
 					break;
@@ -163,50 +103,70 @@ public interface ISignalListener {
 	}
 	
 	/**
-	 * Registers a listener into the list of listeners
+	 * Adds a listener into the list of listeners
 	 * 
 	 * @param signalName The name of the signal 
-	 * @param listener The listener implementation
+	 * @param signalReceiver The listener implementation
 	 */
-	default public void registerSignalListener(String signalName, ISignalReceiver listener) {
-		Map<String, ISignalReceiver> listeners = getSignalListeners();
+	default public void addSignalListener(String signalName, ISignalReceiver signalReceiver) {
+		Map<String, SignalListenerContainer> listeners = getSignalListeners();
 		if(listeners != null) {
 			if(!listeners.containsKey(signalName)) {
 				Tracelog.log(Level.INFO, false, String.format("Signal Registration: %s is now listening on signal %s", this.getClass().getCanonicalName(), signalName));
-				listeners.put(signalName, listener);
+				listeners.put(signalName, new SignalListenerContainer(signalName, signalReceiver));
 			}
 		}
 	}
 	
 	/**
-	 * Unregisters the specified listener, returning a key to use as a reference to help
-	 * when you wish to register back, you will be able to use the same key.
+	 * Registers the specified signal name
 	 * 
-	 * @param listener The listener to unregister
-	 * 
-	 * @return The name of the key associated to the listener that you passed in originally, use
-	 * this as record keeping and to register back
+	 * @param signalName The name of the signal to register
 	 */
-	default public String unregisterSignalListener(ISignalReceiver listener) {
-		Map<String, ISignalReceiver> listeners = getSignalListeners();
-		if(listeners != null) {
-			for(Map.Entry<String, ISignalReceiver> kvp : listeners.entrySet()) {
-				if(kvp.getValue() == listener) {
-					listeners.remove(kvp.getKey());
-		            Tracelog.log(Level.INFO, false, String.format("Signal Unregistration: %s is no longer listening on signal %s", this.getClass().getCanonicalName(), kvp.getKey()));
-					return kvp.getKey();
-				}
+	default public void registerSignalListener(String signalName) {
+		Map<String, SignalListenerContainer> listeners = getSignalListeners();		
+		if(signalName != null && listeners != null) {
+			SignalListenerContainer container = listeners.get(signalName);
+			if(container != null) {
+				container.setIsEnabled(true);
+				Tracelog.log(Level.INFO, false, String.format("Signal Registration: %s is now listening on signal %s", this.getClass().getCanonicalName(), signalName));
+			}
+		}		
+	}
+	
+	/**
+	 * Unregisters the specified signal name
+	 * 
+	 * @param signalName The name of the signal to unregister
+	 */
+	default public void unregisterSignalListener(String signalName) {
+		Map<String, SignalListenerContainer> listeners = getSignalListeners();		
+		if(signalName != null && listeners != null) {
+			SignalListenerContainer container = listeners.get(signalName);
+			if(container != null) {
+				container.setIsEnabled(false);
+	            Tracelog.log(Level.INFO, false, String.format("Signal Unregistration: %s is no longer active", this.getClass().getCanonicalName()));
 			}
 		}
-		
-		return null;
+	}
+
+	/**
+	 * Removes the specified signal listener
+	 * 
+	 * @param signalName The name of the signal
+	 */
+	default public void removeSignalListener(String signalName) {
+		Map<String, SignalListenerContainer> listeners = getSignalListeners();
+		if(listeners != null) {
+			listeners.remove(signalName);
+		}
 	}
 	
 	/**
 	 * Clears the list of listeners
-	 */
-	default public void unregisterSignalListeners() {
-		Map<String, ISignalReceiver> listeners = getSignalListeners();
+	 */	
+	default public void clearSignalListeners() {
+		Map<String, SignalListenerContainer> listeners = getSignalListeners();
 		if(listeners != null) {
 			listeners.clear();
 		}
@@ -217,7 +177,7 @@ public interface ISignalListener {
 	 * 
 	 * @return A mapping of listener names to listener concrete implementations
 	 */
-	default public Map<String, ISignalReceiver> getSignalListeners() {
+	default public Map<String, SignalListenerContainer> getSignalListeners() {
 		return null;
 	}
 	
