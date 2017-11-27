@@ -124,6 +124,9 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 	    	
 		if(_instance == null) {
 
+			// Get the start time
+			long startTime = System.nanoTime();
+						
 			// Create the new instance
     		_instance = classType.getConstructor().newInstance();
     		_instance._isDebug = isDebug;
@@ -146,6 +149,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     		}
     		Tracelog.log(Level.INFO, false, "--Engine Data Initialization Completed--");	    		
     		Tracelog.log(Level.INFO, false, "--Engine Bootup Finished--");
+    		Tracelog.log(Level.INFO, false, "ENGINE STARTUP TIME: " + ((System.nanoTime() - startTime) / 1000000) + "ms");
     	}
 	
     	return _instance;
