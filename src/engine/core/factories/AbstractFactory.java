@@ -55,7 +55,7 @@ public abstract class AbstractFactory implements IDestructor {
 		for(int i = FACTORIES.size() - 1; i >= 0; --i) {
 			AbstractFactory factory = FACTORIES.get(i);
 			if(!factory.isPersistent) {
-				factory.flush();
+				factory.clear();
 				FACTORIES.remove(i);
 			}
 		}

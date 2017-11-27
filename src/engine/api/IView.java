@@ -27,7 +27,6 @@ package engine.api;
 import java.awt.Container;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -37,8 +36,6 @@ import engine.core.factories.AbstractFactory;
 import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
 import engine.utils.logging.Tracelog;
-import game.core.ControllerFactory;
-import game.core.ModelFactory;
 import game.core.ViewFactory;
 
 /**
@@ -54,7 +51,7 @@ public interface IView extends IDestructor, ISignalListener {
 	 * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
 	 */
 	public final class ViewProperties extends CommonProperties<IController>  {
-				
+	    
 		/**
 		 * Indicates if the view should be redrawn
 		 */
@@ -78,7 +75,7 @@ public interface IView extends IDestructor, ISignalListener {
 		 * to get a reference to the outer class using Outer.this.methodName
 		 */
 		public ViewProperties(IView view) {
-			
+		    
 			// The view is set to false because by default most container classes
 			// are already visible when they are created and because of this no event
 			// will ever be sent out that a JPanel or some other container is being shown
@@ -211,7 +208,6 @@ public interface IView extends IDestructor, ISignalListener {
 	 * 
 	 * Note: This is called BEFORE the initializeComponentBindings is called
 	 * 
-	 *  
 	 */
 	public void initializeComponents();
 	
@@ -273,22 +269,28 @@ public interface IView extends IDestructor, ISignalListener {
 		return getViewProperties().getSignalListeners();
 	}
 	
+	@Override default void remove() {
+	    IDestructor.super.remove();
 
-	/**
-	 * Removes the view from the view factory.  Also attempts to clean up the controller associated to this
-	 * view if any, and also attempts to clean up any models that are associated to the controller.
-	 */
-	default public void remove() {
-		AbstractFactory.getFactory(ViewFactory.class).remove(this);
-		IController controller = getViewProperties().getEntity();
-		if(controller != null) {
-			AbstractFactory.getFactory(ControllerFactory.class).remove(controller);
-			List<IModel> controllerModels = controller.getModels();
-			if(controllerModels != null) {
-				for(IModel model : controllerModels) {
-					AbstractFactory.getFactory(ModelFactory.class).remove(model);
-				}				
-			}
-		}
-	}
+	    // Clear the signals associated to this view
+	    clearSignalListeners();
+  
+	    // Remove this view from the view factory
+	    AbstractFactory.getFactory(ViewFactory.class).remove(this);
+  
+	    // Attempt to get the controller of this view and 
+	    // remove it as well
+	    IController controller = getViewProperties().getEntity();
+	    if(controller != null) {
+	        controller.remove();
+        }
+	    
+	    // Get the parent container and remove this view from that container
+	    Container parent = getContainerClass().getParent();
+	    parent.remove(getContainerClass());
+	    
+	    // Re-validate the contents of the parent and repaint it
+	    parent.revalidate();
+	    parent.repaint();
+    }
 }

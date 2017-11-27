@@ -24,13 +24,14 @@
 
 package engine.api;
 
-import java.util.List;
 import java.util.Map;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.SignalListenerContainer;
+import engine.core.factories.AbstractFactory;
 import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
+import game.core.ControllerFactory;
 
 /**
  * This is the top-most controller interface, for all sub-type implemented controller types
@@ -57,16 +58,17 @@ public interface IController extends IDestructor, ISignalListener {
 	 */
 	public ControllerProperties getControllerProperties();
 	
-	/**
-	 * Gets the list of models that the current controller has
-	 *  
-	 * @return The list of models associated to the controller
-	 */
-	default public List<IModel> getModels() {
-		return null;
-	}
-	
 	@Override default Map<String, SignalListenerContainer> getSignalListeners() {
 		return getControllerProperties().getSignalListeners();
-	} 
+	}
+	
+	@Override default void remove() {
+	    IDestructor.super.remove();
+
+	    // Clear the signals associated to this controller
+	    clearSignalListeners();
+	    
+	    // Remove this controller from the controller factory
+        AbstractFactory.getFactory(ControllerFactory.class).remove(this);
+	}
 }

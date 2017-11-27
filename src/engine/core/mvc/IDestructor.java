@@ -39,7 +39,13 @@ public interface IDestructor {
 	 *   
 	 * @return TRUE if it was successful, FALSE if it was not 
 	 */
-	default public boolean flush() {
+	default public boolean clear() {
 		return true;
+	}
+	
+	/**
+	 * Removes the contents of the implemented type
+	 */
+	default public void remove() {
 	}
 }

@@ -168,6 +168,7 @@ public interface ISignalListener {
 	default public void clearSignalListeners() {
 		Map<String, SignalListenerContainer> listeners = getSignalListeners();
 		if(listeners != null) {
+            Tracelog.log(Level.INFO, false, String.format("Clearing all signals for " + this.getClass().getCanonicalName()));
 			listeners.clear();
 		}
 	}

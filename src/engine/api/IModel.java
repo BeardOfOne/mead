@@ -77,13 +77,14 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
 	 */
 	public void copyData(IModel model);
 
-	/**
-	 * Removes this model from the context of the application
-	 */
-	default public void remove() {
-		clearSignalListeners();
+	@Override default public void remove() {
+	    IDestructor.super.remove();
+	    
+	    // Clear the signals associated to this model
+	    clearSignalListeners();
+		
+	    // Remove this model from the model factory
 		AbstractFactory.getFactory(ModelFactory.class).remove(this);
-		flush();
 	}
 
 	@Override default Map<String, SignalListenerContainer> getSignalListeners() {

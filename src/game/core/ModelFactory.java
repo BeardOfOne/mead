@@ -58,7 +58,7 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
 				resource.refresh();
 				
 				// Flush the contents of what was in the cache
-				cachedResource.flush();	
+				cachedResource.clear();	
 				
 				// Remove the cache entry if there are no more elements left
 				if(cachedResources.isEmpty()) {

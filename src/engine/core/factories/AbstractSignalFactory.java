@@ -259,7 +259,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
 		return !_privateSignals.isEmpty() || !_cache.isEmpty();
 	}
 	
-	@Override public boolean flush() {
+	@Override public boolean clear() {
 		_privateSignals.clear();
 		_publicSignals.clear();
 		_cache.clear();

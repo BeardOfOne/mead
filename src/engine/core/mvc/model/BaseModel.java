@@ -294,7 +294,7 @@ public abstract class BaseModel implements IModel
 		return _modelProperties;
 	}
 
-	@Override public boolean flush() {
+	@Override public boolean clear() {
 		_listeners.clear();
 		return true;
 	}

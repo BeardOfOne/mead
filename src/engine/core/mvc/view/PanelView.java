@@ -76,7 +76,7 @@ public abstract class PanelView extends JPanel implements IView, IRenderer {
 	
 	@Override public void removeNotify() {
 		super.removeNotify();
-		flush();
+		clear();
 	}
 	
 	@Override public void render(IRenderable renderable, Graphics context) {
