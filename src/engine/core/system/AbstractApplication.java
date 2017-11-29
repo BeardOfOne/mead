@@ -61,7 +61,6 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 	 * Constructs a new instance of this class type
 	 */
     protected AbstractApplication() {
-    	// Set the menu of the application
         setJMenuBar(new JMenuBar());
     }
     
@@ -80,11 +79,18 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 			    getJMenuBar().repaint();
 		    }
 		});
+				
+        addWindowListener(new WindowAdapter() {
+			@Override public void windowClosing(WindowEvent windowEvent) {
+				// Exit the game and Dispose the window
+			 	_instance.dispose();
+			};		
+		});        
 		
 		addWindowListener(new WindowAdapter() {
 			@Override public void windowClosed(WindowEvent event) {
-				Tracelog.log(Level.INFO, false, "Engine shutting down");
-				onEngineShutdown();
+				Tracelog.log(Level.INFO, false, "Powering down engine, and shutting off the application.");
+				Tracelog.close();
 				System.exit(0);
 			}
 		});
@@ -103,13 +109,6 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     }
     
     /**
-     * Performs a shutdown of the application, closing all necessary components and sub-components in the process
-     */
-    public static void shutdown() {
-	 	_instance.dispose();
-    }
-    
-    /**
      * Initializes the singleton instance
      * 
      * @param classType The specified class type to construct
@@ -118,7 +117,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * 
      * @throws Exception If something went wrong, please note that this calls the default constructor of your class type
      * 
-     * @return The application
+     * @return The application instance
      */
     protected static <T extends AbstractApplication> AbstractApplication initialize(Class<T> classType, boolean isDebug) throws Exception {
 	    	
@@ -135,21 +134,20 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     		_instance.onBeforeEngineDataInitialized();  
     		
 	    	// Load the window listeners of the application
-    		Tracelog.log(Level.INFO, false, "--Engine Window Listeners Initializing--");
+    		Tracelog.log(Level.INFO, false, "Initializing Engine Listeners");
     		_instance.initializeWindowListeners();
-    		Tracelog.log(Level.INFO, false, "--Engine Window Listeners Initialization Completed--");
+    		Tracelog.log(Level.INFO, false, "Initializing Engine Listeners - Completed");
     		
     		// Load any engine data
-    		Tracelog.log(Level.INFO, false, "--Engine Data Initializing--");
+    		Tracelog.log(Level.INFO, false, "Initializing Engine Data");
     		if(!EngineProperties.instance().hasDataValues()) {
     			Tracelog.log(Level.WARNING, false, "Cannot load the data files, no data values specified");
     		}
     		else {
     			_instance.loadData();
     		}
-    		Tracelog.log(Level.INFO, false, "--Engine Data Initialization Completed--");	    		
-    		Tracelog.log(Level.INFO, false, "--Engine Bootup Finished--");
-    		Tracelog.log(Level.INFO, false, "ENGINE STARTUP TIME: " + ((System.nanoTime() - startTime) / 1000000) + "ms");
+    		Tracelog.log(Level.INFO, false, "Initializing Engine Data - Completed");
+    		Tracelog.log(Level.INFO, false, "Engine Initialization Completed - " + ((System.nanoTime() - startTime) / 1000000) + "ms");
     	}
 	
     	return _instance;
@@ -173,15 +171,8 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 			AbstractFactory.getFactory(AbstractDataFactory.class).loadData();			
 		} 
 		catch (Exception exception) {
-			exception.printStackTrace();
+			Tracelog.log(Level.SEVERE, false, exception);
 		}
-    }
-
-    /**
-     * Called when the engine is being shut down
-     */
-    private void onEngineShutdown() {
-    	Tracelog.close();
     }
     
     /**
