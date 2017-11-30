@@ -115,42 +115,47 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * @param isDebug The debug state of the application
      * @param <T> AbstractApplication type
      * 
-     * @throws Exception If something went wrong, please note that this calls the default constructor of your class type
-     * 
      * @return The application instance
      */
-    protected static <T extends AbstractApplication> AbstractApplication initialize(Class<T> classType, boolean isDebug) throws Exception {
+    protected static <T extends AbstractApplication> AbstractApplication initialize(Class<T> classType, boolean isDebug) {
 	    	
 		if(_instance == null) {
 
 			// Get the start time
 			long startTime = System.nanoTime();
 						
-			// Create the new instance
-    		_instance = classType.getConstructor().newInstance();
-    		_instance._isDebug = isDebug;
-
-    		// This is what users can hook onto before the data is actually loaded up
-    		_instance.onBeforeEngineDataInitialized();  
-    		
-	    	// Load the window listeners of the application
-    		Tracelog.log(Level.INFO, false, "Initializing Engine Listeners");
-    		_instance.initializeWindowListeners();
-    		Tracelog.log(Level.INFO, false, "Initializing Engine Listeners - Completed");
-    		
-    		// Load any engine data
-    		Tracelog.log(Level.INFO, false, "Initializing Engine Data");
-    		if(!EngineProperties.instance().hasDataValues()) {
-    			Tracelog.log(Level.WARNING, false, "Cannot load the data files, no data values specified");
-    		}
-    		else {
-    			_instance.loadData();
-    		}
-    		Tracelog.log(Level.INFO, false, "Initializing Engine Data - Completed");
-    		Tracelog.log(Level.INFO, false, "Engine Initialization Completed - " + ((System.nanoTime() - startTime) / 1000000) + "ms");
-    	}
+			try {
+			    // Create the new instance
+        		    _instance = classType.getConstructor().newInstance();
+			}
+			catch(Exception exception) {
+			    Tracelog.log(Level.SEVERE, false, exception);
+			    return null;
+			}
+        		
+        		_instance._isDebug = isDebug;
+    
+        		// This is what users can hook onto before the data is actually loaded up
+        		_instance.onBeforeEngineDataInitialized();  
+        		
+        		// Load the window listeners of the application
+        		Tracelog.log(Level.INFO, false, "Initializing Engine Listeners");
+        		_instance.initializeWindowListeners();
+        		Tracelog.log(Level.INFO, false, "Initializing Engine Listeners - Completed");
+        		
+        		// Load any engine data
+        		Tracelog.log(Level.INFO, false, "Initializing Engine Data");
+        		if(!EngineProperties.instance().hasDataValues()) {
+        			Tracelog.log(Level.WARNING, false, "Cannot load the data files, no data values specified");
+        		}
+        		else {
+        			_instance.loadData();
+        		}
+        		Tracelog.log(Level.INFO, false, "Initializing Engine Data - Completed");
+        		Tracelog.log(Level.INFO, false, "Engine Initialization Completed - " + ((System.nanoTime() - startTime) / 1000000) + "ms");
+		}
 	
-    	return _instance;
+    	    return _instance;
     }
     
     /**
@@ -167,7 +172,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * abstract data factory
      */
     private void loadData() {
-    	try {
+        try {
 			AbstractFactory.getFactory(AbstractDataFactory.class).loadData();			
 		} 
 		catch (Exception exception) {
