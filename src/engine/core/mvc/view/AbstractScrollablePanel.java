@@ -38,14 +38,14 @@ import javax.swing.SwingConstants;
  * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
  *
  */
-public class ScrollablePanel extends PanelView implements Scrollable, MouseMotionListener {
+public abstract class AbstractScrollablePanel extends PanelView implements Scrollable, MouseMotionListener {
 
     private int _unitIncrement = 20;
 
     /**
      * Constructs a new instance of this class type
      */
-    public ScrollablePanel() {
+    public AbstractScrollablePanel() {
         setOpaque(true);
         setAutoscrolls(true);
         addMouseMotionListener(this);

@@ -57,32 +57,24 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 	 */
 	private boolean _isDebug;
 	
-	/**
-	 * Constructs a new instance of this class type
-	 */
-    protected AbstractApplication() {
-        setJMenuBar(new JMenuBar());
-    }
-    
     /**
      * Sets the window listeners for the application
      */
-    private void initializeWindowListeners() {
-		addComponentListener(new ComponentAdapter() {
-		    @Override public void componentHidden(ComponentEvent event) {
-		        setJMenuBar(null);
-		    }
-		    
+    protected void onInitializeWindow() {
+
+        JMenuBar menu = new JMenuBar();
+        setJMenuBar(menu);
+        menu.revalidate();
+        menu.repaint();
+        
+        addComponentListener(new ComponentAdapter() {
 		    @Override public void componentShown(ComponentEvent event) {
-		        onApplicationShown();
-		    	getJMenuBar().revalidate();
-			    getJMenuBar().repaint();
+			    onApplicationShown();
 		    }
 		});
 				
         addWindowListener(new WindowAdapter() {
 			@Override public void windowClosing(WindowEvent windowEvent) {
-				// Exit the game and Dispose the window
 			 	_instance.dispose();
 			};		
 		});        
@@ -140,7 +132,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
         		
         		// Load the window listeners of the application
         		Tracelog.log(Level.INFO, false, "Initializing Engine Listeners");
-        		_instance.initializeWindowListeners();
+        		_instance.onInitializeWindow();
         		Tracelog.log(Level.INFO, false, "Initializing Engine Listeners - Completed");
         		
         		// Load any engine data
@@ -181,7 +173,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     }
     
     /**
-     * Sets the engine default values for the game
+     * Called before the data has been initialized and loaded into the game engine components
      */
     protected abstract void onBeforeEngineDataInitialized();
     

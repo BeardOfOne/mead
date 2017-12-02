@@ -55,21 +55,13 @@ public interface IView extends IDestructor, ISignalListener {
 		/**
 		 * Indicates if the view should be redrawn
 		 */
-		private boolean _shouldRedraw = false;
+		private boolean _shouldRedraw;
 		
-		/**
-		 * Flag indicating if the view has performed a render operation
-		 * Note: For this to be properly set it is imperative that the programmer
-		 * call the super of the render() method or this flag will not be properly registered
-		 */
-		private boolean _hasRendered = false;
-
 		/**
 		 * Constructs a new view properties object in charge of holding
 		 * information about the view such as the controller
 		 * 
-		 * @param view A reference to the container class implementing
-		 * the view.
+		 * @param view A reference to the container class implementing the view.
 		 * 
 		 * Note: The parameter exists because from an interface there is no way
 		 * to get a reference to the outer class using Outer.this.methodName
@@ -158,22 +150,6 @@ public interface IView extends IDestructor, ISignalListener {
 		}
 		
 		/**
-		 * Flags this view as being rendered at least once
-		 */
-		protected final void flagAsRendered() {
-			_hasRendered = true;			
-		}
-		
-		/**
-		 * Gets a flag indicating if the view has been rendered at least once
-		 * 
-		 * @return If the view has been rendered
-		 */
-		public final boolean hasRendered() {
-			return _hasRendered;
-		}
-		
-		/**
 		 * Gets a flag indicating if the view should be redrawn
 		 * 
 		 * @return TRUE if the view should be redrawn
@@ -239,31 +215,13 @@ public interface IView extends IDestructor, ISignalListener {
 	}
 	
 	/**
-	 * Gets a flag indicating if the view has been rendered or not
+	 * Renders the view
 	 * 
-	 * @return If the view has been rendered
+	 * Note: The difference between render and an update, is that a render will draw most, if not all of the
+	 *       foundation elements, whereas update would update portions of the rendered view
 	 */
-	default public boolean hasRendered() {
-		return getViewProperties().hasRendered();
-	}
+	public void render();
 	
-	/**
-	 * Renders the view. This should be only called once.
-	 * 
-	 * Note: You should register to the update method to receive subsequent messages thereafter
-	 * 
-	 * Note: To handle deferred rendering on the first pass, simply override the setVisible method and 
-	 * do your pre-processing work, then call super(flag)
-	 */
-	default public void render() {
-		// If the render call has already been made then don't do it again
-		// If, however, for whatever reason the view is not visible, then 
-		// try to render it again to make it visible
-		if(!getViewProperties()._hasRendered || !getContainerClass().isVisible()) {
-			getViewProperties().flagAsRendered();
-			getContainerClass().setVisible(true);	
-		}	
-	}
 	
 	@Override default Map<String, SignalListenerContainer> getSignalListeners() {
 		return getViewProperties().getSignalListeners();
