@@ -220,7 +220,9 @@ public interface IView extends IDestructor, ISignalListener {
 	 * Note: The difference between render and an update, is that a render will draw most, if not all of the
 	 *       foundation elements, whereas update would update portions of the rendered view
 	 */
-	public void render();
+	public default void render() {
+	    getContainerClass().setVisible(true);
+	}
 	
 	
 	@Override default Map<String, SignalListenerContainer> getSignalListeners() {
