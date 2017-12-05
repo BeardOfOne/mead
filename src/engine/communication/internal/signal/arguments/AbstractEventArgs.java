@@ -21,26 +21,42 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-
 package engine.communication.internal.signal.arguments;
 
-import engine.api.IModel;
+import java.util.EventObject;
 
 /**
- * Events specific from an IModel source
+ * Base class for all event arguments
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
- * @param <T> The IModel type
  */
-public class ModelEventArgs<T extends IModel> extends SignalEventArgs<T> {
+public abstract class AbstractEventArgs<T extends Object> extends EventObject {
+
     /**
-     * Constructs a new signal type event
-     * 
-     * @param sender The sender source
-     * @param operationName The name of the operation being performed
+     * The name of the operation 
      */
-    public ModelEventArgs(T sender, String operationName) { 
-        super(sender, operationName);
+    private final String _operationName;
+
+    /**
+     * Constructs a new instance of this class type
+     */
+    public AbstractEventArgs(T sender, String operationName) {
+        super(sender);
+
+        _operationName = operationName;
+    }
+
+    /**
+     * Gets the operation name
+     * 
+     * @return The name of the operation
+     */
+    public final String getOperationName() {
+        return _operationName;
+    }
+    
+    @Override public final T getSource() {
+        return (T)super.getSource();
     }
 }

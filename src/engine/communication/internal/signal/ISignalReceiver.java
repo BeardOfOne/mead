@@ -26,7 +26,7 @@ package engine.communication.internal.signal;
 
 import java.util.EventListener;
 
-import engine.communication.internal.signal.arguments.SignalEventArgs;
+import engine.communication.internal.signal.arguments.AbstractEventArgs;
 
 /**
  * Defines the contractual interface for consuming signal events
@@ -35,7 +35,7 @@ import engine.communication.internal.signal.arguments.SignalEventArgs;
  *
  * @param <T> A type extending a signal event
  */
-public interface ISignalReceiver<T extends SignalEventArgs> extends EventListener {
+public interface ISignalReceiver<T extends AbstractEventArgs> extends EventListener {
 	
 	/**
 	 * This method is invoked when a particular signal is received. This
