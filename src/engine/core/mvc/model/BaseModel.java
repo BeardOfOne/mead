@@ -36,9 +36,9 @@ import engine.api.IModel;
 import engine.communication.internal.signal.IDataPipeline;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.ISignalReceiver;
+import engine.communication.internal.signal.arguments.AbstractEventArgs;
 import engine.communication.internal.signal.arguments.ModelEventArgs;
 import engine.communication.internal.signal.arguments.PipelinedEventArgs;
-import engine.communication.internal.signal.arguments.AbstractSignalEventArgs;
 import engine.core.mvc.common.CommonProperties;
 
 /**
@@ -76,7 +76,7 @@ public abstract class BaseModel implements IModel
     /**
      * The event to submit when performing the request to do the operation
      */
-    private transient AbstractSignalEventArgs _operationEvent;
+    private transient AbstractEventArgs _operationEvent;
 
     /**
      * Indicates if this model should suppress updates to its listeners
@@ -187,7 +187,7 @@ public abstract class BaseModel implements IModel
         // Create a new operation event to send out to listeners
         // In this case we specify a local event as not to disturb 
         // the done update functionality
-        AbstractSignalEventArgs event = new ModelEventArgs(this, MODEL_REFRESH);
+        AbstractEventArgs event = new ModelEventArgs(this, MODEL_REFRESH);
 
         // Call all signal listeners with the specified event (this takes operation name into account)
         // and then it will end up calling update after the fact
@@ -265,14 +265,14 @@ public abstract class BaseModel implements IModel
     }
 
     @Override public void registerSignalListeners() {
-        addSignalListener(ISignalListener.EVENT_REGISTER, new ISignalReceiver<AbstractSignalEventArgs>() {
-            @Override public void signalReceived(AbstractSignalEventArgs event) {
+        addSignalListener(ISignalListener.EVENT_REGISTER, new ISignalReceiver<AbstractEventArgs>() {
+            @Override public void signalReceived(AbstractEventArgs event) {
                 ISignalListener listener = (ISignalListener) event.getSource();
                 addListener(listener);
             }
         });
-        addSignalListener(ISignalListener.EVENT_UNREGISTER, new ISignalReceiver<AbstractSignalEventArgs>() {
-            @Override public void signalReceived(AbstractSignalEventArgs event) {
+        addSignalListener(ISignalListener.EVENT_UNREGISTER, new ISignalReceiver<AbstractEventArgs>() {
+            @Override public void signalReceived(AbstractEventArgs event) {
                 ISignalListener listener = (ISignalListener) event.getSource();
                 removeListener(listener);
             }

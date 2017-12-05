@@ -33,7 +33,7 @@ import engine.api.IView;
  *
  * @param <T> The IView type
  */
-public final class ViewEventArgs<T extends IView> extends AbstractSignalEventArgs<T> {
+public final class ViewEventArgs<T extends IView> extends AbstractEventArgs<T> {
     /**
      * Constructs a new signal type event
      * 
