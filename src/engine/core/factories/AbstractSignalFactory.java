@@ -33,7 +33,7 @@ import java.util.Queue;
 import java.util.logging.Level;
 
 import engine.communication.internal.signal.ISignalListener;
-import engine.communication.internal.signal.arguments.SignalEventArgs;
+import engine.communication.internal.signal.arguments.AbstractEventArgs;
 import engine.utils.logging.Tracelog;
 
 /**
@@ -241,7 +241,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
      * @param <V> A type extending The class SignalEvent
      * 
      */
-    public final <U extends T, V extends SignalEventArgs> void multicastSignalListeners(Class<U> signalClass, V signalEvent) {
+    public final <U extends T, V extends AbstractEventArgs> void multicastSignalListeners(Class<U> signalClass, V signalEvent) {
         List<T> resources = _privateSignals.get(signalClass);
         if(resources != null) {
             Object source = signalEvent.getSource();

@@ -32,7 +32,7 @@ import java.util.List;
 import javax.swing.JPanel;
 
 import engine.api.IView;
-import engine.communication.internal.signal.arguments.SignalEventArgs;
+import engine.communication.internal.signal.arguments.AbstractEventArgs;
 import engine.core.graphics.IRenderable;
 import engine.core.graphics.IRenderer;
 
@@ -98,7 +98,7 @@ public abstract class PanelView extends JPanel implements IView, IRenderer {
 		renderContent(graphics);
 	}
 
-	@Override public void update(SignalEventArgs signalEvent) {
+	@Override public void update(AbstractEventArgs event) {
 		
 		// If the view is set to be redrawn then do not clear the cached render contents
 		if(!getViewProperties().shouldRedraw()) {

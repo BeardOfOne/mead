@@ -27,7 +27,7 @@ package engine.communication.internal.signal;
 import java.util.Map;
 import java.util.logging.Level;
 
-import engine.communication.internal.signal.arguments.SignalEventArgs;
+import engine.communication.internal.signal.arguments.AbstractEventArgs;
 import engine.utils.logging.Tracelog;
 
 /**
@@ -57,7 +57,7 @@ public interface ISignalListener {
 	 * @param signalEvent signalEvent An event that holds information about the action being performed
 	 * 
 	 */
-	default public void sendSignalEvent(SignalEventArgs signalEvent) {
+	default public void sendSignalEvent(AbstractEventArgs signalEvent) {
 		
 		// Get the list of signal listeners available
 		Map<String, SignalListenerContainer> operations = getSignalListeners();
@@ -200,7 +200,7 @@ public interface ISignalListener {
 	 * 
 	 * @param signalEvent An event that holds information about the action being performed
 	 */
-	default public void update(SignalEventArgs signalEvent) {
+	default public void update(AbstractEventArgs signalEvent) {
 	    // INFO:::Putting something here as default could have dire consequences, make sure to test like crazy beforehand
 	}
 }
