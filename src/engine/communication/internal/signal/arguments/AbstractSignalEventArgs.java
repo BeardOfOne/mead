@@ -32,14 +32,14 @@ import engine.communication.internal.signal.ISignalListener;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public class SignalEventArgs<T extends ISignalListener> extends AbstractEventArgs {   
+public abstract class AbstractSignalEventArgs<T extends ISignalListener> extends AbstractEventArgs {   
     /**
      * Constructs a new instance of this class type
      *
      * @param sender The sender source
      * @param operationName The name of the operation being performed
      */
-    public SignalEventArgs(T sender, String operationName) {
+    public AbstractSignalEventArgs(T sender, String operationName) {
         super(sender, operationName);
     }
 }

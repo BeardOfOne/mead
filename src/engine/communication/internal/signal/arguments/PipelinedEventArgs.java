@@ -32,7 +32,7 @@ import engine.communication.internal.signal.IDataPipeline;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public final class PipelinedEventArgs extends SignalEventArgs {
+public final class PipelinedEventArgs extends AbstractSignalEventArgs {
     /**
      * Constructs a new signal type event
      * 
