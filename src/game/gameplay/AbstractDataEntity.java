@@ -41,7 +41,7 @@ import game.core.DataFactory;
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
-public abstract class AbstractEntity<T extends IData> extends BaseModel implements IRenderable {
+public abstract class AbstractDataEntity<T extends IData> extends BaseModel implements IRenderable {
 	
 	/**
 	 * The data associated to the initially specified active data
@@ -63,7 +63,7 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 	 * 
 	 * @param layerName The name of the layer
 	 */
-	protected AbstractEntity(String layer) {
+	protected AbstractDataEntity(String layer) {
 		// Get the list of data associated to active data specified. This is
 		// used so that the abstract entity has a reference to the layer data
 		// for switching purposes
