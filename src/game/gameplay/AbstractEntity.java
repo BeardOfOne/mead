@@ -30,11 +30,11 @@ import java.util.List;
 import java.util.logging.Level;
 
 import engine.api.IData;
-import engine.core.factories.AbstractDataFactory;
 import engine.core.factories.AbstractFactory;
 import engine.core.graphics.IRenderable;
 import engine.core.mvc.model.BaseModel;
 import engine.utils.logging.Tracelog;
+import game.core.DataFactory;
 
 /**
  * Top-most class for dealing with data as an entity within the game play framework
@@ -67,7 +67,7 @@ public abstract class AbstractEntity<T extends IData> extends BaseModel implemen
 		// Get the list of data associated to active data specified. This is
 		// used so that the abstract entity has a reference to the layer data
 		// for switching purposes
-		_layerData.addAll(AbstractFactory.getFactory(AbstractDataFactory.class).getByLayer(layer));
+		_layerData.addAll(AbstractFactory.getFactory(DataFactory.class).getByLayer(layer));
 		
 		_layer = layer;
 	}
