@@ -1,26 +1,26 @@
 /**
-* Daniel Ricci <thedanny09@gmail.com>
-*
-* Permission is hereby granted, free of charge, to any person
-* obtaining a copy of this software and associated documentation
-* files (the "Software"), to deal in the Software without restriction,
-* including without limitation the rights to use, copy, modify, merge,
-* publish, distribute, sublicense, and/or sell copies of the Software,
-* and to permit persons to whom the Software is furnished to do so, subject
-* to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-* THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-* IN THE SOFTWARE.
-*/
+ * Daniel Ricci <thedanny09@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge,
+ * publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ */
 
 package game.gameplay;
 
@@ -32,7 +32,6 @@ import java.util.logging.Level;
 import engine.api.IData;
 import engine.core.factories.AbstractFactory;
 import engine.core.graphics.IRenderable;
-import engine.core.mvc.model.BaseModel;
 import engine.utils.logging.Tracelog;
 import game.core.DataFactory;
 
@@ -41,78 +40,77 @@ import game.core.DataFactory;
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
-public abstract class AbstractDataEntity<T extends IData> extends BaseModel implements IRenderable {
-	
-	/**
-	 * The data associated to the initially specified active data
-	 */
-	private final List<T> _layerData = new ArrayList();
-	
-	/**
-	 * The layer name associated to this entity
-	 */
-	private final String _layer;
-	
-	/**
-	 * The data associated to the data entity
-	 */
-	private T _activeData;
-	
-	/**
-	 * Constructs a new instance of this class type
-	 * 
-	 * @param layerName The name of the layer
-	 */
-	protected AbstractDataEntity(String layer) {
-		// Get the list of data associated to active data specified. This is
-		// used so that the abstract entity has a reference to the layer data
-		// for switching purposes
-		_layerData.addAll(AbstractFactory.getFactory(DataFactory.class).getByLayer(layer));
-		
-		_layer = layer;
-	}
-	
-	/**
-	 * Gets the layer name associated to this entity
-	 * 
-	 * @return The layer name
-	 */
-	protected final String getLayerName() {
-	    return _layer;
-	}
-	
-	/**
-	 * Gets the names of the data held by this entity, used for lookup purposes
-	 * 
-	 * @return The list of data names
-	 */
-	protected final List<String> getDataNames() {
-		List<String> names = new ArrayList();
-		for(T data : _layerData) {
-			names.add(data.getName());
-		}
-		
-		return names;
-	}
-	
-	/**
-	 * Sets the currently active data element of this entity
-	 * 
-	 * @param dataName The data name, one that would be retrieved if calling getDataNames for example
-	 */
-	protected final void setActiveData(String dataName) {
-		if(dataName != null) {
-			for(T data : _layerData) {
-				if(data.getName().equalsIgnoreCase(dataName)) {
-					Tracelog.log(Level.INFO, false, "Active data being set to " + dataName);
-					_activeData = data;
-					break;
-				}
-			}
-		}
-	}
-	
-	@Override public Image getRenderableContent() {
-		return _activeData != null ? _activeData.getImageData() : null;
-	}
+public abstract class AbstractDataEntity<T extends IData> implements IRenderable {
+
+    /**
+     * The data associated to the initially specified active data
+     */
+    private final List<T> _data = new ArrayList();
+
+    /**
+     * The layer name associated to this entity
+     */
+    private final String _layer;
+
+    /**
+     * The data associated to the data entity
+     */
+    private T _activeData;
+
+    /**
+     * Constructs a new instance of this class type
+     * 
+     * @param layerName The name of the layer
+     */
+    public AbstractDataEntity(String layer) {
+        // Get the list of data associated to active data specified. This is
+        // used so that the abstract entity has a reference to the layer data
+        // for switching purposes
+        _data.addAll(AbstractFactory.getFactory(DataFactory.class).getByLayer(layer));
+        _layer = layer;
+    }
+
+    /**
+     * Gets the layer name associated to this entity
+     * 
+     * @return The layer name
+     */
+    protected final String getLayerName() {
+        return _layer;
+    }
+
+    /**
+     * Gets the names of the data held by this entity, used for lookup purposes
+     * 
+     * @return The list of data names
+     */
+    protected final List<String> getDataNames() {
+        List<String> names = new ArrayList();
+        for(T data : _data) {
+            names.add(data.getName());
+        }
+
+        return names;
+    }
+
+    /**
+     * Sets the currently active data element of this entity
+     * 
+     * @param dataName The data name, one that would be retrieved if calling getDataNames for example
+     */
+    protected final void setActiveData(String dataName) {
+        if(dataName != null) {
+            for(T data : _data) {
+                if(data.getName().equalsIgnoreCase(dataName)) {
+                    Tracelog.log(Level.INFO, false, "Active data being set to " + dataName);
+                    _activeData = data;
+                    break;
+                }
+            }
+        }
+    }
+
+    @Override public Image getRenderableContent() {
+        return _activeData != null ? _activeData.getImageData() : null;
+    }
 }

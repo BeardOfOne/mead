@@ -103,7 +103,7 @@ public class DataFactory<T extends IData> extends AbstractFactory {
     public List<T> getByLayer(String layer) {
 
         // Get the list of data
-        List<T> data = _data.get(layer);
+        List<T> data = _data.get(layer.toLowerCase());
 
         // If there is a valid entry then return a new list 
         // of its results

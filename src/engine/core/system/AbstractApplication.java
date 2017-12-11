@@ -130,11 +130,6 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
             // This is what users can hook onto before the data is actually loaded up
             _instance.onBeforeEngineDataInitialized();  
 
-            // Load the window listeners of the application
-            Tracelog.log(Level.INFO, false, "Initializing Engine Listeners");
-            _instance.onInitializeWindow();
-            Tracelog.log(Level.INFO, false, "Initializing Engine Listeners - Completed");
-
             // Load any engine data
             Tracelog.log(Level.INFO, false, "Initializing Engine Data");
             if(!EngineProperties.instance().hasDataValues()) {
@@ -143,6 +138,13 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
             else {
                 _instance.loadData();
             }
+            
+            // Load the window listeners of the application
+            Tracelog.log(Level.INFO, false, "Initializing Engine Listeners");
+            _instance.onInitializeWindow();
+            Tracelog.log(Level.INFO, false, "Initializing Engine Listeners - Completed");
+
+
             Tracelog.log(Level.INFO, false, "Initializing Engine Data - Completed");
             Tracelog.log(Level.INFO, false, "Engine Initialization Completed - " + ((System.nanoTime() - startTime) / 1000000) + "ms");
         }
