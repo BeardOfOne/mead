@@ -40,72 +40,42 @@ import game.core.DataFactory;
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
-public abstract class AbstractDataEntity<T extends IData> implements IRenderable {
+public abstract class AbstractDataEntity implements IRenderable {
 
     /**
      * The data associated to the initially specified active data
      */
-    private final List<T> _data = new ArrayList();
+    private final List<IData> _data = new ArrayList();
 
     /**
-     * The layer name associated to this entity
+     * The active data that is associated to this entity
      */
-    private final String _layer;
-
-    /**
-     * The data associated to the data entity
-     */
-    private T _activeData;
-
-    /**
-     * Constructs a new instance of this class type
-     * 
-     * @param layerName The name of the layer
-     */
-    public AbstractDataEntity(String layer) {
-        // Get the list of data associated to active data specified. This is
-        // used so that the abstract entity has a reference to the layer data
-        // for switching purposes
-        _data.addAll(AbstractFactory.getFactory(DataFactory.class).getByLayer(layer));
-        _layer = layer;
-    }
-
-    /**
-     * Gets the layer name associated to this entity
-     * 
-     * @return The layer name
-     */
-    protected final String getLayerName() {
-        return _layer;
-    }
-
-    /**
-     * Gets the names of the data held by this entity, used for lookup purposes
-     * 
-     * @return The list of data names
-     */
-    protected final List<String> getDataNames() {
-        List<String> names = new ArrayList();
-        for(T data : _data) {
-            names.add(data.getName());
-        }
-
-        return names;
-    }
+    private IData _activeData;
 
     /**
      * Sets the currently active data element of this entity
      * 
      * @param dataName The data name, one that would be retrieved if calling getDataNames for example
      */
-    protected final void setActiveData(String dataName) {
-        if(dataName != null) {
-            for(T data : _data) {
-                if(data.getName().equalsIgnoreCase(dataName)) {
-                    Tracelog.log(Level.INFO, false, "Active data being set to " + dataName);
-                    _activeData = data;
-                    break;
-                }
+    public final <T extends Enum<T>> void setActiveData(T dataName) {
+
+        // If no data has been loaded, lazily load the data based on the enumerator class name
+        if(_data.isEmpty()) { 
+            List<IData> data = AbstractFactory.getFactory(DataFactory.class).getByLayer(dataName.getDeclaringClass().getSimpleName().toString());
+            if(data == null || data.isEmpty()) {
+                Tracelog.log(Level.WARNING, false, "Could not instantiate the data for the specified layer");
+                return;
+            }
+
+            _data.addAll(data);
+        }
+
+        // Go through all the data and determine which data is the active data for this entity
+        for(IData data : _data) {
+            if(data.getName().equalsIgnoreCase(dataName.toString())) {
+                Tracelog.log(Level.INFO, false, "Active data being set to " + dataName);
+                _activeData = data;
+                break;
             }
         }
     }

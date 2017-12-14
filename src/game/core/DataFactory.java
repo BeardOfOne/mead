@@ -45,9 +45,8 @@ import game.data.DataBuilder;
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
- * @param <T> An {@link IData} implemented type
  */
-public class DataFactory<T extends IData> extends AbstractFactory {
+public class DataFactory extends AbstractFactory {
 
     /**
      * Holds the mappings of layer names to data resources.
@@ -56,7 +55,7 @@ public class DataFactory<T extends IData> extends AbstractFactory {
      * 
      * Note: The key should be lower case at all times for normalization reasons
      */
-    private final Map<String, List<T>> _data = new HashMap();
+    private final Map<String, List<IData>> _data = new HashMap();
 
     /**
      * Constructs a new instance of this class type
@@ -73,17 +72,17 @@ public class DataFactory<T extends IData> extends AbstractFactory {
      * 
      * @return A data resource of type {@link IData}
      */
-    public T getByName(String layer, String dataName) {
+    public IData getByName(String layer, String dataName) {
 
         // Get the list of resource associated to the class type
-        List<T> resources = getByLayer(layer);
+        List<IData> resources = getByLayer(layer);
 
         // If the resources exist
         if(resources != null) {
 
             // Go through the list of resources and try to find the
             // resource with the specified name
-            for(T resource : resources) {
+            for(IData resource : resources) {
                 if(resource.getName().equalsIgnoreCase(dataName.toLowerCase())) {
                     return resource;
                 }
@@ -100,10 +99,10 @@ public class DataFactory<T extends IData> extends AbstractFactory {
      * 
      * @return The list of {@link IData} types associated to the specified layer name
      */
-    public List<T> getByLayer(String layer) {
+    public List<IData> getByLayer(String layer) {
 
         // Get the list of data
-        List<T> data = _data.get(layer.toLowerCase());
+        List<IData> data = _data.get(layer.toLowerCase());
 
         // If there is a valid entry then return a new list 
         // of its results
@@ -147,20 +146,20 @@ public class DataFactory<T extends IData> extends AbstractFactory {
      * @param resources The list of resources
      * @param <U> IData type
      */
-    public <U extends T> void addDataResources(List<U> resources)  {
+    public void addDataResources(List<IData> resources)  {
 
         // Create a mapping of layer name to IData types
-        Map<List<String>, List<U>> mappings = resources.stream().collect(Collectors.groupingBy(U::getLayers));
+        Map<List<String>, List<IData>> mappings = resources.stream().collect(Collectors.groupingBy(IData::getLayers));
 
         // Go through each kvp and add its contents into the factory
-        for(Map.Entry<List<String>, List<U>> mapping : mappings.entrySet()) {
+        for(Map.Entry<List<String>, List<IData>> mapping : mappings.entrySet()) {
 
             // Go through the list of layers, since there can be more than one layer per entity
             for(String layer : mapping.getKey()) {
 
                 // If the entry does not exist then create a new list
                 // and insert it into the map
-                List<T> dataList = _data.get(layer);
+                List<IData> dataList = _data.get(layer);
                 if(dataList == null) {
                     dataList = new ArrayList();
                     _data.put(layer, dataList);
