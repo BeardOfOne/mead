@@ -51,6 +51,11 @@ public abstract class AbstractDataEntity implements IRenderable {
      * The active data that is associated to this entity
      */
     private IData _activeData;
+    
+    /**
+     * The active data cache associated to the active data
+     */
+    private Image _activeDataCache;
 
     /**
      * Sets the currently active data element of this entity
@@ -59,6 +64,10 @@ public abstract class AbstractDataEntity implements IRenderable {
      */
     public final <T extends Enum<T>> void setActiveData(T dataName) {
 
+        // Ensure that all the data elements have been cleared prior
+        _activeData = null;
+        _activeDataCache = null;
+        
         // If no data has been loaded, lazily load the data based on the enumerator class name
         if(_data.isEmpty()) { 
             List<IData> data = AbstractFactory.getFactory(DataFactory.class).getByLayer(dataName.getDeclaringClass().getSimpleName().toString());
@@ -81,6 +90,10 @@ public abstract class AbstractDataEntity implements IRenderable {
     }
 
     @Override public Image getRenderableContent() {
-        return _activeData != null ? _activeData.getImageData() : null;
+        if(_activeData != null && _activeDataCache == null) {
+            _activeDataCache = _activeData.getImageData();
+        }
+        
+        return _activeDataCache;
     }
 }
