@@ -1,26 +1,26 @@
 /**
-* Daniel Ricci <thedanny09@gmail.com>
-*
-* Permission is hereby granted, free of charge, to any person
-* obtaining a copy of this software and associated documentation
-* files (the "Software"), to deal in the Software without restriction,
-* including without limitation the rights to use, copy, modify, merge,
-* publish, distribute, sublicense, and/or sell copies of the Software,
-* and to permit persons to whom the Software is furnished to do so, subject
-* to the following conditions:
-*
-* The above copyright notice and this permission notice shall be included in
-* all copies or substantial portions of the Software.
-*
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
-* THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-* FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-* IN THE SOFTWARE.
-*/
+ * Daniel Ricci <thedanny09@gmail.com>
+ *
+ * Permission is hereby granted, free of charge, to any person
+ * obtaining a copy of this software and associated documentation
+ * files (the "Software"), to deal in the Software without restriction,
+ * including without limitation the rights to use, copy, modify, merge,
+ * publish, distribute, sublicense, and/or sell copies of the Software,
+ * and to permit persons to whom the Software is furnished to do so, subject
+ * to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+ * IN THE SOFTWARE.
+ */
 
 package engine.utils.globalisation;
 
@@ -44,42 +44,42 @@ import engine.utils.logging.Tracelog;
  *
  */
 public class Localization {
-	
-	/**
-	 * The singleton instance of this class type
-	 */
+
+    /**
+     * The singleton instance of this class type
+     */
     private static Localization _instance;
-    
+
     /**
      * The resources mapping list.  The key is the key column in the resources file, and the value is
      * whatever the localized string is.
      */
     private final Map<String, String> _resources = new HashMap();
-        
+
     /**
      * Constructs a new instance of this class type
      */
     private Localization() {
-	    try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(EngineProperties.instance().getProperty(Property.LOCALIZATION_PATH_CVS)))))  {
-    		// Hack to skip the first row, which is the header.  This will eventually be moved
-    		// when multi language is supported
-    		reader.readLine();
-    		
-    		// Note: Right now, the only supported language is whatever is in the second
-    		//       column of the .csv.  Eventually there will be support for more than
-    		// 		 one language
-    		String line = null;
-    		while((line = reader.readLine()) != null) {
-    			String[] data = line.split(",");
-    			_resources.put(data[0], data[1]);
-    		}
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(EngineProperties.instance().getProperty(Property.LOCALIZATION_PATH_CVS)))))  {
+            // Hack to skip the first row, which is the header.  This will eventually be moved
+            // when multi language is supported
+            reader.readLine();
+
+            // Note: Right now, the only supported language is whatever is in the second
+            //       column of the .csv.  Eventually there will be support for more than
+            // 		 one language
+            String line = null;
+            while((line = reader.readLine()) != null) {
+                String[] data = line.split(",");
+                _resources.put(data[0], data[1]);
+            }
         }
         catch(Exception exception) {
             Tracelog.log(Level.SEVERE, false, "Cannot load any localized strings.  Make sure that you are pointing to a valid resources file.");
             System.exit(1);
         }
     }
-    
+
     /**
      * Gets the singleton instance reference of this class type
      * 
@@ -91,10 +91,10 @@ public class Localization {
         }
         return _instance;        
     }
-    
+
     /**
-	 * Gets the localized data of the specified key
-	 *  
+     * Gets the localized data of the specified key
+     *  
      * Note: This will toString() the provided enum.
      * 
      * @param key The key to use for lookup
@@ -102,9 +102,9 @@ public class Localization {
      * @return The localized string
      */
     public String getLocalizedString(Enum key) {
-    	return getLocalizedString(key.toString());
+        return getLocalizedString(key.toString());
     }
-    
+
     /**
      * Gets the localized string of the provided key
      * 
@@ -112,46 +112,46 @@ public class Localization {
      * 
      * @return The localized string
      */
-	public String getLocalizedString(String key) {
-		String result = _resources.get(key);
-		if(result == null) {
-			result = "<!__PLACEHOLDER_TEXT__!>";
-		}
-		return result;
-	}
-	
-	/**
-	 * Gets the localized data of the specified key
-	 * 
-	 * Note: This will toString() the provided enum.
-	 * 
-	 * @param value The key to use for lookup.
-	 * 
-	 * @return The image of the specified key
-	 */
-	public Image getLocalizedData(Enum key) {
-		return getLocalizedData(key.toString());
-	}
+    public String getLocalizedString(String key) {
+        String result = _resources.get(key);
+        if(result == null) {
+            result = "<!__PLACEHOLDER_TEXT__!>";
+        }
+        return result;
+    }
 
-	/**
-	 * Gets the localized data of the specified key
-	 * 
-	 * Note: This will toString() the provided enum.
-	 * 
-	 * @param value The key to use for lookup.
-	 * 
-	 * @return The image of the specified key	 
-	 */
-	public Image getLocalizedData(String key) {
-	    
-	    Image image = null;
-	    try {
-	        image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(getLocalizedString(key)));
-	    }
-	    catch(Exception exception) {
-	        Tracelog.log(Level.SEVERE, false, exception);
-	    }
-	    
-	    return image;
-	}
+    /**
+     * Gets the localized data of the specified key
+     * 
+     * Note: This will toString() the provided enum.
+     * 
+     * @param value The key to use for lookup.
+     * 
+     * @return The image of the specified key
+     */
+    public Image getLocalizedData(Enum key) {
+        return getLocalizedData(key.toString());
+    }
+
+    /**
+     * Gets the localized data of the specified key
+     * 
+     * Note: This will toString() the provided enum.
+     * 
+     * @param value The key to use for lookup.
+     * 
+     * @return The image of the specified key	 
+     */
+    public Image getLocalizedData(String key) {
+
+        Image image = null;
+        try {
+            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream(getLocalizedString(key)));
+        }
+        catch(Exception exception) {
+            Tracelog.log(Level.SEVERE, false, exception);
+        }
+
+        return image;
+    }
 }

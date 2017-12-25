@@ -24,6 +24,7 @@
 
 package engine.core.mvc.view;
 
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -77,7 +78,20 @@ public abstract class PanelView extends JPanel implements IView, IRenderer {
             }
         }
     }
-
+    
+    /**
+     * Helper method for rendering the contents of a panel
+     *
+     * @param panel The panel to render
+     */
+    protected final void render(JPanel panel) {
+        for(Component component : panel.getComponents()) {
+            if(component instanceof IView) {
+                ((IView) component).render();
+            }
+        }
+    }
+    
     @Override public void removeNotify() {
         super.removeNotify();
         clear();
