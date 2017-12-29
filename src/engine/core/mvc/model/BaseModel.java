@@ -174,7 +174,8 @@ public abstract class BaseModel implements IModel
     }
 
     /**
-     * Refreshes this tile model, effectively doing a doneUpdate 
+     * Refreshes this tile model, effectively doing a doneUpdate however 
+     * a MODEL_REFRESH tag will be used as the command type 
      */
     @Override public void refresh() {
 
@@ -218,7 +219,7 @@ public abstract class BaseModel implements IModel
      * A convenience method to indicate that an update has been performed
      * and that this model should notify its receivers by issuing a signal
      */
-    protected final void doneUpdating() {
+    public final void doneUpdating() {
 
         // Do not continue with the update if there is a suppression
         // of the updates

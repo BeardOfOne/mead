@@ -62,7 +62,7 @@ public abstract class AbstractDataEntity implements IRenderable {
      * 
      * @param dataName The data name, one that would be retrieved if calling getDataNames for example
      */
-    public final <T extends Enum<T>> void setActiveData(T dataName) {
+    protected final <T extends Enum<T>> void setActiveData(T dataName) {
 
         // Ensure that all the data elements have been cleared prior
         _activeData = null;
@@ -89,6 +89,11 @@ public abstract class AbstractDataEntity implements IRenderable {
         }
     }
 
+    
+    public final boolean hasActiveData() {
+        return _activeData != null;
+    }
+    
     @Override public Image getRenderableContent() {
         if(_activeData != null && _activeDataCache == null) {
             _activeDataCache = _activeData.getImageData();
