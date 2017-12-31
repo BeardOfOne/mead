@@ -77,16 +77,11 @@ public interface ISignalListener {
 
                 // Verify if the key is the same as the operation name and that the signal is active
                 if(kvp.getKey().equalsIgnoreCase(operationName) && kvp.getValue().getIsEnabled()) {
-
-                    Tracelog.log(
-                            Level.INFO, 
-                            false,
-                            String.format("%s sends event %s to %s",
-                                    signalEvent.getSource().getClass().getCanonicalName(),
-                                    operationName,
-                                    kvp.getValue().getClass().getName()
-                                    )
-                            );
+                    Tracelog.log(Level.INFO, false, String.format("%s sends event %s to %s",
+                        signalEvent.getSource().getClass().getSimpleName(),
+                        operationName,
+                        kvp.getValue().getClass().getSimpleName()
+                    ));
 
                     // Send out a signal receive event
                     kvp.getValue().signalReceiver.signalReceived(signalEvent);
