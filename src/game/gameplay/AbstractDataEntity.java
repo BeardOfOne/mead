@@ -33,7 +33,7 @@ import engine.api.IData;
 import engine.core.factories.AbstractFactory;
 import engine.core.graphics.IRenderable;
 import engine.utils.logging.Tracelog;
-import game.core.DataFactory;
+import game.core.factories.DataFactory;
 
 /**
  * Top-most class for dealing with data as an entity within the game play framework

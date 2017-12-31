@@ -36,7 +36,7 @@ import engine.communication.external.filesystem.FileSystem;
 import engine.communication.internal.persistance.IXMLCodec.XMLCodec;
 import engine.core.factories.AbstractFactory;
 import engine.utils.logging.Tracelog;
-import game.core.DataFactory;
+import game.core.factories.DataFactory;
 
 /**
  * Data builder used for building data from the editor and

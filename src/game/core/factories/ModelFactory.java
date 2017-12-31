@@ -22,7 +22,7 @@
  * IN THE SOFTWARE.
  */
 
-package game.core;
+package game.core.factories;
 
 import java.util.List;
 import java.util.Queue;

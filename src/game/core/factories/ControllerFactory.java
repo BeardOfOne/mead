@@ -22,7 +22,7 @@
 * IN THE SOFTWARE.
 */
 
-package game.core;
+package game.core.factories;
 
 import engine.api.IController;
 import engine.core.factories.AbstractSignalFactory;

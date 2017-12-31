@@ -33,7 +33,7 @@ import engine.communication.internal.signal.SignalListenerContainer;
 import engine.core.factories.AbstractFactory;
 import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
-import game.core.ModelFactory;
+import game.core.factories.ModelFactory;
 
 /**
  * This interface describes the general contract rules of all model type implementors 

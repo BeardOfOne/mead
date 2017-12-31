@@ -36,7 +36,7 @@ import engine.core.factories.AbstractFactory;
 import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
 import engine.utils.logging.Tracelog;
-import game.core.ViewFactory;
+import game.core.factories.ViewFactory;
 
 /**
  * This contract specifies how views should operate within the framework. 

@@ -36,9 +36,9 @@ import java.util.Map;
 public final class EngineProperties {
 
 	/**
-	 * The mapping of properties to values
+	 * The mapping of local properties 
 	 */
-	private final Map<Property, String> _properties = new HashMap();
+	private final Map<Property, String> _engineProperties = new HashMap();
 
 	/**
 	 * The singleton instance of this class
@@ -105,7 +105,7 @@ public final class EngineProperties {
 	 * @param value The value associated to the property being appended
 	 */
 	public void setProperty(Property property, String value) {
-		_properties.put(property, value);
+		_engineProperties.put(property, value);
 	}
 	
 	/**
@@ -116,7 +116,7 @@ public final class EngineProperties {
 	 * @return The value associated to the specified property
 	 */
 	public String getProperty(Property property) {
-		return _properties.get(property);
+		return _engineProperties.get(property);
 	}
 
 	/**
@@ -125,6 +125,6 @@ public final class EngineProperties {
 	 * TRUE if the engine properties holds property values for the data paths, FALSE otherwise
 	 */
 	public boolean hasDataValues() {
-		return _properties.containsKey(Property.DATA_PATH_SHEET) || _properties.containsKey(Property.DATA_PATH_XML);
+		return _engineProperties.containsKey(Property.DATA_PATH_SHEET) || _engineProperties.containsKey(Property.DATA_PATH_XML);
 	}
 }

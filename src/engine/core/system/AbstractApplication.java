@@ -24,6 +24,8 @@
 
 package engine.core.system;
 
+import java.awt.AWTEvent;
+import java.awt.event.AWTEventListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
@@ -36,7 +38,7 @@ import javax.swing.JMenuBar;
 import engine.core.factories.AbstractFactory;
 import engine.core.mvc.IDestructor;
 import engine.utils.logging.Tracelog;
-import game.core.DataFactory;
+import game.core.factories.DataFactory;
 
 /**
  * This class provides the entry point for all applications to extend for their game.  
@@ -45,7 +47,7 @@ import game.core.DataFactory;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class AbstractApplication extends JFrame implements IDestructor {
+public abstract class AbstractApplication extends JFrame implements IDestructor, AWTEventListener {
 
     /**
      * The singleton instance of this class
@@ -56,37 +58,6 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * Debug state of the application
      */
     private boolean _isDebug;
-
-    /**
-     * Sets the window listeners for the application
-     */
-    protected void onInitializeWindow() {
-
-        JMenuBar menu = new JMenuBar();
-        setJMenuBar(menu);
-        menu.revalidate();
-        menu.repaint();
-
-        addComponentListener(new ComponentAdapter() {
-            @Override public void componentShown(ComponentEvent event) {
-                onApplicationShown();
-            }
-        });
-
-        addWindowListener(new WindowAdapter() {
-            @Override public void windowClosing(WindowEvent windowEvent) {
-                _instance.dispose();
-            };
-        });        
-
-        addWindowListener(new WindowAdapter() {
-            @Override public void windowClosed(WindowEvent event) {
-                Tracelog.log(Level.INFO, false, "Powering down engine, and shutting off the application.");
-                Tracelog.close();
-                System.exit(0);
-            }
-        });
-    }
 
     /**
      * Gets the singleton instance of this application
@@ -151,7 +122,8 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
 
         return _instance;
     }
-
+    
+    
     /**
      * Gets the debug state of the application
      * 
@@ -175,15 +147,58 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     }
 
     /**
-     * Called before the data has been initialized and loaded into the game engine components
-     */
-    protected abstract void onBeforeEngineDataInitialized();
-
-    /**
      * Called when the application is shown.  
      * 
      * Note: A shown application is when the application's visibility is TRUE
      */
     protected void onApplicationShown() {
     }
+    
+    /**
+     * Sets the window listeners for the application
+     */
+    protected void onInitializeWindow() {
+    
+        JMenuBar menu = new JMenuBar();
+        setJMenuBar(menu);
+        menu.revalidate();
+        menu.repaint();
+        
+        addComponentListener(new ComponentAdapter() {
+            @Override public void componentShown(ComponentEvent event) {
+                onApplicationShown();
+            }
+        });
+    
+        addWindowListener(new WindowAdapter() {
+            @Override public void windowClosing(WindowEvent windowEvent) {
+                _instance.dispose();
+            };
+        });        
+    
+        addWindowListener(new WindowAdapter() {
+            @Override public void windowClosed(WindowEvent event) {
+                Tracelog.log(Level.INFO, false, "Powering down engine, and shutting off the application.");
+                Tracelog.close();
+                System.exit(0);
+            }
+        });
+    }
+
+    @Override public void eventDispatched(AWTEvent event) {
+        switch(event.getID()) {
+        case WindowEvent.WINDOW_OPENED:
+            System.out.println("OPENING WINDOW");
+            break;
+        case WindowEvent.WINDOW_CLOSED:
+            System.out.println("CLOSING WINDOW");
+            break;
+        }
+    }
+    
+    /**
+     * Called before the data has been initialized and loaded into the game engine components
+     */
+    protected abstract void onBeforeEngineDataInitialized();
+
 }
