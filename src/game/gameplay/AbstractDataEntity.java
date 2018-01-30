@@ -62,11 +62,16 @@ public abstract class AbstractDataEntity implements IRenderable {
      * 
      * @param dataName The data name, one that would be retrieved if calling getDataNames for example
      */
-    protected final <T extends Enum<T>> void setActiveData(T dataName) {
+    protected <T extends Enum<T>> void setActiveData(T dataName) {
 
         // Ensure that all the data elements have been cleared prior
         _activeData = null;
         _activeDataCache = null;
+        
+        // Do not go any further if the data name provided is null or empty
+        if(dataName == null || dataName.toString().length() == 0) {
+            return;
+        }
         
         // If no data has been loaded, lazily load the data based on the enumerator class name
         if(_data.isEmpty()) { 
