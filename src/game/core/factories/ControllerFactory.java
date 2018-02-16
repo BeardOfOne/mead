@@ -24,6 +24,8 @@
 
 package game.core.factories;
 
+import java.util.List;
+
 import engine.api.IController;
 import engine.core.factories.AbstractSignalFactory;
 
@@ -34,4 +36,19 @@ import engine.core.factories.AbstractSignalFactory;
  *
  */
 public final class ControllerFactory extends AbstractSignalFactory<IController> {
+    @Override public boolean clear() {
+
+        // Call clear on the list of private controllers, allowing them to clean up
+        // properly before removal from the factory
+        for(List<IController> controllers : _privateSignals.values()) 
+        {
+            controllers.stream().forEach(z -> z.clear());
+        }
+
+        // Call clear on the list of public controllers, allowing them to clean up
+        // properly before removal from the factory
+        _publicSignals.stream().forEach(z -> z.clear());
+        
+        return super.clear();
+    }
 }

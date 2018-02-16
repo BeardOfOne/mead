@@ -63,7 +63,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
     /**
      * The list of all signals that have been declared and marked as public
      */
-    private final List<T> _publicSignals = new ArrayList<>();
+    protected final List<T> _publicSignals = new ArrayList<>();
 
     /**
      * Returns a flag indicating if the specified public signal class exists
@@ -260,6 +260,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
     }
 
     @Override public boolean clear() {
+        
         _privateSignals.clear();
         _publicSignals.clear();
         _cache.clear();
