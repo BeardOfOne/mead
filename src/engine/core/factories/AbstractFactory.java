@@ -44,18 +44,12 @@ public abstract class AbstractFactory implements IDestructor {
     static final List<AbstractFactory> FACTORIES = new ArrayList<>();
 
     /**
-     * Indicates if this factory persists throughout the lifetime of the application
-     */
-    // TODO Make this a method which returns a bool, no state = good state
-    protected boolean isPersistent;
-
-    /**
      * Resets the factory
      */
     public static final void reset() {
         for(int i = FACTORIES.size() - 1; i >= 0; --i) {
             AbstractFactory factory = FACTORIES.get(i);
-            if(!factory.isPersistent) {
+            if(!factory.isPersistent()) {
                 factory.clear();
                 FACTORIES.remove(i);
             }
@@ -73,7 +67,7 @@ public abstract class AbstractFactory implements IDestructor {
     public static final boolean isRunning() {
         // Go through the list of factories
         for(AbstractFactory factory : FACTORIES) {
-            if(!factory.isPersistent && factory.hasEntities()) {
+            if(!factory.isPersistent() && factory.hasEntities()) {
                 return true;
             }
         }
@@ -133,4 +127,16 @@ public abstract class AbstractFactory implements IDestructor {
      * @return TRUE if the factory has entities that are currently being used, FALSE otherwise
      */
     protected abstract boolean hasEntities();
+ 
+    /**
+     * Indicates if this factory persists throughout the lifetime of the application
+     */
+
+    /**
+     * Gets if this factory is a persistent one or not. A persistent factory is one
+     * that always exists regardless of if there are elements within it.
+     *
+     * @return TRUE if this factory is persistent, FALSE otherwise
+     */
+    protected abstract boolean isPersistent();
 }

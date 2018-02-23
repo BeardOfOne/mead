@@ -58,13 +58,6 @@ public class DataFactory extends AbstractFactory {
     private final Map<String, List<IData>> _data = new HashMap();
 
     /**
-     * Constructs a new instance of this class type
-     */
-    public DataFactory() {
-        isPersistent = true;
-    }
-
-    /**
      * Gets a data resource based on the specified layer name and the data name
      * 
      * @param layerName The name of the layer to perform the lookup on
@@ -173,5 +166,9 @@ public class DataFactory extends AbstractFactory {
 
     @Override protected boolean hasEntities() {
         return !_data.isEmpty();
+    }
+    
+    @Override protected boolean isPersistent() {
+        return true;
     }
 }

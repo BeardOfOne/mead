@@ -105,4 +105,8 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
             }
         }
     }
+    
+    @Override protected boolean isPersistent() {
+        return false;
+    }
 }

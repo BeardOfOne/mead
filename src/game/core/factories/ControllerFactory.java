@@ -51,4 +51,8 @@ public final class ControllerFactory extends AbstractSignalFactory<IController> 
         
         return super.clear();
     }
+    
+    @Override protected boolean isPersistent() {
+        return false;
+    }
 }
