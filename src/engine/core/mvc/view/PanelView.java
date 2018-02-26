@@ -25,10 +25,12 @@
 package engine.core.mvc.view;
 
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.swing.JPanel;
 
@@ -36,6 +38,7 @@ import engine.api.IView;
 import engine.communication.internal.signal.arguments.AbstractEventArgs;
 import engine.core.graphics.IRenderable;
 import engine.core.graphics.IRenderer;
+import engine.utils.logging.Tracelog;
 
 /**
  * This class represents a custom panel class that ties into the gosling MVC design pattern
@@ -44,7 +47,18 @@ import engine.core.graphics.IRenderer;
  *
  */
 public abstract class PanelView extends JPanel implements IView, IRenderer {
-
+    
+    /**
+     * The render methods the can be used within this view
+     * 
+     * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+     *
+     */
+    protected enum RenderMethod {
+        PARENT,
+        NORMAL
+    }
+    
     /**
      * The view properties of this view
      */
@@ -92,6 +106,15 @@ public abstract class PanelView extends JPanel implements IView, IRenderer {
         }
     }
     
+    /**
+     * Gets the render method used for this view
+     *
+     * @return The render method used for this view
+     */
+    protected RenderMethod getRenderMethod() {
+        return RenderMethod.NORMAL; 
+    }
+    
     @Override public void removeNotify() {
         super.removeNotify();
         clear();
@@ -129,5 +152,27 @@ public abstract class PanelView extends JPanel implements IView, IRenderer {
 
     @Override public final ViewProperties getViewProperties() {
         return _properties;
+    }
+    
+    @Override public void repaint() {
+        RenderMethod renderMethod = getRenderMethod();
+        if(renderMethod != null) {
+            switch(renderMethod) {
+            case NORMAL:
+                super.repaint();
+                break;
+            case PARENT:
+                // TODO: This is horribly inefficient, but it works much nicer than calling repaint on each individual
+                //       component. This needs to be re-thought.
+                Container parent = getParent();
+                if(parent != null) {
+                    parent.repaint();
+                }
+                break;
+            default:
+                Tracelog.log(Level.SEVERE, false, "Cannot render the specified panel, render method " + renderMethod.toString() + " not supported");
+                break;
+            }
+        }
     }
 }
