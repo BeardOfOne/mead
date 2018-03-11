@@ -32,7 +32,7 @@ import engine.utils.logging.Tracelog;
 
 /**
  * This interface defines a methodology for communicating signals between different sub-systems using
- * a signaling concept with a custom set of custom event arguments
+ * a signaling concept with a custom set of event arguments
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
@@ -78,10 +78,10 @@ public interface ISignalListener {
                 // Verify if the key is the same as the operation name and that the signal is active
                 if(kvp.getKey().equalsIgnoreCase(operationName) && kvp.getValue().getIsEnabled()) {
                     Tracelog.log(Level.INFO, false, String.format("%s sends event %s to %s",
-                        signalEvent.getSource().getClass().getSimpleName(),
-                        operationName,
-                        kvp.getValue().getClass().getSimpleName()
-                    ));
+                            signalEvent.getSource().getClass().getSimpleName(),
+                            operationName,
+                            kvp.getValue().getClass().getSimpleName()
+                            ));
 
                     // Send out a signal receive event
                     kvp.getValue().signalReceiver.signalReceived(signalEvent);
@@ -89,7 +89,7 @@ public interface ISignalListener {
                     // Stop executing
                     break;
                 }
-            }			
+            }
         }
 
         // Update the state of the receiver, this is done at the end to 'apply'
@@ -126,7 +126,7 @@ public interface ISignalListener {
                 container.setIsEnabled(true);
                 Tracelog.log(Level.INFO, false, String.format("Signal Registration: %s is now listening on signal %s", this.getClass().getCanonicalName(), signalName));
             }
-        }		
+        }
     }
 
     /**
