@@ -61,7 +61,7 @@ public final class MenuBuilder {
      * @param host The host component of this menu
      */
     private MenuBuilder(JComponent host) {
-	_host = host;
+        _host = host;
     }
 
     /**
@@ -72,10 +72,10 @@ public final class MenuBuilder {
      * @return A reference to this option builder
      */
     public MenuBuilder addBuilder(MenuBuilder builder) {
-	builder._root = _root;
-	_components.addAll(builder._components);
+        builder._root = _root;
+        _components.addAll(builder._components);
 
-	return this;
+        return this;
     }
 
     /**
@@ -86,16 +86,16 @@ public final class MenuBuilder {
      * @return A reference to the menu builder
      */
     public MenuBuilder addMenu(String text) {
-	AbstractMenuContainer component = new AbstractMenuContainer(_root == null ? _host : _root, text);
+        AbstractMenuContainer component = new AbstractMenuContainer(_root == null ? _host : _root, text);
 
-	if(_components.isEmpty() && _root == null) {
-	    _root = component.getComponent();
-	}
-	else {
-	    _components.add(component.getComponent());    
-	}
+        if(_components.isEmpty() && _root == null) {
+            _root = component.getComponent();
+        }
+        else {
+            _components.add(component.getComponent());    
+        }
 
-	return this;
+        return this;
     }
 
     /**
@@ -107,20 +107,20 @@ public final class MenuBuilder {
      * @return A reference to this builder
      */
     public <T extends AbstractMenuItem> MenuBuilder addMenuItem(Class<T> component) {
-	try {
-	    T baseComponent = component.getConstructor(JComponent.class).newInstance(_root == null ? _host : _root);
-	    if(_components.isEmpty() && _root == null) {
-		_root = baseComponent.getComponent();
-	    }
-	    else {
-		_components.add(baseComponent.getComponent());    
-	    }
-	} 
-	catch (Exception exception) {
-	    exception.printStackTrace();
-	}	
+        try {
+            T baseComponent = component.getConstructor(JComponent.class).newInstance(_root == null ? _host : _root);
+            if(_components.isEmpty() && _root == null) {
+                _root = baseComponent.getComponent();
+            }
+            else {
+                _components.add(baseComponent.getComponent());    
+            }
+        } 
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }	
 
-	return this;
+        return this;
     }
 
     /**
@@ -131,12 +131,12 @@ public final class MenuBuilder {
      * @return A reference to this option builder
      */
     public <T extends AbstractMenu> MenuBuilder addSeparator() {
-	if(_root != null) {
-	    T component = (T) _root.getClientProperty(_root);
-	    component.addSeperator();			
-	}
+        if(_root != null) {
+            T component = (T) _root.getClientProperty(_root);
+            component.addSeperator();			
+        }
 
-	return this;
+        return this;
     }
 
     /**
@@ -147,8 +147,8 @@ public final class MenuBuilder {
      * @return A reference to this builder
      */
     public MenuBuilder root(JComponent root) {
-	_root = root;
-	return this;
+        _root = root;
+        return this;
     }
 
     /**
@@ -159,16 +159,16 @@ public final class MenuBuilder {
      * @param jMenuBar The menu bar to reset
      */
     public static void reset(JMenuBar jMenuBar) {
-	for(Component component : jMenuBar.getComponents()) {
-	    if(component instanceof JMenu) {
-		JMenu menu = (JMenu)component;
-		Object obj = menu.getClientProperty(menu);
-		if(obj instanceof AbstractMenuContainer) {
-		    AbstractMenuContainer menuComponent = (AbstractMenuContainer) obj;
-		    menuComponent.reset();
-		}
-	    }
-	}
+        for(Component component : jMenuBar.getComponents()) {
+            if(component instanceof JMenu) {
+                JMenu menu = (JMenu)component;
+                Object obj = menu.getClientProperty(menu);
+                if(obj instanceof AbstractMenuContainer) {
+                    AbstractMenuContainer menuComponent = (AbstractMenuContainer) obj;
+                    menuComponent.reset();
+                }
+            }
+        }
     }
 
     /**
@@ -179,7 +179,7 @@ public final class MenuBuilder {
      * @return A reference to this builder
      */
     public static MenuBuilder start(JComponent host) {
-	return new MenuBuilder(host);
+        return new MenuBuilder(host);
     }
 
     /**
@@ -190,7 +190,7 @@ public final class MenuBuilder {
      * @return A reference to this builder
      */
     public static MenuBuilder start(MenuBuilder host) {
-	return start(host._root);
+        return start(host._root);
     }
 
     /**
@@ -203,20 +203,20 @@ public final class MenuBuilder {
      * @return The first entry found of the specified class type
      */
     public static <U extends T, T extends AbstractMenuItem> U search(JMenuBar jMenuBar, Class<U> classType) {
-	for(Component component : jMenuBar.getComponents()) {
-	    if(component instanceof JMenu) {
-		JMenu menu = (JMenu)component;
-		for(Component menuComponent : menu.getMenuComponents()) {
-		    if(menuComponent instanceof JMenuItem) {
-			Object obj = ((JMenuItem)menuComponent).getClientProperty(menuComponent);
-			if(obj.getClass() == classType) {
-			    return (U)obj;
-			}
-		    }
-		}
-	    }
-	}
+        for(Component component : jMenuBar.getComponents()) {
+            if(component instanceof JMenu) {
+                JMenu menu = (JMenu)component;
+                for(Component menuComponent : menu.getMenuComponents()) {
+                    if(menuComponent instanceof JMenuItem) {
+                        Object obj = ((JMenuItem)menuComponent).getClientProperty(menuComponent);
+                        if(obj.getClass() == classType) {
+                            return (U)obj;
+                        }
+                    }
+                }
+            }
+        }
 
-	return null;
+        return null;
     }
 }

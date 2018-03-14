@@ -24,8 +24,6 @@
 
 package engine.core.system;
 
-import java.awt.AWTEvent;
-import java.awt.event.AWTEventListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
@@ -47,7 +45,7 @@ import game.core.factories.DataFactory;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class AbstractApplication extends JFrame implements IDestructor, AWTEventListener {
+public abstract class AbstractApplication extends JFrame implements IDestructor {
 
     /**
      * The singleton instance of this class
@@ -114,7 +112,6 @@ public abstract class AbstractApplication extends JFrame implements IDestructor,
             Tracelog.log(Level.INFO, false, "Initializing Engine Listeners");
             _instance.onInitializeWindow();
             Tracelog.log(Level.INFO, false, "Initializing Engine Listeners - Completed");
-
 
             Tracelog.log(Level.INFO, false, "Initializing Engine Data - Completed");
             Tracelog.log(Level.INFO, false, "Engine Initialization Completed - " + ((System.nanoTime() - startTime) / 1000000) + "ms");
@@ -183,17 +180,6 @@ public abstract class AbstractApplication extends JFrame implements IDestructor,
                 System.exit(0);
             }
         });
-    }
-
-    @Override public void eventDispatched(AWTEvent event) {
-        switch(event.getID()) {
-        case WindowEvent.WINDOW_OPENED:
-            System.out.println("OPENING WINDOW");
-            break;
-        case WindowEvent.WINDOW_CLOSED:
-            System.out.println("CLOSING WINDOW");
-            break;
-        }
     }
     
     /**
