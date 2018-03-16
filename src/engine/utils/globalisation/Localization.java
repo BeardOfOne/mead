@@ -115,7 +115,7 @@ public class Localization {
     public String getLocalizedString(String key) {
         String result = _resources.get(key);
         if(result == null) {
-            result = "<!__PLACEHOLDER_TEXT__!>";
+            result = "<!__/////" + key.toUpperCase() + "//////!>";
         }
         return result;
     }
