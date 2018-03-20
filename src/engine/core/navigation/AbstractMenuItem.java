@@ -95,11 +95,11 @@ public abstract class AbstractMenuItem extends AbstractMenu {
         }
 
         // Associate this menu item to the specified grouping
-        group.add(this.get(AbstractButton.class));
+        group.add(this.getComponent(AbstractButton.class));
     }
 
     @Override protected final void onInitialize() {
-        super.get(JMenuItem.class).addActionListener(new AbstractAction(super.toString()) {
+        super.getComponent(JMenuItem.class).addActionListener(new AbstractAction(super.toString()) {
             @Override public void actionPerformed(ActionEvent actionEvent) {
                 // Make sure that the action is enabled before proceeding
                 if(enabled()) {

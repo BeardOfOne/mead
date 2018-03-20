@@ -69,7 +69,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
      * Returns a flag indicating if the specified public signal class exists
      *   
      * @param signalClass The class of the resource to verify
-     * 
+     *  
      * @return TRUE if the specified signal class exists, FALSE otherwise
      */
     public final <U extends T> boolean exists(Class<U> signalClass) {

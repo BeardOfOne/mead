@@ -116,7 +116,7 @@ abstract class AbstractMenu {
      * 
      * @return The specified component class
      */
-    protected final <T extends JComponent> T get(Class<T> componentClass) {
+    public <T extends JComponent> T getComponent(Class<T> componentClass) {
         return (T)_component;
     }
 
@@ -125,7 +125,7 @@ abstract class AbstractMenu {
      * 
      * @return The associated component of this option
      */
-    public final JComponent getComponent() {
+    public JComponent getComponent() {
         return _component;
     }
 
@@ -134,7 +134,7 @@ abstract class AbstractMenu {
      * 
      * @return The parent component of this option
      */
-    protected final JComponent getParentComponent() {
+    protected JComponent getParentComponent() {
         return _parent;
     }
 

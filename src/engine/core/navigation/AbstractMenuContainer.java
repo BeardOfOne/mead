@@ -57,14 +57,14 @@ class AbstractMenuContainer extends AbstractMenu {
 	 * @param mnemonic The mnemonic to set to this menu component
 	 */
 	public void setMnemonic(int mnemonic) {
-		super.get(JMenu.class).setMnemonic(mnemonic);
+		super.getComponent(JMenu.class).setMnemonic(mnemonic);
 	}
 
 	/**
 	 * Resets this menu and its sub-items to their default states
 	 */
 	public final void reset() {
-		for(Component component : super.get(JMenu.class).getMenuComponents()) {
+		for(Component component : super.getComponent(JMenu.class).getMenuComponents()) {
 			if(component instanceof JComponent) {
 				JComponent jComponent = (JComponent) component;
 				Object clientProperty = jComponent.getClientProperty(jComponent);
@@ -82,7 +82,7 @@ class AbstractMenuContainer extends AbstractMenu {
 	
 
 	@Override protected void onInitialize() {
-		super.get(JMenu.class).addMenuListener(new MenuListener() {
+		super.getComponent(JMenu.class).addMenuListener(new MenuListener() {
 			@Override public void menuSelected(MenuEvent e) {
 				JMenu menu = (JMenu)e.getSource();
 				for(Component component : menu.getMenuComponents()) {
