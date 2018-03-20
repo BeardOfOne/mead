@@ -69,6 +69,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
      * Returns a flag indicating if the specified public signal class exists
      *   
      * @param signalClass The class of the resource to verify
+     * @param <U> A type extending The class template type 
      *  
      * @return TRUE if the specified signal class exists, FALSE otherwise
      */
@@ -101,11 +102,11 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
      * Note: This will return the private resources associated to the factory
      * 
      * @param signalClass The signal class type
+     * @param <U> A type extending The class template type 
      * 
      * @return The list of private signals of the specified type
      */
-    @Deprecated
-    public final <U extends T> List<U> getAll(Class<U> signalClass) {
+    @Deprecated public final <U extends T> List<U> getAll(Class<U> signalClass) {
         List<T> signals = _privateSignals.get(signalClass);
         return signals == null ? new ArrayList() : new ArrayList(signals);
     }
@@ -117,6 +118,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
      * @param isShared If the resource should be available publicly
      * @param <U> A type extending The class template type
      * 
+     * @return A resource based on the specified type
      */
     public <U extends T> U add(U resource, boolean isShared) {
 
@@ -205,8 +207,9 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
     /**
      * Gets the number of resources
      * 
-     * @param resource The resource class type
-     * 
+     * @param classType The resource class type
+     * @param <U> A type extending The class template type 
+     *
      * @return The number of queued resources
      */
     public final <U extends T> int getQueuedResourcesCount(Class<U> classType) {

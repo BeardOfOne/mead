@@ -33,6 +33,7 @@ public class BooleanEventArgs<T extends Object> extends AbstractEventArgs<T> {
      * 
      * @param sender The sender source
      * @param operationName The name of the operation being performed
+     * @param result The resulting value
      */
     public BooleanEventArgs(T sender, String operationName, boolean result) { 
         super(sender, operationName);

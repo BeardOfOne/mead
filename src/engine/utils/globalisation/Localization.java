@@ -125,7 +125,7 @@ public class Localization {
      * 
      * Note: This will toString() the provided enum.
      * 
-     * @param value The key to use for lookup.
+     * @param key The key to use for lookup.
      * 
      * @return The image of the specified key
      */
@@ -138,7 +138,7 @@ public class Localization {
      * 
      * Note: This will toString() the provided enum.
      * 
-     * @param value The key to use for lookup.
+     * @param key The key to use for lookup.
      * 
      * @return The image of the specified key	 
      */

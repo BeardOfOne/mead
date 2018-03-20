@@ -132,6 +132,7 @@ public abstract class BaseModel implements IModel
      * Gets the specified listener based on its class type
      * 
      * @param classType The class type of the listener
+     * @param <T> A type extending The class template type
      * 
      * @return The listener associated to this class type
      */
@@ -149,7 +150,7 @@ public abstract class BaseModel implements IModel
      * Gets if the specified listener is listening in on this model for messages
      * 
      * @param listener The listener
-     * @param T ISignalListener derived type
+     * @param <T> ISignalListener derived type
      * 
      * @return TRUE if this model is sending messages to the specified listener, FALSE otherwise
      */

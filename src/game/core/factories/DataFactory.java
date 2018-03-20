@@ -60,7 +60,7 @@ public class DataFactory extends AbstractFactory {
     /**
      * Gets a data resource based on the specified layer name and the data name
      * 
-     * @param layerName The name of the layer to perform the lookup on
+     * @param layer The name of the layer to perform the lookup on
      * @param dataName The name of the resource to lookup with the specified layer
      * 
      * @return A data resource of type {@link IData}
@@ -88,7 +88,7 @@ public class DataFactory extends AbstractFactory {
     /**
      * Gets the list of resources associated to the specified layer name
      * 
-     * @param layerName The name of the layer to lookup
+     * @param layer The name of the layer to lookup
      * 
      * @return The list of {@link IData} types associated to the specified layer name
      */
@@ -137,7 +137,6 @@ public class DataFactory extends AbstractFactory {
      * consists of a mapping of layer names to {@link IData} implemented concrete types
      * 
      * @param resources The list of resources
-     * @param <U> IData type
      */
     public void addDataResources(List<IData> resources)  {
 

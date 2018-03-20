@@ -40,6 +40,9 @@ public abstract class AbstractEventArgs<T extends Object> extends EventObject {
 
     /**
      * Constructs a new instance of this class type
+     * 
+     * @param sender The sender
+     * @param operationName The name of the operation
      */
     public AbstractEventArgs(T sender, String operationName) {
         super(sender);

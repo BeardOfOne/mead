@@ -198,7 +198,8 @@ public final class MenuBuilder {
      * 
      * @param jMenuBar The JMenu bar to perform the search
      * @param classType The type of class to look for within the menu
-     * @param <T> A type which is of type AbstractMenuItem
+     * @param <U> A type which is of type AbstractMenuItem
+     * @param <T> A type extending The class template type
      * 
      * @return The first entry found of the specified class type
      */
