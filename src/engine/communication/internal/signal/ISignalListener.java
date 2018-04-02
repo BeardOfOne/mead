@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import engine.communication.internal.signal.arguments.AbstractEventArgs;
+import engine.core.system.EngineProperties;
+import engine.core.system.EngineProperties.Property;
 import engine.utils.logging.Tracelog;
 
 /**
@@ -107,7 +109,10 @@ public interface ISignalListener {
         Map<String, SignalListenerContainer> listeners = getSignalListeners();
         if(listeners != null) {
             if(!listeners.containsKey(signalName)) {
-                Tracelog.log(Level.INFO, false, String.format("Signal Registration: %s is now listening on signal %s", this.getClass().getCanonicalName(), signalName));
+                if(EngineProperties.instance().getIsPropertyInvalid(Property.SUPPRESS_SIGNAL_REGISTRATION_OUTPUT)) { 
+                    Tracelog.log(Level.INFO, false, String.format("Signal Registration: %s is now listening on signal %s", this.getClass().getCanonicalName(), signalName));
+                }
+                
                 listeners.put(signalName, new SignalListenerContainer(signalName, signalReceiver));
             }
         }
@@ -124,7 +129,9 @@ public interface ISignalListener {
             SignalListenerContainer container = listeners.get(signalName);
             if(container != null) {
                 container.setIsEnabled(true);
-                Tracelog.log(Level.INFO, false, String.format("Signal Registration: %s is now listening on signal %s", this.getClass().getCanonicalName(), signalName));
+                if(EngineProperties.instance().getIsPropertyInvalid(Property.SUPPRESS_SIGNAL_REGISTRATION_OUTPUT)) {
+                    Tracelog.log(Level.INFO, false, String.format("Signal Registration: %s is now listening on signal %s", this.getClass().getCanonicalName(), signalName));
+                }
             }
         }
     }

@@ -76,7 +76,12 @@ public final class EngineProperties {
         /**
          * If the engine logging should be omitted from the standard output stream of the console
          */
-        ENGINE_OUTPUT
+        ENGINE_OUTPUT,
+        
+        /**
+         * If the engine should supress the display signal registration
+         */
+        SUPPRESS_SIGNAL_REGISTRATION_OUTPUT
     }
 
     /**
@@ -119,6 +124,26 @@ public final class EngineProperties {
         return _engineProperties.get(property);
     }
 
+    /**
+     * Indicates if the set property is boolean valid
+     *
+     * @param property The property
+     * @return TRUE if the property toString() value is truthy, FALSE otherwise
+     */
+    public boolean getIsPropertyValid(Property property) {
+        return Boolean.parseBoolean(getProperty(property));
+    }
+
+    /**
+     * Indicates if the set property is boolean invalid
+     *
+     * @param property The property
+     * @return TRUE if the property toString() value is not truthy, FALSE otherwise
+     */
+    public boolean getIsPropertyInvalid(Property property) {
+        return !getIsPropertyValid(property);
+    }
+    
     /**
      * Gets if the engine properties has enough information to load data for the current session
      * 
