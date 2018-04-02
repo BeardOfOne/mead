@@ -24,6 +24,7 @@
 
 package engine.core.mvc.view;
 
+import java.awt.Rectangle;
 import java.awt.Window;
 
 import javax.swing.JDialog;
@@ -40,6 +41,11 @@ import engine.api.IView;
  */
 public abstract class DialogView extends JDialog implements IView {
 
+    /**
+     * Flag indicating if this dialog should always attempt to center itself to it's parent component
+     */
+    private boolean _isAutomaticDialogCentering = false;
+    
     /**
      * The dialog result state of this dialog
      */
@@ -78,6 +84,15 @@ public abstract class DialogView extends JDialog implements IView {
     }
 
     /**
+     * Method for validating that a form is valid
+     * 
+     * @return If the dialog is valid 
+     */
+    protected boolean validateDialog() {
+        return true;
+    }
+
+    /**
      * Gets the dialog result status.
      * 
      * Note: This should correspond to a JOptionPane result
@@ -97,17 +112,31 @@ public abstract class DialogView extends JDialog implements IView {
     public final void setDialogResult(int result) {
         _dialogResult = result;
     }
+    
+    /**
+     * Sets the flag indicating if this dialog should attempt to center itself to it's owner when rendered 
+     * 
+     * Note: false by default
+     *
+     * @param isAutomaticDialogCentering TRUE if this dialog should attempt to center itself to it's owner when rendered, FALSE otherwise
+     */
+    public final void setAutomaticDialogCentering(boolean isAutomaticDialogCentering) {
+        _isAutomaticDialogCentering = isAutomaticDialogCentering;
+    }
+    
+    @Override public void render() {
+        pack();
+        if(_isAutomaticDialogCentering) {
+            Rectangle ownerScreen = this.getOwner().getGraphicsConfiguration().getBounds();
+            setLocation(
+                ownerScreen.x + (ownerScreen.width - getWidth()) / 2,
+                ownerScreen.y + (ownerScreen.height - getHeight()) / 2
+            );
+        }
+        IView.super.render();
+    }
 
     @Override public final ViewProperties getViewProperties() {
         return _properties;
-    }	
-
-    /**
-     * Method for validating that a form is valid
-     * 
-     * @return If the dialog is valid 
-     */
-    protected boolean validateDialog() {
-        return true;
-    }	
+    }
 }
