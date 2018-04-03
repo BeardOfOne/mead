@@ -31,6 +31,7 @@ package engine.core.mvc;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
+@Deprecated
 public interface IDestructor {
 
     /**
@@ -39,6 +40,7 @@ public interface IDestructor {
      *   
      * @return TRUE if it was successful, FALSE if it was not 
      */
+    @Deprecated
     default public boolean clear() {
         return true;
     }
@@ -46,6 +48,7 @@ public interface IDestructor {
     /**
      * Removes the contents of the implemented type
      */
+    @Deprecated
     default public void remove() {
     }
 }
