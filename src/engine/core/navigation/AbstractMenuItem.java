@@ -66,7 +66,13 @@ public abstract class AbstractMenuItem extends AbstractMenu {
     protected String getGroupName() {
         return null;
     }
-
+    
+    /**
+     * Loads the menu item
+     */
+    protected void onLoad() {
+        
+    }
 
     /**
      * Initializes the grouping of the menu item if any

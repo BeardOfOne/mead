@@ -76,10 +76,8 @@ class AbstractMenuContainer extends AbstractMenu {
         }
     }
 
-
     @Override public final void onExecute(ActionEvent actionEvent) {
     }
-
 
     @Override protected void onInitialize() {
         super.getComponent(JMenu.class).addMenuListener(new MenuListener() {
@@ -91,6 +89,7 @@ class AbstractMenuContainer extends AbstractMenu {
                         Object clientProperty = jComponent.getClientProperty(jComponent);
                         if(clientProperty instanceof AbstractMenuItem) {
                             AbstractMenuItem itemComponent = (AbstractMenuItem) jComponent.getClientProperty(jComponent);
+                            itemComponent.onLoad();
                             jComponent.setEnabled(itemComponent.enabled());
                             jComponent.setVisible(itemComponent.visibility());    
                         }
@@ -100,7 +99,7 @@ class AbstractMenuContainer extends AbstractMenu {
             @Override public void menuCanceled(MenuEvent e) {
             }
             @Override public void menuDeselected(MenuEvent e) {
-            }			
+            }
         });
     }
 
