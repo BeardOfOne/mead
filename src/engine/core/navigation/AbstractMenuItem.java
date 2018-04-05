@@ -68,11 +68,11 @@ public abstract class AbstractMenuItem extends AbstractMenu {
     }
     
     /**
-     * Loads the menu item
+     * Defines a method for handling an execution of the option
+     * 
+     * @param actionEvent The action event associated to the call of this method
      */
-    protected void onLoad() {
-        
-    }
+    protected abstract void onExecute(ActionEvent actionEvent);
 
     /**
      * Initializes the grouping of the menu item if any

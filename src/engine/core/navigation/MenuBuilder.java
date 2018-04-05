@@ -26,11 +26,14 @@ package engine.core.navigation;
 
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+
+import engine.utils.logging.Tracelog;
 
 /**
  * A builder class for easily creating UI menus
@@ -86,13 +89,38 @@ public final class MenuBuilder {
      * @return A reference to the menu builder
      */
     public MenuBuilder addMenu(String text) {
-        AbstractMenuContainer component = new AbstractMenuContainer(_root == null ? _host : _root, text);
+        AbstractMenuContainer component = new AbstractMenuContainer(text, _root == null ? _host : _root);
 
         if(_components.isEmpty() && _root == null) {
             _root = component.getComponent();
         }
         else {
             _components.add(component.getComponent());    
+        }
+
+        return this;
+    }
+    
+    /**
+     * Adds the specified menu item type to the currently active menu
+     *
+     * @param classType The class type
+     * @param <T> An object that extends AbstractMenu
+     * 
+     * @return A reference to the menu builder
+     */
+    public <T extends AbstractMenu> MenuBuilder addMenu(Class<T> classType) {
+        try {
+            T baseComponent = classType.getConstructor(JComponent.class).newInstance(_root == null ? _host : _root);
+            if(_components.isEmpty() && _root == null) {
+                _root = baseComponent.getComponent();
+            }
+            else {
+                _components.add(baseComponent.getComponent());    
+            }
+        } 
+        catch (Exception exception) {
+            Tracelog.log(Level.SEVERE, true, exception);
         }
 
         return this;
@@ -117,8 +145,24 @@ public final class MenuBuilder {
             }
         } 
         catch (Exception exception) {
-            exception.printStackTrace();
-        }	
+            Tracelog.log(Level.SEVERE, true, exception);
+        }
+
+        return this;
+    }
+    
+    public <T extends AbstractMenuItem> MenuBuilder addMenuItem(T clazz) {
+        try {
+            if(_components.isEmpty() && _root == null) {
+                _root = clazz.getComponent();
+            }
+            else {
+                _components.add(clazz.getComponent());    
+            }
+        } 
+        catch (Exception exception) {
+            Tracelog.log(Level.SEVERE, true, exception);
+        }
 
         return this;
     }
@@ -133,7 +177,7 @@ public final class MenuBuilder {
     public <T extends AbstractMenu> MenuBuilder addSeparator() {
         if(_root != null) {
             T component = (T) _root.getClientProperty(_root);
-            component.addSeperator();			
+            component.addSeperator();
         }
 
         return this;

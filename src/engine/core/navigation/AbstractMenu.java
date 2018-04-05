@@ -24,7 +24,6 @@
 
 package engine.core.navigation;
 
-import java.awt.event.ActionEvent;
 import java.util.UUID;
 
 import javax.swing.JComponent;
@@ -73,7 +72,7 @@ abstract class AbstractMenu {
 
         if(parent != null) {
             if(_parent.getClientProperty(_parentKey) == null) {
-                _parent.putClientProperty(_parentKey, parent);	
+                _parent.putClientProperty(_parentKey, parent);
             }
             _parent.add(_component);
         }
@@ -152,18 +151,18 @@ abstract class AbstractMenu {
     protected boolean visibility() {
         return _component.isVisible();
     }
+    
+    /**
+     * Defines functionality for when the entry is loaded
+     */
+    protected void onLoad() {
+    }
 
     /**
-     * Defines abstract functionality for initializing the menu entity
+     * Defines functionality for initializing the menu entity
      */
-    protected abstract void onInitialize();
-
-    /**
-     * Defines a method for handling an execution of the option
-     * 
-     * @param actionEvent The action event associated to the call of this method
-     */
-    protected abstract void onExecute(ActionEvent actionEvent);
+    protected void onInitialize() {
+    }
 
     @Override public final String toString() {
         return _identifier.toString();

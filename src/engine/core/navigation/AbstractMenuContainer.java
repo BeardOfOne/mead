@@ -25,7 +25,6 @@
 package engine.core.navigation;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
 
 import javax.swing.JComponent;
 import javax.swing.JMenu;
@@ -39,15 +38,15 @@ import javax.swing.event.MenuListener;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-class AbstractMenuContainer extends AbstractMenu {
+public class AbstractMenuContainer extends AbstractMenu {
 
     /**
      * Constructs a new instance of this type
      * 
+     * @param text The text of the menu component that will be displayed
      * @param parent The parent component associated to this option menu
-     * @param text The text of the menu component that will be displayed 
      */
-    public AbstractMenuContainer(JComponent parent, String text) {
+    public AbstractMenuContainer(String text, JComponent parent) {
         super(new JMenu(text), parent);
     }
 
@@ -76,9 +75,6 @@ class AbstractMenuContainer extends AbstractMenu {
         }
     }
 
-    @Override public final void onExecute(ActionEvent actionEvent) {
-    }
-
     @Override protected void onInitialize() {
         super.getComponent(JMenu.class).addMenuListener(new MenuListener() {
             @Override public void menuSelected(MenuEvent e) {
@@ -87,8 +83,8 @@ class AbstractMenuContainer extends AbstractMenu {
                     if(component instanceof JComponent) {
                         JComponent jComponent = (JComponent) component;
                         Object clientProperty = jComponent.getClientProperty(jComponent);
-                        if(clientProperty instanceof AbstractMenuItem) {
-                            AbstractMenuItem itemComponent = (AbstractMenuItem) jComponent.getClientProperty(jComponent);
+                        if(clientProperty instanceof AbstractMenu) {
+                            AbstractMenu itemComponent = (AbstractMenu) jComponent.getClientProperty(jComponent);
                             itemComponent.onLoad();
                             jComponent.setEnabled(itemComponent.enabled());
                             jComponent.setVisible(itemComponent.visibility());    
