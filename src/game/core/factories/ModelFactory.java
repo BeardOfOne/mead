@@ -64,7 +64,7 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
                 if(cachedResources.isEmpty()) {
                     Tracelog.log(Level.INFO, false, "Removing the key " + resource.getClass() + " from the cache");
                     _cache.remove(resource.getClass());
-                }				
+                }
             }
             else {
                 Tracelog.log(Level.SEVERE, false, "Could not inject the specified model");
@@ -108,5 +108,8 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
     
     @Override protected boolean isPersistent() {
         return false;
+    }
+
+    @Override public void remove() {
     }
 }

@@ -78,8 +78,6 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
     public void copyData(IModel model);
 
     @Override default public void remove() {
-        IDestructor.super.remove();
-
         // Clear the signals associated to this model
         clearSignalListeners();
 

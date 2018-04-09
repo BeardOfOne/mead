@@ -89,8 +89,10 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
         this._listener = entity;
     }
 
-    @Override public boolean clear() {
+    @Override public void clear() {
         _listeners.clear();
-        return true;
+    }
+
+    @Override public void remove() {
     }
 }

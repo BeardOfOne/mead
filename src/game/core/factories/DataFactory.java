@@ -170,4 +170,10 @@ public class DataFactory extends AbstractFactory {
     @Override protected boolean isPersistent() {
         return true;
     }
+
+    @Override public void clear() {
+    }
+
+    @Override public void remove() {
+    }
 }

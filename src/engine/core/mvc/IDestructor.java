@@ -25,30 +25,26 @@
 package engine.core.mvc;
 
 /**
- * Specifies a contract for flushing (clearing) resources effectively resetting its state, and
- * disposing of an object properly.
+ * Specifies a contract for handling resource removal and clearing
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-@Deprecated
 public interface IDestructor {
 
     /**
-     * This method should clear the contents of the underlying class where implemented
-     * but should not remove handles
+     * Clear the model of its contents
      *   
-     * @return TRUE if it was successful, FALSE if it was not 
+     * Note: The implementation should follow that after this method is called, the object is effectively reset to an original or
+     *       equivalent state. Resources that were originally aquired could be optionally removed if need be. 
      */
-    @Deprecated
-    default public boolean clear() {
-        return true;
-    }
-
+    public void clear();
+    
     /**
-     * Removes the contents of the implemented type
+     * Removes the contents of the implemented type.
+     * 
+     * Note: The implementation should follow that after this method is called, the object can be safely removed from existance. 
+     *       This should behave similar to a destructor call.
      */
-    @Deprecated
-    default public void remove() {
-    }
+    public void remove();
 }

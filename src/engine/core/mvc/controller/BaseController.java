@@ -70,8 +70,8 @@ public abstract class BaseController implements IController  {
         return _properties;
     }
 
-    @Override public boolean clear() {
+    @Override public void clear() {
+        _properties.clear();
         clearSignalListeners();
-        return _properties.clear();
     }
 }

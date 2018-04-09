@@ -29,7 +29,6 @@ import java.util.Map;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.SignalListenerContainer;
 import engine.core.factories.AbstractFactory;
-import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
 import game.core.factories.ControllerFactory;
 
@@ -40,7 +39,7 @@ import game.core.factories.ControllerFactory;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public interface IController extends IDestructor, ISignalListener {
+public interface IController extends ISignalListener {
 
     /**
      * This class represents the controller properties of each IController implemented type
@@ -63,8 +62,6 @@ public interface IController extends IDestructor, ISignalListener {
     }
 
     @Override default void remove() {
-        IDestructor.super.remove();
-
         // Clear the signals associated to this controller
         clearSignalListeners();
 

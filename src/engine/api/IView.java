@@ -230,8 +230,6 @@ public interface IView extends IDestructor, ISignalListener {
     }
 
     @Override default void remove() {
-        IDestructor.super.remove();
-
         // Clear the signals associated to this view
         clearSignalListeners();
 
