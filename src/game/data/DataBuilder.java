@@ -94,7 +94,7 @@ public class DataBuilder extends AbstractBuilder<FileSystem> {
             ArrayList<IData> dataList = iterator.next();
 
             // Queue the data in the data factory
-            AbstractFactory.getFactory(DataFactory.class).addDataResources(dataList);
+            AbstractFactory.getFactory(DataFactory.class).populateData(dataList);
         }
     }
 

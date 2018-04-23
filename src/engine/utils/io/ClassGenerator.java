@@ -27,7 +27,8 @@ package engine.utils.io;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import engine.api.IModel;
 
 /**
  * This class handles creating and generation of code within a specified file.  The code should be to spec
@@ -35,7 +36,7 @@ import java.util.stream.Collectors;
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
-public class ClassGenerator {
+public final class ClassGenerator {
 
     /**
      * The name of the class
@@ -89,15 +90,23 @@ public class ClassGenerator {
      * Appends an enum entry into this class generator
      * 
      * @param enumName The name of the enum
-     * @param values The values of the enum 
+     * @param data The values of the enum 
      */
-    public void appendEnum(String enumName, List<String> values) {
-        _enumBuilder.append(
-                String.format("\tpublic enum %s { %s }", enumName.toUpperCase(), values.stream().map(z -> z.toUpperCase()).collect(Collectors.joining(",")))
-                );
+    public void appendEnum(String enumName, List<? extends IModel> data) {
+        
+        _enumBuilder.append(String.format("\tpublic enum %S {", enumName));
+        appendNewLine(_enumBuilder);
+        
+        data.stream().forEach(z -> _enumBuilder.append(String.format("\t\t%S(\"%s\")%s\n", z.getName(), z.getUUID().toString(), (z.equals(data.get(data.size() - 1)) ? ";" : ","))));
+        
+        _enumBuilder.append("\t\tpublic final java.util.UUID identifier;");
+        appendNewLine(_enumBuilder);
+        _enumBuilder.append(String.format("\t\t%S(String identifier) {\n\t\t\tthis.identifier = java.util.UUID.fromString(identifier);\n\t\t}", enumName));
+        appendNewLine(_enumBuilder);
+        _enumBuilder.append("\t}");
         appendNewLine(_enumBuilder);
     }
-
+    
     /**
      * Writes the contents of this generated class to the specified file
      * 

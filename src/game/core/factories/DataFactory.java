@@ -28,6 +28,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
@@ -40,8 +43,7 @@ import engine.utils.logging.Tracelog;
 import game.data.DataBuilder;
 
 /**
- * Data factory for extracting data from an external source
- * based on specified types
+ * Data factory for getting data related resources
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
@@ -49,64 +51,42 @@ import game.data.DataBuilder;
 public class DataFactory extends AbstractFactory {
 
     /**
-     * Holds the mappings of layer names to data resources.
-     * Key = The name of the layer
-     * Value = All the IData types that have that layer name
-     * 
-     * Note: The key should be lower case at all times for normalization reasons
+     * A mapping of identifiers to associated datas
      */
-    private final Map<String, List<IData>> _data = new HashMap();
+    private final Map<UUID, List<IData>> _data = new HashMap();
 
     /**
-     * Gets a data resource based on the specified layer name and the data name
+     * Gets a data group using the specified identifer
+     *
+     * @param identifier The identifier to use as a lookup
      * 
-     * @param layer The name of the layer to perform the lookup on
-     * @param dataName The name of the resource to lookup with the specified layer
-     * 
-     * @return A data resource of type {@link IData}
+     * @return A data group
      */
-    public IData getByName(String layer, String dataName) {
-
-        // Get the list of resource associated to the class type
-        List<IData> resources = getByLayer(layer);
-
-        // If the resources exist
-        if(resources != null) {
-
-            // Go through the list of resources and try to find the
-            // resource with the specified name
-            for(IData resource : resources) {
-                if(resource.getName().equalsIgnoreCase(dataName.toLowerCase())) {
-                    return resource;
-                }
+    public List<IData> getDataGroup(UUID identifier) {
+        List<IData> data = _data.get(identifier);
+        if(data != null) {
+            data = new ArrayList(data); 
+        }
+        return data;
+    }
+    
+    /**
+     * Gets the data entity using the specified identifier
+     *
+     * @param identifier The identifier to use as a lookup
+     * 
+     * @return A data entity
+     */
+    public IData getDataEntity(UUID identifier) {
+        for(Entry<UUID, List<IData>> datas : _data.entrySet()) {
+            Optional<IData> dataEntity = datas.getValue().stream().filter(z -> z.getIdentifier().equals(identifier)).findFirst();
+            if(dataEntity.isPresent()) {
+                return dataEntity.get();
             }
         }
-
-        return null;
+        return null; 
     }
-
-    /**
-     * Gets the list of resources associated to the specified layer name
-     * 
-     * @param layer The name of the layer to lookup
-     * 
-     * @return The list of {@link IData} types associated to the specified layer name
-     */
-    public List<IData> getByLayer(String layer) {
-
-        // Get the list of data
-        List<IData> data = _data.get(layer.toLowerCase());
-
-        // If there is a valid entry then return a new list 
-        // of its results
-        if(data != null) {
-            return new ArrayList(data); 
-        }
-
-        // Nothing found
-        return null;
-    }
-
+    
     /**
      * Loads the data specified by the engine data path
      */
@@ -138,33 +118,35 @@ public class DataFactory extends AbstractFactory {
      * 
      * @param resources The list of resources
      */
-    public void addDataResources(List<IData> resources)  {
-
-        // Create a mapping of layer name to IData types
-        Map<List<String>, List<IData>> mappings = resources.stream().collect(Collectors.groupingBy(IData::getLayers));
-
-        // Go through each kvp and add its contents into the factory
-        for(Map.Entry<List<String>, List<IData>> mapping : mappings.entrySet()) {
-
-            // Go through the list of layers, since there can be more than one layer per entity
-            for(String layer : mapping.getKey()) {
-
-                // If the entry does not exist then create a new list
-                // and insert it into the map
-                List<IData> dataList = _data.get(layer);
-                if(dataList == null) {
-                    dataList = new ArrayList();
-                    _data.put(layer, dataList);
-                }
-
-                // Add the data entry into the mappings structure
-                dataList.addAll(mapping.getValue());
-            }
-        }
+    public void populateData(List<IData> resources)  {
+        
+        // TODO
+        
+//        // Create a mapping of layers to associated data
+//        Map<List<UUID>, List<IData>> mappings = resources.stream().collect(Collectors.groupingBy(IData::getIdentifier()));
+//
+//        // Go through each kvp and add its contents into the factory
+//        for(Map.Entry<List<String>, List<IData>> mapping : mappings.entrySet()) {
+//
+//            // Go through the list of layers, since there can be more than one layer per entity
+//            for(String layer : mapping.getKey()) {
+//
+//                // If the entry does not exist then create a new list
+//                // and insert it into the map
+//                List<IData> dataList = _data.get(layer);
+//                if(dataList == null) {
+//                    dataList = new ArrayList();
+//                    _data.put(layer, dataList);
+//                }
+//
+//                // Add the data entry into the mappings structure
+//                dataList.addAll(mapping.getValue());
+//            }
+//        }
     }
 
     @Override protected boolean hasEntities() {
-        return !_data.isEmpty();
+        return _data.values().size() > 0;
     }
     
     @Override protected boolean isPersistent() {
@@ -172,8 +154,10 @@ public class DataFactory extends AbstractFactory {
     }
 
     @Override public void clear() {
+        Tracelog.log(Level.INFO, false, "clear() for DataFactory.java not implemented");
     }
 
     @Override public void remove() {
+        Tracelog.log(Level.INFO, false, "remove() for DataFactory.java not implemented");
     }
 }

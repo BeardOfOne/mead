@@ -27,25 +27,19 @@ package game.gameplay;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
+import java.util.UUID;
 
 import engine.api.IData;
 import engine.core.factories.AbstractFactory;
 import engine.core.graphics.IRenderable;
-import engine.utils.logging.Tracelog;
 import game.core.factories.DataFactory;
 
-/**
- * Top-most class for dealing with data as an entity within the game play framework
- * 
- * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
- */
 public abstract class AbstractDataEntity implements IRenderable {
 
     /**
      * The data associated to the initially specified active data
      */
-    private final List<IData> _data = new ArrayList();
+    private final List<IData> _data;
 
     /**
      * The active data that is associated to this entity
@@ -58,52 +52,32 @@ public abstract class AbstractDataEntity implements IRenderable {
     private Image _activeDataCache;
 
     /**
-     * Sets the currently active data element of this entity
-     * 
-     * @param dataName The data name, one that would be retrieved if calling getDataNames for example
+     * Constructs a new instance of this class type
      */
-    protected <T extends Enum<T>> void setActiveData(T dataName) {
-
-        // Ensure that all the data elements have been cleared prior
+    protected AbstractDataEntity(UUID identifier) {
+        _data = new ArrayList(AbstractFactory.getFactory(DataFactory.class).getDataGroup(identifier));
+    }
+    
+    protected void setActiveData(UUID identifier) {
         _activeData = null;
         _activeDataCache = null;
         
-        // Do not go any further if the data name provided is null or empty
-        if(dataName == null || dataName.toString().length() == 0) {
-            return;
-        }
-        
-        // If no data has been loaded, lazily load the data based on the enumerator class name
-        if(_data.isEmpty()) { 
-            List<IData> data = AbstractFactory.getFactory(DataFactory.class).getByLayer(dataName.getDeclaringClass().getSimpleName().toString());
-            if(data == null || data.isEmpty()) {
-                Tracelog.log(Level.WARNING, false, "Could not instantiate the data for the specified layer");
-                return;
-            }
-
-            _data.addAll(data);
-        }
-
-        // Go through all the data and determine which data is the active data for this entity
-        for(IData data : _data) {
-            if(data.getName().equalsIgnoreCase(dataName.toString())) {
-                Tracelog.log(Level.INFO, false, "Active data being set to " + dataName);
-                _activeData = data;
-                break;
+        if(identifier != null) {
+            for(IData data : _data) {
+                if(data.getIdentifier().equals(identifier)) {
+                    _activeData = data;
+                    _activeDataCache = _activeData.getImageData();
+                    break;
+                }
             }
         }
     }
 
-    
     public final boolean hasActiveData() {
         return _activeData != null;
     }
     
     @Override public Image getRenderableContent() {
-        if(_activeData != null && _activeDataCache == null) {
-            _activeDataCache = _activeData.getImageData();
-        }
-        
         return _activeDataCache;
     }
 }
