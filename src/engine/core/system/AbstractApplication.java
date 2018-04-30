@@ -32,6 +32,7 @@ import java.util.logging.Level;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.WindowConstants;
 
 import engine.core.factories.AbstractFactory;
 import engine.core.mvc.IDestructor;
@@ -56,7 +57,12 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * Debug state of the application
      */
     private boolean _isDebug;
-
+    
+    public AbstractApplication() {
+        // Pressing on the close button won't do it's default action
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+    }
+    
     /**
      * Gets the singleton instance of this application
      * 
