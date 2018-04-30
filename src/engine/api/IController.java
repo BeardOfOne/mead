@@ -61,7 +61,7 @@ public interface IController extends ISignalListener {
         return getControllerProperties().getSignalListeners();
     }
 
-    @Override default void remove() {
+    @Override default void destructor() {
         // Clear the signals associated to this controller
         clearSignalListeners();
 

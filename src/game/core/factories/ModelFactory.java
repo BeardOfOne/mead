@@ -110,6 +110,6 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
         return false;
     }
 
-    @Override public void remove() {
+    @Override public void destructor() {
     }
 }

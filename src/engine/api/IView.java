@@ -229,7 +229,7 @@ public interface IView extends IDestructor, ISignalListener {
         return getViewProperties().getSignalListeners();
     }
 
-    @Override default void remove() {
+    @Override default void destructor() {
         // Clear the signals associated to this view
         clearSignalListeners();
 
@@ -240,7 +240,7 @@ public interface IView extends IDestructor, ISignalListener {
         // remove it as well
         IController controller = getViewProperties().getEntity();
         if(controller != null) {
-            controller.remove();
+            controller.destructor();
         }
 
         // Get the parent container and remove this view from that container

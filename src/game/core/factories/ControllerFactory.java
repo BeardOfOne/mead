@@ -56,6 +56,6 @@ public final class ControllerFactory extends AbstractSignalFactory<IController> 
         return false;
     }
 
-    @Override public void remove() {
+    @Override public void destructor() {
     }
 }

@@ -156,7 +156,7 @@ public class DataFactory extends AbstractFactory {
         Tracelog.log(Level.INFO, false, "clear() for DataFactory.java not implemented");
     }
 
-    @Override public void remove() {
+    @Override public void destructor() {
         Tracelog.log(Level.INFO, false, "remove() for DataFactory.java not implemented");
     }
 }

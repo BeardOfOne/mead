@@ -93,6 +93,6 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
         _listeners.clear();
     }
 
-    @Override public void remove() {
+    @Override public void destructor() {
     }
 }

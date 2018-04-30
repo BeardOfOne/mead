@@ -78,7 +78,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * 
      * @return The application instance
      */
-    protected static <T extends AbstractApplication> AbstractApplication initialize(Class<T> classType, boolean isDebug) {
+    protected static <T extends AbstractApplication> void initialize(Class<T> classType, boolean isDebug) {
 
         if(_instance == null) {
 
@@ -91,7 +91,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
             }
             catch(Exception exception) {
                 Tracelog.log(Level.SEVERE, false, exception);
-                return null;
+                return;
             }
 
             _instance._isDebug = isDebug;
@@ -110,14 +110,14 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
             
             // Load the window listeners of the application
             Tracelog.log(Level.INFO, false, "Initializing Engine Listeners");
-            _instance.onInitializeWindow();
+            _instance.onWindowInitialized();
             Tracelog.log(Level.INFO, false, "Initializing Engine Listeners - Completed");
 
             Tracelog.log(Level.INFO, false, "Initializing Engine Data - Completed");
             Tracelog.log(Level.INFO, false, "Engine Initialization Completed - " + ((System.nanoTime() - startTime) / 1000000) + "ms");
+            
+            _instance.setVisible(true);
         }
-
-        return _instance;
     }
     
     
@@ -154,7 +154,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
     /**
      * Sets the window listeners for the application
      */
-    protected void onInitializeWindow() {
+    protected void onWindowInitialized() {
     
         JMenuBar menu = new JMenuBar();
         setJMenuBar(menu);
@@ -171,7 +171,7 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
             @Override public void windowClosing(WindowEvent windowEvent) {
                 _instance.dispose();
             };
-        });        
+        });
     
         addWindowListener(new WindowAdapter() {
             @Override public void windowClosed(WindowEvent event) {
@@ -186,5 +186,4 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      * Called before the data has been initialized and loaded into the game engine components
      */
     protected abstract void onBeforeEngineDataInitialized();
-
 }

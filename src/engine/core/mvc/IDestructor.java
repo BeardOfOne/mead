@@ -46,5 +46,5 @@ public interface IDestructor {
      * Note: The implementation should follow that after this method is called, the object can be safely removed from existance. 
      *       This should behave similar to a destructor call.
      */
-    public void remove();
+    public void destructor();
 }

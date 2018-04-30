@@ -58,6 +58,6 @@ public final class ViewFactory extends AbstractSignalFactory<IView> {
         return false;
     }
 
-    @Override public void remove() {
+    @Override public void destructor() {
     }
 }
