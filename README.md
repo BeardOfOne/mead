@@ -11,7 +11,7 @@ This is the game engine that I custom built for myself.  Here are the games that
 - [x] Checkers
 - [x] Chess
 - [x] Minesweeper
-- [] Solitaire
+- [ ] Solitaire
 
 ### Features
 - [x] Localization System
