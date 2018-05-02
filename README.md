@@ -10,7 +10,8 @@ This is the game engine that I custom built for myself.  Here are the games that
 - [x] Tic-Tac-Toe
 - [x] Checkers
 - [x] Chess
-- [ ] Minesweeper
+- [x] Minesweeper
+- [] Solitaire
 
 ### Features
 - [x] Localization System
