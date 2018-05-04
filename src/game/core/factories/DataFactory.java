@@ -25,13 +25,16 @@
 package game.core.factories;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import engine.api.IData;
 import engine.communication.external.builder.Director;
@@ -119,29 +122,22 @@ public class DataFactory extends AbstractFactory {
      */
     public void populateData(List<IData> resources)  {
         
-        // TODO
+        // Clear any data within this factory first
+        _data.clear();
         
-//        // Create a mapping of layers to associated data
-//        Map<List<UUID>, List<IData>> mappings = resources.stream().collect(Collectors.groupingBy(IData::getIdentifier()));
-//
-//        // Go through each kvp and add its contents into the factory
-//        for(Map.Entry<List<String>, List<IData>> mapping : mappings.entrySet()) {
-//
-//            // Go through the list of layers, since there can be more than one layer per entity
-//            for(String layer : mapping.getKey()) {
-//
-//                // If the entry does not exist then create a new list
-//                // and insert it into the map
-//                List<IData> dataList = _data.get(layer);
-//                if(dataList == null) {
-//                    dataList = new ArrayList();
-//                    _data.put(layer, dataList);
-//                }
-//
-//                // Add the data entry into the mappings structure
-//                dataList.addAll(mapping.getValue());
-//            }
-//        }
+        // Get the list of layer UUID, make sure there are no duplicates
+        Set<UUID> layers = resources.stream().map(IData::getLayers).flatMap(Collection::stream).collect(Collectors.toSet());
+        
+        // Go through all the layers and look for the data that contains the specified UUID
+        for(UUID uuid : layers) {
+            
+            // Get all the data that has the specified layer
+            List<IData> data = new ArrayList(
+                resources.stream().filter(z -> z.getLayers().contains(uuid)).collect(Collectors.toList())
+            );
+            
+            _data.put(uuid,  data);
+        }        
     }
 
     @Override protected boolean hasEntities() {

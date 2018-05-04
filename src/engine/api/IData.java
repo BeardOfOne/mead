@@ -55,7 +55,7 @@ public interface IData {
     /**
      * @return The name, if any, of the layer.
      */
-    public List<String> getLayers();
+    public List<UUID> getLayers();
 
     /**
      * @return The image data
