@@ -38,14 +38,14 @@ import javax.swing.SwingConstants;
  * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
  *
  */
-public abstract class AbstractScrollablePanel extends PanelView implements Scrollable, MouseMotionListener {
+public class ScrollView extends PanelView implements Scrollable, MouseMotionListener {
 
     private int _unitIncrement = 20;
 
     /**
      * Constructs a new instance of this class type
      */
-    public AbstractScrollablePanel() {
+    public ScrollView() {
         setOpaque(true);
         setAutoscrolls(true);
         addMouseMotionListener(this);
@@ -112,4 +112,13 @@ public abstract class AbstractScrollablePanel extends PanelView implements Scrol
 
 	@Override public void initializeComponentBindings() {
 	}
+
+    /* (non-Javadoc)
+     * @see engine.core.mvc.IDestructor#clear()
+     */
+    @Override
+    public void clear() {
+        // TODO Auto-generated method stub
+        
+    }
 }
