@@ -111,8 +111,21 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
         return signals == null ? new ArrayList() : new ArrayList(signals);
      }
 
+     /**
+      * Adds the created resource for retrieval
+      *  
+      * @param resource The resource that was created to be added
+      * @param <U> A type extending The class template type
+      * 
+      * @return A resource based on the specified type
+      */
+     public <U extends T> U add(U resource)
+     {
+         return add(resource, false);
+     }
+     
     /**
-     * Helper method to add the created resource for retrieval
+     * Adds the created resource for retrieval
      *  
      * @param resource The resource that was created to be added
      * @param isShared If the resource should be available publicly
