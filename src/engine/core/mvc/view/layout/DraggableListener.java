@@ -21,6 +21,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
+
 package engine.core.mvc.view.layout;
 
 import java.awt.Component;
@@ -29,6 +30,8 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 
 import javax.swing.event.MouseInputAdapter;
+
+import engine.api.IView;
 
 /**
  * Listener class used for providing draggable functionality to a component
@@ -60,6 +63,15 @@ public class DraggableListener extends MouseInputAdapter {
      */
     private boolean _lastDragged;
 
+    /**
+     * Constructs a new instance of this class type
+     */
+    public DraggableListener(IView view)
+    {
+        view.getContainerClass().addMouseListener(this);
+        view.getContainerClass().addMouseMotionListener(this);
+    }
+    
     /**
      * Gets if the component was last dragged
      * 
