@@ -21,7 +21,7 @@
  * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
  * IN THE SOFTWARE.
  */
-package engine.core.mvc.event;
+package engine.core.mvc.view.layout;
 
 import java.awt.Component;
 import java.awt.Cursor;
@@ -51,14 +51,14 @@ public class DraggableListener extends MouseInputAdapter {
     /**
      * Indicates if the component is in a dragging state
      */
-    private boolean _dragging = false;
+    private boolean _dragging;
 
     /**
      * Indicates if the last completed operation done by this component resulted in a drag
      * 
      * Note: This would be queried after the fact that a drag had occurred
      */
-    private boolean _lastDragged = false;
+    private boolean _lastDragged;
 
     /**
      * Gets if the component was last dragged

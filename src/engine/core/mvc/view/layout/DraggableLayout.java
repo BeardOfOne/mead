@@ -54,7 +54,6 @@ public class DraggableLayout implements LayoutManager {
         }
 
         // Width/Height is adjusted if any component is outside left/top edge
-
         if (x < parentInsets.left)
             width += parentInsets.left - x;
 

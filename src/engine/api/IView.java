@@ -127,15 +127,7 @@ public interface IView extends IDestructor, ISignalListener {
                     Map listeners = controller.getSignalListeners();
                     if(listeners == null || !listeners.isEmpty()) {
 
-                        Tracelog.log(
-                                Level.WARNING, 
-                                false, 
-                                String.format(
-                                        "Signal listeners already detected for %s, not registering again", 
-                                        controller.getClass().getCanonicalName()
-                                        )
-                                );
-
+                        Tracelog.log(Level.WARNING, false, String.format("Signal listeners already detected for %s, not registering again", controller.getClass().getCanonicalName()));
                         return;
                     }
 
@@ -176,16 +168,10 @@ public interface IView extends IDestructor, ISignalListener {
     public ViewProperties getViewProperties();	
 
     /**
-     * Initializes the list of components for the view.
-     * 
-     * Note: You should not put bindings in here
-     * 
-     * Note: This is where you should put initialization of UI controls/components
-     * 
-     * Note: This is called BEFORE the initializeComponentBindings is called
-     * 
+     * Called after the view is created is has been initialized.
      */
-    public void initializeComponents();
+    default public void onViewInitialized() {
+    }
 
     /**
      * Defines how the bindings of the components in the view are initialized
@@ -201,7 +187,8 @@ public interface IView extends IDestructor, ISignalListener {
      *       this is really specific to the UI itself and its 
      *       JComponent/Container hierarchies 
      */
-    public void initializeComponentBindings();
+    @Deprecated default public void initializeComponentBindings() {
+    }
 
     /**
      * Gets the containing class of the view, this is the container representation in Swing terms
@@ -223,7 +210,6 @@ public interface IView extends IDestructor, ISignalListener {
     public default void render() {
         getContainerClass().setVisible(true);
     }
-
 
     @Override default Map<String, SignalListenerContainer> getSignalListeners() {
         return getViewProperties().getSignalListeners();

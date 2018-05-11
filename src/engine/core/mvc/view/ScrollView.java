@@ -107,7 +107,7 @@ public class ScrollView extends PanelView implements Scrollable, MouseMotionList
         }
     }
 
-    @Override public void initializeComponents() {
+    @Override public void onViewInitialized() {
     }
 
     @Override public void initializeComponentBindings() {
