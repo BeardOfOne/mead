@@ -25,7 +25,6 @@
 package engine.core.mvc.view.layout;
 
 import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
@@ -66,12 +65,11 @@ public class DraggableListener extends MouseInputAdapter {
     /**
      * Constructs a new instance of this class type
      */
-    public DraggableListener(IView view)
-    {
+    public DraggableListener(IView view) {
         view.getContainerClass().addMouseListener(this);
         view.getContainerClass().addMouseMotionListener(this);
     }
-    
+
     /**
      * Gets if the component was last dragged
      * 
@@ -101,14 +99,6 @@ public class DraggableListener extends MouseInputAdapter {
 
     @Override public void mousePressed(MouseEvent event) {
         _mousePressedEvent = event;
-    }
-
-    @Override public void mouseEntered(MouseEvent event) {
-        event.getComponent().setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-    }
-
-    @Override public void mouseExited(MouseEvent event) {
-        event.getComponent().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
     }
 
     @Override public void mouseDragged(MouseEvent event) {

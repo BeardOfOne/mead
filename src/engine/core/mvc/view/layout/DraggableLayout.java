@@ -8,7 +8,7 @@ import java.awt.LayoutManager;
 import java.awt.Point;
 
 /**
- * This layout manager is used for handling draggable components
+ * This layout manager is used for handling draggable layouts
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *

@@ -44,7 +44,7 @@ public final class ControllerFactory extends AbstractSignalFactory<IController> 
         {
             controllers.stream().forEach(z -> z.clear());
         }
-
+        
         // Call clear on the list of public controllers, allowing them to clean up
         // properly before removal from the factory
         _publicSignals.stream().forEach(z -> z.clear());

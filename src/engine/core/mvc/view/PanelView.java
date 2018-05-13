@@ -175,4 +175,7 @@ public abstract class PanelView extends JPanel implements IView, IRenderer {
             }
         }
     }
+    
+    @Override public void clear() {
+    }
 }
