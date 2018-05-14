@@ -31,10 +31,24 @@ import java.util.List;
 
 import javax.swing.event.MouseInputAdapter;
 
+/**
+ * Handles collisions associated to a particular component within the same node level structure
+ * 
+ * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ *
+ */
 public final class CollisionListener extends MouseInputAdapter {
     
+    /**
+     * The list of collided components
+     */
     private final List<Component> _collisions = new ArrayList();
     
+    /**
+     * Constructs a new instance of this class type
+     *
+     * @param component The component to register collision events to
+     */
     public CollisionListener(Component component){
         component.addMouseListener(this);
         component.addMouseMotionListener(this);
@@ -42,25 +56,24 @@ public final class CollisionListener extends MouseInputAdapter {
     
     @Override public void mouseDragged(MouseEvent event) {
         
+        // Clears the collisions
         _collisions.clear();
         
-        Component component = event.getComponent();
-        Component[] siblings = component.getParent().getComponents();
+        final Component thisComponent = event.getComponent();
+        final Component[] thisComponentsSiblings = thisComponent.getParent().getComponents();
     
-        for(Component sibling : siblings) {
-            if(sibling != component && sibling.getClass().equals(component.getClass())) {
-                if(isCollided(component, sibling)) {
-                    _collisions.add(sibling);
-                }                   
+        // Find all collided components 
+        for(Component sibling : thisComponentsSiblings) {
+            if(sibling != thisComponent && sibling.getClass().equals(thisComponent.getClass()) && thisComponent.getBounds().intersects(sibling.getBounds())) {
+                _collisions.add(sibling);
             }
         }
     }
     
+    /**
+     * @return The list of collided entities that the currently registered component has colided with
+     */
     public List<Component> getCollisions() {
         return new ArrayList(_collisions);
-    }
-    
-    private boolean isCollided(Component source, Component destination) {
-        return false;
-    }
+    }    
 }
