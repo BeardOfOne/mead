@@ -30,8 +30,6 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.event.MouseInputAdapter;
 
-import engine.api.IView;
-
 /**
  * Listener class used for providing draggable functionality to a component
  * 
@@ -65,9 +63,9 @@ public class DraggableListener extends MouseInputAdapter {
     /**
      * Constructs a new instance of this class type
      */
-    public DraggableListener(IView view) {
-        view.getContainerClass().addMouseListener(this);
-        view.getContainerClass().addMouseMotionListener(this);
+    public DraggableListener(Component component) {
+        component.addMouseListener(this);
+        component.addMouseMotionListener(this);
     }
 
     /**
