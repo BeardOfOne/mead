@@ -42,42 +42,33 @@ public abstract class AbstractDataEntity implements IRenderable {
     private final List<IData> _data;
 
     /**
-     * The active data that is associated to this entity
-     */
-    private IData _activeData;
-    
-    /**
      * The active data cache associated to the active data
      */
-    private Image _activeDataCache;
+    private Image _renderableData;
 
     /**
      * Constructs a new instance of this class type
+     * 
+     * @param identifierGroup The identifier group
      */
-    protected AbstractDataEntity(UUID identifier) {
-        _data = new ArrayList(AbstractFactory.getFactory(DataFactory.class).getDataGroup(identifier));
+    protected AbstractDataEntity(UUID identifierGroup) {
+        _data = new ArrayList(AbstractFactory.getFactory(DataFactory.class).getDataGroup(identifierGroup));
     }
     
     protected void setActiveData(UUID identifier) {
-        _activeData = null;
-        _activeDataCache = null;
+        _renderableData = null;
         
         if(identifier != null) {
             for(IData data : _data) {
                 if(data.getIdentifier().equals(identifier)) {
-                    _activeData = data;
-                    _activeDataCache = _activeData.getImageData();
+                    _renderableData = data.getImageData();
                     break;
                 }
             }
         }
     }
-
-    public final boolean hasActiveData() {
-        return _activeData != null;
-    }
     
     @Override public Image getRenderableContent() {
-        return _activeDataCache;
+        return _renderableData;
     }
 }
