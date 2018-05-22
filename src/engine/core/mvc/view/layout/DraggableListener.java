@@ -55,15 +55,23 @@ public class DraggableListener extends MouseInputAdapter {
 
     /**
      * Indicates if the last completed operation done by this component resulted in a drag
-     * 
-     * Note: This would be queried after the fact that a drag had occurred
      */
     private boolean _lastDragged;
+    
+    /**
+     * The owner associated to this 
+     */
+    private final Component _owner;
 
     /**
      * Constructs a new instance of this class type
      */
     public DraggableListener(Component component) {
+        
+        // Set the owner
+        _owner = component;
+        
+        // Associated the proper listeners to what this listener class requires to operate 
         component.addMouseListener(this);
         component.addMouseMotionListener(this);
     }
@@ -73,8 +81,15 @@ public class DraggableListener extends MouseInputAdapter {
      * 
      * @return TRUE if the component was dragged during its last operation, FALSE otherwise
      */
-    public boolean getLastDragged() {
+    public final boolean getLastDragged() {
         return _lastDragged;
+    }
+    
+    /**
+     * @return The owner associated to this listener
+     */
+    public final Component getOwner() {
+        return _owner;
     }
 
     @Override public void mouseReleased(MouseEvent event) {
@@ -100,9 +115,14 @@ public class DraggableListener extends MouseInputAdapter {
     }
 
     @Override public void mouseDragged(MouseEvent event) {
+        
+        // Get the component associated to the mouse event
         Component component = event.getComponent();
+        
+        // Store the locatation of the component
         _location = component.getLocation(_location);
 
+        // Set the location of the component
         component.setLocation(
                 _location.x - _mousePressedEvent.getX() + event.getX(), 
                 _location.y - _mousePressedEvent.getY() + event.getY()
