@@ -37,7 +37,7 @@ import engine.api.IModel;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  * 
  */
-public final class UUIDEventArgs extends ModelEventArgs<IModel> {
+public final class UUIDEventArgs extends ModelEventArgs {
     /**
      * The list of unique identifiers
      */

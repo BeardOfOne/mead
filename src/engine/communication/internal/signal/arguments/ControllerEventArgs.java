@@ -33,14 +33,14 @@ import engine.api.IController;
  *
  * @param <T> The IController type
  */
-public final class ControllerEventArgs<T extends IController> extends AbstractEventArgs<T> {
+public final class ControllerEventArgs extends AbstractEventArgs {
     /**
      * Constructs a new signal type event
      * 
      * @param sender The sender source
      * @param operationName The name of the operation being performed
      */
-    public ControllerEventArgs(T sender, String operationName) {
+    public ControllerEventArgs(IController sender, String operationName) {
         super(sender, operationName);
     }
 }

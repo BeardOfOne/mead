@@ -31,7 +31,7 @@ import java.util.EventObject;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class AbstractEventArgs<T extends Object> extends EventObject {
+public abstract class AbstractEventArgs extends EventObject {
 
     /**
      * The name of the operation 
@@ -44,7 +44,7 @@ public abstract class AbstractEventArgs<T extends Object> extends EventObject {
      * @param sender The sender
      * @param operationName The name of the operation
      */
-    public AbstractEventArgs(T sender, String operationName) {
+    public AbstractEventArgs(Object sender, String operationName) {
         super(sender);
 
         _operationName = operationName;
@@ -59,7 +59,7 @@ public abstract class AbstractEventArgs<T extends Object> extends EventObject {
         return _operationName;
     }
     
-    @Override public final T getSource() {
-        return (T)super.getSource();
+    @Override public final Object getSource() {
+        return super.getSource();
     }
 }

@@ -33,14 +33,14 @@ import engine.api.IModel;
  *
  * @param <T> The IModel type
  */
-public class ModelEventArgs<T extends IModel> extends AbstractEventArgs<T> {
+public class ModelEventArgs extends AbstractEventArgs {
     /**
      * Constructs a new signal type event
      * 
      * @param sender The sender source
      * @param operationName The name of the operation being performed
      */
-    public ModelEventArgs(T sender, String operationName) { 
+    public ModelEventArgs(IModel sender, String operationName) { 
         super(sender, operationName);
     }
 }

@@ -24,7 +24,7 @@
 
 package engine.communication.internal.signal.arguments;
 
-public class BooleanEventArgs<T extends Object> extends AbstractEventArgs<T> {
+public class BooleanEventArgs extends AbstractEventArgs {
     
     private final boolean _result;
     
@@ -35,7 +35,7 @@ public class BooleanEventArgs<T extends Object> extends AbstractEventArgs<T> {
      * @param operationName The name of the operation being performed
      * @param result The resulting value
      */
-    public BooleanEventArgs(T sender, String operationName, boolean result) { 
+    public BooleanEventArgs(Object sender, String operationName, boolean result) { 
         super(sender, operationName);
         _result = result;
     }

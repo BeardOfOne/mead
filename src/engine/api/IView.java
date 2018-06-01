@@ -112,6 +112,9 @@ public interface IView extends IDestructor, ISignalListener {
                 // the visibility is set to true
                 @Override public void componentShown(ComponentEvent args) {
 
+                    // Register all signals being listened to by the view
+                    view.registerSignalListeners();
+                    
                     // Indicate that this view is being shown now
                     Tracelog.log(Level.INFO, false, String.format("Component %s is being shown", args.getSource().getClass().getCanonicalName()));
 
@@ -126,16 +129,12 @@ public interface IView extends IDestructor, ISignalListener {
                     // Note: This can occur if registration occurred before the actual view was about to be shown
                     Map listeners = controller.getSignalListeners();
                     if(listeners == null || !listeners.isEmpty()) {
-
                         Tracelog.log(Level.WARNING, false, String.format("Signal listeners already detected for %s, not registering again", controller.getClass().getCanonicalName()));
                         return;
                     }
 
                     // Register all signals being listened to by the view's controller
                     controller.registerSignalListeners();
-
-                    // Register all signals being listened to by the view
-                    view.registerSignalListeners();
                 }
 
             });

@@ -33,14 +33,14 @@ import engine.api.IView;
  *
  * @param <T> The IView type
  */
-public final class ViewEventArgs<T extends IView> extends AbstractEventArgs<T> {
+public final class ViewEventArgs extends AbstractEventArgs {
     /**
      * Constructs a new signal type event
      * 
      * @param sender The sender source
      * @param operationName The name of the operation being performed
      */
-    public ViewEventArgs(T sender, String operationName) {
+    public ViewEventArgs(IView sender, String operationName) {
         super(sender, operationName);
     }	
 }
