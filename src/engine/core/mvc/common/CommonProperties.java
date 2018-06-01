@@ -48,7 +48,7 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
     /**
      * The mapping of signal names to signal implementations
      */
-    private final Map<String, SignalListenerContainer> _listeners = new HashMap<>();
+    private final Map<String, SignalListenerContainer> _listeners = new HashMap();
 
     /**
      * Gets the list of signal listeners associated to the view

@@ -28,8 +28,7 @@ package engine.communication.internal.signal;
  * Container class used for holding signal names to signal listener relationships
  * 
  * This container is usually used when keeping track of which signals are attached to a particular
- * entity, and sometimes the state of this container might be toggle off and then on depending on 
- * to prevent circular loops from occurring
+ * entity
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
@@ -49,7 +48,7 @@ public class SignalListenerContainer {
     /**
      * If this signal relationship is active
      */
-    private boolean _isEnabled;
+    public boolean isEnabled;
 
     /**
      * Constructs a new instance of this class type
@@ -62,24 +61,6 @@ public class SignalListenerContainer {
         this.signalReceiver = signalReceiver;
 
         // By default, all relationships are enabled
-        _isEnabled = true;
-    }
-
-    /**
-     * Sets the flag indicating if this relation is enabled
-     * 
-     * @param isEnabled The flag to set
-     */
-    public void setIsEnabled(boolean isEnabled) {
-        _isEnabled = isEnabled;
-    }
-
-    /**
-     * Gets if this signal relation is enabled
-     * 
-     * @return TRUE if this signal relation is enabled, FALSE otherwise
-     */
-    public boolean getIsEnabled() {
-        return _isEnabled;
+        isEnabled = true;
     }
 }

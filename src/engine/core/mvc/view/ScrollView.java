@@ -38,7 +38,7 @@ import javax.swing.SwingConstants;
  * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
  *
  */
-public class ScrollView extends PanelView implements Scrollable, MouseMotionListener {
+public abstract class ScrollView extends PanelView implements Scrollable, MouseMotionListener {
 
     private int _unitIncrement = 20;
 
