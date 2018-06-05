@@ -97,7 +97,7 @@ public abstract class BaseModel implements IModel
      */
     protected BaseModel(ISignalListener... listeners) {
         this();
-        addListeners(listeners);
+        addListenersImpl(listeners);
     }
 
     /**
@@ -105,8 +105,8 @@ public abstract class BaseModel implements IModel
      * 
      * @param listeners The list of listeners 
      */
-    public final void addListener(ISignalListener... listeners) {
-        addListeners(listeners);
+    public final void addListeners(ISignalListener... listeners) {
+        addListenersImpl(listeners);
 
         // Set the event for listeners
         setOperation(EVENT_LISTENER_ADDED);
@@ -120,7 +120,7 @@ public abstract class BaseModel implements IModel
      * 
      * @param listeners The listeners to add to this model
      */
-    private void addListeners(ISignalListener... listeners) {
+    private void addListenersImpl(ISignalListener... listeners) {
         for(ISignalListener listener : listeners) {
             if(!(listener == null || _listeners.contains(listener))) {
                 _listeners.add(listener);
@@ -270,7 +270,7 @@ public abstract class BaseModel implements IModel
         addSignalListener(ISignalListener.EVENT_REGISTER, new ISignalReceiver<AbstractEventArgs>() {
             @Override public void signalReceived(AbstractEventArgs event) {
                 ISignalListener listener = (ISignalListener) event.getSource();
-                addListener(listener);
+                addListeners(listener);
             }
         });
         addSignalListener(ISignalListener.EVENT_UNREGISTER, new ISignalReceiver<AbstractEventArgs>() {

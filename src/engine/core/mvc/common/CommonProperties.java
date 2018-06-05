@@ -43,6 +43,7 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
     /**
      * The listener entity
      */
+    @Deprecated
     private T _listener;
 
     /**
@@ -64,6 +65,7 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
      * 
      * @return The entity
      */
+    @Deprecated
     public final T getEntity() {
         return _listener;
     }
@@ -76,6 +78,7 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
      * 
      * @return The listener as the specified type
      */
+    @Deprecated
     public final <U extends T> U getEntity(Class<U> classType) {
         return _listener != null ? (U)_listener : null;
     }
@@ -85,7 +88,7 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
      * 
      * @param entity The entity
      */
-    public final void setEntity(T entity) {
+    @Deprecated public final void setEntity(T entity) {
         this._listener = entity;
     }
 

@@ -84,6 +84,9 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
      */
     public void copyData(IModel model);
 
+    public void addListeners(ISignalListener... listeners);
+
+    
     @Override default public void destructor() {
         // Clear the signals associated to this model
         clearSignalListeners();

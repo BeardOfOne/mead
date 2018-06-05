@@ -22,30 +22,16 @@
  * IN THE SOFTWARE.
  */
 
-package engine.core.mvc;
+package engine.core.mvc.view;
 
-/**
- * Specifies a contract for handling resource removal and clearing
- * 
- * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
- *
- */
-public interface IDestructor {
+public abstract class TransparentPanelView extends PanelView {
 
-    /**
-     * Clear the model of its contents
-     *   
-     * Note: The implementation should follow that after this method is called, the object is effectively reset to an original or
-     *       equivalent state. Resources that were originally aquired could be optionally removed if need be. 
-     */
-    @Deprecated
-    public void clear();
+    public TransparentPanelView() {
+        this.setOpaque(false);
+    }
     
-    /**
-     * Removes the contents of the implemented type.
-     * 
-     * Note: The implementation should follow that after this method is called, the object can be safely removed from existance. 
-     *       This should behave similar to a destructor call.
-     */
-    public void destructor();
+    @Override public void setOpaque(boolean isOpaque) {
+        super.setOpaque(isOpaque);
+        repaint();
+    }
 }

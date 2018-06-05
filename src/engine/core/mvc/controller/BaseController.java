@@ -24,8 +24,12 @@
 
 package engine.core.mvc.controller;
 
+import java.util.List;
+
 import engine.api.IController;
-import engine.api.IView;
+import engine.api.IModel;
+import engine.communication.internal.signal.ISignalListener;
+import engine.communication.internal.signal.arguments.AbstractEventArgs;
 
 /**
  * Top-level controller class that holds common controller information
@@ -46,32 +50,21 @@ public abstract class BaseController implements IController  {
     public BaseController() {
     }
 
-    /**
-     * Constructs a new instance of this class type
-     * 
-     * @param view The view associated to this controller
-     * @param <T> A type extending any IView implemented class
-     */
-    @Deprecated
-    public <T extends IView> BaseController(T view) {
-        _properties.setEntity(view);
+    @Override public final void addSignalListener(ISignalListener listener) {
+        for(IModel model : getControllerModels()) {
+            model.addListeners(listener);
+        }       
     }
-
-    /**
-     * Gets the view associated to this controller
-     * 
-     * @return The view associated to this controller
-     */
-    protected final IView getView() {
-        return _properties.getEntity();
-    }
-
+    
+    public abstract List<IModel> getControllerModels();
+      
     @Override public final ControllerProperties getControllerProperties() {
         return _properties;
     }
-
-    @Override public void clear() {
-        _properties.clear();
-        clearSignalListeners();
-    }
+    
+    @Override public void update(AbstractEventArgs signalEvent) { }
+    
+    @Override public void registerSignalListeners() { }
+    
+    @Override public void clear() { }
 }

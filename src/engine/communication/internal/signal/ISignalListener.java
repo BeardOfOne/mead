@@ -69,7 +69,10 @@ public interface ISignalListener extends IDestructor {
             }
         }
     }
-
+    
+    default public void addSignalListener(ISignalListener listener) {
+    }
+    
     /**
      * Clears the list of listeners
      */
