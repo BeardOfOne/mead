@@ -51,12 +51,15 @@ public abstract class BaseController implements IController  {
     }
 
     @Override public final void addSignalListener(ISignalListener listener) {
-        for(IModel model : getControllerModels()) {
-            model.addListeners(listener);
-        }       
+        List<IModel> models = getControllerModels();
+        if(models != null) {
+            for(IModel model : getControllerModels()) {
+                model.addListeners(listener);
+            }
+        }
     }
     
-    public abstract List<IModel> getControllerModels();
+    protected abstract List<IModel> getControllerModels();
       
     @Override public final ControllerProperties getControllerProperties() {
         return _properties;
