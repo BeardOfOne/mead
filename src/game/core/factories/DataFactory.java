@@ -66,10 +66,11 @@ public class DataFactory extends AbstractFactory {
      */
     public List<IData> getDataGroup(UUID identifier) {
         List<IData> data = _data.get(identifier);
-        if(data != null) {
-            data = new ArrayList(data); 
+        if(data == null) {
+            data = new ArrayList();
         }
-        return data;
+
+        return new ArrayList(data);
     }
     
     /**

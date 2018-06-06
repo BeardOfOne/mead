@@ -59,8 +59,11 @@ public abstract class BaseController implements IController  {
         }
     }
     
+    /**
+     * @return The controller models associated to this controller
+     */
     protected abstract List<IModel> getControllerModels();
-      
+    
     @Override public final ControllerProperties getControllerProperties() {
         return _properties;
     }

@@ -242,7 +242,6 @@ public abstract class BaseModel implements IModel
         _operationEvent = null;
     }
 
-
     /**
      * Sets a particular operation name that will be converted into a signal and
      * dispatched to all signal receivers of this model
@@ -307,5 +306,8 @@ public abstract class BaseModel implements IModel
         }
 
         return false;
+    }
+    
+    @Override public void update(AbstractEventArgs signalEvent) {
     }
 }
