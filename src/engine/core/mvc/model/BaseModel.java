@@ -24,6 +24,7 @@
 
 package engine.core.mvc.model;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -39,6 +40,7 @@ import engine.communication.internal.signal.ISignalReceiver;
 import engine.communication.internal.signal.arguments.AbstractEventArgs;
 import engine.communication.internal.signal.arguments.ModelEventArgs;
 import engine.communication.internal.signal.arguments.PipelinedEventArgs;
+import engine.core.graphics.IRenderable;
 import engine.core.mvc.common.CommonProperties;
 
 /**
@@ -48,7 +50,7 @@ import engine.core.mvc.common.CommonProperties;
  *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-public abstract class BaseModel implements IModel 
+public abstract class BaseModel implements IModel, IRenderable 
 {
     public static final String MODEL_REFRESH = "MODEL_REFRESH";
 
@@ -105,6 +107,7 @@ public abstract class BaseModel implements IModel
      * 
      * @param listeners The list of listeners 
      */
+    @Override
     public final void addListeners(ISignalListener... listeners) {
         addListenersImpl(listeners);
 
@@ -309,5 +312,9 @@ public abstract class BaseModel implements IModel
     }
     
     @Override public void update(AbstractEventArgs signalEvent) {
+    }
+    
+    @Override public Image getRenderableContent() {
+        return null;
     }
 }
