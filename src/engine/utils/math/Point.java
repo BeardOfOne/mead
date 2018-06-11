@@ -37,6 +37,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @XmlRootElement(name = "Point")
 @XmlAccessorType(XmlAccessType.FIELD)
+@Deprecated
 public class Point {
 
     /**
