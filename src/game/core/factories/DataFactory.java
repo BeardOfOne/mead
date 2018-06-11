@@ -37,12 +37,8 @@ import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 import engine.api.IData;
-import engine.communication.external.builder.Director;
 import engine.core.factories.AbstractFactory;
-import engine.core.system.EngineProperties;
-import engine.core.system.EngineProperties.Property;
 import engine.utils.logging.Tracelog;
-import game.data.DataBuilder;
 
 /**
  * Data factory for getting data related resources
@@ -89,31 +85,6 @@ public class DataFactory extends AbstractFactory {
         }
         return null; 
     }
-    
-    /**
-     * Loads the data specified by the engine data path
-     */
-    public void loadData() {
-
-        // Get the value set within the engine properties for where to fetch 
-        // the data from
-        String dataPath = EngineProperties.instance().getProperty(Property.DATA_PATH_XML);
-
-        // If the data path has not been set or it was set inappropriately
-        if(dataPath == null || dataPath.length() == 0) {
-            Tracelog.log(Level.WARNING, false, "No data path has been specified for the DATA_PATH_XML, data will not be loaded for the application");
-            return;
-        }
-
-        // Create a data builder
-        DataBuilder dataBuilder = new DataBuilder(dataPath);
-
-        // Create a director and use the data builder to extract content
-        Director director = new Director(dataBuilder);
-
-        // Construct the content held by the director
-        director.construct();
-    }
 
     /**
      * Adds the specified data resources in this factory.  The current structure of the data resources
@@ -137,7 +108,7 @@ public class DataFactory extends AbstractFactory {
                 resources.stream().filter(z -> z.getLayers().contains(uuid)).collect(Collectors.toList())
             );
             
-            _data.put(uuid,  data);
+            _data.put(uuid, data);
         }        
     }
 

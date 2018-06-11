@@ -34,10 +34,11 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.WindowConstants;
 
-import engine.core.factories.AbstractFactory;
+import engine.communication.external.builder.Director;
 import engine.core.mvc.IDestructor;
+import engine.core.system.EngineProperties.Property;
 import engine.utils.logging.Tracelog;
-import game.core.factories.DataFactory;
+import game.data.DataBuilder;
 
 /**
  * This class provides the entry point for all applications to extend for their game.  
@@ -111,7 +112,17 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
                 Tracelog.log(Level.WARNING, false, "Cannot load the data files, no data values specified");
             }
             else {
-                _instance.loadData();
+                
+                try {
+                    // Create a director and use the data builder to extract content
+                    new Director(
+                        new DataBuilder(EngineProperties.instance().getProperty(Property.DATA_PATH_XML))
+                    ).construct();
+                }
+                catch (Exception exception) {
+                    Tracelog.log(Level.SEVERE, false, exception);
+                }
+                
             }
             
             // Load the window listeners of the application
@@ -134,19 +145,6 @@ public abstract class AbstractApplication extends JFrame implements IDestructor 
      */
     public boolean isDebug() {
         return _isDebug;
-    }
-
-    /**
-     * Loads data based on the specified engine properties data path into the 
-     * abstract data factory
-     */
-    private void loadData() {
-        try {
-            AbstractFactory.getFactory(DataFactory.class).loadData();
-        } 
-        catch (Exception exception) {
-            Tracelog.log(Level.SEVERE, false, exception);
-        }
     }
 
     /**
