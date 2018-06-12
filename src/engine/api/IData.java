@@ -24,13 +24,11 @@
 
 package engine.api;
 
-import java.awt.Image;
 import java.util.List;
 import java.util.UUID;
 
 /**
- * Provides a data contract for all data type objects; data related objects
- * should drive your game, they put the 'data' in data-driven game development
+ * Provides a data contract for all data type objects
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
@@ -43,22 +41,7 @@ public interface IData {
     public UUID getIdentifier();
     
     /**
-     * @return The name of the IData implemented type
-     */
-    public String getName();
-
-    /**
-     * @return The friendly name of the data 
-     */
-    public String getFriendlyName();
-
-    /**
      * @return The name, if any, of the layer.
      */
     public List<UUID> getLayers();
-
-    /**
-     * @return The image data
-     */
-    public Image getImageData();   
 }

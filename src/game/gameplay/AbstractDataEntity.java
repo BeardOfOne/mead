@@ -58,14 +58,14 @@ public abstract class AbstractDataEntity implements IRenderable {
     protected void setActiveData(UUID identifier) {
         _renderableData = null;
         
-        if(identifier != null) {
-            for(IData data : _data) {
-                if(data.getIdentifier().equals(identifier)) {
-                    _renderableData = data.getImageData();
-                    break;
-                }
-            }
-        }
+//        if(identifier != null) {
+//            for(IData data : _data) {
+//                if(data.getIdentifier().equals(identifier)) {
+//                    _renderableData = data.getImageData();
+//                    break;
+//                }
+//            }
+//        }
     }
     
     @Override public Image getRenderableContent() {
