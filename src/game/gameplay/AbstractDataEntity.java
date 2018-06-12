@@ -37,11 +37,6 @@ import game.core.factories.DataFactory;
 public abstract class AbstractDataEntity implements IRenderable {
 
     /**
-     * The data associated to the initially specified active data
-     */
-    private final List<IData> _data;
-
-    /**
      * The active data cache associated to the active data
      */
     private Image _renderableData;
@@ -52,20 +47,13 @@ public abstract class AbstractDataEntity implements IRenderable {
      * @param identifierGroup The identifier group
      */
     protected AbstractDataEntity(UUID identifierGroup) {
-        _data = new ArrayList(AbstractFactory.getFactory(DataFactory.class).getDataGroup(identifierGroup));
     }
     
     protected void setActiveData(UUID identifier) {
         _renderableData = null;
-        
-//        if(identifier != null) {
-//            for(IData data : _data) {
-//                if(data.getIdentifier().equals(identifier)) {
-//                    _renderableData = data.getImageData();
-//                    break;
-//                }
-//            }
-//        }
+        if(identifier != null) {
+            _renderableData = AbstractFactory.getFactory(DataFactory.class).getDataEntity(identifier);
+        }
     }
     
     @Override public Image getRenderableContent() {

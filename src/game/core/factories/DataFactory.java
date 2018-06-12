@@ -24,6 +24,9 @@
 
 package game.core.factories;
 
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -36,8 +39,12 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
+
 import engine.api.IData;
 import engine.core.factories.AbstractFactory;
+import engine.core.system.EngineProperties;
+import engine.core.system.EngineProperties.Property;
 import engine.utils.logging.Tracelog;
 
 /**
@@ -49,25 +56,25 @@ import engine.utils.logging.Tracelog;
 public class DataFactory extends AbstractFactory {
 
     /**
-     * A mapping of identifiers to associated datas
-     */
-    private final Map<UUID, List<IData>> _data = new HashMap();
-
-    /**
-     * Gets a data group using the specified identifer
-     *
-     * @param identifier The identifier to use as a lookup
+     * A data element structure that contains that contents of data and the associated buffered image
      * 
-     * @return A data group
+     * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+     *
      */
-    public List<IData> getDataGroup(UUID identifier) {
-        List<IData> data = _data.get(identifier);
-        if(data == null) {
-            data = new ArrayList();
+    private class DataElement {
+        public final Image image;
+        public final IData data;
+        
+        public DataElement(IData data, Image image) {
+            this.image = image;
+            this.data = data;
         }
-
-        return new ArrayList(data);
     }
+    
+    /**
+     * A mapping of identifiers to associated data image
+     */
+    private final Map<UUID, List<DataElement>> _data = new HashMap();
     
     /**
      * Gets the data entity using the specified identifier
@@ -76,14 +83,18 @@ public class DataFactory extends AbstractFactory {
      * 
      * @return A data entity
      */
-    public IData getDataEntity(UUID identifier) {
-        for(Entry<UUID, List<IData>> datas : _data.entrySet()) {
-            Optional<IData> dataEntity = datas.getValue().stream().filter(z -> z.getIdentifier().equals(identifier)).findFirst();
+    public Image getDataEntity(UUID identifier) {
+        
+        Image img = null;
+        for(Entry<UUID, List<DataElement>> datas : _data.entrySet()) {
+            Optional<DataElement> dataEntity = datas.getValue().stream().filter(z -> z.data.getIdentifier().equals(identifier)).findFirst();
             if(dataEntity.isPresent()) {
-                return dataEntity.get();
+                img = dataEntity.get().image;
+                break;
             }
         }
-        return null; 
+        
+        return img; 
     }
 
     /**
@@ -93,23 +104,50 @@ public class DataFactory extends AbstractFactory {
      * @param resources The list of resources
      */
     public void populateData(List<IData> resources)  {
-        
-        // Clear any data within this factory first
-        _data.clear();
-        
+
         // Get the list of layer UUID, make sure there are no duplicates
         Set<UUID> layers = resources.stream().map(IData::getLayers).flatMap(Collection::stream).collect(Collectors.toSet());
-        
+       
+        BufferedImage mainImage = null;
+        try {
+            mainImage = ImageIO.read(getClass().getResourceAsStream(EngineProperties.instance().getProperty(Property.DATA_PATH_SHEET)));    
+        }
+        catch(Exception exception) {
+            Tracelog.log(Level.SEVERE, false, exception);
+        }
+
         // Go through all the layers and look for the data that contains the specified UUID
         for(UUID uuid : layers) {
+                    
+            List<DataElement> dataElements = new ArrayList();
+            for(IData dataElement : resources.parallelStream().filter(z -> z.getLayers().contains(uuid)).collect(Collectors.toList())) {
+                dataElements.add(new DataElement(dataElement, getImageData(mainImage, dataElement)));
+            }
             
-            // Get all the data that has the specified layer
-            List<IData> data = new ArrayList(
-                resources.stream().filter(z -> z.getLayers().contains(uuid)).collect(Collectors.toList())
-            );
-            
-            _data.put(uuid, data);
-        }        
+            _data.put(uuid, dataElements);
+        }
+        
+        // Cleanup the mainImage contents
+        if(mainImage != null) {
+            mainImage.flush();
+        }
+    }
+    
+    private Image getImageData(BufferedImage image, IData data) {
+        
+        Tracelog.log(Level.INFO, true, "Info: Attempting to query the disk for data " + this.toString());
+        
+        // Attempt to get the image portion
+        try {
+            Point tl = data.getTopLeft();
+            Point br = data.getBottomRight();
+            return image.getSubimage(tl.x, tl.y, br.x - tl.x, br.y - tl.y);
+        }
+        catch(Exception exception) {
+            Tracelog.log(Level.SEVERE, false, exception);
+        }
+
+        return null;
     }
 
     @Override protected boolean hasEntities() {
@@ -121,10 +159,11 @@ public class DataFactory extends AbstractFactory {
     }
 
     @Override public void clear() {
-        Tracelog.log(Level.INFO, false, "clear() for DataFactory.java not implemented");
+        _data.values().stream().forEach(z -> z.stream().filter(a -> a != null).forEach(b -> b.image.flush()));
+        _data.clear();
     }
 
     @Override public void destructor() {
-        Tracelog.log(Level.INFO, false, "remove() for DataFactory.java not implemented");
+        clear();
     }
 }
