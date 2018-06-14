@@ -25,11 +25,8 @@
 package game.gameplay;
 
 import java.awt.Image;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
-import engine.api.IData;
 import engine.core.factories.AbstractFactory;
 import engine.core.graphics.IRenderable;
 import game.core.factories.DataFactory;
@@ -40,14 +37,6 @@ public abstract class AbstractDataEntity implements IRenderable {
      * The active data cache associated to the active data
      */
     private Image _renderableData;
-
-    /**
-     * Constructs a new instance of this class type
-     * 
-     * @param identifierGroup The identifier group
-     */
-    protected AbstractDataEntity(UUID identifierGroup) {
-    }
     
     protected void setActiveData(UUID identifier) {
         _renderableData = null;

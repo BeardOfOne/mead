@@ -100,7 +100,7 @@ public class FileSystemAdapter<T extends ISerializable<String>> extends XmlAdapt
 
             // Create a codec for unmarshalling, using the class type
             // to perform the unmarshalling 
-            XMLCodec codec = new XMLCodec(classType);
+            XMLCodec codec = XMLCodec.createInstance(classType);
 
             // Create a string stream and insert the XML contents of the already
             // serialized class

@@ -25,7 +25,6 @@
 package game.data;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.logging.Level;
@@ -62,35 +61,36 @@ public class DataBuilder extends AbstractBuilder<FileSystem> {
     }
 
     @Override public boolean buildStart() {
-        try {
-            // Create the codec for the file system
-            XMLCodec codec = new XMLCodec(FileSystem.class);
 
-            // Reference the data file
-            InputStream inStream = getClass().getResourceAsStream(_path);
+        // Create the codec for the file system
+        XMLCodec codec = XMLCodec.createInstance(FileSystem.class);
 
+        // Reference the data file
+        try(InputStream inStream = getClass().getResourceAsStream(_path)) {
             // Get the selected map file and unmarshal it
             Object fileSystem = codec.getUnmarshaller().unmarshal(inStream);
 
             // Create the file system 
             _fileSystem = (FileSystem)fileSystem;
-        } 
+        }
         catch (Exception exception) {
             Tracelog.log(Level.SEVERE, false, exception);
             return false;
         }
 
-        // Return true to indicate everything went well
         return true;
     }
 
     @Override public void buildContent() {
         // Get the list of values in the file system
-        Collection<ArrayList<IData>> collectionSet = _fileSystem.getAllData().values();
+        Collection<Collection<IData>> collectionSet = _fileSystem.getAllData().values();
 
+        // Get the data factory
+        DataFactory factory = AbstractFactory.getFactory(DataFactory.class);
+        
         // Go through the list of data within the collection
-        for(Iterator<ArrayList<IData>> iterator = collectionSet.iterator(); iterator.hasNext();) {
-            AbstractFactory.getFactory(DataFactory.class).populateData(iterator.next());
+        for(Iterator<Collection<IData>> iterator = collectionSet.iterator(); iterator.hasNext();) {
+            factory.populateData(iterator.next());
         }
     }
 

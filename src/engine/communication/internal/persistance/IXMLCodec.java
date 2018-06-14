@@ -77,10 +77,27 @@ public interface IXMLCodec extends ISerializable<String> {
          * 
          * @throws JAXBException If an error occured during the instance creation 
          */
-        public XMLCodec(Class classObject) throws JAXBException {
+        protected XMLCodec(Class classObject) throws JAXBException {
             _context = JAXBContext.newInstance(classObject);
             _marshaller = _context.createMarshaller();
             _unmarshaller = _context.createUnmarshaller();
+        }
+
+        /**
+         * Creates a new instance of this class type
+         *
+         * @param classObject The class object type
+         * 
+         * @return An instance of the XML codec class
+         */
+        public static XMLCodec createInstance(Class classObject) {
+            try {
+                return new XMLCodec(classObject);
+            }
+            catch(Exception exception) {
+                Tracelog.log(Level.SEVERE, false, exception);
+                return null;
+            }
         }
 
         /**

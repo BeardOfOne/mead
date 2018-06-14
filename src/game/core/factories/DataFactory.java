@@ -103,7 +103,7 @@ public class DataFactory extends AbstractFactory {
      * 
      * @param resources The list of resources
      */
-    public void populateData(List<IData> resources)  {
+    public void populateData(Collection<IData> resources)  {
 
         // Get the list of layer UUID, make sure there are no duplicates
         Set<UUID> layers = resources.stream().map(IData::getLayers).flatMap(Collection::stream).collect(Collectors.toSet());
@@ -134,8 +134,6 @@ public class DataFactory extends AbstractFactory {
     }
     
     private Image getImageData(BufferedImage image, IData data) {
-        
-        Tracelog.log(Level.INFO, true, "Info: Attempting to query the disk for data " + this.toString());
         
         // Attempt to get the image portion
         try {

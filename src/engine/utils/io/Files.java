@@ -53,8 +53,7 @@ public class Files {
         }
 
         // Open a source and destination channel
-        try(FileChannel sourceChannel  = new FileInputStream(sourceFile).getChannel();  FileChannel destinationChanel = new FileOutputStream(destinationFile).getChannel())
-        {
+        try(FileChannel sourceChannel  = new FileInputStream(sourceFile).getChannel();  FileChannel destinationChanel = new FileOutputStream(destinationFile).getChannel()) {
             // Use the destination channel and transfer the contents from the source channel
             destinationChanel.transferFrom(sourceChannel, 0, sourceChannel.size());  	
         }
