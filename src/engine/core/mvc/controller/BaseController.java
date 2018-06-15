@@ -53,7 +53,7 @@ public abstract class BaseController implements IController  {
     @Override public final void addSignalListener(ISignalListener listener) {
         List<IModel> models = getControllerModels();
         if(models != null) {
-            for(IModel model : getControllerModels()) {
+            for(IModel model : models) {
                 model.addListeners(listener);
             }
         }
