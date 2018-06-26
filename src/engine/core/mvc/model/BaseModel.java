@@ -185,7 +185,10 @@ public abstract class BaseModel implements IModel, IRenderable
      * a MODEL_REFRESH tag will be used as the command type 
      */
     @Override public void refresh() {
-
+        refresh(MODEL_REFRESH);
+    }
+    
+    @Override public void refresh(String operationName) {
         // Do not continue with the update if there is a suppression
         // of the updates
         if(isSuppressingUpdates()) {
@@ -195,7 +198,7 @@ public abstract class BaseModel implements IModel, IRenderable
         // Create a new operation event to send out to listeners
         // In this case we specify a local event as not to disturb 
         // the done update functionality
-        AbstractEventArgs event = new ModelEventArgs(this, MODEL_REFRESH);
+        AbstractEventArgs event = new ModelEventArgs(this, operationName);
 
         // Call all signal listeners with the specified event (this takes operation name into account)
         // and then it will end up calling update after the fact

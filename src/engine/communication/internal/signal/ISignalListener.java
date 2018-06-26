@@ -179,9 +179,17 @@ public interface ISignalListener extends IDestructor {
     /**
      * Performs a refresh that sub-systems can hook onto to refresh their contents
      */
-    @Deprecated
-    default public void refresh() { }
-
+    default public void refresh() {
+    }
+    
+    /**
+     * Performs a refresh that sub-systems can hook onto to refresh their contents
+     *
+     * @param The operation to use when performing a refresh
+     */
+    default public void refresh(String operationName) {
+    }
+    
     /**
      * Gets the list of available signal listeners that the sub-system is listening to
      * 
