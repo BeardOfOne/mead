@@ -141,6 +141,8 @@ public abstract class PanelView extends JPanel implements IView, IRenderer {
 
     @Override public void update(AbstractEventArgs event) {
 
+        Tracelog.log(Level.INFO, false, String.format("PanelView::update: - %s - %s", event.getSource(), event.getOperationName()));
+        
         // If the view is set to be redrawn then do not clear the cached render contents
         if(!getViewProperties().shouldRedraw()) {
             _renderCache.clear();

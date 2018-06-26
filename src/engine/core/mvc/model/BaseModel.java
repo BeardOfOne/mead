@@ -107,8 +107,7 @@ public abstract class BaseModel implements IModel, IRenderable
      * 
      * @param listeners The list of listeners 
      */
-    @Override
-    public final void addListeners(ISignalListener... listeners) {
+    @Override public final void addListeners(ISignalListener... listeners) {
         addListenersImpl(listeners);
 
         // Set the event for listeners
