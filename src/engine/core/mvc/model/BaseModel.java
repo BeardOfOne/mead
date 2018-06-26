@@ -147,6 +147,10 @@ public abstract class BaseModel implements IModel, IRenderable
 
         return null;
     }
+    
+    public int getListenerCount() {
+        return _listeners.size();
+    }
 
     /**
      * Gets if the specified listener is listening in on this model for messages
