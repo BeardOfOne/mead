@@ -51,12 +51,6 @@ public interface ISignalListener {
      */
     public static final String EVENT_UNREGISTER = "EVENT_UNREGISTER";
 
-    /**
-     * Adds a listener into the list of listeners
-     * 
-     * @param signalName The name of the signal 
-     * @param signalReceiver The listener implementation
-     */
     default public void addSignalListener(String signalName, ISignalReceiver signalReceiver) {
         Map<String, SignalListenerContainer> listeners = getSignalListeners();
         if(listeners != null && !listeners.containsKey(signalName)) {
@@ -72,9 +66,6 @@ public interface ISignalListener {
     default public void addSignalListener(ISignalListener listener) {
     }
     
-    /**
-     * Clears the list of listeners
-     */
     default public void clearSignalListeners() {
         Map<String, SignalListenerContainer> listeners = getSignalListeners();
         if(listeners != null) {
@@ -83,11 +74,6 @@ public interface ISignalListener {
         }
     }
 
-    /**
-     * Registers the specified signal name
-     * 
-     * @param signalName The name of the signal to register
-     */
     default public void registerSignalListener(String signalName) {
         Map<String, SignalListenerContainer> listeners = getSignalListeners();
         if(signalName != null && listeners != null) {
@@ -101,11 +87,6 @@ public interface ISignalListener {
         }
     }
 
-    /**
-     * Removes the specified signal listener
-     * 
-     * @param signalName The name of the signal
-     */
     default public void removeSignalListener(String signalName) {
         Map<String, SignalListenerContainer> listeners = getSignalListeners();
         if(listeners != null) {
@@ -113,12 +94,6 @@ public interface ISignalListener {
         }
     }
 
-    /**
-     * Sends a signal with a specified signal event to the internally defined listener
-     * 
-     * @param signalEvent signalEvent An event that holds information about the action being performed
-     * 
-     */
     default public void sendSignalEvent(AbstractEventArgs signalEvent) {
     
         // Get the list of signal listeners available
@@ -159,13 +134,8 @@ public interface ISignalListener {
         update(signalEvent);
     }
 
-    /**
-     * Unregisters the specified signal name
-     * 
-     * @param signalName The name of the signal to unregister
-     */
     default public void unregisterSignalListener(String signalName) {
-        Map<String, SignalListenerContainer> listeners = getSignalListeners();		
+        Map<String, SignalListenerContainer> listeners = getSignalListeners();
         if(signalName != null && listeners != null) {
             SignalListenerContainer container = listeners.get(signalName);
             if(container != null) {
@@ -173,20 +143,6 @@ public interface ISignalListener {
                 Tracelog.log(Level.INFO, false, String.format("Signal Unregistration: %s is no longer active", this.getClass().getCanonicalName()));
             }
         }
-    }
-
-    /**
-     * Performs a refresh that sub-systems can hook onto to refresh their contents
-     */
-    default public void refresh() {
-    }
-    
-    /**
-     * Performs a refresh that sub-systems can hook onto to refresh their contents
-     *
-     * @param The operation to use when performing a refresh
-     */
-    default public void refresh(String operationName) {
     }
     
     /**

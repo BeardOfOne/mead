@@ -30,8 +30,6 @@ package engine.communication.internal.signal;
  * This container is usually used when keeping track of which signals are attached to a particular
  * entity
  * 
- * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
- *
  */
 public class SignalListenerContainer {
 
@@ -48,7 +46,7 @@ public class SignalListenerContainer {
     /**
      * If this signal relationship is active
      */
-    public boolean isEnabled;
+    public boolean isEnabled = true;
 
     /**
      * Constructs a new instance of this class type
@@ -59,8 +57,5 @@ public class SignalListenerContainer {
     public SignalListenerContainer(String signalName, ISignalReceiver signalReceiver) {
         this.signalName = signalName;
         this.signalReceiver = signalReceiver;
-
-        // By default, all relationships are enabled
-        isEnabled = true;
     }
 }

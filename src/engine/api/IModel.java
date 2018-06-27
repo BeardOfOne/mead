@@ -67,6 +67,10 @@ public interface IModel extends ISignalListener, IXMLCodec {
         return "";
     }
     
+    public void refresh();
+    
+    public void refresh(String operationName);
+    
     /**
      * Gets the model properties of the implementor of this interface
      * 
