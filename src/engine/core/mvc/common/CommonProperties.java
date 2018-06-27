@@ -29,7 +29,6 @@ import java.util.Map;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.SignalListenerContainer;
-import engine.core.mvc.IDestructor;
 
 /**
  * This class provides common properties that are used to query between common
@@ -38,7 +37,7 @@ import engine.core.mvc.IDestructor;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  * 
  */
-public class CommonProperties<T extends ISignalListener> implements IDestructor {
+public class CommonProperties<T extends ISignalListener> {
 
     /**
      * The listener entity
@@ -90,12 +89,5 @@ public class CommonProperties<T extends ISignalListener> implements IDestructor 
      */
     @Deprecated public final void setEntity(T entity) {
         this._listener = entity;
-    }
-
-    @Override public void clear() {
-        _listeners.clear();
-    }
-
-    @Override public void destructor() {
     }
 }

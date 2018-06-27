@@ -35,7 +35,6 @@ import javax.swing.JMenuBar;
 import javax.swing.WindowConstants;
 
 import engine.communication.external.builder.Director;
-import engine.core.mvc.IDestructor;
 import engine.core.system.EngineProperties.Property;
 import engine.utils.logging.Tracelog;
 import game.data.DataBuilder;
@@ -47,7 +46,7 @@ import game.data.DataBuilder;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class AbstractApplication extends JFrame implements IDestructor {
+public abstract class AbstractApplication extends JFrame {
 
     /**
      * The singleton instance of this class

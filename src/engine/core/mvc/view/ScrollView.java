@@ -112,7 +112,4 @@ public abstract class ScrollView extends PanelView implements Scrollable, MouseM
 
     @Override public void initializeComponentBindings() {
     }
-
-    @Override public void clear() {
-    }
 }

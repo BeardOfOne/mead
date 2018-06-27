@@ -28,7 +28,6 @@ import java.util.Map;
 import java.util.logging.Level;
 
 import engine.communication.internal.signal.arguments.AbstractEventArgs;
-import engine.core.mvc.IDestructor;
 import engine.core.system.EngineProperties;
 import engine.core.system.EngineProperties.Property;
 import engine.utils.logging.Tracelog;
@@ -40,7 +39,7 @@ import engine.utils.logging.Tracelog;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public interface ISignalListener extends IDestructor {
+public interface ISignalListener {
 
     /**
      * This event is used to signal listening entities that something would like to register to you.

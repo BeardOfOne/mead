@@ -70,7 +70,5 @@ public abstract class BaseController implements IController  {
     
     @Override public void update(AbstractEventArgs signalEvent) { }
     
-    @Override public void registerSignalListeners() { }
-    
-    @Override public void clear() { }
+    @Override public void registerSignalListeners() { }   
 }

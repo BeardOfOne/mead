@@ -32,18 +32,15 @@ import java.util.logging.Level;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.SignalListenerContainer;
-import engine.core.factories.AbstractFactory;
-import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
 import engine.utils.logging.Tracelog;
-import game.core.factories.ViewFactory;
 
 /**
  * This contract specifies how views should operate within the framework. 
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
-public interface IView extends IDestructor, ISignalListener {
+public interface IView extends ISignalListener {
 
     /**
      * The view properties that each IView will have
@@ -212,28 +209,5 @@ public interface IView extends IDestructor, ISignalListener {
 
     @Override default Map<String, SignalListenerContainer> getSignalListeners() {
         return getViewProperties().getSignalListeners();
-    }
-
-    @Override default void destructor() {
-        // Clear the signals associated to this view
-        clearSignalListeners();
-
-        // Remove this view from the view factory
-        AbstractFactory.getFactory(ViewFactory.class).remove(this);
-
-        // Attempt to get the controller of this view and 
-        // remove it as well
-        IController controller = getViewProperties().getEntity();
-        if(controller != null) {
-            controller.destructor();
-        }
-
-        // Get the parent container and remove this view from that container
-        Container parent = getContainerClass().getParent();
-        parent.remove(getContainerClass());
-
-        // Re-validate the contents of the parent and repaint it
-        parent.revalidate();
-        parent.repaint();
     }
 }

@@ -57,9 +57,6 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
                 // Perform a refresh of the model to show the updated contents
                 resource.refresh();
 
-                // Flush the contents of what was in the cache
-                cachedResource.clear();	
-
                 // Remove the cache entry if there are no more elements left
                 if(cachedResources.isEmpty()) {
                     Tracelog.log(Level.INFO, false, "Removing the key " + resource.getClass() + " from the cache");
@@ -108,8 +105,5 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
     
     @Override protected boolean isPersistent() {
         return false;
-    }
-
-    @Override public void destructor() {
     }
 }

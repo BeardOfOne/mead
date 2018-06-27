@@ -28,9 +28,7 @@ import java.util.Map;
 
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.SignalListenerContainer;
-import engine.core.factories.AbstractFactory;
 import engine.core.mvc.common.CommonProperties;
-import game.core.factories.ControllerFactory;
 
 /**
  * This is the top-most controller interface, for all sub-type implemented controller types
@@ -61,13 +59,5 @@ public interface IController extends ISignalListener {
 
     @Override default Map<String, SignalListenerContainer> getSignalListeners() {
         return getControllerProperties().getSignalListeners();
-    }
-
-    @Override default void destructor() {
-        // Clear the signals associated to this controller
-        clearSignalListeners();
-
-        // Remove this controller from the controller factory
-        AbstractFactory.getFactory(ControllerFactory.class).remove(this);
     }
 }

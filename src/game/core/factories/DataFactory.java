@@ -155,13 +155,4 @@ public class DataFactory extends AbstractFactory {
     @Override protected boolean isPersistent() {
         return true;
     }
-
-    @Override public void clear() {
-        _data.values().stream().forEach(z -> z.stream().filter(a -> a != null).forEach(b -> b.image.flush()));
-        _data.clear();
-    }
-
-    @Override public void destructor() {
-        clear();
-    }
 }

@@ -57,7 +57,4 @@ public final class ViewFactory extends AbstractSignalFactory<IView> {
     @Override protected boolean isPersistent() {
         return false;
     }
-
-    @Override public void destructor() {
-    }
 }

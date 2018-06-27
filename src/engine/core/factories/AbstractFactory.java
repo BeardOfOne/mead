@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 
-import engine.core.mvc.IDestructor;
 import engine.utils.logging.Tracelog;
 
 /**
@@ -36,7 +35,7 @@ import engine.utils.logging.Tracelog;
  * 
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
-public abstract class AbstractFactory implements IDestructor {
+public abstract class AbstractFactory {
 
     /**
      * The list of factories that have been constructed and that are still active 
@@ -50,7 +49,6 @@ public abstract class AbstractFactory implements IDestructor {
         for(int i = FACTORIES.size() - 1; i >= 0; --i) {
             AbstractFactory factory = FACTORIES.get(i);
             if(!factory.isPersistent()) {
-                factory.clear();
                 FACTORIES.remove(i);
             }
         }

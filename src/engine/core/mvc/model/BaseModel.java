@@ -303,11 +303,6 @@ public abstract class BaseModel implements IModel, IRenderable
         return _modelProperties;
     }
 
-    @Override public void clear() {
-        _listeners.clear();
-        _modelProperties.clear();
-    }
-
     @Override public boolean equals(Object obj) {
         if(obj instanceof IModel) {
             IModel model = (IModel) obj;

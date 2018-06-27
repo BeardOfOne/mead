@@ -30,10 +30,7 @@ import java.util.UUID;
 import engine.communication.internal.persistance.IXMLCodec;
 import engine.communication.internal.signal.ISignalListener;
 import engine.communication.internal.signal.SignalListenerContainer;
-import engine.core.factories.AbstractFactory;
-import engine.core.mvc.IDestructor;
 import engine.core.mvc.common.CommonProperties;
-import game.core.factories.ModelFactory;
 
 /**
  * This interface describes the general contract rules of all model type implementors 
@@ -41,7 +38,7 @@ import game.core.factories.ModelFactory;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
+public interface IModel extends ISignalListener, IXMLCodec {
 
     /**
      * This event is used to indicate that a listener has been added
@@ -85,15 +82,6 @@ public interface IModel extends IDestructor, ISignalListener, IXMLCodec {
     public void copyData(IModel model);
 
     public void addListeners(ISignalListener... listeners);
-
-    
-    @Override default public void destructor() {
-        // Clear the signals associated to this model
-        clearSignalListeners();
-
-        // Remove this model from the model factory
-        AbstractFactory.getFactory(ModelFactory.class).remove(this);
-    }
 
     @Override default Map<String, SignalListenerContainer> getSignalListeners() {
         return getModelProperties().getSignalListeners();
