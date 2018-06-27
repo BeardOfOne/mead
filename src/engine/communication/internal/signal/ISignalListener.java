@@ -207,5 +207,6 @@ public interface ISignalListener {
     /**
      * Registers the handlers that will listen in for messages that are called
      */
-    public void registerSignalListeners();
+    default public void registerSignalListeners() {
+    }
 }
