@@ -1,0 +1,62 @@
+key,en_ca
+About,About Einstein
+Add,Add
+AllViews,All Views
+ApplicationTitle,Einstein Editor
+Browse,Browse
+Cancel,Cancel
+CellDepth,Cell Depth
+CellHeight,Cell Height
+CellWidth,Cell Width
+ClearAll,Clear All
+ClearImage,Clear Image
+Columns,Columns
+Data,Data
+DeleteIcon,content/delete_image.png
+DeleteTileMapQuestion,Are you sure you want to delete this tile map and all of its contents?
+DeleteTileMapTitle,Delete TileMap
+Dimensions,Dimensions
+Edit,Edit
+Error,Error
+Exit,Exit
+Export,Export
+ExportData,Export Data
+ExportImages,Export Images
+ExportOverwriteMessage,"Directory already exists, are you sure you wish to override its contents?"
+File,File
+FriendlyName,Friendly Name
+Github,https://github.com/danielricci/einstein-assets-editor.git
+Height,Height
+Help,Help
+ID,ID
+Image,Image
+Import,Import
+ImportWorkspace,Would you like to import into the current workspace?
+Layer,Layer
+Load,Load
+Name,Name
+NameError,"A tile with the same name (within the same layer) already exists, please name the tile something else"
+NewProject,New Project
+NewTilemap,New Tilemap
+OK,OK
+Perspective,Perspective
+ProjectName,Project Name
+ProjectSettings,Project Settings
+Properties,Properties
+PropertiesWindow,Properties Window
+Remove,Remove
+ResetPerspective,Reset Perspective
+Rows,Rows
+ScaleDimensions,Scale Dimensions
+Save,Save
+SaveQuestion,Would you like to save before quitting?
+SetupError,"Invalid setup data entered, please try again"
+ShowTileMap,Show Tile Map
+TileLayers,Tile Layers
+TileLayersWindow,Tile Layers Window
+TileProperties,Tile Properties
+View,View
+Views,Views
+Update,Update
+Width,Width
+Window,Window
