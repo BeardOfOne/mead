@@ -99,7 +99,8 @@ public class TileMapView extends PanelView {
         setLocation(visible.x, visible.y);
     }
 
-    @Override public void initializeComponentBindings() {
+    @Override public void onViewInitialized() {
+        setLayout(new GridBagLayout());
         // Listen to the drag events for both mouse and mouse motion
         DraggableListener drag = new DraggableListener(this);
 
@@ -135,10 +136,6 @@ public class TileMapView extends PanelView {
                 }
             }
         });
-    }
-
-    @Override public void onViewInitialized() {
-        setLayout(new GridBagLayout());
     }
 
     @Override public void render() {

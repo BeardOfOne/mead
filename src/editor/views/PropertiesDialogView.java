@@ -244,9 +244,6 @@ public class PropertiesDialogView extends DialogView {
         dataPanel.add(_btnClear);
         dataPanel.add(_btnClearAll);
         getContentPane().add(dataPanel);
-    }
-
-    @Override public void initializeComponentBindings() {
 
         /**
          * Name text field bindings

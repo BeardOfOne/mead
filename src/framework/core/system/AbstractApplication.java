@@ -123,15 +123,10 @@ public abstract class AbstractApplication extends JFrame {
                 }
                 
             }
-            
-            // Load the window listeners of the application
-            Tracelog.log(Level.INFO, false, "Initializing Engine Listeners");
-            _instance.onWindowInitialized();
-            Tracelog.log(Level.INFO, false, "Initializing Engine Listeners - Completed");
-
-            Tracelog.log(Level.INFO, false, "Initializing Engine Data - Completed");
+            Tracelog.log(Level.INFO, false, "Initializing Engine Data - Completed");            
             Tracelog.log(Level.INFO, false, "Engine Initialization Completed - " + ((System.nanoTime() - startTime) / 1000000) + "ms");
             
+            _instance.onWindowInitialized();
             _instance.setVisible(true);
         }
     }

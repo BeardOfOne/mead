@@ -109,14 +109,8 @@ public abstract class BaseModel implements IModel, IRenderable
      */
     @Override public final void addListeners(ISignalListener... listeners) {
         addListenersImpl(listeners);
-
-        // Set the event for listeners
-        setOperation(EVENT_LISTENER_ADDED);
-
-        // Push an update event to the listeners
-        doneUpdating();
     }
-
+    
     /**
      * Adds the specified listeners to this model
      * 
@@ -148,10 +142,6 @@ public abstract class BaseModel implements IModel, IRenderable
         return null;
     }
     
-    public int getListenerCount() {
-        return _listeners.size();
-    }
-
     /**
      * Gets if the specified listener is listening in on this model for messages
      * 
@@ -237,6 +227,10 @@ public abstract class BaseModel implements IModel, IRenderable
             return;
         }
 
+        if(_operationName == null) {
+            _operationName = MODEL_REFRESH;
+        }
+        
         // Create a new operation event to send out to listeners
         _operationEvent = new ModelEventArgs(this, _operationName);
 

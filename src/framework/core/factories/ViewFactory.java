@@ -47,7 +47,6 @@ public final class ViewFactory extends AbstractSignalFactory<IView> {
         // automated and will not need to be called by the programmer 
         if(numOfResources != getTotalResourcesCount()) {
             view.onViewInitialized();
-            view.initializeComponentBindings();
         }
 
         return view;

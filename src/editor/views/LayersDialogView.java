@@ -156,9 +156,7 @@ public class LayersDialogView extends DialogView {
         // Adds a scrolling to the list of layers
         JScrollPane listScroller = new JScrollPane(_layers);
         add(listScroller);
-    }
 
-    @Override public void initializeComponentBindings() {
         /**
          * Bindings for the window itself
          */

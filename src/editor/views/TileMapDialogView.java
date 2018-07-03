@@ -207,8 +207,58 @@ public class TileMapDialogView extends DialogView {
         return Integer.parseInt(_rowField.getText().trim());
     }
 
-    @Override public void initializeComponentBindings() {
+    @Override public void onViewInitialized() {
 
+        // NAME
+        _dialogPanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.Name)));
+        _nameField.setMaximumSize(_nameField.getPreferredSize());
+        _dialogPanel.add(_nameField);
+
+        // ROWS
+        _dialogPanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.Rows)));
+        _rowField.setMaximumSize(_rowField.getPreferredSize());
+        ((PlainDocument)_rowField.getDocument()).setDocumentFilter(new DocumentIntegerFilter());
+        _dialogPanel.add(_rowField);
+
+        // COLUMNS
+        _dialogPanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.Columns)));
+        _columnField.setMaximumSize(_columnField.getPreferredSize());
+        ((PlainDocument)_columnField.getDocument()).setDocumentFilter(new DocumentIntegerFilter());
+        _dialogPanel.add(_columnField);
+
+        // CELL WIDTH
+        _dialogPanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.CellWidth)));
+        _cellWidthField.setMaximumSize(_cellWidthField.getPreferredSize());
+        ((PlainDocument)_cellWidthField.getDocument()).setDocumentFilter(new DocumentIntegerFilter());
+        _dialogPanel.add(_cellWidthField);
+
+        // CELL HEIGHT
+        _dialogPanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.CellHeight)));
+        _cellHeightField.setMaximumSize(_cellHeightField.getPreferredSize());
+        ((PlainDocument)_cellHeightField.getDocument()).setDocumentFilter(new DocumentIntegerFilter());
+        _dialogPanel.add(_cellHeightField);
+
+        // Make the grid compact 
+        SpringLayoutHelper.makeCompactGrid(_dialogPanel, 5, 2, 6, 6, 10, 0);
+
+        // Add the dialog panel
+        add(_dialogPanel);
+        
+        // SCALE DIMENSIONS
+        if(_dimension != null) {
+            _scalePanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.ScaleDimensions)));
+            _scaleCheckBox.setMaximumSize(_scaleCheckBox.getPreferredSize());
+            _scalePanel.add(_scaleCheckBox);
+
+            // Add the scale panel
+            add(_scalePanel);
+        }
+        
+        // Add our confirmation buttons to our panel
+        _confirmationPanel.add(_okButton);
+        _confirmationPanel.add(_cancelButton);
+        add(_confirmationPanel);
+        
         // If dimension was provided then add some more bindings
         if(_dimension != null) {
 
@@ -267,7 +317,7 @@ public class TileMapDialogView extends DialogView {
                         int rows = _dimension.height / Integer.parseInt(_cellHeightField.getText());
 
                         _columnField.setText(Integer.toString(columns));
-                        _rowField.setText(Integer.toString(rows));		
+                        _rowField.setText(Integer.toString(rows));      
                     }
                     catch(Exception exception) {
                         // Nothing logged here, this is mainly because of potential division by zero issues
@@ -298,59 +348,7 @@ public class TileMapDialogView extends DialogView {
                 setVisible(false);
             }
         });
-    }
 
-    @Override public void onViewInitialized() {
-
-        // NAME
-        _dialogPanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.Name)));
-        _nameField.setMaximumSize(_nameField.getPreferredSize());
-        _dialogPanel.add(_nameField);
-
-        // ROWS
-        _dialogPanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.Rows)));
-        _rowField.setMaximumSize(_rowField.getPreferredSize());
-        ((PlainDocument)_rowField.getDocument()).setDocumentFilter(new DocumentIntegerFilter());
-        _dialogPanel.add(_rowField);
-
-        // COLUMNS
-        _dialogPanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.Columns)));
-        _columnField.setMaximumSize(_columnField.getPreferredSize());
-        ((PlainDocument)_columnField.getDocument()).setDocumentFilter(new DocumentIntegerFilter());
-        _dialogPanel.add(_columnField);
-
-        // CELL WIDTH
-        _dialogPanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.CellWidth)));
-        _cellWidthField.setMaximumSize(_cellWidthField.getPreferredSize());
-        ((PlainDocument)_cellWidthField.getDocument()).setDocumentFilter(new DocumentIntegerFilter());
-        _dialogPanel.add(_cellWidthField);
-
-        // CELL HEIGHT
-        _dialogPanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.CellHeight)));
-        _cellHeightField.setMaximumSize(_cellHeightField.getPreferredSize());
-        ((PlainDocument)_cellHeightField.getDocument()).setDocumentFilter(new DocumentIntegerFilter());
-        _dialogPanel.add(_cellHeightField);
-
-        // Make the grid compact 
-        SpringLayoutHelper.makeCompactGrid(_dialogPanel, 5, 2, 6, 6, 10, 0);
-
-        // Add the dialog panel
-        add(_dialogPanel);
-        
-        // SCALE DIMENSIONS
-        if(_dimension != null) {
-            _scalePanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.ScaleDimensions)));
-            _scaleCheckBox.setMaximumSize(_scaleCheckBox.getPreferredSize());
-            _scalePanel.add(_scaleCheckBox);
-
-            // Add the scale panel
-            add(_scalePanel);
-        }
-        
-        // Add our confirmation buttons to our panel
-        _confirmationPanel.add(_okButton);
-        _confirmationPanel.add(_cancelButton);
-        add(_confirmationPanel);
     }
 
     @Override protected boolean validateDialog() {

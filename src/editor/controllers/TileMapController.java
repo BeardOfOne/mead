@@ -24,13 +24,11 @@
 
 package editor.controllers;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.logging.Level;
 
 import editor.models.TileMapModel;
 import editor.models.TileModel;
-import framework.api.IModel;
 import framework.communication.internal.signal.ISignalListener;
 import framework.communication.internal.signal.ISignalReceiver;
 import framework.communication.internal.signal.arguments.ControllerEventArgs;
@@ -299,9 +297,5 @@ public class TileMapController extends BaseController {
                 registerSignalListener(event.getOperationName());
             }
         });
-    }
-
-    @Override public List<IModel> getControllerModels() {
-        return null;
     }
 }

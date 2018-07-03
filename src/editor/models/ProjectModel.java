@@ -72,6 +72,7 @@ public final class ProjectModel extends BaseModel {
      * 
      * @return The name of the project
      */
+    @Override
     public String getName() {
         return _projectName;
     }

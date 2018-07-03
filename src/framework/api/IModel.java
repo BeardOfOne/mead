@@ -41,13 +41,6 @@ import framework.core.mvc.common.CommonProperties;
 public interface IModel extends ISignalListener, IXMLCodec {
 
     /**
-     * This event is used to indicate that a listener has been added
-     * from some entity. You will receive a notifications when this 
-     * occurs.
-     */
-    public static final String EVENT_LISTENER_ADDED = "LISTENER_ADDED";
-
-    /**
      * This event is used to indicate that the model listens to events that
      * need a reference to itself.
      */
@@ -86,7 +79,7 @@ public interface IModel extends ISignalListener, IXMLCodec {
     public void copyData(IModel model);
 
     public void addListeners(ISignalListener... listeners);
-
+    
     @Override default Map<String, SignalListenerContainer> getSignalListeners() {
         return getModelProperties().getSignalListeners();
     }

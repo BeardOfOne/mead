@@ -24,10 +24,7 @@
 
 package editor.controllers;
 
-import java.util.List;
-
 import editor.models.ProjectModel;
-import framework.api.IModel;
 import framework.core.mvc.controller.BaseController;
 
 /**
@@ -68,12 +65,5 @@ public final class ProjectController extends BaseController {
      */
     public void setProjectName(String projectName) {
         _model.setProjectName(projectName);
-    }
-
-    /* (non-Javadoc)
-     * @see engine.core.mvc.controller.BaseController#getControllerModels()
-     */
-    @Override public List<IModel> getControllerModels() {
-        return null;
     }
 }

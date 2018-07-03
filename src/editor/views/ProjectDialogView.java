@@ -136,9 +136,7 @@ public final class ProjectDialogView extends DialogView {
         // Add our layouts to this view
         add(_dialogLayout);
         add(_confirmationPanel);
-    }
 
-    @Override public void initializeComponentBindings() {
         _nameField.addKeyListener(new KeyAdapter() {
             @Override public void keyReleased(KeyEvent event) {
                 if (event.getKeyCode() == KeyEvent.VK_ENTER) {

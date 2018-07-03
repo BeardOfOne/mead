@@ -82,9 +82,6 @@ public class TileView extends PanelView {
     } 
 
     @Override public void onViewInitialized() {
-    }
-
-    @Override public void initializeComponentBindings() {
         this.addMouseListener(new MouseAdapter() {
             @Override public void mouseEntered(MouseEvent args) {
                 PropertiesDialogView propertiesView = AbstractFactory.getFactory(ViewFactory.class).get(PropertiesDialogView.class);

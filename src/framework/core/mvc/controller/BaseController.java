@@ -24,11 +24,7 @@
 
 package framework.core.mvc.controller;
 
-import java.util.List;
-
 import framework.api.IController;
-import framework.api.IModel;
-import framework.communication.internal.signal.ISignalListener;
 import framework.communication.internal.signal.arguments.AbstractEventArgs;
 
 /**
@@ -45,25 +41,8 @@ public abstract class BaseController implements IController  {
     private final ControllerProperties _properties = new ControllerProperties();
 
     /**
-     * Constructs a new instance of this class type
-     */
-    public BaseController() {
-    }
-
-    @Override public final void addSignalListener(ISignalListener listener) {
-        List<IModel> models = getControllerModels();
-        if(models != null) {
-            for(IModel model : models) {
-                model.addListeners(listener);
-            }
-        }
-    }
-    
-    /**
      * @return The controller models associated to this controller
      */
-    protected abstract List<IModel> getControllerModels();
-    
     @Override public final ControllerProperties getControllerProperties() {
         return _properties;
     }

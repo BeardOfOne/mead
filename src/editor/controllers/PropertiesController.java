@@ -31,7 +31,6 @@ import java.util.stream.Collectors;
 import editor.models.PropertiesModel;
 import editor.models.TileLayerModel;
 import editor.models.TileModel;
-import framework.api.IModel;
 import framework.core.mvc.controller.BaseController;
 
 /**
@@ -149,9 +148,5 @@ public final class PropertiesController extends BaseController {
 
     @Override public void clearSignalListeners() {
         _model.setTileModel(null);
-    }
-
-    @Override public List<IModel> getControllerModels() {
-        return null;
     }
 }

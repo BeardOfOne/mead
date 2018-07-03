@@ -24,6 +24,7 @@
 
 package framework.api;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -102,7 +103,7 @@ public interface IView extends ISignalListener {
                     view.clearSignalListeners();
 
                     // log that the component is being hidden
-                    Tracelog.log(Level.INFO, false, String.format("Component %s is being hidden", args.getSource().getClass().getCanonicalName()));
+                    //Tracelog.log(Level.INFO, false, String.format("Component %s is being hidden", args.getSource().getClass().getCanonicalName()));
                 }
 
                 // This event is fired when  a view is shown, that is when
@@ -161,29 +162,12 @@ public interface IView extends ISignalListener {
      * 
      * @return the view properties associated to the view
      */
-    public ViewProperties getViewProperties();	
+    public ViewProperties getViewProperties();
 
     /**
      * Called after the view is created is has been initialized.
      */
     default public void onViewInitialized() {
-    }
-
-    /**
-     * Defines how the bindings of the components in the view are initialized
-     * 
-     * Note: This is automatically called by the corresponding 
-     *       factory. This method will be called after the 
-     *       constructor is done executing
-     * 
-     * Note: This method should only include binding specific information about a control
-     * 
-     * Note: This is not the place where you should deal with
-     *       signals from the SignalListener interface and such, 
-     *       this is really specific to the UI itself and its 
-     *       JComponent/Container hierarchies 
-     */
-    @Deprecated default public void initializeComponentBindings() {
     }
 
     /**
@@ -199,14 +183,19 @@ public interface IView extends ISignalListener {
 
     /**
      * Renders the view
-     * 
-     * Note: The difference between render and an update, is that a render will draw most, if not all of the
-     *       foundation elements, whereas update would update portions of the rendered view
      */
     public default void render() {
+        
+        Tracelog.log(Level.INFO, false, "IView::render:" + this.getClass().getName());
+        
         getContainerClass().setVisible(true);
+        for(Component component : getContainerClass().getComponents()) {
+            if(component instanceof IView) {
+                ((IView)component).render();
+            }
+        }
     }
-
+    
     @Override default Map<String, SignalListenerContainer> getSignalListeners() {
         return getViewProperties().getSignalListeners();
     }

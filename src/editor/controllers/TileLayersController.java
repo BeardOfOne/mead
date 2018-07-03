@@ -24,12 +24,9 @@
 
 package editor.controllers;
 
-import java.util.List;
-
 import javax.swing.DefaultComboBoxModel;
 
 import editor.models.TileLayerModel;
-import framework.api.IModel;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ModelFactory;
 import framework.core.mvc.controller.BaseController;
@@ -140,9 +137,5 @@ public final class TileLayersController extends BaseController {
         
         layer.setLayerName(name);
         return true;
-    }
-
-    @Override public List<IModel> getControllerModels() {
-        return null;
     }
 }

@@ -106,10 +106,4 @@ public abstract class ScrollView extends PanelView implements Scrollable, MouseM
             return ((currentPosition / _unitIncrement) + 1) * _unitIncrement - currentPosition;
         }
     }
-
-    @Override public void onViewInitialized() {
-    }
-
-    @Override public void initializeComponentBindings() {
-    }
 }
