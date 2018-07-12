@@ -46,7 +46,7 @@ import framework.utils.logging.Tracelog;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class PanelView extends JPanel implements IView, IRenderer {
+public class PanelView extends JPanel implements IView, IRenderer {
     
     /**
      * The render methods the can be used within this view
