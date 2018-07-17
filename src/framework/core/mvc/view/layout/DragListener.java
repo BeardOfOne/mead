@@ -36,7 +36,7 @@ import javax.swing.event.MouseInputAdapter;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public class DraggableListener extends MouseInputAdapter {
+public class DragListener extends MouseInputAdapter {
 
     /**
      * The position of the mouse
@@ -62,18 +62,51 @@ public class DraggableListener extends MouseInputAdapter {
      * The owner associated to this 
      */
     private final Component _owner;
+    
+    /**
+     * TRUE if the listener for the owner component is enabled, FALSE otherwise
+     */
+    private boolean _isEnabled;
 
     /**
      * Constructs a new instance of this class type
+     *
+     * @param component The component to associate this listener to
      */
-    public DraggableListener(Component component) {
-        
-        // Set the owner
+    public DragListener(Component component) {
         _owner = component;
+        setEnabled(true);
+    }
+    
+    /**
+     * Sets if this listener is enabled
+     *
+     * @param isEnabled TRUE if this listener is enabled, FALSE otherwise
+     */
+    public void setEnabled(boolean isEnabled) {
+        if(_isEnabled == isEnabled) {
+            return;
+        }
         
-        // Associated the proper listeners to what this listener class requires to operate 
-        component.addMouseListener(this);
-        component.addMouseMotionListener(this);
+        _isEnabled = isEnabled;
+        
+        if(!isEnabled) {
+            _owner.removeMouseListener(this);
+            _owner.removeMouseMotionListener(this);
+        }
+        else {
+            _owner.addMouseListener(this);
+            _owner.addMouseMotionListener(this);
+        }
+    }
+    
+    /**
+     * Gets if this listener is enabled
+     *
+     * @return TRUE if this listener is enabled, FALSE otherwise
+     */
+    public boolean getIsEnabled() {
+        return _isEnabled;
     }
 
     /**
@@ -93,6 +126,7 @@ public class DraggableListener extends MouseInputAdapter {
     }
 
     @Override public void mouseReleased(MouseEvent event) {
+        System.out.println("DraggableListener::mouseReleased");
         Object source = event.getSource();
         if(source instanceof Component) {
             Component component = (Component)source;
@@ -111,10 +145,13 @@ public class DraggableListener extends MouseInputAdapter {
     }
 
     @Override public void mousePressed(MouseEvent event) {
+        System.out.println("DraggableListener::mousePressed");
         _mousePressedEvent = event;
     }
 
     @Override public void mouseDragged(MouseEvent event) {
+        
+        System.out.println("DraggableListener::mouseDragged");
         
         // Get the component associated to the mouse event
         Component component = event.getComponent();

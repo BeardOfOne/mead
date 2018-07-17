@@ -48,7 +48,7 @@ import framework.core.factories.ControllerFactory;
 import framework.core.factories.ModelFactory;
 import framework.core.factories.ViewFactory;
 import framework.core.mvc.view.PanelView;
-import framework.core.mvc.view.layout.DraggableListener;
+import framework.core.mvc.view.layout.DragListener;
 import framework.utils.globalisation.Localization;
 import resources.ResourceKeys;
 
@@ -102,7 +102,7 @@ public class TileMapView extends PanelView {
     @Override public void onViewInitialized() {
         setLayout(new GridBagLayout());
         // Listen to the drag events for both mouse and mouse motion
-        DraggableListener drag = new DraggableListener(this);
+        DragListener drag = new DragListener(this);
 
         this.addMouseListener(new MouseAdapter() {
             @Override public void mouseReleased(MouseEvent args) {
