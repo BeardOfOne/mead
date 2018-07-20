@@ -31,6 +31,8 @@ import java.util.List;
 
 import javax.swing.event.MouseInputAdapter;
 
+import framework.api.IView;
+
 /**
  * Handles collisions associated to a particular component within the same node level structure
  * 
@@ -38,42 +40,52 @@ import javax.swing.event.MouseInputAdapter;
  *
  */
 public final class CollisionListener extends MouseInputAdapter {
+
+    private final IView _source;
     
     /**
-     * The list of collided components
+     * The collided object
      */
-    private final List<Component> _collisions = new ArrayList();
+    private IView _collision;
     
     /**
      * Constructs a new instance of this class type
      *
-     * @param component The component to register collision events to
+     * @param source The source component to register collision events to
      */
-    public CollisionListener(Component component){
-        component.addMouseListener(this);
-        component.addMouseMotionListener(this);
+    public CollisionListener(IView source) {
+        _source = source;
+        source.getContainerClass().addMouseListener(this);
+        source.getContainerClass().addMouseMotionListener(this);
     }
     
     @Override public void mouseDragged(MouseEvent event) {
         
         // Clears the collisions
-        _collisions.clear();
-        
-        final Component thisComponent = event.getComponent();
-        final Component[] thisComponentsSiblings = thisComponent.getParent().getComponents();
+        _collision = null;
+        List<IView> siblings = new ArrayList();
+        for(Component component : _source.getContainerClass().getParent().getComponents()) {
+            if(component instanceof IView) {
+                siblings.add((IView)component);
+            }
+        }
     
         // Find all collided components 
-        for(Component sibling : thisComponentsSiblings) {
-            if(sibling != thisComponent && sibling.getClass().equals(thisComponent.getClass()) && thisComponent.getBounds().intersects(sibling.getBounds())) {
-                _collisions.add(sibling);
+        for(IView sibling : siblings) {
+            if(sibling != _source && sibling instanceof ICollidable && _source.getContainerClass().getBounds().intersects(sibling.getContainerClass().getBounds())) {
+                ICollidable collidable = (ICollidable)sibling;
+                if(collidable.isValidCollider(_source)) {
+                    _collision = (IView)collidable;
+                    break;
+                }
             }
         }
     }
     
     /**
-     * @return The list of collided entities that the currently registered component has colided with
+     * @return The list of collided entities that the currently registered component has collided with
      */
-    public List<Component> getCollisions() {
-        return new ArrayList(_collisions);
+    public IView getCollision() {
+        return _collision;
     }    
 }

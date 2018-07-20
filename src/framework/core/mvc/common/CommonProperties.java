@@ -42,7 +42,6 @@ public class CommonProperties<T extends ISignalListener> {
     /**
      * The listener entity
      */
-    @Deprecated
     private T _listener;
 
     /**
@@ -64,7 +63,6 @@ public class CommonProperties<T extends ISignalListener> {
      * 
      * @return The entity
      */
-    @Deprecated
     public final T getEntity() {
         return _listener;
     }
@@ -77,7 +75,6 @@ public class CommonProperties<T extends ISignalListener> {
      * 
      * @return The listener as the specified type
      */
-    @Deprecated
     public final <U extends T> U getEntity(Class<U> classType) {
         return _listener != null ? (U)_listener : null;
     }
@@ -87,7 +84,7 @@ public class CommonProperties<T extends ISignalListener> {
      * 
      * @param entity The entity
      */
-    @Deprecated public final void setEntity(T entity) {
+     public final void setEntity(T entity) {
         this._listener = entity;
     }
 }

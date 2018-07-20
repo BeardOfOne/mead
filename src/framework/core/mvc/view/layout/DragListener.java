@@ -126,7 +126,6 @@ public class DragListener extends MouseInputAdapter {
     }
 
     @Override public void mouseReleased(MouseEvent event) {
-        System.out.println("DraggableListener::mouseReleased");
         Object source = event.getSource();
         if(source instanceof Component) {
             Component component = (Component)source;
@@ -145,18 +144,15 @@ public class DragListener extends MouseInputAdapter {
     }
 
     @Override public void mousePressed(MouseEvent event) {
-        System.out.println("DraggableListener::mousePressed");
         _mousePressedEvent = event;
     }
 
     @Override public void mouseDragged(MouseEvent event) {
         
-        System.out.println("DraggableListener::mouseDragged");
-        
         // Get the component associated to the mouse event
         Component component = event.getComponent();
         
-        // Store the locatation of the component
+        // Store the location of the component
         _location = component.getLocation(_location);
 
         // Set the location of the component
