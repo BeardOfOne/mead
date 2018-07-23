@@ -72,9 +72,9 @@ public final class CollisionListener extends MouseInputAdapter {
     
         // Find all collided components 
         for(IView sibling : siblings) {
-            if(sibling != _source && sibling instanceof ICollidable && _source.getContainerClass().getBounds().intersects(sibling.getContainerClass().getBounds())) {
-                ICollidable collidable = (ICollidable)sibling;
-                if(collidable.isValidCollider(_source)) {
+            if(sibling != _source && sibling instanceof ICollide && _source.getContainerClass().getBounds().intersects(sibling.getContainerClass().getBounds())) {
+                ICollide collidable = (ICollide)sibling;
+                if(collidable.isValidCollision(_source)) {
                     _collision = (IView)collidable;
                     break;
                 }

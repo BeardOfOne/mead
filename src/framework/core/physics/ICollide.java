@@ -28,6 +28,6 @@ import framework.api.IView;
 /**
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
-public interface ICollidable {
-    public boolean isValidCollider(IView source);
+public interface ICollide {
+    public boolean isValidCollision(IView source);
 }
