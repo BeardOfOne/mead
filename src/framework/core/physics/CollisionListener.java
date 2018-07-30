@@ -28,10 +28,12 @@ import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.swing.event.MouseInputAdapter;
 
 import framework.api.IView;
+import framework.utils.logging.Tracelog;
 
 /**
  * Handles collisions associated to a particular component within the same node level structure
@@ -41,22 +43,29 @@ import framework.api.IView;
  */
 public final class CollisionListener extends MouseInputAdapter {
 
-    private final IView _source;
+    /**
+     * The source of where the collision took place
+     */
+    private final Component _source;
     
     /**
-     * The collided object
+     * TRUE if the listener for the owner component is enabled, FALSE otherwise
      */
-    private IView _collision;
+    private boolean _isEnabled;
+    
+    /**
+     * The object that has been collided with
+     */
+    private ICollide _collision;
     
     /**
      * Constructs a new instance of this class type
      *
      * @param source The source component to register collision events to
      */
-    public CollisionListener(IView source) {
+    public CollisionListener(Component source) {
         _source = source;
-        source.getContainerClass().addMouseListener(this);
-        source.getContainerClass().addMouseMotionListener(this);
+        setEnabled(true);
     }
     
     @Override public void mouseDragged(MouseEvent event) {
@@ -64,7 +73,7 @@ public final class CollisionListener extends MouseInputAdapter {
         // Clears the collisions
         _collision = null;
         List<IView> siblings = new ArrayList();
-        for(Component component : _source.getContainerClass().getParent().getComponents()) {
+        for(Component component : _source.getParent().getComponents()) {
             if(component instanceof IView) {
                 siblings.add((IView)component);
             }
@@ -72,10 +81,10 @@ public final class CollisionListener extends MouseInputAdapter {
     
         // Find all collided components 
         for(IView sibling : siblings) {
-            if(sibling != _source && sibling instanceof ICollide && _source.getContainerClass().getBounds().intersects(sibling.getContainerClass().getBounds())) {
+            if(sibling != _source && sibling instanceof ICollide && _source.getBounds().intersects(sibling.getContainerClass().getBounds())) {
                 ICollide collidable = (ICollide)sibling;
                 if(collidable.isValidCollision(_source)) {
-                    _collision = (IView)collidable;
+                    _collision = collidable;
                     break;
                 }
             }
@@ -83,9 +92,42 @@ public final class CollisionListener extends MouseInputAdapter {
     }
     
     /**
+     * Sets if this listener is enabled
+     *
+     * @param isEnabled TRUE if this listener is enabled, FALSE otherwise
+     */
+    public void setEnabled(boolean isEnabled) {
+        if(_isEnabled == isEnabled) {
+            return;
+        }
+        
+        _isEnabled = isEnabled;
+        
+        if(!isEnabled) {
+            _source.removeMouseListener(this);
+            _source.removeMouseMotionListener(this);
+        }
+        else {
+            _source.addMouseListener(this);
+            _source.addMouseMotionListener(this);
+        }
+        
+        Tracelog.log(Level.INFO, false, String.format("CollisionListener for %s is now %s", _source.getClass().toString(), _isEnabled ? "ENABLED" : "DISABLED"));
+    }
+    
+    /**
+     * Gets if this listener is enabled
+     *
+     * @return TRUE if this listener is enabled, FALSE otherwise
+     */
+    public boolean getIsEnabled() {
+        return _isEnabled;
+    }
+    
+    /**
      * @return The list of collided entities that the currently registered component has collided with
      */
-    public IView getCollision() {
+    public ICollide getCollision() {
         return _collision;
     }    
 }

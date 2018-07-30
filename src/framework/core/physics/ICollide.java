@@ -23,11 +23,11 @@
 */
 package framework.core.physics;
 
-import framework.api.IView;
+import java.awt.Component;
 
 /**
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  */
 public interface ICollide {
-    public boolean isValidCollision(IView source);
+    public boolean isValidCollision(Component source);
 }
