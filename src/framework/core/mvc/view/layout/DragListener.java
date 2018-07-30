@@ -27,8 +27,11 @@ package framework.core.mvc.view.layout;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.util.logging.Level;
 
 import javax.swing.event.MouseInputAdapter;
+
+import framework.utils.logging.Tracelog;
 
 /**
  * Listener class used for providing draggable functionality to a component
@@ -98,6 +101,8 @@ public class DragListener extends MouseInputAdapter {
             _owner.addMouseListener(this);
             _owner.addMouseMotionListener(this);
         }
+        
+        Tracelog.log(Level.INFO, false, String.format("DragListener for %s is now %s", _owner.getClass().toString(), _isEnabled ? "ENABLED" : "DISABLED"));
     }
     
     /**
