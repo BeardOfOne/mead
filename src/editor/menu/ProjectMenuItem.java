@@ -66,7 +66,7 @@ public class ProjectMenuItem extends AbstractMenuItem {
 
         // If the dialog is not valid then clear the contents of the application and go no further
         if(projectDialog.getDialogResult() != JOptionPane.OK_OPTION) {
-            AbstractSignalFactory.reset();
+            AbstractSignalFactory.clearFactories();
             return;
         }
 

@@ -45,11 +45,12 @@ public abstract class AbstractFactory {
     /**
      * Resets the factory
      */
-    public static final void reset() {
+    public static final void clearFactories() {
         for(int i = FACTORIES.size() - 1; i >= 0; --i) {
             AbstractFactory factory = FACTORIES.get(i);
             if(!factory.isPersistent()) {
                 FACTORIES.remove(i);
+                factory.clear();
             }
         }
     }
@@ -126,6 +127,8 @@ public abstract class AbstractFactory {
      */
     protected abstract boolean hasEntities();
  
+    protected abstract void clear();
+    
     /**
      * Indicates if this factory persists throughout the lifetime of the application
      */

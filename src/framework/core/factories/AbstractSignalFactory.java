@@ -270,6 +270,12 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
             }
         }
     }
+    
+    @Override protected void clear() {
+        _cache.clear();
+        _privateSignals.clear();
+        _publicSignals.clear();
+    }
 
     @Override protected boolean hasEntities() {
         return !_privateSignals.isEmpty() || !_cache.isEmpty();

@@ -147,6 +147,9 @@ public class DataFactory extends AbstractFactory {
         return null;
     }
 
+    @Override protected void clear() {
+    }
+    
     @Override protected boolean hasEntities() {
         return _data.values().size() > 0;
     }
