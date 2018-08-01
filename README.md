@@ -1,31 +1,9 @@
-# Gosling Engine
+# Mead
+<a href="https://github.com/danielricci/mead-framework/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="License" /></a>
 
-### Build Status
-<img src="https://travis-ci.org/danielricci/gosling-engine.svg?branch=master" />
-
-### Description
-This is the game engine that I custom built for myself.  Here are the games that I have currently made with this engine
-
-### Development
+### Games
 - [x] Tic-Tac-Toe
 - [x] Checkers
 - [x] Chess
 - [x] Minesweeper
 - [ ] Solitaire
-
-### Features
-- [x] Localization System
-- [x] Signaling System
-- [x] Data Assets Loading
-- [x] MVC Architecture
-- [x] Events System
-- [x] Build System Integration
-- [x] Logging System
-- [ ] Multi-Threaded Support
-- [ ] Physics System
-- [ ] Network System
-- [ ] Audio System
-- [ ] Animation System
-
-### Contributors
-* [Daniel Ricci] (https://github.com/danielricci)
