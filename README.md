@@ -1,5 +1,6 @@
 # Mead
-<a href="https://github.com/danielricci/mead-framework/blob/master/LICENSE"><img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="License" /></a>
+<img src="https://img.shields.io/github/license/mashape/apistatus.svg" />
+<img src="https://img.shields.io/github/issues/badges/shields.svg" />
 ### Games
 - [x] Tic-Tac-Toe
 - [x] Checkers
