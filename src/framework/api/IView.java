@@ -167,6 +167,7 @@ public interface IView extends ISignalListener {
     /**
      * Called after the view is created is has been initialized.
      */
+    @Deprecated
     default public void onViewInitialized() {
     }
 
