@@ -175,15 +175,15 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
      * @param <U> A type extending The class template type
      */
     public final <U extends T> void remove(U resource) {
-        List<T> history = _privateSignals.get(resource.getClass());
-        if(history != null) {
+        List<T> signals = _privateSignals.get(resource.getClass());
+        if(signals != null) {
 
             // Attempt to remove the reference from the history
-            if(history.remove(resource)) {
+            if(signals.remove(resource)) {
                 Tracelog.log(Level.INFO, false, "Successfully removed " + resource.getClass().toString() + " from the history within the " + this.getClass().toString() + " factory");
 
                 // If there are no more items in the list then clean out the key as well
-                if(history.size() == 0) {
+                if(signals.size() == 0) {
                     _privateSignals.remove(resource.getClass());
                 }
             }
