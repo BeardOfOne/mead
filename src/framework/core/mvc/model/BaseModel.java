@@ -192,7 +192,9 @@ public abstract class BaseModel implements IModel, IRenderable
 
         // Call all signal listeners with the specified event (this takes operation name into account)
         // and then it will end up calling update after the fact
-        for(ISignalListener receiver : _listeners) {
+        // Note: It is possible that the listeners list is updated from elsewhere, this is to prevent
+        //       that issue from occur in a different stackframe
+        for(ISignalListener receiver : new ArrayList<ISignalListener>(_listeners)) {
             receiver.sendSignalEvent(event);
         }
     }
