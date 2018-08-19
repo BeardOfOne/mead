@@ -165,13 +165,6 @@ public interface IView extends ISignalListener {
     public ViewProperties getViewProperties();
 
     /**
-     * Called after the view is created is has been initialized.
-     */
-    @Deprecated
-    default public void onViewInitialized() {
-    }
-
-    /**
      * Gets the containing class of the view, this is the container representation in Swing terms
      * 
      * @param <T> A type extending the class {@link Container}

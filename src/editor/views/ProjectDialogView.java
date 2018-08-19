@@ -37,11 +37,12 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import editor.application.Application;
 import framework.communication.internal.signal.arguments.AbstractEventArgs;
 import framework.core.mvc.view.DialogView;
 import framework.core.mvc.view.layout.SpringLayoutHelper;
 import framework.utils.globalisation.Localization;
+
+import editor.application.Application;
 import resources.ResourceKeys;
 
 /**
@@ -99,28 +100,7 @@ public final class ProjectDialogView extends DialogView {
 
         // Ensures that the dialog is centered on the screen w.r.t its owner
         setLocationRelativeTo(null);
-    }
-
-    /**
-     * Gets the name text field (trimmed)
-     * 
-     * @return The name text field
-     */
-    public String getNameField() {
-        return _nameField.getText().trim();
-    }
-    
-    /**
-     * Sets the name field
-     *
-     * @param name The name
-     */
-    public void setNameField(String name) {
-        _nameField.setText(name);
-    }
-
-    @Override public void onViewInitialized() {
-
+        
         // NAME
         _dialogLayout.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.ProjectName)));
         _nameField.setMaximumSize(_nameField.getPreferredSize());
@@ -172,6 +152,25 @@ public final class ProjectDialogView extends DialogView {
                 }
             }
         });
+
+    }
+
+    /**
+     * Gets the name text field (trimmed)
+     * 
+     * @return The name text field
+     */
+    public String getNameField() {
+        return _nameField.getText().trim();
+    }
+    
+    /**
+     * Sets the name field
+     *
+     * @param name The name
+     */
+    public void setNameField(String name) {
+        _nameField.setText(name);
     }
 
     @Override protected boolean validateDialog() {

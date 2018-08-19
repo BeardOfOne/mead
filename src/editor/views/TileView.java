@@ -32,14 +32,15 @@ import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
-import editor.controllers.TileMapController;
-import editor.models.TileModel;
 import framework.communication.internal.signal.arguments.AbstractEventArgs;
 import framework.core.factories.AbstractFactory;
 import framework.core.factories.ModelFactory;
 import framework.core.factories.ViewFactory;
 import framework.core.graphics.RawData;
 import framework.core.mvc.view.PanelView;
+
+import editor.controllers.TileMapController;
+import editor.models.TileModel;
 
 /**
  * This view represents the visuals of a single tile
@@ -79,9 +80,7 @@ public class TileView extends PanelView {
 
         // Set the layout of this view
         setLayout(new BorderLayout());
-    } 
 
-    @Override public void onViewInitialized() {
         this.addMouseListener(new MouseAdapter() {
             @Override public void mouseEntered(MouseEvent args) {
                 PropertiesDialogView propertiesView = AbstractFactory.getFactory(ViewFactory.class).get(PropertiesDialogView.class);

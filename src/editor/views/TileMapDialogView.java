@@ -42,13 +42,14 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.text.PlainDocument;
 
-import editor.application.Application;
 import framework.communication.internal.signal.arguments.AbstractEventArgs;
 import framework.core.mvc.view.DialogView;
 import framework.core.mvc.view.layout.SpringLayoutHelper;
 import framework.utils.filters.DocumentIntegerFilter;
 import framework.utils.globalisation.Localization;
 import framework.utils.logging.Tracelog;
+
+import editor.application.Application;
 import resources.ResourceKeys;
 
 /**
@@ -150,65 +151,7 @@ public class TileMapDialogView extends DialogView {
         this();
 
         _dimension = dimension;
-    }
-    
-    public TileMapDialogView(String name, String rows, String columns, String width, String height) {
-        this();
         
-        _nameField.setText(name);
-        _rowField.setText(rows);
-        _columnField.setText(columns);
-        _cellWidthField.setText(width);
-        _cellHeightField.setText(height);
-    }
-
-    /**
-     * Gets the cell height data of the dialog
-     * 
-     * @return The cell height size
-     */
-    public int getCellHeightField() {
-        return Integer.parseInt(_cellHeightField.getText().trim());
-    }
-
-    /**
-     * Gets the cell width data of the dialog
-     * 
-     * @return The cell width size
-     */
-    public int getCellWidthField() {
-        return Integer.parseInt(_cellWidthField.getText().trim());
-    }
-
-    /**
-     * Gets the column data of the dialog
-     * 
-     * @return The number of columns entered
-     */
-    public int getColumnsField() {
-        return Integer.parseInt(_columnField.getText().trim());
-    }
-
-    /**
-     * Gets the name text field (trimmed)
-     * 
-     * @return The name text field
-     */
-    public String getNameField() {
-        return _nameField.getText().trim();
-    }
-
-    /**
-     * Gets the rows data of the dialog
-     * 
-     * @return The number of rows entered
-     */
-    public int getRowsField() {
-        return Integer.parseInt(_rowField.getText().trim());
-    }
-
-    @Override public void onViewInitialized() {
-
         // NAME
         _dialogPanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.Name)));
         _nameField.setMaximumSize(_nameField.getPreferredSize());
@@ -349,6 +292,61 @@ public class TileMapDialogView extends DialogView {
             }
         });
 
+    }
+    
+    public TileMapDialogView(String name, String rows, String columns, String width, String height) {
+        this();
+        
+        _nameField.setText(name);
+        _rowField.setText(rows);
+        _columnField.setText(columns);
+        _cellWidthField.setText(width);
+        _cellHeightField.setText(height);
+    }
+
+    /**
+     * Gets the cell height data of the dialog
+     * 
+     * @return The cell height size
+     */
+    public int getCellHeightField() {
+        return Integer.parseInt(_cellHeightField.getText().trim());
+    }
+
+    /**
+     * Gets the cell width data of the dialog
+     * 
+     * @return The cell width size
+     */
+    public int getCellWidthField() {
+        return Integer.parseInt(_cellWidthField.getText().trim());
+    }
+
+    /**
+     * Gets the column data of the dialog
+     * 
+     * @return The number of columns entered
+     */
+    public int getColumnsField() {
+        return Integer.parseInt(_columnField.getText().trim());
+    }
+
+    /**
+     * Gets the name text field (trimmed)
+     * 
+     * @return The name text field
+     */
+    public String getNameField() {
+        return _nameField.getText().trim();
+    }
+
+    /**
+     * Gets the rows data of the dialog
+     * 
+     * @return The number of rows entered
+     */
+    public int getRowsField() {
+        return Integer.parseInt(_rowField.getText().trim());
     }
 
     @Override protected boolean validateDialog() {

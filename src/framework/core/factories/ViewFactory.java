@@ -32,26 +32,7 @@ import framework.api.IView;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public final class ViewFactory extends AbstractSignalFactory<IView> {
-
-    @Override public <U extends IView> U add(U view, boolean isShared) {
-
-        // Get the total number of resources currently in the factory
-        int numOfResources = getTotalResourcesCount();		
-
-        // Add the resource into the factory
-        super.add(view, isShared);
-
-        // Compare the current number of resources to see if this was newly created
-        // and if it was then call initialize components so that this procedure is
-        // automated and will not need to be called by the programmer 
-        if(numOfResources != getTotalResourcesCount()) {
-            view.onViewInitialized();
-        }
-
-        return view;
-    }
-    
+public final class ViewFactory extends AbstractSignalFactory<IView> {   
     @Override protected boolean isPersistent() {
         return false;
     }

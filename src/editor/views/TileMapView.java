@@ -38,9 +38,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 
-import editor.application.Application;
-import editor.controllers.TileMapController;
-import editor.models.TileMapModel;
 import framework.communication.internal.signal.arguments.AbstractEventArgs;
 import framework.core.factories.AbstractFactory;
 import framework.core.factories.AbstractSignalFactory;
@@ -50,6 +47,10 @@ import framework.core.factories.ViewFactory;
 import framework.core.mvc.view.PanelView;
 import framework.core.mvc.view.layout.DragListener;
 import framework.utils.globalisation.Localization;
+
+import editor.application.Application;
+import editor.controllers.TileMapController;
+import editor.models.TileMapModel;
 import resources.ResourceKeys;
 
 /**
@@ -97,9 +98,7 @@ public class TileMapView extends PanelView {
         Rectangle visible = AbstractFactory.getFactory(ViewFactory.class).get(ProjectView.class).getVisibleRect();
         getViewProperties().getEntity(TileMapController.class).updateTileMapPosition(visible.x, visible.y);
         setLocation(visible.x, visible.y);
-    }
 
-    @Override public void onViewInitialized() {
         setLayout(new GridBagLayout());
         // Listen to the drag events for both mouse and mouse motion
         DragListener drag = new DragListener(this);

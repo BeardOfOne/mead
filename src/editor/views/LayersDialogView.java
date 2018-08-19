@@ -44,14 +44,15 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import editor.application.Application;
-import editor.controllers.TileLayersController;
-import editor.models.TileLayerModel;
 import framework.communication.internal.signal.arguments.AbstractEventArgs;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ControllerFactory;
 import framework.core.mvc.view.DialogView;
 import framework.utils.globalisation.Localization;
+
+import editor.application.Application;
+import editor.controllers.TileLayersController;
+import editor.models.TileLayerModel;
 import resources.ResourceKeys;
 
 /**
@@ -136,9 +137,7 @@ public class LayersDialogView extends DialogView {
         
         // The remove button is enabled when there is a selection within the list
         _btnRemove.setEnabled(!_layers.isSelectionEmpty());
-    }
 
-    @Override public void onViewInitialized() {
         JPanel actionsPanel = new JPanel();
         actionsPanel.add(_btnAdd);
         actionsPanel.add(_btnUpdate);

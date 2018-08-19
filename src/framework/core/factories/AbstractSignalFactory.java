@@ -196,28 +196,6 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
     }
 
     /**
-     * Gets the total count of resources from the factory
-     * 
-     * Note: This goes through the history list therefore this will
-     * include everything that was ever created, minus whatever resources
-     * have been destroyed (nullified)
-     *  
-     * @return The total number of current resources within the history structure
-     */
-    protected final int getTotalResourcesCount() {
-
-        int count = 0;
-
-        // For every list within the history structure
-        // get the total number of entries
-        for(List list : _privateSignals.values()) {
-            count += list.size();
-        }
-
-        return count;
-    }
-
-    /**
      * Gets the number of resources
      * 
      * @param classType The resource class type

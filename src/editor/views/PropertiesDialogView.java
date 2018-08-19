@@ -51,12 +51,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-import editor.application.Application;
-import editor.controllers.PropertiesController;
-import editor.controllers.TileLayersController;
-import editor.models.PropertiesModel;
-import editor.models.TileLayerModel;
-import editor.models.TileModel;
 import framework.communication.internal.signal.arguments.AbstractEventArgs;
 import framework.communication.internal.signal.arguments.ModelEventArgs;
 import framework.core.factories.AbstractFactory;
@@ -68,6 +62,13 @@ import framework.core.mvc.view.DialogView;
 import framework.core.system.GameValues;
 import framework.utils.globalisation.Localization;
 import framework.utils.io.Paths;
+
+import editor.application.Application;
+import editor.controllers.PropertiesController;
+import editor.controllers.TileLayersController;
+import editor.models.PropertiesModel;
+import editor.models.TileLayerModel;
+import editor.models.TileModel;
 import resources.ResourceKeys;
 
 /**
@@ -145,35 +146,7 @@ public class PropertiesDialogView extends DialogView {
 
         // Set the layout manager of this dialog to be a grid-like layout
         getContentPane().setLayout(new GridLayout(7, 2, 0, 0));
-    }
-
-    /**
-     * Helper method used to easily update the state of the components on the UI
-     *  
-     * @param isEditable If the components can be interacted with by the user
-     */
-    private void updateComponentStates(boolean isEditable) {
-
-        // Set if the fields are editable
-        _nameTextField.setEditable(isEditable);
-        _friendlyNameTextField.setEditable(isEditable);
-
-        // Focusable prevents events from being fired even when
-        // the fields are not enabled
-        _nameTextField.setFocusable(isEditable);
-        _friendlyNameTextField.setFocusable(isEditable);
-
-        // Set if the layers drop down can be interacted with
-        _layers.setEnabled(isEditable);
-
-        // Set if the image manipulation buttons can be interacted with
-        _btnBrowse.setEnabled(isEditable);
-        _btnClear.setEnabled(isEditable);
-        _btnClear.setEnabled(isEditable);
-    }
-
-    @Override public void onViewInitialized() {
-
+        
         // ID Entry
         JPanel idPanel = new JPanel();
         getContentPane().add(idPanel);
@@ -380,7 +353,7 @@ public class PropertiesDialogView extends DialogView {
             }
         });
         _layers.setSelectionModel(new DefaultListSelectionModel() 
-        {		
+        {       
             // Make it so that clicking behaves the same as ctrl + click, else it will
             // toggle and only ever allow one element, this prevents that.
             @Override public void setSelectionInterval(int index0, int index1) 
@@ -393,6 +366,31 @@ public class PropertiesDialogView extends DialogView {
                 }
             }
         });
+    }
+
+    /**
+     * Helper method used to easily update the state of the components on the UI
+     *  
+     * @param isEditable If the components can be interacted with by the user
+     */
+    private void updateComponentStates(boolean isEditable) {
+
+        // Set if the fields are editable
+        _nameTextField.setEditable(isEditable);
+        _friendlyNameTextField.setEditable(isEditable);
+
+        // Focusable prevents events from being fired even when
+        // the fields are not enabled
+        _nameTextField.setFocusable(isEditable);
+        _friendlyNameTextField.setFocusable(isEditable);
+
+        // Set if the layers drop down can be interacted with
+        _layers.setEnabled(isEditable);
+
+        // Set if the image manipulation buttons can be interacted with
+        _btnBrowse.setEnabled(isEditable);
+        _btnClear.setEnabled(isEditable);
+        _btnClear.setEnabled(isEditable);
     }
 
     @Override public void render() {
