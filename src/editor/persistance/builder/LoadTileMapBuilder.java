@@ -31,7 +31,7 @@ import java.util.logging.Level;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
 
-import editor.application.Application;
+import editor.application.Editor;
 import editor.models.ProjectModel;
 import editor.models.TileLayerModel;
 import editor.models.TileMapModel;
@@ -164,7 +164,7 @@ public final class LoadTileMapBuilder extends AbstractBuilder<FileSystem> {
 
         // Open the file chooser so the user can navigate to the path
         // where the file should be loaded.
-        int loadValue = fileChooser.showOpenDialog(Application.instance());
+        int loadValue = fileChooser.showOpenDialog(Editor.instance());
 
         // If the user chose to perform a load within the file chooser
         // dialog, then continue forward 

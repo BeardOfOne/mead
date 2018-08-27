@@ -63,7 +63,7 @@ import framework.core.system.GameValues;
 import framework.utils.globalisation.Localization;
 import framework.utils.io.Paths;
 
-import editor.application.Application;
+import editor.application.Editor;
 import editor.controllers.PropertiesController;
 import editor.controllers.TileLayersController;
 import editor.models.PropertiesModel;
@@ -129,7 +129,7 @@ public class PropertiesDialogView extends DialogView {
      */
     public PropertiesDialogView() {
         super(
-                Application.instance(),
+                Editor.instance(),
                 Localization.instance().getLocalizedString(ResourceKeys.Properties),
                 400,
                 650

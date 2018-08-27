@@ -29,7 +29,7 @@ import java.util.Map;
 
 import javax.swing.JFileChooser;
 
-import editor.application.Application;
+import editor.application.Editor;
 import editor.models.ProjectModel;
 import editor.models.TileLayerModel;
 import editor.models.TileMapModel;
@@ -70,7 +70,7 @@ public final class SaveTileMapBuilder extends AbstractBuilder<FileSystem> implem
         // where the file should be saved.  The user will also enter a
         // file name, this is taken and will later be used to create
         // the file
-        int saveValue = fileChooser.showSaveDialog(Application.instance());
+        int saveValue = fileChooser.showSaveDialog(Editor.instance());
 
         // If the user chose to perform a save within the file chooser
         // dialog, then continue forward and create a resource handle

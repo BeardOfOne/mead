@@ -50,7 +50,7 @@ import framework.core.factories.ControllerFactory;
 import framework.core.mvc.view.DialogView;
 import framework.utils.globalisation.Localization;
 
-import editor.application.Application;
+import editor.application.Editor;
 import editor.controllers.TileLayersController;
 import editor.models.TileLayerModel;
 import resources.ResourceKeys;
@@ -100,7 +100,7 @@ public class LayersDialogView extends DialogView {
      */
     public LayersDialogView() {
         super(
-                Application.instance(), 
+                Editor.instance(), 
                 Localization.instance().getLocalizedString(ResourceKeys.TileLayers)
                 );
 

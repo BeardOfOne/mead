@@ -42,7 +42,7 @@ import framework.core.mvc.view.DialogView;
 import framework.core.mvc.view.layout.SpringLayoutHelper;
 import framework.utils.globalisation.Localization;
 
-import editor.application.Application;
+import editor.application.Editor;
 import resources.ResourceKeys;
 
 /**
@@ -82,7 +82,7 @@ public final class ProjectDialogView extends DialogView {
      * Constructs a new instance of this class type
      */
     public ProjectDialogView() {
-        super(Application.instance(), Localization.instance().getLocalizedString(ResourceKeys.NewProject), 400, 100);
+        super(Editor.instance(), Localization.instance().getLocalizedString(ResourceKeys.NewProject), 400, 100);
 
         setAutomaticDialogCentering(true);
         

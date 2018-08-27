@@ -30,7 +30,7 @@ import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import editor.application.Application;
+import editor.application.Editor;
 import editor.models.TileLayerModel;
 import editor.models.TileMapModel;
 import editor.persistance.filesystem.TileMapFileSystem;
@@ -85,7 +85,7 @@ public final class ExportDataBuilder extends AbstractBuilder<TileMapFileSystem> 
         }
         
         // Show the save dialog location
-        if(fileChooser.showSaveDialog(Application.instance()) != JFileChooser.APPROVE_OPTION) {
+        if(fileChooser.showSaveDialog(Editor.instance()) != JFileChooser.APPROVE_OPTION) {
             return null;
         }
         
@@ -100,7 +100,7 @@ public final class ExportDataBuilder extends AbstractBuilder<TileMapFileSystem> 
         // Display to the user that the directory already existed, and that
         // contents within the directory will be overwritten
         return JOptionPane.showConfirmDialog(
-            Application.instance(),
+            Editor.instance(),
             Localization.instance().getLocalizedString(ResourceKeys.ExportOverwriteMessage),
             Localization.instance().getLocalizedString(ResourceKeys.Export),
             JOptionPane.YES_NO_OPTION,

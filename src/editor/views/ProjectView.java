@@ -26,7 +26,7 @@ package editor.views;
 
 import javax.swing.JScrollPane;
 
-import editor.application.Application;
+import editor.application.Editor;
 import editor.controllers.ProjectController;
 import editor.models.ProjectModel;
 import framework.communication.internal.signal.arguments.AbstractEventArgs;
@@ -50,7 +50,7 @@ public class ProjectView extends ScrollView {
      */
     public ProjectView(String projectName) {
         setLayout(new DraggableLayout());
-        Application.instance().setContentPane(new JScrollPane(this));
+        Editor.instance().setContentPane(new JScrollPane(this));
 
         // Create the tile model that this view will be populated from
         ProjectModel model = AbstractFactory.getFactory(ModelFactory.class).add(
@@ -65,7 +65,7 @@ public class ProjectView extends ScrollView {
     }
 
     @Override public void render() {
-        Application.instance().validate();
+        Editor.instance().validate();
         setVisible(true);
     }
 
@@ -74,7 +74,7 @@ public class ProjectView extends ScrollView {
 
         if(event.getSource() instanceof ProjectModel) {
             ProjectModel model = (ProjectModel) event.getSource();
-            Application.instance().setTitle(Application.instance().getTitle() + " - " + model.getName());
+            Editor.instance().setTitle(Editor.instance().getTitle() + " - " + model.getName());
         }
 
         repaint();

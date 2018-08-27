@@ -47,7 +47,7 @@ import editor.menu.TileLayersMenuItem;
 import editor.menu.TileMapMenuItem;
 import editor.menu.TileMapSettingsMenuItem;
 import framework.core.navigation.MenuBuilder;
-import framework.core.system.AbstractApplication;
+import framework.core.system.Application;
 import framework.core.system.EngineProperties;
 import framework.core.system.EngineProperties.Property;
 import framework.utils.globalisation.Localization;
@@ -59,7 +59,7 @@ import resources.ResourceKeys;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public final class Application extends AbstractApplication {
+public final class Editor extends Application {
 
     /**
      * The default application name of this application
@@ -69,7 +69,7 @@ public final class Application extends AbstractApplication {
     /**
      * Constructs a new instance of this class type
      */
-    public Application() {
+    public Editor() {
 
         // Pressing on the close button won't do it's default action
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -87,8 +87,8 @@ public final class Application extends AbstractApplication {
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             @Override public void run() {
-                Application.initialize(Application.class, false);
-                Application.instance().setVisible(true);
+                Editor.initialize(Editor.class, false);
+                Editor.instance().setVisible(true);
             }
         });
     }

@@ -46,19 +46,19 @@ import framework.utils.logging.Tracelog;
  * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
  *
  */
-public abstract class AbstractApplication extends JFrame {
+public abstract class Application extends JFrame {
 
     /**
      * The singleton instance of this class
      */
-    private static AbstractApplication _instance;
+    private static Application _instance;
 
     /**
      * Debug state of the application
      */
     private boolean _isDebug;
     
-    public AbstractApplication() {
+    public Application() {
         // Pressing on the close button won't do it's default action
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     }
@@ -68,7 +68,7 @@ public abstract class AbstractApplication extends JFrame {
      * 
      * @return The singleton instance
      */
-    public static AbstractApplication instance() {
+    public static Application instance() {
         if(_instance == null) {
             Tracelog.log(Level.WARNING, false, "Application instance was requested but was not initialized.");
         }
@@ -84,7 +84,7 @@ public abstract class AbstractApplication extends JFrame {
      * 
      * @return The application instance
      */
-    protected static <T extends AbstractApplication> void initialize(Class<T> classType, boolean isDebug) {
+    protected static <T extends Application> void initialize(Class<T> classType, boolean isDebug) {
 
         if(_instance == null) {
 

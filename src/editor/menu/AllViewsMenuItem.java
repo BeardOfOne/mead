@@ -29,7 +29,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 
-import editor.application.Application;
+import editor.application.Editor;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.navigation.AbstractMenuItem;
 import framework.core.navigation.MenuBuilder;
@@ -54,8 +54,8 @@ public class AllViewsMenuItem extends AbstractMenuItem {
     }
 
     @Override public void onExecute(ActionEvent actionEvent) {
-        MenuBuilder.search(Application.instance().getJMenuBar(), TileLayersMenuItem.class).onExecute(actionEvent);
-        MenuBuilder.search(Application.instance().getJMenuBar(), PropertiesMenuItem.class).onExecute(actionEvent);
+        MenuBuilder.search(Editor.instance().getJMenuBar(), TileLayersMenuItem.class).onExecute(actionEvent);
+        MenuBuilder.search(Editor.instance().getJMenuBar(), PropertiesMenuItem.class).onExecute(actionEvent);
     }
 
     @Override public boolean enabled() {
