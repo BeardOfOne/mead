@@ -44,7 +44,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ControllerFactory;
 import framework.core.mvc.view.DialogView;
@@ -263,8 +262,5 @@ public class LayersDialogView extends DialogView {
         // or it will show up where the mouse is and potentially remove any on-mouse events
         // before making its way to the desired position
         setVisible(true);
-    }
-
-    @Override public void update(AbstractEventArgs signalEvent) {
     }
 }

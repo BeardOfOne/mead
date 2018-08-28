@@ -81,7 +81,12 @@ public final class EngineProperties {
         /**
          * If the engine should supress the display signal registration
          */
-        SUPPRESS_SIGNAL_REGISTRATION_OUTPUT
+        SUPPRESS_SIGNAL_REGISTRATION_OUTPUT,
+        
+        /**
+         * Disables translations placeholder, this will show the text entered as-written
+         */
+        DISABLE_TRANSLATIONS_PLACEHOLDER
     }
 
     /**

@@ -42,7 +42,6 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.text.PlainDocument;
 
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
 import framework.core.mvc.view.DialogView;
 import framework.core.mvc.view.layout.SpringLayoutHelper;
 import framework.utils.filters.DocumentIntegerFilter;
@@ -385,8 +384,5 @@ public class TileMapDialogView extends DialogView {
 
         // Return the validity flag
         return isValid;
-    }
-
-    @Override public void update(AbstractEventArgs signalEvent) {
     }
 }

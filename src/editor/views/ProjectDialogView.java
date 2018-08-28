@@ -37,7 +37,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
 import framework.core.mvc.view.DialogView;
 import framework.core.mvc.view.layout.SpringLayoutHelper;
 import framework.utils.globalisation.Localization;
@@ -190,9 +189,5 @@ public final class ProjectDialogView extends DialogView {
 
         // Return the validity flag
         return true;
-    }
-
-
-    @Override public void update(AbstractEventArgs signalEvent) {
     }
 }
