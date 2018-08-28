@@ -113,17 +113,17 @@ public class Localization {
      * @return The localized string
      */
     public String getLocalizedString(String key) {
-        if(EngineProperties.instance().getIsPropertyValid(Property.DISABLE_TRANSLATIONS_PLACEHOLDER)) {
-            return key;
-        }
-        else {
-            String result = _resources.get(key);
-            if(result == null) {
-                result = "<!__/////" + key.toUpperCase() + "//////!>";
+        String result = _resources.get(key);
+        if(result == null) {
+        	if(EngineProperties.instance().getIsPropertyValid(Property.DISABLE_TRANSLATIONS_PLACEHOLDER)) {
+                result = key;
             }
-            
-            return result;            
+        	else {
+        		result = "<!__/////" + key.toUpperCase() + "//////!>";	
+        	}
         }
+        
+        return result;            
     }
 
     /**
