@@ -49,6 +49,4 @@ public interface IRenderer {
      * @param context The graphics context
      */
     public void render(Image renderableData, Graphics context);
-    
-    
 }

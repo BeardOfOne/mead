@@ -49,6 +49,31 @@ import framework.utils.logging.Tracelog;
 public class PanelView extends JPanel implements IView, IRenderer {
     
     /**
+     * The default render limit value for this panel
+     */
+    private final int RENDER_LIMIT_DEFAULT_VALUE = -1;
+    
+    /**
+     * The x-coordinate for rendering
+     */
+    private int x = -1;
+    
+    /**
+     * The y-coordinate for rendering
+     */
+    private int y = -1;
+    
+    /**
+     * The width for rendering
+     */
+    private int width = -1;
+    
+    /**
+     * The height for rendering
+     */
+    private int height = -1;
+    
+    /**
      * The render methods the can be used within this view
      * 
      * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
@@ -80,6 +105,28 @@ public class PanelView extends JPanel implements IView, IRenderer {
         }
     }
 
+    /**
+     * Sets the rendering limits for this view.
+     *
+     * @param x The x position
+     * @param y The y position
+     * @param width The width
+     * @param height The height
+     */
+    protected final void setRenderLimits(int x, int y, int width, int height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+    }
+    
+    /**
+     * Resets the rendering limits of this view
+     */
+    protected final void resetRenderLimits() {
+        this.x = this.y = this.width = this.height = RENDER_LIMIT_DEFAULT_VALUE;
+    }
+    
     /**
      * Renders the contents currently held in the render cache
      * 
@@ -124,7 +171,14 @@ public class PanelView extends JPanel implements IView, IRenderer {
     }
 
     @Override public void render(Image renderableData, Graphics context) {
-        context.drawImage(renderableData, 0, 0, getWidth(), getHeight(), null);
+        context.drawImage(
+            renderableData, 
+            x == - 1 ? 0 : x, 
+            y == -1 ? 0 : y,
+            width == - 1 ? getWidth() : width, 
+            height == -1 ? getHeight() : height, 
+            null
+        );
     }
 
     @Override protected void paintComponent(Graphics graphics) {
