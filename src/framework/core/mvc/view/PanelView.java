@@ -24,6 +24,7 @@
 
 package framework.core.mvc.view;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Graphics;
@@ -81,7 +82,8 @@ public class PanelView extends JPanel implements IView, IRenderer {
      */
     protected enum RenderMethod {
         PARENT,
-        NORMAL
+        NORMAL,
+        XOR
     }
     
     /**
@@ -171,6 +173,12 @@ public class PanelView extends JPanel implements IView, IRenderer {
     }
 
     @Override public void render(Image renderableData, Graphics context) {
+        if(getRenderMethod() == RenderMethod.XOR) {
+            context.setXORMode(Color.WHITE);
+        } else {
+            context.setPaintMode();
+        }
+        
         context.drawImage(
             renderableData, 
             x == - 1 ? 0 : x, 

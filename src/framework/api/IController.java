@@ -45,7 +45,6 @@ public interface IController extends ISignalListener {
      * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
      *
      */
-    @Deprecated
     public final class ControllerProperties extends CommonProperties<IView> {
     }
 
@@ -54,7 +53,6 @@ public interface IController extends ISignalListener {
      * 
      * @return The controller properties
      */
-    @Deprecated
     public ControllerProperties getControllerProperties();
 
     @Override default Map<String, SignalListenerContainer> getSignalListeners() {
