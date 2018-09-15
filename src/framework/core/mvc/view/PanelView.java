@@ -181,10 +181,10 @@ public class PanelView extends JPanel implements IView, IRenderer {
         
         context.drawImage(
             renderableData, 
-            x == - 1 ? 0 : x, 
-            y == -1 ? 0 : y,
-            width == - 1 ? getWidth() : width, 
-            height == -1 ? getHeight() : height, 
+            x == RENDER_LIMIT_DEFAULT_VALUE ? 0 : x, 
+            y == RENDER_LIMIT_DEFAULT_VALUE ? 0 : y,
+            width == RENDER_LIMIT_DEFAULT_VALUE ? getWidth() : width, 
+            height == RENDER_LIMIT_DEFAULT_VALUE ? getHeight() : height, 
             null
         );
     }
