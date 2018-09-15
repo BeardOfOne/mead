@@ -24,14 +24,11 @@
 
 package framework.core.mvc.view;
 
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import javax.swing.JPanel;
 
@@ -39,7 +36,6 @@ import framework.api.IView;
 import framework.communication.internal.signal.arguments.AbstractEventArgs;
 import framework.core.graphics.IRenderable;
 import framework.core.graphics.IRenderer;
-import framework.utils.logging.Tracelog;
 
 /**
  * This class represents a custom panel class that ties into the gosling MVC design pattern
@@ -57,34 +53,22 @@ public class PanelView extends JPanel implements IView, IRenderer {
     /**
      * The x-coordinate for rendering
      */
-    private int x = -1;
+    private int _x = -1;
     
     /**
      * The y-coordinate for rendering
      */
-    private int y = -1;
+    private int _y = -1;
     
     /**
      * The width for rendering
      */
-    private int width = -1;
+    private int _width = -1;
     
     /**
      * The height for rendering
      */
-    private int height = -1;
-    
-    /**
-     * The render methods the can be used within this view
-     * 
-     * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
-     *
-     */
-    protected enum RenderMethod {
-        PARENT,
-        NORMAL,
-        XOR
-    }
+    private int _height = -1;
     
     /**
      * The view properties of this view
@@ -116,17 +100,10 @@ public class PanelView extends JPanel implements IView, IRenderer {
      * @param height The height
      */
     protected final void setRenderLimits(int x, int y, int width, int height) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
-    }
-    
-    /**
-     * Resets the rendering limits of this view
-     */
-    protected final void resetRenderLimits() {
-        this.x = this.y = this.width = this.height = RENDER_LIMIT_DEFAULT_VALUE;
+        _x = x;
+        _y = y;
+        _width = width;
+        _height = height;
     }
     
     /**
@@ -155,13 +132,7 @@ public class PanelView extends JPanel implements IView, IRenderer {
         }
     }
     
-    /**
-     * Gets the render method used for this view
-     *
-     * @return The render method used for this view
-     */
-    protected RenderMethod getRenderMethod() {
-        return RenderMethod.NORMAL; 
+    protected void PreProcessGraphics(Graphics context) {
     }
     
     @Override public void render(IRenderable renderable, Graphics context) {
@@ -173,18 +144,14 @@ public class PanelView extends JPanel implements IView, IRenderer {
     }
 
     @Override public void render(Image renderableData, Graphics context) {
-        if(getRenderMethod() == RenderMethod.XOR) {
-            context.setXORMode(Color.WHITE);
-        } else {
-            context.setPaintMode();
-        }
-        
+        context.setPaintMode();
+        PreProcessGraphics(context);
         context.drawImage(
             renderableData, 
-            x == RENDER_LIMIT_DEFAULT_VALUE ? 0 : x, 
-            y == RENDER_LIMIT_DEFAULT_VALUE ? 0 : y,
-            width == RENDER_LIMIT_DEFAULT_VALUE ? getWidth() : width, 
-            height == RENDER_LIMIT_DEFAULT_VALUE ? getHeight() : height, 
+            _x == RENDER_LIMIT_DEFAULT_VALUE ? 0 : _x, 
+            _y == RENDER_LIMIT_DEFAULT_VALUE ? 0 : _y,
+            _width == RENDER_LIMIT_DEFAULT_VALUE ? getWidth() : _width, 
+            _height == RENDER_LIMIT_DEFAULT_VALUE ? getHeight() : _height, 
             null
         );
     }
@@ -208,27 +175,5 @@ public class PanelView extends JPanel implements IView, IRenderer {
 
     @Override public final ViewProperties getViewProperties() {
         return _properties;
-    }
-    
-    @Override public void repaint() {
-        RenderMethod renderMethod = getRenderMethod();
-        if(renderMethod != null) {
-            switch(renderMethod) {
-            case NORMAL:
-                super.repaint();
-                break;
-            case PARENT:
-                // TODO: This is horribly inefficient, but it works much nicer than calling repaint on each individual
-                //       component. This needs to be re-thought.
-                Container parent = getParent();
-                if(parent != null) {
-                    parent.repaint();
-                }
-                break;
-            default:
-                Tracelog.log(Level.SEVERE, false, "Cannot render the specified panel, render method " + renderMethod.toString() + " not supported");
-                break;
-            }
-        }
-    }
+    }   
 }
