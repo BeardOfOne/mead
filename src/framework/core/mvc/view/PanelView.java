@@ -132,7 +132,7 @@ public class PanelView extends JPanel implements IView, IRenderer {
         }
     }
     
-    protected void PreProcessGraphics(Graphics context) {
+    protected void preProcessGraphics(Graphics context) {
     }
     
     @Override public void render(IRenderable renderable, Graphics context) {
@@ -145,7 +145,7 @@ public class PanelView extends JPanel implements IView, IRenderer {
 
     @Override public void render(Image renderableData, Graphics context) {
         context.setPaintMode();
-        PreProcessGraphics(context);
+        preProcessGraphics(context);
         context.drawImage(
             renderableData, 
             _x == RENDER_LIMIT_DEFAULT_VALUE ? 0 : _x, 
