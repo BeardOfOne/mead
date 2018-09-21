@@ -131,6 +131,7 @@ public class DragListener extends MouseInputAdapter {
     }
 
     @Override public void mouseReleased(MouseEvent event) {
+              
         Object source = event.getSource();
         if(source instanceof Component) {
             Component component = (Component)source;
@@ -146,6 +147,8 @@ public class DragListener extends MouseInputAdapter {
         else {
             _lastDragged = false;
         }
+        
+        getOwner().notify();
     }
 
     @Override public void mousePressed(MouseEvent event) {
@@ -153,7 +156,7 @@ public class DragListener extends MouseInputAdapter {
     }
 
     @Override public void mouseDragged(MouseEvent event) {
-        
+
         // Get the component associated to the mouse event
         Component component = event.getComponent();
         
