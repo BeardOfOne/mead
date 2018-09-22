@@ -147,8 +147,6 @@ public class DragListener extends MouseInputAdapter {
         else {
             _lastDragged = false;
         }
-        
-        getOwner().notify();
     }
 
     @Override public void mousePressed(MouseEvent event) {
