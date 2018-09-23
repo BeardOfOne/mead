@@ -29,10 +29,6 @@ import java.util.Map;
 
 import javax.swing.JFileChooser;
 
-import editor.application.Editor;
-import editor.models.ProjectModel;
-import editor.models.TileLayerModel;
-import editor.models.TileMapModel;
 import framework.api.IModel;
 import framework.communication.external.builder.AbstractBuilder;
 import framework.communication.external.filesystem.FileSystem;
@@ -44,7 +40,12 @@ import framework.communication.internal.signal.arguments.PipelinedEventArgs;
 import framework.core.factories.AbstractFactory;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ModelFactory;
+import framework.core.system.Application;
 import framework.core.system.GameValues;
+
+import editor.models.ProjectModel;
+import editor.models.TileLayerModel;
+import editor.models.TileMapModel;
 
 /**
  * Builder pattern used for saving a map, so that it can be loaded back afterwards
@@ -70,7 +71,7 @@ public final class SaveTileMapBuilder extends AbstractBuilder<FileSystem> implem
         // where the file should be saved.  The user will also enter a
         // file name, this is taken and will later be used to create
         // the file
-        int saveValue = fileChooser.showSaveDialog(Editor.instance());
+        int saveValue = fileChooser.showSaveDialog(Application.instance);
 
         // If the user chose to perform a save within the file chooser
         // dialog, then continue forward and create a resource handle

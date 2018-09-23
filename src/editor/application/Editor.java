@@ -30,6 +30,12 @@ import java.io.File;
 
 import javax.swing.WindowConstants;
 
+import framework.core.navigation.MenuBuilder;
+import framework.core.system.Application;
+import framework.core.system.EngineProperties;
+import framework.core.system.EngineProperties.Property;
+import framework.utils.globalisation.Localization;
+
 import editor.menu.AboutMenuItem;
 import editor.menu.AllViewsMenuItem;
 import editor.menu.ExitMenuItem;
@@ -46,11 +52,6 @@ import editor.menu.ShowTileMapMenu;
 import editor.menu.TileLayersMenuItem;
 import editor.menu.TileMapMenuItem;
 import editor.menu.TileMapSettingsMenuItem;
-import framework.core.navigation.MenuBuilder;
-import framework.core.system.Application;
-import framework.core.system.EngineProperties;
-import framework.core.system.EngineProperties.Property;
-import framework.utils.globalisation.Localization;
 import resources.ResourceKeys;
 
 /**
@@ -70,7 +71,8 @@ public final class Editor extends Application {
      * Constructs a new instance of this class type
      */
     public Editor() {
-
+        super(false); 
+        
         // Pressing on the close button won't do it's default action
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -87,8 +89,9 @@ public final class Editor extends Application {
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             @Override public void run() {
-                Editor.initialize(Editor.class, false);
-                Editor.instance().setVisible(true);
+                
+//                Editor.initialize(Editor.class, false);
+//                Editor.instance().setVisible(true);
             }
         });
     }

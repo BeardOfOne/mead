@@ -46,9 +46,9 @@ import framework.core.factories.ModelFactory;
 import framework.core.factories.ViewFactory;
 import framework.core.mvc.view.PanelView;
 import framework.core.mvc.view.layout.DragListener;
+import framework.core.system.Application;
 import framework.utils.globalisation.Localization;
 
-import editor.application.Editor;
 import editor.controllers.TileMapController;
 import editor.models.TileMapModel;
 import resources.ResourceKeys;
@@ -130,7 +130,7 @@ public class TileMapView extends PanelView {
                 // really delete this tile map
                 if(args.getKeyCode() == KeyEvent.VK_DELETE) {
                     // If the user wishes to delete the tile map, perform the deletion
-                    if(JOptionPane.showConfirmDialog(Editor.instance(), Localization.instance().getLocalizedString(ResourceKeys.DeleteTileMapQuestion), Localization.instance().getLocalizedString(ResourceKeys.DeleteTileMapTitle), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                    if(JOptionPane.showConfirmDialog(Application.instance, Localization.instance().getLocalizedString(ResourceKeys.DeleteTileMapQuestion), Localization.instance().getLocalizedString(ResourceKeys.DeleteTileMapTitle), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
                     }
                 }
             }

@@ -31,9 +31,9 @@ import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 
 import framework.core.navigation.AbstractMenuItem;
+import framework.core.system.Application;
 import framework.utils.globalisation.Localization;
 
-import editor.application.Editor;
 import resources.ResourceKeys;
 
 /**
@@ -54,8 +54,8 @@ public class ExitMenuItem extends AbstractMenuItem {
     }
 
     @Override public void onExecute(ActionEvent actionEvent) {
-        Editor.instance().dispatchEvent(
-                new WindowEvent(Editor.instance(), WindowEvent.WINDOW_CLOSING)
+        Application.instance.dispatchEvent(
+                new WindowEvent(Application.instance, WindowEvent.WINDOW_CLOSING)
                 );
     }
 

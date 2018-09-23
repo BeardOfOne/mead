@@ -26,9 +26,6 @@ package editor.views;
 
 import javax.swing.JScrollPane;
 
-import editor.application.Editor;
-import editor.controllers.ProjectController;
-import editor.models.ProjectModel;
 import framework.communication.internal.signal.arguments.AbstractEventArgs;
 import framework.core.factories.AbstractFactory;
 import framework.core.factories.AbstractSignalFactory;
@@ -36,6 +33,10 @@ import framework.core.factories.ControllerFactory;
 import framework.core.factories.ModelFactory;
 import framework.core.mvc.view.ScrollView;
 import framework.core.mvc.view.layout.DraggableLayout;
+import framework.core.system.Application;
+
+import editor.controllers.ProjectController;
+import editor.models.ProjectModel;
 
 /**
  * The main window view is the outer most shell that wraps everything
@@ -50,7 +51,7 @@ public class ProjectView extends ScrollView {
      */
     public ProjectView(String projectName) {
         setLayout(new DraggableLayout());
-        Editor.instance().setContentPane(new JScrollPane(this));
+        Application.instance.setContentPane(new JScrollPane(this));
 
         // Create the tile model that this view will be populated from
         ProjectModel model = AbstractFactory.getFactory(ModelFactory.class).add(
@@ -65,7 +66,7 @@ public class ProjectView extends ScrollView {
     }
 
     @Override public void render() {
-        Editor.instance().validate();
+        Application.instance.validate();
         setVisible(true);
     }
 
@@ -74,7 +75,7 @@ public class ProjectView extends ScrollView {
 
         if(event.getSource() instanceof ProjectModel) {
             ProjectModel model = (ProjectModel) event.getSource();
-            Editor.instance().setTitle(Editor.instance().getTitle() + " - " + model.getName());
+            Application.instance.setTitle(Application.instance.getTitle() + " - " + model.getName());
         }
 
         repaint();

@@ -28,6 +28,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.Duration;
 import java.util.logging.Level;
 
 import javax.swing.JFrame;
@@ -48,99 +49,69 @@ import framework.utils.logging.Tracelog;
  */
 public abstract class Application extends JFrame {
 
-    /**
-     * The singleton instance of this class
-     */
-    private static Application _instance;
-
+    public static Application instance;
+    
     /**
      * Debug state of the application
      */
-    private boolean _isDebug;
+    public final boolean isDebug;
     
-    public Application() {
+    /**
+     * The running time of engine
+     */
+    private long runningTime = System.nanoTime();
+    
+    /**
+     * Constructs a new instance of this class type
+     *
+     * @param isDebug If the application is in debug mode
+     */
+    protected Application(boolean isDebug) {
+        
+        instance = this;
+        
         // Pressing on the close button won't do it's default action
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-    }
+        
+        this.isDebug = isDebug;
     
-    /**
-     * Gets the singleton instance of this application
-     * 
-     * @return The singleton instance
-     */
-    public static Application instance() {
-        if(_instance == null) {
-            Tracelog.log(Level.WARNING, false, "Application instance was requested but was not initialized.");
-        }
-        return _instance;
-    }
-
-    /**
-     * Initializes the singleton instance
-     * 
-     * @param classType The specified class type to construct
-     * @param isDebug The debug state of the application
-     * @param <T> AbstractApplication type
-     * 
-     * @return The application instance
-     */
-    protected static <T extends Application> void initialize(Class<T> classType, boolean isDebug) {
-
-        if(_instance == null) {
-
-            // Get the start time
-            long startTime = System.nanoTime();
-
-            try {
-                // Create the new instance
-                _instance = classType.getConstructor().newInstance();
-            }
-            catch(Exception exception) {
-                Tracelog.log(Level.SEVERE, false, exception);
-                return;
-            }
-
-            _instance._isDebug = isDebug;
-
-            // This is what users can hook onto before the data is actually loaded up
-            _instance.onBeforeEngineDataInitialized();  
-
-            // Load any engine data
-            Tracelog.log(Level.INFO, false, "Initializing Engine Data");
-            if(!EngineProperties.instance().hasDataValues()) {
-                Tracelog.log(Level.WARNING, false, "Cannot load the data files, no data values specified");
-            }
-            else {
-                
-                try {
-                    // Create a director and use the data builder to extract content
-                    new Director(
-                        new DataBuilder(EngineProperties.instance().getProperty(Property.DATA_PATH_XML))
-                    ).construct();
-                }
-                catch (Exception exception) {
-                    Tracelog.log(Level.SEVERE, false, exception);
-                }
-                
-            }
-            Tracelog.log(Level.INFO, false, "Initializing Engine Data - Completed");            
-            Tracelog.log(Level.INFO, false, "Engine Initialization Completed - " + ((System.nanoTime() - startTime) / 1000000) + "ms");
+        // Call the engine data before event
+        onBeforeEngineDataInitialized();
+        
+        // Get the start time
+        long startTimeMain = System.nanoTime();
+        
+        // Load any engine data
+        Tracelog.log(Level.INFO, false, "Initializing Engine Started");
             
-            _instance.onWindowInitialized();
-            _instance.setVisible(true);
+        // Load any engine data
+        Tracelog.log(Level.INFO, false, "Load Data Entities Started");
+        if(!EngineProperties.instance().hasDataValues()) {
+            Tracelog.log(Level.WARNING, false, "Cannot load the data files, no data values specified");
         }
+        else {
+            // Get the start time
+            long startTimeData = System.nanoTime();
+            
+            try {
+                // Create a director and use the data builder to extract content
+                new Director(
+                    new DataBuilder(EngineProperties.instance().getProperty(Property.DATA_PATH_XML))
+                ).construct();
+            }
+            catch (Exception exception) {
+                Tracelog.log(Level.SEVERE, false, exception);
+            }
+            finally {
+                Tracelog.log(Level.INFO, false, "Load Data Entities Finished - " + ((System.nanoTime() - startTimeData) / 1000000) + "ms");
+            }
+        }
+        Tracelog.log(Level.INFO, false, "Engine Initialization Finished - " + ((System.nanoTime() - startTimeMain) / 1000000) + "ms");
+            
+        onWindowInitialized();
+        setVisible(true);
     }
     
-    
-    /**
-     * Gets the debug state of the application
-     * 
-     * @return TRUE if the application is running in a debug state, FALSE otherwise
-     */
-    public boolean isDebug() {
-        return _isDebug;
-    }
-
     /**
      * Called when the application is shown.  
      * 
@@ -167,17 +138,36 @@ public abstract class Application extends JFrame {
     
         addWindowListener(new WindowAdapter() {
             @Override public void windowClosing(WindowEvent windowEvent) {
-                _instance.dispose();
+                dispose();
             };
         });
     
         addWindowListener(new WindowAdapter() {
             @Override public void windowClosed(WindowEvent event) {
+                Tracelog.log(Level.INFO, false, "Engine Running Time - " + formatDuration(Duration.ofMillis(((System.nanoTime() - runningTime) / 1000000))));
                 Tracelog.log(Level.INFO, false, "Powering down engine, and shutting off the application.");
                 Tracelog.close();
                 System.exit(0);
             }
         });
+    }
+    
+    /**
+     * Formats the specified duration to H:MM:SS 
+     *
+     * @param duration The duration
+     * 
+     * @return The formatting duration as a string representation
+     */
+    private static String formatDuration(Duration duration) {
+        long seconds = duration.getSeconds();
+        long absSeconds = Math.abs(seconds);
+        String positive = String.format(
+            "%d:%02d:%02d",
+            absSeconds / 3600,
+            (absSeconds % 3600) / 60,
+            absSeconds % 60);
+        return seconds < 0 ? "-" + positive : positive;
     }
     
     /**

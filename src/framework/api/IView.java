@@ -114,12 +114,12 @@ public interface IView extends ISignalListener {
                     view.registerSignalListeners();
                     
                     // Indicate that this view is being shown now
-                    Tracelog.log(Level.INFO, false, String.format("Component %s is being shown", args.getSource().getClass().getCanonicalName()));
+                    //Tracelog.log(Level.INFO, false, String.format("Component %s is being shown", args.getSource().getClass().getCanonicalName()));
 
                     // Note: Some views don't have controllers
                     IController controller = getEntity(IController.class);
                     if(controller == null) {
-                        Tracelog.log(Level.WARNING, false, "Cannot invoke controller for shown component " + args.getSource().getClass().getCanonicalName());
+                        //Tracelog.log(Level.WARNING, false, "Cannot invoke controller for shown component " + args.getSource().getClass().getCanonicalName());
                         return;
                     }
 
@@ -127,7 +127,7 @@ public interface IView extends ISignalListener {
                     // Note: This can occur if registration occurred before the actual view was about to be shown
                     Map listeners = controller.getSignalListeners();
                     if(listeners == null || !listeners.isEmpty()) {
-                        Tracelog.log(Level.WARNING, false, String.format("Signal listeners already detected for %s, not registering again", controller.getClass().getCanonicalName()));
+                        //Tracelog.log(Level.WARNING, false, String.format("Signal listeners already detected for %s, not registering again", controller.getClass().getCanonicalName()));
                         return;
                     }
 
@@ -180,7 +180,7 @@ public interface IView extends ISignalListener {
      */
     public default void render() {
         
-        Tracelog.log(Level.INFO, false, "IView::render:" + this.getClass().getName());
+        //Tracelog.log(Level.INFO, false, "IView::render:" + this.getClass().getName());
         
         getContainerClass().setVisible(true);
         for(Component component : getContainerClass().getComponents()) {

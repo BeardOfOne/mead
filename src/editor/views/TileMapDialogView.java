@@ -44,11 +44,11 @@ import javax.swing.text.PlainDocument;
 
 import framework.core.mvc.view.DialogView;
 import framework.core.mvc.view.layout.SpringLayoutHelper;
+import framework.core.system.Application;
 import framework.utils.filters.DocumentIntegerFilter;
 import framework.utils.globalisation.Localization;
 import framework.utils.logging.Tracelog;
 
-import editor.application.Editor;
 import resources.ResourceKeys;
 
 /**
@@ -124,7 +124,7 @@ public class TileMapDialogView extends DialogView {
      */
     private TileMapDialogView() {
         
-        super(Editor.instance(), Localization.instance().getLocalizedString(ResourceKeys.NewTilemap));
+        super(Application.instance, Localization.instance().getLocalizedString(ResourceKeys.NewTilemap));
 
         // Set the layout manager of this view
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

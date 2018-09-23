@@ -28,12 +28,10 @@ import java.awt.Component;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 import javax.swing.event.MouseInputAdapter;
 
 import framework.api.IView;
-import framework.utils.logging.Tracelog;
 
 /**
  * Handles collisions associated to a particular component within the same node level structure
@@ -113,7 +111,7 @@ public final class CollisionListener extends MouseInputAdapter {
             _source.addMouseMotionListener(this);
         }
         
-        Tracelog.log(Level.INFO, false, String.format("CollisionListener for %s is now %s", _source.getClass().toString(), _isEnabled ? "ENABLED" : "DISABLED"));
+        //Tracelog.log(Level.INFO, false, String.format("CollisionListener for %s is now %s", _source.getClass().toString(), _isEnabled ? "ENABLED" : "DISABLED"));
     }
     
     /**

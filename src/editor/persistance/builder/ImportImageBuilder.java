@@ -35,20 +35,21 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import editor.application.Editor;
-import editor.menu.ProjectMenuItem;
-import editor.menu.TileMapMenuItem;
-import editor.models.TileMapModel;
-import editor.models.TileModel;
-import editor.views.ProjectView;
 import framework.communication.external.builder.AbstractBuilder;
 import framework.communication.external.filesystem.FileSystem;
 import framework.core.factories.AbstractFactory;
 import framework.core.factories.ModelFactory;
 import framework.core.factories.ViewFactory;
 import framework.core.navigation.MenuBuilder;
+import framework.core.system.Application;
 import framework.core.system.GameValues;
 import framework.utils.logging.Tracelog;
+
+import editor.menu.ProjectMenuItem;
+import editor.menu.TileMapMenuItem;
+import editor.models.TileMapModel;
+import editor.models.TileModel;
+import editor.views.ProjectView;
 
 /**
  * Builder pattern used for exporting a map for games to use
@@ -85,7 +86,7 @@ public final class ImportImageBuilder extends AbstractBuilder<FileSystem> {
         }
         
         // Ask the user where the file should be imported from
-        if(_fileChooser.showOpenDialog(Editor.instance()) != JFileChooser.APPROVE_OPTION) {
+        if(_fileChooser.showOpenDialog(Application.instance) != JFileChooser.APPROVE_OPTION) {
             return false;
         }
         
@@ -95,7 +96,7 @@ public final class ImportImageBuilder extends AbstractBuilder<FileSystem> {
         // If there is no main window, then there cannot be a project, therefore prompt the user
         // to create a new project, and very that all of that went through correctly
         if(AbstractFactory.getFactory(ViewFactory.class).get(ProjectView.class) == null) {
-            MenuBuilder.search(Editor.instance().getJMenuBar(), ProjectMenuItem.class).onExecute(null);
+            MenuBuilder.search(Application.instance.getJMenuBar(), ProjectMenuItem.class).onExecute(null);
             if(AbstractFactory.getFactory(ViewFactory.class).get(ProjectView.class) == null) {
                 return false;
             }
@@ -114,7 +115,7 @@ public final class ImportImageBuilder extends AbstractBuilder<FileSystem> {
                 BufferedImage img = ImageIO.read(_fileChooser.getSelectedFile());
 
                 // Get a reference to the new tile map creation, set its contents and execute the action, and then clear.
-                TileMapMenuItem menuItem = MenuBuilder.search(Editor.instance().getJMenuBar(), TileMapMenuItem.class);
+                TileMapMenuItem menuItem = MenuBuilder.search(Application.instance.getJMenuBar(), TileMapMenuItem.class);
                 menuItem.setDimensions(new Dimension(img.getWidth(), img.getHeight()));
                 menuItem.onExecute(null);
                 menuItem.onReset();

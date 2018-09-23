@@ -30,9 +30,6 @@ import java.util.Map;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import editor.application.Editor;
-import editor.models.TileMapModel;
-import editor.persistance.filesystem.ImageFileSystem;
 import framework.api.IModel;
 import framework.communication.external.builder.AbstractBuilder;
 import framework.communication.internal.signal.IDataPipeline;
@@ -41,8 +38,12 @@ import framework.communication.internal.signal.arguments.AbstractEventArgs;
 import framework.communication.internal.signal.arguments.PipelinedEventArgs;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ModelFactory;
+import framework.core.system.Application;
 import framework.core.system.GameValues;
 import framework.utils.globalisation.Localization;
+
+import editor.models.TileMapModel;
+import editor.persistance.filesystem.ImageFileSystem;
 import resources.ResourceKeys;
 
 /**
@@ -68,7 +69,7 @@ public final class ExportImagesBuilder extends AbstractBuilder<ImageFileSystem> 
         }
         
         // Show the save dialog location
-        if(fileChooser.showSaveDialog(Editor.instance()) != JFileChooser.APPROVE_OPTION) {
+        if(fileChooser.showSaveDialog(Application.instance) != JFileChooser.APPROVE_OPTION) {
             return null;
         }
         
@@ -83,7 +84,7 @@ public final class ExportImagesBuilder extends AbstractBuilder<ImageFileSystem> 
         // Display to the user that the directory already existed, and that
         // contents within the directory will be overwritten
         return JOptionPane.showConfirmDialog(
-                Editor.instance(),
+                Application.instance,
                 Localization.instance().getLocalizedString(ResourceKeys.ExportOverwriteMessage),
                 Localization.instance().getLocalizedString(ResourceKeys.Export),
                 JOptionPane.YES_NO_OPTION,

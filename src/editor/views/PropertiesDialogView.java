@@ -59,11 +59,11 @@ import framework.core.factories.ControllerFactory;
 import framework.core.factories.ModelFactory;
 import framework.core.graphics.CheckBoxListCellRenderer;
 import framework.core.mvc.view.DialogView;
+import framework.core.system.Application;
 import framework.core.system.GameValues;
 import framework.utils.globalisation.Localization;
 import framework.utils.io.Paths;
 
-import editor.application.Editor;
 import editor.controllers.PropertiesController;
 import editor.controllers.TileLayersController;
 import editor.models.PropertiesModel;
@@ -129,7 +129,7 @@ public class PropertiesDialogView extends DialogView {
      */
     public PropertiesDialogView() {
         super(
-                Editor.instance(),
+                Application.instance,
                 Localization.instance().getLocalizedString(ResourceKeys.Properties),
                 400,
                 650

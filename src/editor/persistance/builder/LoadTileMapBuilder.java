@@ -31,7 +31,16 @@ import java.util.logging.Level;
 import javax.swing.JFileChooser;
 import javax.xml.bind.JAXBException;
 
-import editor.application.Editor;
+import framework.communication.external.builder.AbstractBuilder;
+import framework.communication.external.filesystem.FileSystem;
+import framework.communication.internal.persistance.IXMLCodec.XMLCodec;
+import framework.core.factories.AbstractSignalFactory;
+import framework.core.factories.ModelFactory;
+import framework.core.factories.ViewFactory;
+import framework.core.system.Application;
+import framework.core.system.GameValues;
+import framework.utils.logging.Tracelog;
+
 import editor.models.ProjectModel;
 import editor.models.TileLayerModel;
 import editor.models.TileMapModel;
@@ -39,14 +48,6 @@ import editor.models.TileModel;
 import editor.views.LayersDialogView;
 import editor.views.ProjectView;
 import editor.views.TileMapView;
-import framework.communication.external.builder.AbstractBuilder;
-import framework.communication.external.filesystem.FileSystem;
-import framework.communication.internal.persistance.IXMLCodec.XMLCodec;
-import framework.core.factories.AbstractSignalFactory;
-import framework.core.factories.ModelFactory;
-import framework.core.factories.ViewFactory;
-import framework.core.system.GameValues;
-import framework.utils.logging.Tracelog;
 
 /**
  * Builder pattern used for loading a map
@@ -164,7 +165,7 @@ public final class LoadTileMapBuilder extends AbstractBuilder<FileSystem> {
 
         // Open the file chooser so the user can navigate to the path
         // where the file should be loaded.
-        int loadValue = fileChooser.showOpenDialog(Editor.instance());
+        int loadValue = fileChooser.showOpenDialog(Application.instance);
 
         // If the user chose to perform a load within the file chooser
         // dialog, then continue forward 
