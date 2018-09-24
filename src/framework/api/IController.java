@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@gmail.com>
+ * Daniel Ricci <thedanny09@icloud.com>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -34,7 +34,7 @@ import framework.core.mvc.common.CommonProperties;
  * This is the top-most controller interface, for all sub-type implemented controller types
  * and interfaces
  * 
- * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  */
 public interface IController extends ISignalListener {
@@ -42,7 +42,7 @@ public interface IController extends ISignalListener {
     /**
      * This class represents the controller properties of each IController implemented type
      * 
-     * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+     * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
      *
      */
     public final class ControllerProperties extends CommonProperties<IView> {

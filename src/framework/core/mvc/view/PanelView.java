@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@gmail.com>
+ * Daniel Ricci <thedanny09@icloud.com>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -40,7 +40,7 @@ import framework.core.graphics.IRenderer;
 /**
  * This class represents a custom panel class that ties into the gosling MVC design pattern
  * 
- * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  */
 public class PanelView extends JPanel implements IView, IRenderer {

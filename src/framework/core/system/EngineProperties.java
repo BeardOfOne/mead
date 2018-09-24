@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@gmail.com>
+ * Daniel Ricci <thedanny09@icloud.com>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -30,7 +30,7 @@ import java.util.Map;
 /**
  * The engine properties associated to the engine at runtime
  * 
- * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  */
 public final class EngineProperties {
@@ -48,7 +48,7 @@ public final class EngineProperties {
     /**
      * Enum values for properties in the engine properties
      * 
-     * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+     * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
      *
      */
     public enum Property {

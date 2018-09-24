@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@gmail.com>
+ * Daniel Ricci <thedanny09@icloud.com>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -44,7 +44,7 @@ import framework.utils.logging.Tracelog;
  * This class provides the entry point for all applications to extend for their game.  
  * Your main method should be within a class that extends this class.
  * 
- * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  */
 public abstract class Application extends JFrame {

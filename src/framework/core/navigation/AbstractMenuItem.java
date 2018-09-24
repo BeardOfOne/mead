@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@gmail.com>
+ * Daniel Ricci <thedanny09@icloud.com>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -38,7 +38,7 @@ import javax.swing.JMenuItem;
  * Defines the abstract implementation for the menu item. A menu item is similar
  * in nature to a JMenuItem
  * 
- * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  */
 public abstract class AbstractMenuItem extends AbstractMenu {

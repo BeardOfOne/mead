@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@gmail.com>
+ * Daniel Ricci <thedanny09@icloud.com>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -54,7 +54,7 @@ import editor.views.ProjectView;
 /**
  * Builder pattern used for exporting a map for games to use
  * 
- * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
+ * @author {@literal Daniel Ricci <thedanny09@icloud.com>}
  *
  */
 public final class ImportImageBuilder extends AbstractBuilder<FileSystem> {

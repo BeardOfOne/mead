@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@gmail.com>
+ * Daniel Ricci <thedanny09@icloud.com>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -39,14 +39,14 @@ import framework.utils.logging.Tracelog;
 /**
  * This contract specifies how views should operate within the framework. 
  * 
- * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  */
 public interface IView extends ISignalListener {
 
     /**
      * The view properties that each IView will have
      * 
-     * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+     * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
      */
     public final class ViewProperties extends CommonProperties<IController>  {
 

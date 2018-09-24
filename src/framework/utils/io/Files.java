@@ -9,7 +9,7 @@ import java.nio.channels.FileChannel;
 /**
  * Helper class for managing files
  * 
- * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  */
 public class Files {

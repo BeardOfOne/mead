@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@gmail.com>
+ * Daniel Ricci <thedanny09@icloud.com>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -38,7 +38,7 @@ import framework.utils.logging.Tracelog;
 /**
  * Defines a codec for performing serialization and deserialization functionality using XML
  * 
- * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  */
 public interface IXMLCodec extends ISerializable<String> {
 
@@ -50,7 +50,7 @@ public interface IXMLCodec extends ISerializable<String> {
     /**
      * Class that provides codec related functionality for JAXB compatible classes
      * 
-     * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
+     * @author {@literal Daniel Ricci <thedanny09@icloud.com>}
      */
     public final class XMLCodec {
 

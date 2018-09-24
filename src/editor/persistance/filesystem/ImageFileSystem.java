@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@gmail.com>
+ * Daniel Ricci <thedanny09@icloud.com>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -41,7 +41,7 @@ import framework.utils.logging.Tracelog;
 /**
  * Image file system for handling images
  * 
- * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
+ * @author {@literal Daniel Ricci <thedanny09@icloud.com>}
  */
 public final class ImageFileSystem extends AbstractFileSystem {
 

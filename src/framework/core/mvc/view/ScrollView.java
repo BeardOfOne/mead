@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@gmail.com>
+ * Daniel Ricci <thedanny09@icloud.com>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -35,7 +35,7 @@ import javax.swing.SwingConstants;
 /**
  * This panel gives the ability to be able to scroll content that is placed within this panel.
  * 
- * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
+ * @author {@literal Daniel Ricci <thedanny09@icloud.com>}
  *
  */
 public abstract class ScrollView extends PanelView implements Scrollable, MouseMotionListener {

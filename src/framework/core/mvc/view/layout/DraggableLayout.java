@@ -10,7 +10,7 @@ import java.awt.Point;
 /**
  * This layout manager is used for handling draggable layouts
  * 
- * @author Daniel Ricci {@literal <thedanny09@gmail.com>}
+ * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  */
 public class DraggableLayout implements LayoutManager {

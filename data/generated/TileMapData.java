@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@gmail.com>
+ * Daniel Ricci <thedanny09@icloud.com>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -40,7 +40,7 @@ import framework.communication.internal.persistance.IXMLCodec;
 /**
  * A tile map entity represents a portion of a tile map in data form
  * 
- * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
+ * @author {@literal Daniel Ricci <thedanny09@icloud.com>}
  * 
  */
 @XmlRootElement(name = "root")

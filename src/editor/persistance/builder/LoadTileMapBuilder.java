@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@gmail.com>
+ * Daniel Ricci <thedanny09@icloud.com>
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -52,7 +52,7 @@ import editor.views.TileMapView;
 /**
  * Builder pattern used for loading a map
  * 
- * @author {@literal Daniel Ricci <thedanny09@gmail.com>}
+ * @author {@literal Daniel Ricci <thedanny09@icloud.com>}
  *
  */
 public final class LoadTileMapBuilder extends AbstractBuilder<FileSystem> {
