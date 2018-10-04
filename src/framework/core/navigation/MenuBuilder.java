@@ -102,6 +102,28 @@ public final class MenuBuilder {
     }
     
     /**
+     * Adds a menu with the specified text to the currently active menu
+     * 
+     * @param text The text to set as the menu title
+     * @param mnemonic The mnemonic to associate to the menu 
+     * 
+     * @return A reference to the menu builder
+     */
+    public MenuBuilder addMenu(String text, int mnemonic)
+    {
+        AbstractMenuContainer component = new AbstractMenuContainer(text, _root == null ? _host : _root);
+        component.setMnemonic(mnemonic);
+        if(_components.isEmpty() && _root == null) {
+            _root = component.getComponent();
+        }
+        else {
+            _components.add(component.getComponent());    
+        }
+
+        return this;
+    }
+    
+    /**
      * Adds the specified menu item type to the currently active menu
      *
      * @param classType The class type
