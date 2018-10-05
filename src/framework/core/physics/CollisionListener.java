@@ -67,10 +67,19 @@ public final class CollisionListener extends MouseInputAdapter {
         setEnabled(true);
     }
     
+    @Override public void mousePressed(MouseEvent event) {
+        // When the mouse button has been pressed down on this listener, the collision should be cleared
+        // or else a false-positive could end up happening
+        _collision = null;
+    }
+    
     @Override public void mouseDragged(MouseEvent event) {
         
-        // Clears the collisions
+        // Clears the collision
         _collision = null;
+        
+        // Populate all the siblings
+        // TODO - should this be (ICollide)
         List<IView> siblings = new ArrayList();
         for(Component component : _source.getParent().getComponents()) {
             if(component instanceof IView) {
