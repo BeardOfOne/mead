@@ -7,3 +7,4 @@
 - [x] Chess
 - [x] Minesweeper
 - [ ] Solitaire
+- [ ] Mahjong
