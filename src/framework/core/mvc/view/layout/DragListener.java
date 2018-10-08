@@ -57,6 +57,11 @@ public class DragListener extends MouseInputAdapter {
      * Indicates if the last completed operation done by this component resulted in a drag
      */
     private boolean _lastDragged;
+
+    /**
+     * Stops the current drag event from occuring until the next drag event commences 
+     */
+    private boolean _stopDragging;
     
     /**
      * The owner associated to this 
@@ -76,6 +81,13 @@ public class DragListener extends MouseInputAdapter {
     public DragListener(Component component) {
         _owner = component;
         setEnabled(true);
+    }
+    
+    /**
+     * Stops the current drag event from occuring
+     */
+    public void stopDragEvent() {
+        _stopDragging = true;
     }
     
     /**
@@ -147,11 +159,17 @@ public class DragListener extends MouseInputAdapter {
     }
 
     @Override public void mousePressed(MouseEvent event) {
+        _stopDragging = false;
         _mousePressedEvent = event;
     }
 
     @Override public void mouseDragged(MouseEvent event) {
 
+        // Do not proceed any further
+        if(_stopDragging) {
+            return;
+        }
+        
         // Get the component associated to the mouse event
         Component component = event.getComponent();
         
