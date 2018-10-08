@@ -66,7 +66,7 @@ public final class CollisionListener extends MouseInputAdapter {
         _source = source;
         setEnabled(true);
     }
-    
+       
     @Override public void mousePressed(MouseEvent event) {
         // When the mouse button has been pressed down on this listener, the collision should be cleared
         // or else a false-positive could end up happening
@@ -74,7 +74,7 @@ public final class CollisionListener extends MouseInputAdapter {
     }
     
     @Override public void mouseDragged(MouseEvent event) {
-        
+
         // Clears the collision
         _collision = null;
         
@@ -92,8 +92,8 @@ public final class CollisionListener extends MouseInputAdapter {
             if(sibling != _source && sibling instanceof ICollide && _source.getBounds().intersects(sibling.getContainerClass().getBounds())) {
                 ICollide collidable = (ICollide)sibling;
                 if(collidable.isValidCollision(_source)) {
-                    _collision = collidable;
-                    break;
+                   _collision = collidable;
+                   break;
                 }
             }
         }
@@ -119,8 +119,6 @@ public final class CollisionListener extends MouseInputAdapter {
             _source.addMouseListener(this);
             _source.addMouseMotionListener(this);
         }
-        
-        //Tracelog.log(Level.INFO, false, String.format("CollisionListener for %s is now %s", _source.getClass().toString(), _isEnabled ? "ENABLED" : "DISABLED"));
     }
     
     /**
