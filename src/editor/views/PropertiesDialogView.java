@@ -51,7 +51,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileSystemView;
 
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
+import framework.communication.internal.signal.arguments.EventArgs;
 import framework.communication.internal.signal.arguments.ModelEventArgs;
 import framework.core.factories.AbstractFactory;
 import framework.core.factories.AbstractSignalFactory;
@@ -410,7 +410,7 @@ public class PropertiesDialogView extends DialogView {
         requestFocus();
     }
 
-    @Override public void update(AbstractEventArgs event) {
+    @Override public void update(EventArgs event) {
 
         // Cast to our proper event
         ModelEventArgs modelEvent = (ModelEventArgs) event;

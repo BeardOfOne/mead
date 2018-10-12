@@ -55,6 +55,8 @@ public interface IView extends ISignalListener {
          */
         private boolean _shouldRedraw;
 
+        private boolean _shouldAlwaysRedraw;
+        
         /**
          * Constructs a new view properties object in charge of holding
          * information about the view such as the controller
@@ -146,6 +148,10 @@ public interface IView extends ISignalListener {
         public final boolean shouldRedraw() {
             return _shouldRedraw;
         }
+        
+        public final boolean shouldAlwaysRedraw() {
+            return _shouldAlwaysRedraw;
+        }
 
         /**
          * Sets if the view should be redrawn
@@ -154,6 +160,10 @@ public interface IView extends ISignalListener {
          */
         public final void setRedraw(boolean shouldRedraw) {
             _shouldRedraw = shouldRedraw;
+        }
+        
+        public final void setShouldAlwaysRedraw(boolean shouldAlwaysRedraw) {
+            _shouldAlwaysRedraw = shouldAlwaysRedraw;
         }
     }
 

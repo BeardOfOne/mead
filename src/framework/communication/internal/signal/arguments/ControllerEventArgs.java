@@ -33,7 +33,7 @@ import framework.api.IController;
  *
  * @param <T> The IController type
  */
-public final class ControllerEventArgs extends AbstractEventArgs {
+public final class ControllerEventArgs extends EventArgs {
     /**
      * Constructs a new signal type event
      * 

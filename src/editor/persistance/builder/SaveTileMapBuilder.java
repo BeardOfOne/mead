@@ -35,7 +35,7 @@ import framework.communication.external.filesystem.FileSystem;
 import framework.communication.internal.persistance.IXMLCodec;
 import framework.communication.internal.signal.IDataPipeline;
 import framework.communication.internal.signal.SignalListenerContainer;
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
+import framework.communication.internal.signal.arguments.EventArgs;
 import framework.communication.internal.signal.arguments.PipelinedEventArgs;
 import framework.core.factories.AbstractFactory;
 import framework.core.factories.AbstractSignalFactory;
@@ -128,6 +128,6 @@ public final class SaveTileMapBuilder extends AbstractBuilder<FileSystem> implem
         return null;
     }
 
-    @Override public void update(AbstractEventArgs signalEvent) {
+    @Override public void update(EventArgs signalEvent) {
     }
 }

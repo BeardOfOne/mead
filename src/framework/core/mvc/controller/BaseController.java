@@ -25,7 +25,7 @@
 package framework.core.mvc.controller;
 
 import framework.api.IController;
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
+import framework.communication.internal.signal.arguments.EventArgs;
 
 /**
  * Top-level controller class that holds common controller information
@@ -47,7 +47,7 @@ public abstract class BaseController implements IController  {
         return _properties;
     }
     
-    @Override public void update(AbstractEventArgs signalEvent) { }
+    @Override public void update(EventArgs signalEvent) { }
     
     @Override public void registerSignalListeners() { }   
 }

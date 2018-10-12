@@ -37,7 +37,7 @@ import framework.api.IModel;
 import framework.communication.internal.signal.IDataPipeline;
 import framework.communication.internal.signal.ISignalListener;
 import framework.communication.internal.signal.ISignalReceiver;
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
+import framework.communication.internal.signal.arguments.EventArgs;
 import framework.communication.internal.signal.arguments.ModelEventArgs;
 import framework.communication.internal.signal.arguments.PipelinedEventArgs;
 import framework.core.graphics.IRenderable;
@@ -78,7 +78,7 @@ public abstract class BaseModel implements IModel, IRenderable
     /**
      * The event to submit when performing the request to do the operation
      */
-    private transient AbstractEventArgs _operationEvent;
+    private transient EventArgs _operationEvent;
 
     /**
      * Indicates if this model should suppress updates to its listeners
@@ -188,7 +188,7 @@ public abstract class BaseModel implements IModel, IRenderable
         // Create a new operation event to send out to listeners
         // In this case we specify a local event as not to disturb 
         // the done update functionality
-        AbstractEventArgs event = new ModelEventArgs(this, operationName);
+        EventArgs event = new ModelEventArgs(this, operationName);
 
         // Call all signal listeners with the specified event (this takes operation name into account)
         // and then it will end up calling update after the fact
@@ -271,14 +271,14 @@ public abstract class BaseModel implements IModel, IRenderable
     }
 
     @Override public void registerSignalListeners() {
-        addSignalListener(ISignalListener.EVENT_REGISTER, new ISignalReceiver<AbstractEventArgs>() {
-            @Override public void signalReceived(AbstractEventArgs event) {
+        addSignalListener(ISignalListener.EVENT_REGISTER, new ISignalReceiver<EventArgs>() {
+            @Override public void signalReceived(EventArgs event) {
                 ISignalListener listener = (ISignalListener) event.getSource();
                 addListeners(listener);
             }
         });
-        addSignalListener(ISignalListener.EVENT_UNREGISTER, new ISignalReceiver<AbstractEventArgs>() {
-            @Override public void signalReceived(AbstractEventArgs event) {
+        addSignalListener(ISignalListener.EVENT_UNREGISTER, new ISignalReceiver<EventArgs>() {
+            @Override public void signalReceived(EventArgs event) {
                 ISignalListener listener = (ISignalListener) event.getSource();
                 removeListener(listener);
             }
@@ -308,7 +308,7 @@ public abstract class BaseModel implements IModel, IRenderable
         return false;
     }
     
-    @Override public void update(AbstractEventArgs signalEvent) {
+    @Override public void update(EventArgs signalEvent) {
     }
     
     @Override public Image getRenderableContent() {

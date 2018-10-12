@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
+import framework.communication.internal.signal.arguments.EventArgs;
 import framework.core.mvc.model.BaseModel;
 
 
@@ -91,6 +91,6 @@ public final class ProjectModel extends BaseModel {
         return _projectName;
     }
 
-    @Override public void update(AbstractEventArgs signalEvent) {
+    @Override public void update(EventArgs signalEvent) {
     }
 }

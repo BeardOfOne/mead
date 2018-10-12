@@ -25,7 +25,7 @@
 package editor.models;
 
 import framework.communication.internal.signal.ISignalListener;
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
+import framework.communication.internal.signal.arguments.EventArgs;
 import framework.core.mvc.model.BaseModel;
 
 /**
@@ -69,6 +69,6 @@ public final class PropertiesModel extends BaseModel {
         return _tileModel;
     }
 
-    @Override public void update(AbstractEventArgs signalEvent) {
+    @Override public void update(EventArgs signalEvent) {
     }
 }

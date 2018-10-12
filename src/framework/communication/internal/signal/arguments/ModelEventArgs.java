@@ -33,7 +33,7 @@ import framework.api.IModel;
  *
  * @param <T> The IModel type
  */
-public class ModelEventArgs extends AbstractEventArgs {
+public class ModelEventArgs extends EventArgs {
     /**
      * Constructs a new signal type event
      * 

@@ -26,7 +26,7 @@ package editor.views;
 
 import javax.swing.JScrollPane;
 
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
+import framework.communication.internal.signal.arguments.EventArgs;
 import framework.core.factories.AbstractFactory;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ControllerFactory;
@@ -70,7 +70,7 @@ public class ProjectView extends ScrollView {
         setVisible(true);
     }
 
-    @Override public void update(AbstractEventArgs event) {
+    @Override public void update(EventArgs event) {
         super.update(event);
 
         if(event.getSource() instanceof ProjectModel) {

@@ -32,7 +32,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
+import framework.communication.internal.signal.arguments.EventArgs;
 import framework.core.factories.AbstractFactory;
 import framework.core.factories.ModelFactory;
 import framework.core.factories.ViewFactory;
@@ -100,7 +100,7 @@ public class TileView extends PanelView {
         });
     }
 
-    @Override public void update(AbstractEventArgs event) {
+    @Override public void update(EventArgs event) {
         super.update(event);
 
         if(event.getSource() instanceof TileModel) {

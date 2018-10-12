@@ -33,7 +33,7 @@ import framework.api.IView;
  *
  * @param <T> The IView type
  */
-public final class ViewEventArgs extends AbstractEventArgs {
+public final class ViewEventArgs extends EventArgs {
     /**
      * Constructs a new signal type event
      * 

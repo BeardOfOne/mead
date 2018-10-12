@@ -38,7 +38,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
+import framework.communication.internal.signal.arguments.EventArgs;
 import framework.core.factories.AbstractFactory;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ControllerFactory;
@@ -179,7 +179,7 @@ public class TileMapView extends PanelView {
         setVisible(true);
     }
 
-    @Override public void update(AbstractEventArgs event) {
+    @Override public void update(EventArgs event) {
         super.update(event);
 
         if(event.getSource() instanceof TileMapModel) {

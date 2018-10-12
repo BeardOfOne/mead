@@ -35,7 +35,7 @@ import framework.communication.external.builder.AbstractBuilder;
 import framework.communication.internal.persistance.IXMLCodec;
 import framework.communication.internal.signal.IDataPipeline;
 import framework.communication.internal.signal.SignalListenerContainer;
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
+import framework.communication.internal.signal.arguments.EventArgs;
 import framework.communication.internal.signal.arguments.PipelinedEventArgs;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ModelFactory;
@@ -163,6 +163,6 @@ public final class ExportDataBuilder extends AbstractBuilder<TileMapFileSystem> 
         return null;
     }
 
-    @Override public void update(AbstractEventArgs signalEvent) {
+    @Override public void update(EventArgs signalEvent) {
     }
 }

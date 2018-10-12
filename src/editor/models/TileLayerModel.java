@@ -30,7 +30,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import framework.api.IModel;
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
+import framework.communication.internal.signal.arguments.EventArgs;
 import framework.core.mvc.model.BaseModel;
 
 /**
@@ -85,6 +85,6 @@ public final class TileLayerModel extends BaseModel {
         return _name;
     }
 
-    @Override public void update(AbstractEventArgs signalEvent) {
+    @Override public void update(EventArgs signalEvent) {
     }
 }

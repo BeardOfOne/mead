@@ -24,7 +24,7 @@
 
 package framework.communication.internal.signal.arguments;
 
-public final class EmptyEventArgs extends AbstractEventArgs {
+public final class EmptyEventArgs extends EventArgs {
 
     /**
      * Using a temporary object to pass as a sender

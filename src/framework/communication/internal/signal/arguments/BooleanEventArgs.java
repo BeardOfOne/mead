@@ -24,7 +24,7 @@
 
 package framework.communication.internal.signal.arguments;
 
-public class BooleanEventArgs extends AbstractEventArgs {
+public class BooleanEventArgs extends EventArgs {
     
     private final boolean _result;
     

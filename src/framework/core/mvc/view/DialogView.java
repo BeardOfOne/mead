@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
 
 import framework.api.IController;
 import framework.api.IView;
-import framework.communication.internal.signal.arguments.AbstractEventArgs;
+import framework.communication.internal.signal.arguments.EventArgs;
 
 /**
  * A simple dialog that extends from the default swing dialog implementation
@@ -141,6 +141,6 @@ public abstract class DialogView extends JDialog implements IView {
         return _properties;
     }
     
-    @Override public void update(AbstractEventArgs signalEvent) {
+    @Override public void update(EventArgs signalEvent) {
     }
 }
