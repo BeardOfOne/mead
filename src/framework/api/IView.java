@@ -190,6 +190,12 @@ public interface IView extends ISignalListener {
         }
     }
     
+    /**
+     * Called before the view is removed from the underlying 
+     */
+    public default void destructor() {
+    }
+    
     @Override default Map<String, SignalListenerContainer> getSignalListeners() {
         return getViewProperties().getSignalListeners();
     }

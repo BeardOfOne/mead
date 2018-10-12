@@ -31,6 +31,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 import java.util.logging.Level;
+import java.util.stream.Collectors;
 
 import framework.communication.internal.signal.ISignalListener;
 import framework.communication.internal.signal.arguments.AbstractEventArgs;
@@ -174,7 +175,7 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
      * @param resource The resource to remove
      * @param <U> A type extending The class template type
      */
-    public final <U extends T> void remove(U resource) {
+    public <U extends T> void remove(U resource) {
         List<T> signals = _privateSignals.get(resource.getClass());
         if(signals != null) {
 
@@ -251,8 +252,8 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
     
     @Override protected void clear() {
         _cache.clear();
-        _privateSignals.clear();
-        _publicSignals.clear();
+        _privateSignals.values().stream().flatMap(z -> z.stream()).collect(Collectors.toList()).forEach(z -> remove(z));
+        _publicSignals.forEach(z -> remove(z));
     }
 
     @Override protected boolean hasEntities() {
