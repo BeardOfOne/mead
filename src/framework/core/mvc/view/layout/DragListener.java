@@ -170,6 +170,11 @@ public class DragListener extends MouseInputAdapter {
             return;
         }
         
+        
+        if(_mousePressedEvent == null) {
+            return;
+        }
+        
         // Get the component associated to the mouse event
         Component component = event.getComponent();
         
