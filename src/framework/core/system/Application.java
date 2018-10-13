@@ -109,6 +109,12 @@ public abstract class Application extends JFrame {
         Tracelog.log(Level.INFO, false, "Engine Initialization Finished - " + ((System.nanoTime() - startTimeMain) / 1000000) + "ms");
             
         onWindowInitialized();
+        
+        // Notify on the title that the game is in debug mode
+        if(isDebug) {
+            setTitle(getTitle() + " - [DEBUG]");    
+        }
+        
         setVisible(true);
     }
     
