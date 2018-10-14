@@ -33,6 +33,7 @@ import javax.swing.JOptionPane;
 import framework.api.IController;
 import framework.api.IView;
 import framework.communication.internal.signal.arguments.EventArgs;
+import framework.core.system.Application;
 
 /**
  * A simple dialog that extends from the default swing dialog implementation
@@ -128,12 +129,15 @@ public abstract class DialogView extends JDialog implements IView {
     @Override public void render() {
         pack();
         if(_isAutomaticDialogCentering) {
-            Rectangle ownerScreen = this.getOwner().getGraphicsConfiguration().getBounds();
+            Rectangle applicationBounds = Application.instance.getBounds();
+            
+            // Set the location in the middle of the screen
             setLocation(
-                ownerScreen.x + (ownerScreen.width - getWidth()) / 2,
-                ownerScreen.y + (ownerScreen.height - getHeight()) / 2
+                applicationBounds.x + (applicationBounds.width - getWidth()) / 2,
+                applicationBounds.y + (applicationBounds.height - getHeight()) / 2
             );
         }
+        
         IView.super.render();
     }
 
