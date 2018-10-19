@@ -91,6 +91,13 @@ public class DragListener extends MouseInputAdapter {
     }
     
     /**
+     *  @return TRUE if this drag listener is dragging, FALSE otherwise
+     */
+    public boolean isDragging() {
+        return _dragging;
+    }
+    
+    /**
      * Sets if this listener is enabled
      *
      * @param isEnabled TRUE if this listener is enabled, FALSE otherwise
