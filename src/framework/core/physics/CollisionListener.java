@@ -31,8 +31,6 @@ import java.util.List;
 
 import javax.swing.event.MouseInputAdapter;
 
-import framework.api.IView;
-
 /**
  * Handles collisions associated to a particular component within the same node level structure
  * 
@@ -42,13 +40,18 @@ import framework.api.IView;
 public final class CollisionListener extends MouseInputAdapter {
 
     /**
+     * Indicates if this collision listener can only ever collide with at-most one element at a time
+     */
+    private boolean _isCollisionSingular;
+    
+    /**
      * The source of where the collision took place
      */
     // TODO - This should be ICollide
     private final Component _source;
     
     /**
-     * TRUE if the listener for the owner component is enabled, FALSE otherwise
+     * TRUE if the listener for the owner component is enabled
      */
     private boolean _isEnabled;
     
@@ -75,27 +78,38 @@ public final class CollisionListener extends MouseInputAdapter {
     
     @Override public void mouseDragged(MouseEvent event) {
 
-        // Clears the collision
-        _collision = null;
-        
-        // Populate all the siblings
-        // TODO - should this be (ICollide)
-        List<IView> siblings = new ArrayList();
-        for(Component component : _source.getParent().getComponents()) {
-            if(component instanceof IView) {
-                siblings.add((IView)component);
+        // Before going through the list of collided components, verify if what was last colided (if any)
+        // is still being collided.
+        if(_isCollisionSingular && _collision != null) {
+            if(_collision.isValidCollision(_source)) {
+                return;  
             }
         }
-    
-        // Find all collided components 
-        for(IView sibling : siblings) {
-            if(sibling != _source && sibling instanceof ICollide && _source.getBounds().intersects(sibling.getContainerClass().getBounds())) {
+
+        // Get the list of components that implement the ICollide type
+        List<Component> siblings = new ArrayList();
+        for(Component component : _source.getParent().getComponents()) {
+            if(component instanceof ICollide) {
+                siblings.add(component);
+            }
+        }
+
+        // Find the first collided component
+        boolean found = false;
+        for(Component sibling : siblings) {
+            if(sibling != _source && sibling instanceof ICollide && _source.getBounds().intersects(sibling.getBounds())) {
                 ICollide collidable = (ICollide)sibling;
                 if(collidable.isValidCollision(_source)) {
+                    found = true;
                    _collision = collidable;
                    break;
                 }
             }
+        }
+        
+        // If there was no collision that occured, ensure that the reference to any collision is no longer valid
+        if(!found) {
+            _collision = null;
         }
     }
     
@@ -119,6 +133,17 @@ public final class CollisionListener extends MouseInputAdapter {
             _source.addMouseListener(this);
             _source.addMouseMotionListener(this);
         }
+    }
+    
+    /**
+     * Sets if this collision listener can only ever collide with at most one object. When a
+     * valid collision has been detected, that collided object will take precedence over any other
+     * object until collision with that object is no longer valid
+     *
+     * @param isEnabled If this option is enabled
+     */
+    public void setIsSingularCollision(boolean isSingularCollision) {
+        _isCollisionSingular = isSingularCollision;
     }
     
     /**

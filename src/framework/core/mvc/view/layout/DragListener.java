@@ -117,8 +117,6 @@ public class DragListener extends MouseInputAdapter {
             _owner.addMouseListener(this);
             _owner.addMouseMotionListener(this);
         }
-        
-        //Tracelog.log(Level.INFO, false, String.format("DragListener for %s is now %s", _owner.getClass().toString(), _isEnabled ? "ENABLED" : "DISABLED"));
     }
     
     /**

@@ -29,5 +29,6 @@ import java.awt.Component;
  * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  */
 public interface ICollide {
+    // TODO Should this be an IView instead of a Component?
     public boolean isValidCollision(Component source);
 }
