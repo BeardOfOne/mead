@@ -80,8 +80,10 @@ public final class CollisionListener extends MouseInputAdapter {
 
         // Before going through the list of collided components, verify if what was last colided (if any)
         // is still being collided.
-        if(_isCollisionSingular && _collision != null) {
-            if(_collision.isValidCollision(_source)) {
+        if(_isCollisionSingular && _collision != null && _collision.isValidCollision(_source)) {
+            
+            // Re-evaluate the intersection condition
+            if(_source.getBounds().intersects(((Component)_collision).getBounds())) {
                 return;  
             }
         }
