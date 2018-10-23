@@ -25,6 +25,9 @@
 package framework.core.navigation;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -74,6 +77,12 @@ public abstract class AbstractMenuItem extends AbstractMenu {
      */
     protected abstract void onExecute(ActionEvent actionEvent);
 
+    protected void onEntered(InputEvent event) {
+    }
+    
+    protected void onExited(InputEvent event) {
+    }
+    
     /**
      * Initializes the grouping of the menu item if any
      * 
@@ -105,12 +114,24 @@ public abstract class AbstractMenuItem extends AbstractMenu {
     }
 
     @Override protected final void onInitialize() {
-        super.getComponent(JMenuItem.class).addActionListener(new AbstractAction(super.toString()) {
-            @Override public void actionPerformed(ActionEvent actionEvent) {
-                // Make sure that the action is enabled before proceeding
+        
+        super.getComponent(JMenuItem.class).addMouseListener(new MouseAdapter() {
+            @Override public void mouseEntered(MouseEvent event) {
                 if(enabled()) {
-                    onExecute(actionEvent);
+                    onEntered(event);
                 }
+            }
+            @Override public void mouseExited(MouseEvent event) {
+                if(enabled()) {
+                    onExited(event);
+                }
+            }
+        });
+        super.getComponent(JMenuItem.class).addActionListener(new AbstractAction(super.toString()) {
+            @Override public void actionPerformed(ActionEvent event) {
+                if(enabled()) {
+                    onExecute(event);
+                } 
             }
         });
     }
