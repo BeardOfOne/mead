@@ -129,9 +129,11 @@ public interface ISignalListener {
             }
         }
     
-        // Update the state of the receiver, this is done at the end to 'apply'
-        // whatever changes have been made by calling events registered before-hand
-        update(signalEvent);
+        if(!signalEvent.isUpdateSuppressed()) {
+            // Update the state of the receiver, this is done at the end to 'apply'
+            // whatever changes have been made by calling events registered before-hand
+            update(signalEvent);
+        }
     }
 
     default public void unregisterSignalListener(String signalName) {

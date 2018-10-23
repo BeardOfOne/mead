@@ -34,6 +34,11 @@ import java.util.EventObject;
 public class EventArgs extends EventObject {
 
     /**
+     * Indicates if this event should not be carried forward
+     */
+    private boolean _suppressUpdate;
+    
+    /**
      * The name of the operation 
      */
     private final String _operationName;
@@ -46,10 +51,25 @@ public class EventArgs extends EventObject {
      */
     public EventArgs(Object sender, String operationName) {
         super(sender);
-
         _operationName = operationName;
     }
-
+    
+    /**
+     * Sets the suppress update state
+     *
+     * @param isSuppressed If this event should be suppressed during any update phases
+     */
+    public void setSuppressUpdate(boolean isSuppressed) {
+        _suppressUpdate = isSuppressed;
+    }
+    
+    /**
+     * @return Gets the suppress update state of this event
+     */
+    public boolean isUpdateSuppressed() {
+        return _suppressUpdate;
+    }
+    
     /**
      * Gets the operation name
      * 
