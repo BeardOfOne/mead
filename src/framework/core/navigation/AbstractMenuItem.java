@@ -25,9 +25,7 @@
 package framework.core.navigation;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.util.EventObject;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +34,10 @@ import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import framework.core.factories.AbstractFactory;
 
 /**
  * Defines the abstract implementation for the menu item. A menu item is similar
@@ -77,10 +79,10 @@ public abstract class AbstractMenuItem extends AbstractMenu {
      */
     protected abstract void onExecute(ActionEvent actionEvent);
 
-    protected void onEntered(InputEvent event) {
+    protected void onEntered(EventObject event) {
     }
     
-    protected void onExited(InputEvent event) {
+    protected void onExited(EventObject event) {
     }
     
     /**
@@ -115,19 +117,38 @@ public abstract class AbstractMenuItem extends AbstractMenu {
 
     @Override protected final void onInitialize() {
         
-        super.getComponent(JMenuItem.class).addMouseListener(new MouseAdapter() {
-            @Override public void mouseEntered(MouseEvent event) {
-                if(enabled()) {
-                    onEntered(event);
-                }
-            }
-            @Override public void mouseExited(MouseEvent event) {
-                if(enabled()) {
-                    onExited(event);
+        JMenuItem item = super.getComponent(JMenuItem.class);
+        
+        // Listen to events when the focus changes on menu items
+        item.addChangeListener(new ChangeListener() {
+            @Override public void stateChanged(ChangeEvent event) {
+                
+                if (event.getSource() instanceof JMenuItem) {
+                    
+                    // As a convenience functionality, only fire onEntered/onExited after the factory
+                    // has been used. This is to avoid issues related to trying to access factory related
+                    // operations prematurely.
+                    //
+                    // Note: TODO This can be turned into an option to bypass
+                    // 
+                    JMenuItem eventItem = (JMenuItem) event.getSource();
+                    if(AbstractFactory.isRunning())
+                    {
+                        // Focus In
+                        if (eventItem.isSelected() || eventItem.isArmed()) {
+                            onEntered(event);
+                        }
+                        // Focus Out
+                        else
+                        {
+                            onExited(event);
+                        }
+                    }
                 }
             }
         });
-        super.getComponent(JMenuItem.class).addActionListener(new AbstractAction(super.toString()) {
+        
+        item.addActionListener(new AbstractAction(super.toString()) {
             @Override public void actionPerformed(ActionEvent event) {
                 if(enabled()) {
                     onExecute(event);
