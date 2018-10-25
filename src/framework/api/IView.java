@@ -185,13 +185,22 @@ public interface IView extends ISignalListener {
         return (T)this;
     }
 
+    default public IView getParentIView() {
+        Container container = this.getContainerClass();
+        while(container != null && !((container = container.getParent()) instanceof IView)) {
+        }
+        
+        if(container == this) {
+            return null;
+        }
+        
+        return (IView)container;
+    }
+    
     /**
      * Renders the view
      */
     public default void render() {
-        
-        //Tracelog.log(Level.INFO, false, "IView::render:" + this.getClass().getName());
-        
         getContainerClass().setVisible(true);
         for(Component component : getContainerClass().getComponents()) {
             if(component instanceof IView) {

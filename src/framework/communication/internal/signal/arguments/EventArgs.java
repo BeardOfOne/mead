@@ -79,6 +79,10 @@ public class EventArgs extends EventObject {
         return _operationName;
     }
     
+    public static EventArgs Empty() {
+        return new EmptyEventArgs();
+    }
+    
     @Override public final Object getSource() {
         return super.getSource();
     }
