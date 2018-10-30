@@ -26,9 +26,19 @@ package framework.core.mvc.view;
 
 import java.awt.Rectangle;
 import java.awt.Window;
+import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.util.UUID;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import javax.swing.JRootPane;
+import javax.swing.KeyStroke;
+
+import com.sun.glass.events.KeyEvent;
 
 import framework.api.IController;
 import framework.api.IView;
@@ -43,7 +53,7 @@ import framework.core.system.Application;
  */
 public abstract class DialogView extends JDialog implements IView {
 
-    /**
+	/**
      * Flag indicating if this dialog should always attempt to center itself to it's parent component
      */
     private boolean _isAutomaticDialogCentering = false;
@@ -68,6 +78,20 @@ public abstract class DialogView extends JDialog implements IView {
      */
     public <T extends IController> DialogView(Window parent, String title) {
         super(parent, title);
+        
+        // Create the action that will dispatch an event to this dialog 
+        Action dispatchClosing = new AbstractAction() { 
+            public void actionPerformed(ActionEvent event) {
+            	DialogView.this.dispatchEvent(new WindowEvent(DialogView.this, WindowEvent.WINDOW_CLOSING)); 
+            } 
+        };
+        
+        // Create a uuid to act as a `unique` identifier for the input map
+        String uuid = UUID.randomUUID().toString();
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), uuid);
+        
+        // Associate to the UUID the action that will be performed
+        getRootPane().getActionMap().put(uuid, dispatchClosing);
     }
 
     /**
