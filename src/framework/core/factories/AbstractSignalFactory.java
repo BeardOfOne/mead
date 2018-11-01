@@ -89,11 +89,23 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
      * @return The concrete class of the specified type
      */
     public final <U extends T> U get(Class<U> signalClass) {
+        
+        // Verify if there is a hit based on a 1-1 relationship of the class
         for(T resource : _publicSignals) {
             if(resource.getClass().equals(signalClass)) {
                 return (U)resource;
             }
         }
+        
+        // If we get to here then it means nothing was found, so at least attempt to find
+        // a sub-class existance
+        for(T resource : _publicSignals) {
+            if(signalClass.isAssignableFrom(resource.getClass())) {
+                Tracelog.log(Level.WARNING, false, "Using public signal " + resource.getClass().getSimpleName() + " as it is a sub-class of " + signalClass.getSimpleName());
+                return (U)resource;
+            }
+        }
+        
         return null;
     }
 
