@@ -35,7 +35,6 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
 import com.sun.glass.events.KeyEvent;
