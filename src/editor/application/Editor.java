@@ -70,8 +70,8 @@ public final class Editor extends Application {
     /**
      * Constructs a new instance of this class type
      */
-    public Editor() {
-        super(false); 
+    public Editor(boolean isDebug) {
+        super(isDebug); 
         
         // Pressing on the close button won't do it's default action
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -89,9 +89,14 @@ public final class Editor extends Application {
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             @Override public void run() {
-                
-//                Editor.initialize(Editor.class, false);
-//                Editor.instance().setVisible(true);
+                boolean debugMode = false;
+                for(String arg : args) {
+                    if(arg.trim().equalsIgnoreCase("debug")) {
+                        debugMode = true;
+                        break;
+                    }
+                }
+                new Editor(debugMode);
             }
         });
     }
