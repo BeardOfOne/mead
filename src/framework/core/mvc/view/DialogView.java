@@ -52,7 +52,7 @@ import framework.core.system.Application;
  */
 public abstract class DialogView extends JDialog implements IView {
 
-	/**
+    /**
      * Flag indicating if this dialog should always attempt to center itself to it's parent component
      */
     private boolean _isAutomaticDialogCentering = false;
