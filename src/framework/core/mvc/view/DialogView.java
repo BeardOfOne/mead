@@ -80,17 +80,22 @@ public abstract class DialogView extends JDialog implements IView {
         
         // Create the action that will dispatch an event to this dialog 
         Action dispatchClosing = new AbstractAction() { 
-            public void actionPerformed(ActionEvent event) {
-            	DialogView.this.dispatchEvent(new WindowEvent(DialogView.this, WindowEvent.WINDOW_CLOSING)); 
+            @Override public void actionPerformed(ActionEvent event) {
+                DialogView.this.dispatchEvent(new WindowEvent(DialogView.this, WindowEvent.WINDOW_CLOSING)); 
             } 
         };
-        
-        // Create a uuid to act as a `unique` identifier for the input map
-        String uuid = UUID.randomUUID().toString();
-        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), uuid);
-        
-        // Associate to the UUID the action that will be performed
-        getRootPane().getActionMap().put(uuid, dispatchClosing);
+        String uuidEscape = UUID.randomUUID().toString();
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), uuidEscape);
+        getRootPane().getActionMap().put(uuidEscape, dispatchClosing);
+
+        Action dispatchEnter = new AbstractAction() {
+            @Override public void actionPerformed(ActionEvent event) {
+                enterActionPerformed(event);
+            }
+        };
+        String uuidEnter = UUID.randomUUID().toString();
+        getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), uuidEnter);
+        getRootPane().getActionMap().put(uuidEnter, dispatchEnter);        
     }
 
     /**
@@ -115,6 +120,14 @@ public abstract class DialogView extends JDialog implements IView {
      */
     protected boolean validateDialog() {
         return true;
+    }
+    
+    /**
+     * Called when the enter key is pressed in the dialog
+     *
+     * @param event The event associated to the action taking place
+     */
+    protected void enterActionPerformed(ActionEvent event) {
     }
 
     /**
