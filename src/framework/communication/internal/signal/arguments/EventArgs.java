@@ -37,6 +37,9 @@ public class EventArgs extends EventObject {
      * Indicates if this event should not be carried forward
      */
     private boolean _suppressUpdate;
+
+    
+    private boolean _setDestinationAsTarget;
     
     /**
      * The name of the operation 
@@ -54,6 +57,10 @@ public class EventArgs extends EventObject {
         _operationName = operationName;
     }
     
+    public void setSender(Object sender) {
+        source = sender;
+    }
+    
     /**
      * Sets the suppress update state
      *
@@ -68,6 +75,14 @@ public class EventArgs extends EventObject {
      */
     public boolean isUpdateSuppressed() {
         return _suppressUpdate;
+    }
+    
+    public void setDestinationAsTarget(boolean enabled) {
+        _setDestinationAsTarget = enabled;
+    }
+    
+    public boolean isDestinationUsedAsTarget() {
+        return _setDestinationAsTarget;
     }
     
     /**

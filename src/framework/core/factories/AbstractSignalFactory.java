@@ -256,6 +256,10 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
                 // Send out a unicast signal to every resource, although 
                 // horribly inefficient the way it is being done right now
                 if(!source.equals(resource)) {
+                    
+                    if(signalEvent.isDestinationUsedAsTarget()) {
+                        signalEvent.setSender(resource);
+                    }
                     resource.sendSignalEvent(signalEvent);
                 }
             }

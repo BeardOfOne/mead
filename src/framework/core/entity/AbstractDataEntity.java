@@ -38,7 +38,7 @@ public abstract class AbstractDataEntity implements IRenderable {
      */
     private Image _renderableData;
     
-    protected void setActiveData(UUID identifier) {
+    public void setActiveData(UUID identifier) {
         _renderableData = null;
         if(identifier != null) {
             _renderableData = AbstractFactory.getFactory(DataFactory.class).getDataEntity(identifier);
