@@ -267,7 +267,7 @@ public class PropertiesDialogView extends DialogView {
 
                 JFileChooser chooser = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
                 chooser.setAcceptAllFileFilterUsed(false);
-                chooser.setFileFilter(new FileNameExtensionFilter("Image File (*.jpg, *.jpeg, *.png, *.gif)", "jpg", "jpeg", "png", "gif"));
+                chooser.setFileFilter(new FileNameExtensionFilter("Image File (*.jpg, *.jpeg, *.png, *.gif, *.bmp)", "jpg", "jpeg", "png", "gif", "bmp"));
 
                 if(GameValues.exists(chooser.getClass().getSimpleName())) {
                     chooser.setCurrentDirectory(new File(GameValues.getGameValue(chooser.getClass().getSimpleName())));

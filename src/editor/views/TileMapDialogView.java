@@ -139,17 +139,6 @@ public class TileMapDialogView extends DialogView {
 
         // Do not allow it to be resized
         setResizable(false);
-    }
-
-    /**
-     * Constructs a new instance of this class type
-     *
-     * @param dimension The dimensions of the image (for scaling purposes)
-     */
-    public TileMapDialogView(Dimension dimension) {
-        this();
-
-        _dimension = dimension;
         
         // NAME
         _dialogPanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.Name)));
@@ -186,6 +175,40 @@ public class TileMapDialogView extends DialogView {
         // Add the dialog panel
         add(_dialogPanel);
         
+        // Add our confirmation buttons to our panel
+        _confirmationPanel.add(_okButton);
+        _confirmationPanel.add(_cancelButton);
+        add(_confirmationPanel);
+        
+        // OK button event
+        _okButton.addActionListener(new ActionListener() {
+            @Override public void actionPerformed(ActionEvent e) {
+                if(validateDialog()) {
+                    setDialogResult(JOptionPane.OK_OPTION);
+                    setVisible(false);
+                }
+            }
+        });
+
+        // Cancel button event
+        _cancelButton.addActionListener(new ActionListener() {
+            @Override public void actionPerformed(ActionEvent e) {
+                setDialogResult(JOptionPane.CANCEL_OPTION);
+                setVisible(false);
+            }
+        });
+    }
+
+    /**
+     * Constructs a new instance of this class type
+     *
+     * @param dimension The dimensions of the image (for scaling purposes)
+     */
+    public TileMapDialogView(Dimension dimension) {
+        this();
+
+        _dimension = dimension;
+        
         // SCALE DIMENSIONS
         if(_dimension != null) {
             _scalePanel.add(new JLabel(Localization.instance().getLocalizedString(ResourceKeys.ScaleDimensions)));
@@ -195,11 +218,6 @@ public class TileMapDialogView extends DialogView {
             // Add the scale panel
             add(_scalePanel);
         }
-        
-        // Add our confirmation buttons to our panel
-        _confirmationPanel.add(_okButton);
-        _confirmationPanel.add(_cancelButton);
-        add(_confirmationPanel);
         
         // If dimension was provided then add some more bindings
         if(_dimension != null) {
@@ -272,25 +290,6 @@ public class TileMapDialogView extends DialogView {
             _cellWidthField.addKeyListener(cellWidthHeightListener);
             _cellHeightField.addKeyListener(cellWidthHeightListener);
         }
-
-        // OK button event
-        _okButton.addActionListener(new ActionListener() {
-            @Override public void actionPerformed(ActionEvent e) {
-                if(validateDialog()) {
-                    setDialogResult(JOptionPane.OK_OPTION);
-                    setVisible(false);
-                }
-            }
-        });
-
-        // Cancel button event
-        _cancelButton.addActionListener(new ActionListener() {
-            @Override public void actionPerformed(ActionEvent e) {
-                setDialogResult(JOptionPane.CANCEL_OPTION);
-                setVisible(false);
-            }
-        });
-
     }
     
     public TileMapDialogView(String name, String rows, String columns, String width, String height) {
