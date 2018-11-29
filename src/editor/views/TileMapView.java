@@ -82,6 +82,10 @@ public class TileMapView extends PanelView {
      * 
      */
     public TileMapView(String name, int rows, int columns, int cellWidth, int cellHeight) {
+        
+        // Do not render the background of the this class. Make it so that it is transparent. All tiles
+        // that are created within this tile map should also have their opaque set to false
+        setOpaque(false);
 
         // Create the setup model that will be associated to the tilemap
         TileMapModel setupModel = AbstractFactory.getFactory(ModelFactory.class).add(new TileMapModel(this), false);

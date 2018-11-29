@@ -24,7 +24,6 @@
 
 package framework.core.mvc.view;
 
-import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
@@ -80,12 +79,14 @@ public class PanelView extends JPanel implements IView, IRenderer {
      */
     private final List<IRenderable> _renderCache = new ArrayList();
 
+    private boolean _isHighlighted;
+    
     /**
      * Adds renderable content to the queue of content to be rendered
      * 
      * @param content The content to render
      */
-    public final void addRenderableContent(IRenderable content) {
+    protected final void addRenderableContent(IRenderable content) {
         if(content != null) {
             _renderCache.add(content);    
         }
@@ -105,34 +106,14 @@ public class PanelView extends JPanel implements IView, IRenderer {
         _width = width;
         _height = height;
     }
-    
-    /**
-     * Renders the contents currently held in the render cache
-     * 
-     * @param context The graphics context
-     */
-    protected final void renderContent(Graphics context) {
-        for(IRenderable content : _renderCache) {
-            if(content != null) {
-                this.render(content, context);
-            }
-        }
+             
+    public void setIsHighlighted(boolean isHighlighted) {
+        _isHighlighted = isHighlighted;
+        repaint();
     }
     
-    /**
-     * Helper method for rendering the contents of a panel
-     *
-     * @param panel The panel to render
-     */
-    protected final void render(JPanel panel) {
-        for(Component component : panel.getComponents()) {
-            if(component instanceof IView) {
-                ((IView) component).render();
-            }
-        }
-    }
-    
-    protected void preProcessGraphics(Graphics context) {
+    public boolean getIsHighlighted() {
+        return _isHighlighted;
     }
     
     @Override public void render(IRenderable renderable, Graphics context) {
@@ -158,9 +139,11 @@ public class PanelView extends JPanel implements IView, IRenderer {
 
     @Override protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-
-        // Render the contents attached to the view
-        renderContent(graphics);
+        for(IRenderable content : _renderCache) {
+            if(content != null) {
+                this.render(content, graphics);
+            }
+        }
     }
 
     @Override public void update(EventArgs event) {

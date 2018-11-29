@@ -24,6 +24,8 @@
 
 package editor.views;
 
+import java.awt.Color;
+
 import javax.swing.JScrollPane;
 
 import framework.communication.internal.signal.arguments.EventArgs;
@@ -52,7 +54,7 @@ public class ProjectView extends ScrollView {
     public ProjectView(String projectName) {
         setLayout(new DraggableLayout());
         Application.instance.setContentPane(new JScrollPane(this));
-
+setBackground(Color.ORANGE);
         // Create the tile model that this view will be populated from
         ProjectModel model = AbstractFactory.getFactory(ModelFactory.class).add(
                 new ProjectModel(projectName),

@@ -24,6 +24,7 @@
 
 package editor.persistance.filesystem;
 
+import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -36,15 +37,16 @@ import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import editor.models.TileLayerModel;
-import editor.models.TileMapModel;
-import editor.models.TileModel;
 import framework.communication.external.filesystem.AbstractFileSystem;
 import framework.utils.io.ClassGenerator;
 import framework.utils.io.JarPackage;
 import framework.utils.io.Javac;
 import framework.utils.io.Paths;
 import framework.utils.logging.Tracelog;
+
+import editor.models.TileLayerModel;
+import editor.models.TileMapModel;
+import editor.models.TileModel;
 import generated.TileMapData;
 
 /**
@@ -104,8 +106,17 @@ public final class TileMapFileSystem extends AbstractFileSystem {
         // Fill the entire image with the specified color for debug purposes
         BufferedImage image = new BufferedImage(width, height , BufferedImage.TYPE_INT_ARGB);
         Graphics2D graphics = image.createGraphics();
-        graphics.fillRect(0,  0,  width, height);
-
+        
+        // Create an alpha composite so that the initial background is fully transparent
+        AlphaComposite composite = AlphaComposite.getInstance(AlphaComposite.CLEAR, 0.0f);
+        graphics.setComposite(composite);
+        
+        // Draw the initial layout of the buffer
+        graphics.fillRect(0, 0, width, height);
+        
+        // Set the composite back so that we can draw things over the transparent background
+        graphics.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
+        
         // Go through the list of tile map models and from the generated list of tile map data, place the
         // image held by it into the image placeholder
         for(int i = 0, posX = 0, iSize = tileMapModels.size(); i < iSize; ++i) {

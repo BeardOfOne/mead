@@ -66,6 +66,9 @@ public class TileView extends PanelView {
      */
     public TileView(TileMapController tileMapController) {
 
+        // Do not show any background, let the image do all the work
+        setOpaque(false);
+        
         // Use the tile map controller as the controller for this view
         getViewProperties().setEntity(tileMapController);
 
