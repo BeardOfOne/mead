@@ -81,6 +81,8 @@ public class PanelView extends JPanel implements IView, IRenderer {
 
     private boolean _isHighlighted;
     
+    private boolean _isForceRendering;
+    
     /**
      * Adds renderable content to the queue of content to be rendered
      * 
@@ -116,6 +118,10 @@ public class PanelView extends JPanel implements IView, IRenderer {
         return _isHighlighted;
     }
     
+    protected final void setIsForceRendering(boolean isForceRendering) {
+        _isForceRendering = isForceRendering;
+    }
+    
     @Override public void render(IRenderable renderable, Graphics context) {
         Image image = null;
         if(renderable != null) {
@@ -136,12 +142,20 @@ public class PanelView extends JPanel implements IView, IRenderer {
             null
         );
     }
-
+    
     @Override protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
-        for(IRenderable content : _renderCache) {
-            if(content != null) {
-                this.render(content, graphics);
+        if(_isForceRendering) {
+            
+            // Force the render method that holds an image
+            Image img = null;
+            render(img, graphics);
+        }
+        else {
+            for(IRenderable content : _renderCache) {
+                if(content != null) {
+                    this.render(content, graphics);
+                }
             }
         }
     }
@@ -160,5 +174,9 @@ public class PanelView extends JPanel implements IView, IRenderer {
 
     @Override public final ViewProperties getViewProperties() {
         return _properties;
-    }   
+    }
+    
+    @Override public String toString() {
+        return this.getClass().toString();
+    }
 }

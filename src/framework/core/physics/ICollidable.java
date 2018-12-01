@@ -21,6 +21,7 @@
 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 * IN THE SOFTWARE.
 */
+
 package framework.core.physics;
 
 import java.awt.Component;
@@ -28,7 +29,6 @@ import java.awt.Component;
 /**
  * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  */
-public interface ICollide {
-    // TODO Should this be an IView instead of a Component?
+public interface ICollidable {
     public boolean isValidCollision(Component source);
 }

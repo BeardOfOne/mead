@@ -58,7 +58,7 @@ public final class CollisionListener extends MouseInputAdapter {
     /**
      * The object that has been collided with
      */
-    private ICollide _collision;
+    private ICollidable _collision;
     
     /**
      * Constructs a new instance of this class type
@@ -91,7 +91,7 @@ public final class CollisionListener extends MouseInputAdapter {
         // Get the list of components that implement the ICollide type
         List<Component> siblings = new ArrayList();
         for(Component component : _source.getParent().getComponents()) {
-            if(component instanceof ICollide) {
+            if(component instanceof ICollidable) {
                 siblings.add(component);
             }
         }
@@ -99,8 +99,8 @@ public final class CollisionListener extends MouseInputAdapter {
         // Find the first collided component
         boolean found = false;
         for(Component sibling : siblings) {
-            if(sibling != _source && sibling instanceof ICollide && _source.getBounds().intersects(sibling.getBounds())) {
-                ICollide collidable = (ICollide)sibling;
+            if(sibling != _source && sibling instanceof ICollidable && _source.getBounds().intersects(sibling.getBounds())) {
+                ICollidable collidable = (ICollidable)sibling;
                 if(collidable.isValidCollision(_source)) {
                     found = true;
                    _collision = collidable;
@@ -160,7 +160,7 @@ public final class CollisionListener extends MouseInputAdapter {
     /**
      * @return The list of collided entities that the currently registered component has collided with
      */
-    public ICollide getCollision() {
+    public ICollidable getCollision() {
         return _collision;
     }    
 }
