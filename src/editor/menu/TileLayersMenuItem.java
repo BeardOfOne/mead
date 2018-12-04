@@ -29,11 +29,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 
-import editor.views.LayersDialogView;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ViewFactory;
 import framework.core.navigation.AbstractMenuItem;
 import framework.utils.globalisation.Localization;
+
+import editor.views.LayersDialogView;
 import resources.ResourceKeys;
 
 /**

@@ -27,8 +27,6 @@ package editor.controllers;
 import java.util.Optional;
 import java.util.logging.Level;
 
-import editor.models.TileMapModel;
-import editor.models.TileModel;
 import framework.communication.internal.signal.ISignalListener;
 import framework.communication.internal.signal.ISignalReceiver;
 import framework.communication.internal.signal.arguments.ControllerEventArgs;
@@ -37,6 +35,9 @@ import framework.core.factories.AbstractFactory;
 import framework.core.factories.ControllerFactory;
 import framework.core.mvc.controller.BaseController;
 import framework.utils.logging.Tracelog;
+
+import editor.models.TileMapModel;
+import editor.models.TileModel;
 
 /**
  * This controller provides functionality that deals with a single tile map and the tiles that it occupies

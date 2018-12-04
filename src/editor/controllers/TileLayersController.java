@@ -26,10 +26,11 @@ package editor.controllers;
 
 import javax.swing.DefaultComboBoxModel;
 
-import editor.models.TileLayerModel;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ModelFactory;
 import framework.core.mvc.controller.BaseController;
+
+import editor.models.TileLayerModel;
 
 /**
  * The controller for business logic associated to tile layers

@@ -32,6 +32,7 @@ import javax.swing.JOptionPane;
 
 import framework.core.navigation.AbstractMenuItem;
 import framework.utils.globalisation.Localization;
+
 import resources.ResourceKeys;
 
 /**

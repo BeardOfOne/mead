@@ -33,13 +33,14 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import editor.views.TileMapDialogView;
-import editor.views.TileMapView;
 import framework.core.factories.AbstractFactory;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ViewFactory;
 import framework.core.navigation.AbstractMenuItem;
 import framework.utils.globalisation.Localization;
+
+import editor.views.TileMapDialogView;
+import editor.views.TileMapView;
 import resources.ResourceKeys;
 
 /**

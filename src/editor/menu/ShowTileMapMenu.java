@@ -30,8 +30,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 
-import editor.models.TileMapModel;
-import editor.views.ProjectView;
 import framework.core.factories.AbstractFactory;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ModelFactory;
@@ -40,6 +38,9 @@ import framework.core.navigation.AbstractMenuContainer;
 import framework.core.navigation.AbstractMenuItem;
 import framework.core.navigation.MenuBuilder;
 import framework.utils.globalisation.Localization;
+
+import editor.models.TileMapModel;
+import editor.views.ProjectView;
 import resources.ResourceKeys;
 
 /**

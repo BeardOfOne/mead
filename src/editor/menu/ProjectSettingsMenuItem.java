@@ -30,14 +30,15 @@ import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import editor.controllers.ProjectController;
-import editor.views.ProjectDialogView;
 import framework.core.factories.AbstractFactory;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ControllerFactory;
 import framework.core.factories.ViewFactory;
 import framework.core.navigation.AbstractMenuItem;
 import framework.utils.globalisation.Localization;
+
+import editor.controllers.ProjectController;
+import editor.views.ProjectDialogView;
 import resources.ResourceKeys;
 
 /**

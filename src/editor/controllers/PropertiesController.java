@@ -28,10 +28,11 @@ import java.awt.image.BufferedImage;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import framework.core.mvc.controller.BaseController;
+
 import editor.models.PropertiesModel;
 import editor.models.TileLayerModel;
 import editor.models.TileModel;
-import framework.core.mvc.controller.BaseController;
 
 /**
  * The properties controller

@@ -32,11 +32,12 @@ import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 
-import editor.models.TileMapModel;
-import editor.models.TileModel;
 import framework.communication.external.filesystem.AbstractFileSystem;
 import framework.utils.io.Paths;
 import framework.utils.logging.Tracelog;
+
+import editor.models.TileMapModel;
+import editor.models.TileModel;
 
 /**
  * Image file system for handling images

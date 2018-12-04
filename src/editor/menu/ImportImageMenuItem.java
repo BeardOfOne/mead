@@ -31,10 +31,11 @@ import javax.swing.JComponent;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
-import editor.persistance.builder.ImportImageBuilder;
 import framework.communication.external.builder.Director;
 import framework.core.navigation.AbstractMenuItem;
 import framework.utils.globalisation.Localization;
+
+import editor.persistance.builder.ImportImageBuilder;
 import resources.ResourceKeys;
 
 /**

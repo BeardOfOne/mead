@@ -24,8 +24,9 @@
 
 package editor.controllers;
 
-import editor.models.ProjectModel;
 import framework.core.mvc.controller.BaseController;
+
+import editor.models.ProjectModel;
 
 /**
  * The project controller used to manage functionality for the project

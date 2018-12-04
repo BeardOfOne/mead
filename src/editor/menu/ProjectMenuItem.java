@@ -32,12 +32,13 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import editor.views.ProjectDialogView;
-import editor.views.ProjectView;
 import framework.core.factories.AbstractSignalFactory;
 import framework.core.factories.ViewFactory;
 import framework.core.navigation.AbstractMenuItem;
 import framework.utils.globalisation.Localization;
+
+import editor.views.ProjectDialogView;
+import editor.views.ProjectView;
 import resources.ResourceKeys;
 
 /**
