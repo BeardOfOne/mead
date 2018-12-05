@@ -76,7 +76,7 @@ public class ProjectSettingsMenuItem extends AbstractMenuItem {
         projectController.setProjectName(projectDialog.getNameField());
     }
 
-    @Override public boolean enabled() {
+    @Override public boolean isEnabled() {
         return AbstractFactory.isRunning();
     }
 }

@@ -60,7 +60,7 @@ setBackground(Color.ORANGE);
                 new ProjectModel(projectName),
                 true
                 );
-        model.addListeners(this);
+        model.addListener(this);
 
         getViewProperties().setEntity(
                 AbstractSignalFactory.getFactory(ControllerFactory.class).add(new ProjectController(model), true)

@@ -76,7 +76,7 @@ public class ProjectMenuItem extends AbstractMenuItem {
         view.render();
     }
 
-    @Override public boolean enabled() {
+    @Override public boolean isEnabled() {
         return true;
     }
 }

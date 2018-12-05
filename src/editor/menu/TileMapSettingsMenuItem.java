@@ -86,7 +86,7 @@ public class TileMapSettingsMenuItem extends AbstractMenuItem {
         }
     }
     
-    @Override protected boolean enabled() {
+    @Override protected boolean isEnabled() {
         return true;
     }
 

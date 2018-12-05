@@ -103,12 +103,12 @@ public abstract class BaseModel implements IModel, IRenderable
     }
 
     /**
-     * Adds the specified listeners to listen in on signals fired by this model
+     * Adds the specified listener to listen in of signals fired by this model
      * 
-     * @param listeners The list of listeners 
+     * @param listener The listener to add 
      */
-    @Override public final void addListeners(ISignalListener... listeners) {
-        addListenersImpl(listeners);
+    @Override public final void addListener(ISignalListener... listener) {
+        addListenersImpl(listener);
     }
     
     /**
@@ -274,7 +274,7 @@ public abstract class BaseModel implements IModel, IRenderable
         addSignalListener(ISignalListener.EVENT_REGISTER, new ISignalReceiver<EventArgs>() {
             @Override public void signalReceived(EventArgs event) {
                 ISignalListener listener = (ISignalListener) event.getSource();
-                addListeners(listener);
+                addListener(listener);
             }
         });
         addSignalListener(ISignalListener.EVENT_UNREGISTER, new ISignalReceiver<EventArgs>() {

@@ -61,7 +61,7 @@ public class ExportDataMenuItem extends AbstractMenuItem {
         exportDirector.construct();
     }
 
-    @Override public boolean enabled() {
+    @Override public boolean isEnabled() {
         return !AbstractFactory.getFactory(ModelFactory.class).getAll(TileMapModel.class).isEmpty();
     }
 }

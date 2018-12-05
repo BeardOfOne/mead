@@ -103,7 +103,7 @@ abstract class AbstractMenu {
      * 
      * @return TRUE if the option is enabled, FALSE if the option is not enabled
      */
-    protected boolean enabled() {
+    protected boolean isEnabled() {
         return _component.isEnabled();
     }
 

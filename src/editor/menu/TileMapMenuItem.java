@@ -93,7 +93,7 @@ public class TileMapMenuItem extends AbstractMenuItem {
         tilemapView.render();
     }
 
-    @Override public boolean enabled() {
+    @Override public boolean isEnabled() {
         return AbstractFactory.isRunning();
     }
 

@@ -62,7 +62,7 @@ public class TileLayersMenuItem extends AbstractMenuItem {
         view.render();
     }
 
-    @Override public boolean enabled() {
+    @Override public boolean isEnabled() {
         return AbstractSignalFactory.isRunning();
     }
 }

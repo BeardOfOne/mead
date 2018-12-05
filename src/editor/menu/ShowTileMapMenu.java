@@ -97,11 +97,11 @@ public class ShowTileMapMenu extends AbstractMenuContainer {
         }
     }
 
-    @Override protected boolean enabled() {
+    @Override protected boolean isEnabled() {
         return AbstractSignalFactory.isRunning();
     }
     
     @Override protected boolean visibility() {
-        return enabled() && !AbstractFactory.getFactory(ModelFactory.class).getAll(TileMapModel.class).isEmpty();
+        return isEnabled() && !AbstractFactory.getFactory(ModelFactory.class).getAll(TileMapModel.class).isEmpty();
     }
 }

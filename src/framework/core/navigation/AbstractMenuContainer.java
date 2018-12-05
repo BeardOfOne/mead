@@ -87,7 +87,7 @@ public class AbstractMenuContainer extends AbstractMenu {
                             AbstractMenu itemComponent = (AbstractMenu) jComponent.getClientProperty(jComponent);
                             itemComponent.onLoad();
                             jComponent.setVisible(itemComponent.visibility());
-                            jComponent.setEnabled(jComponent.isVisible() && itemComponent.enabled());
+                            jComponent.setEnabled(jComponent.isVisible() && itemComponent.isEnabled());
                         }
                     }
                 }

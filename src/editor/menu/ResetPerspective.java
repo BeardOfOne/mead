@@ -74,7 +74,7 @@ public class ResetPerspective extends AbstractMenuItem {
         }
     }
 
-    @Override public boolean enabled() {
+    @Override public boolean isEnabled() {
         return AbstractSignalFactory.isRunning();
     }
 }

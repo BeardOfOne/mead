@@ -62,7 +62,7 @@ public class PropertiesMenuItem extends AbstractMenuItem {
         propertiesView.render();
     }
 
-    @Override public boolean enabled() {
+    @Override public boolean isEnabled() {
         return AbstractSignalFactory.isRunning();
     }
 }

@@ -62,7 +62,7 @@ public class SaveMenuItem extends AbstractMenuItem {
         saveDirector.construct();
     }
 
-    @Override public boolean enabled() {
+    @Override public boolean isEnabled() {
         return AbstractSignalFactory.isRunning();
     }	
 }

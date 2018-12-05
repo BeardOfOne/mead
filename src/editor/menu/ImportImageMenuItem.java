@@ -66,7 +66,7 @@ public class ImportImageMenuItem extends AbstractMenuItem {
         importDirector.construct();
     }
 
-    @Override public boolean enabled() {
+    @Override public boolean isEnabled() {
         return true;
     }
 }

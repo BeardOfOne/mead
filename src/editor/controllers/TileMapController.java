@@ -74,7 +74,7 @@ public class TileMapController extends BaseController {
      */
     public TileMapController(TileMapModel setupModel) {
         _tileMapModel = setupModel;
-        setupModel.addListeners(this);
+        setupModel.addListener(this);
     }
 
     /**

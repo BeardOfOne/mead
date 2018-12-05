@@ -78,7 +78,7 @@ public interface IModel extends ISignalListener, IXMLCodec {
      */
     public void copyData(IModel model);
 
-    public void addListeners(ISignalListener... listeners);
+    public void addListener(ISignalListener... listeners);
     
     @Override default Map<String, SignalListenerContainer> getSignalListeners() {
         return getModelProperties().getSignalListeners();

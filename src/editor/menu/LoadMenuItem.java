@@ -61,7 +61,7 @@ public class LoadMenuItem extends AbstractMenuItem {
         loadDirector.construct();
     }
 
-    @Override public boolean enabled() {
+    @Override public boolean isEnabled() {
         return true;
     }
 }

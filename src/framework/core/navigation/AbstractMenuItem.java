@@ -150,7 +150,7 @@ public abstract class AbstractMenuItem extends AbstractMenu {
         
         item.addActionListener(new AbstractAction(super.toString()) {
             @Override public void actionPerformed(ActionEvent event) {
-                if(enabled()) {
+                if(isEnabled()) {
                     onExecute(event);
                 } 
             }

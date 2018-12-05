@@ -59,7 +59,7 @@ public class AllViewsMenuItem extends AbstractMenuItem {
         MenuBuilder.search(Application.instance.getJMenuBar(), PropertiesMenuItem.class).onExecute(actionEvent);
     }
 
-    @Override public boolean enabled() {
+    @Override public boolean isEnabled() {
         return AbstractSignalFactory.isRunning();
     }
 }

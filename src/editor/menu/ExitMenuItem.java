@@ -59,7 +59,7 @@ public class ExitMenuItem extends AbstractMenuItem {
                 );
     }
 
-    @Override public boolean enabled() {
+    @Override public boolean isEnabled() {
         return true;
     }
 }
