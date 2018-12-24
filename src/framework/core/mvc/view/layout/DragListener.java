@@ -28,7 +28,7 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 
-import javax.swing.event.MouseInputAdapter;
+import framework.utils.MouseListenerEvent;
 
 /**
  * Listener class used for providing draggable functionality to a component
@@ -36,7 +36,7 @@ import javax.swing.event.MouseInputAdapter;
  * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  */
-public class DragListener extends MouseInputAdapter {
+public class DragListener extends MouseListenerEvent {
 
     /**
      * The position of the mouse
@@ -145,7 +145,12 @@ public class DragListener extends MouseInputAdapter {
     }
 
     @Override public void mouseReleased(MouseEvent event) {
-              
+            
+        super.mouseReleased(event);
+        if(event.isConsumed()) {
+            return;
+        }
+        
         Object source = event.getSource();
         if(source instanceof Component) {
             Component component = (Component)source;
@@ -164,17 +169,28 @@ public class DragListener extends MouseInputAdapter {
     }
 
     @Override public void mousePressed(MouseEvent event) {
+        
+        super.mousePressed(event);
+        if(event.isConsumed()) {
+            return;
+        }
+        
         _stopDragging = false;
         _mousePressedEvent = event;
     }
 
     @Override public void mouseDragged(MouseEvent event) {
 
-        // Do not proceed any further
-        if(_stopDragging) {
+        super.mouseDragged(event);
+        if(event.isConsumed()) {
             return;
         }
         
+        // Do not proceed any further
+        if(_stopDragging) {
+            System.out.println("STOPPING!!!");
+            return;
+        }
         
         if(_mousePressedEvent == null) {
             return;

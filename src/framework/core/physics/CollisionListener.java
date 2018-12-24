@@ -29,7 +29,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.event.MouseInputAdapter;
+import framework.utils.MouseListenerEvent;
 
 /**
  * Handles collisions associated to a particular component within the same node level structure
@@ -37,7 +37,7 @@ import javax.swing.event.MouseInputAdapter;
  * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  */
-public final class CollisionListener extends MouseInputAdapter {
+public final class CollisionListener extends MouseListenerEvent {
 
     /**
      * Indicates if this collision listener can only ever collide with at-most one element at a time
@@ -71,6 +71,12 @@ public final class CollisionListener extends MouseInputAdapter {
     }
        
     @Override public void mousePressed(MouseEvent event) {
+        
+        super.mousePressed(event);
+        if(event.isConsumed()) {
+            return;
+        }
+        
         // When the mouse button has been pressed down on this listener, the collision should be cleared
         // or else a false-positive could end up happening
         _collision = null;
