@@ -45,6 +45,8 @@ public abstract class AbstractDataEntity implements IRenderable {
         }
     }
     
+    public abstract void refresh();
+    
     @Override public Image getRenderableContent() {
         return _renderableData;
     }
