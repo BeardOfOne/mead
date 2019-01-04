@@ -188,7 +188,6 @@ public class DragListener extends MouseListenerEvent {
         
         // Do not proceed any further
         if(_stopDragging) {
-            System.out.println("STOPPING!!!");
             return;
         }
         
