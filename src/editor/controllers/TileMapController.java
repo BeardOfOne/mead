@@ -75,6 +75,7 @@ public class TileMapController extends BaseController {
     public TileMapController(TileMapModel setupModel) {
         _tileMapModel = setupModel;
         setupModel.addListener(this);
+        registerAllSignals();
     }
 
     /**
@@ -187,9 +188,9 @@ public class TileMapController extends BaseController {
         _tileMapModel.setCoordinate(x, y);
     }
 
-    @Override public void registerSignalListeners() {
+    private void registerAllSignals() {
 
-        addSignalListener(EVENT_CLEAR_SELECTION, new ISignalReceiver<ControllerEventArgs>() {
+        addSignal(EVENT_CLEAR_SELECTION, new ISignalReceiver<ControllerEventArgs>() {
             @Override public void signalReceived(ControllerEventArgs event) {
 
                 if(_currentlySelectedTile != null && _currentlySelectedTile.getSelected()) {
@@ -205,11 +206,11 @@ public class TileMapController extends BaseController {
             }
         });
 
-        addSignalListener(TileModel.EVENT_TILE_SELECTION_CHANGED, new ISignalReceiver<ModelEventArgs>() {
+        addSignal(TileModel.EVENT_TILE_SELECTION_CHANGED, new ISignalReceiver<ModelEventArgs>() {
             @Override public void signalReceived(ModelEventArgs event) {
 
                 // Unregister this controller from listening to this event, to prevent  an event from being re-fired back here
-                unregisterSignalListener(event.getOperationName());
+                setSignalEnabled(event.getOperationName(), false);
 
                 TileModel tileModel = (TileModel) event.getSource();
                 if(tileModel.getSelected()) {
@@ -255,16 +256,16 @@ public class TileMapController extends BaseController {
                 }
 
                 // Register back the original listener so that we can continue to receive signals
-                registerSignalListener(event.getOperationName());
+                setSignalEnabled(event.getOperationName(), true);
             }
         });
 
-        addSignalListener(TileMapModel.EVENT_TILEMAP_SELECTION_CHANGED, new ISignalReceiver<ModelEventArgs>() {
+        addSignal(TileMapModel.EVENT_TILEMAP_SELECTION_CHANGED, new ISignalReceiver<ModelEventArgs>() {
             @Override public void signalReceived(ModelEventArgs event) {
 
                 // Unregister this controller from listening to this event, to prevent 
                 // an event from being re-fired back here
-                unregisterSignalListener(event.getOperationName());
+                setSignalEnabled(event.getOperationName(), false);
 
                 TileMapModel tileMapModel = (TileMapModel) event.getSource();
                 if(tileMapModel.getSelected()) {
@@ -295,7 +296,7 @@ public class TileMapController extends BaseController {
                 }
 
                 // Register back the original listener so that we can continue to receive signals
-                registerSignalListener(event.getOperationName());
+                setSignalEnabled(event.getOperationName(), true);
             }
         });
     }

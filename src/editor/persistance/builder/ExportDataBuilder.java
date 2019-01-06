@@ -159,7 +159,7 @@ public final class ExportDataBuilder extends AbstractBuilder<TileMapFileSystem> 
         _fileSystem.serialize();
     }
 
-    @Override public Map<String, SignalListenerContainer> getSignalListeners() {
+    @Override public Map<String, SignalListenerContainer> getSignals() {
         return null;
     }
 

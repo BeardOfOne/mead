@@ -89,7 +89,24 @@ public abstract class BaseModel implements IModel, IRenderable
      * Constructs a new instance of this class type
      */
     protected BaseModel() {
-        registerSignalListeners();
+        addSignal(ISignalListener.EVENT_REGISTER, new ISignalReceiver<EventArgs>() {
+            @Override public void signalReceived(EventArgs event) {
+                ISignalListener listener = (ISignalListener) event.getSource();
+                addListener(listener);
+            }
+        });
+        addSignal(ISignalListener.EVENT_UNREGISTER, new ISignalReceiver<EventArgs>() {
+            @Override public void signalReceived(EventArgs event) {
+                ISignalListener listener = (ISignalListener) event.getSource();
+                removeListener(listener);
+            }
+        });
+        addSignal(IModel.EVENT_PIPE_DATA, new ISignalReceiver<PipelinedEventArgs>() {
+            @Override public void signalReceived(PipelinedEventArgs event) {
+                IDataPipeline source = (IDataPipeline) event.getSource();
+                source.pipeData(BaseModel.this);
+            }
+        });
     }
 
     /** 
@@ -195,7 +212,7 @@ public abstract class BaseModel implements IModel, IRenderable
         // Note: It is possible that the listeners list is updated from elsewhere, this is to prevent
         //       that issue from occur in a different stackframe
         for(ISignalListener receiver : new ArrayList<ISignalListener>(_listeners)) {
-            receiver.sendSignalEvent(event);
+            receiver.invokeSignal(event);
         }
     }
 
@@ -239,7 +256,7 @@ public abstract class BaseModel implements IModel, IRenderable
         // Call all signal listeners with the specified event (this takes operation name into account)
         // and then it will end up calling update after the fact
         for(ISignalListener receiver : _listeners) {
-            receiver.sendSignalEvent(_operationEvent);
+            receiver.invokeSignal(_operationEvent);
         }
 
         // reset the contents created
@@ -268,27 +285,6 @@ public abstract class BaseModel implements IModel, IRenderable
 
     @Override public final UUID getUUID() {
         return _uuid;
-    }
-
-    @Override public void registerSignalListeners() {
-        addSignalListener(ISignalListener.EVENT_REGISTER, new ISignalReceiver<EventArgs>() {
-            @Override public void signalReceived(EventArgs event) {
-                ISignalListener listener = (ISignalListener) event.getSource();
-                addListener(listener);
-            }
-        });
-        addSignalListener(ISignalListener.EVENT_UNREGISTER, new ISignalReceiver<EventArgs>() {
-            @Override public void signalReceived(EventArgs event) {
-                ISignalListener listener = (ISignalListener) event.getSource();
-                removeListener(listener);
-            }
-        });
-        addSignalListener(IModel.EVENT_PIPE_DATA, new ISignalReceiver<PipelinedEventArgs>() {
-            @Override public void signalReceived(PipelinedEventArgs event) {
-                IDataPipeline source = (IDataPipeline) event.getSource();
-                source.pipeData(BaseModel.this);
-            }
-        });
     }
 
     @Override public void copyData(IModel model) {

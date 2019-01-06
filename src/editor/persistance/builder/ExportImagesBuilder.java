@@ -131,7 +131,7 @@ public final class ExportImagesBuilder extends AbstractBuilder<ImageFileSystem> 
         _fileSystem.serialize();
     }
 
-    @Override public Map<String, SignalListenerContainer> getSignalListeners() {
+    @Override public Map<String, SignalListenerContainer> getSignals() {
         return null;
     }
 

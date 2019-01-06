@@ -55,6 +55,9 @@ public interface IView extends ISignalListener {
          */
         private boolean _shouldRedraw;
 
+        /**
+         * Indicates if the view should always be redrawn
+         */
         private boolean _shouldAlwaysRedraw;
         
         /**
@@ -88,55 +91,14 @@ public interface IView extends ISignalListener {
                 // This event is fired when a view is hidden, that is when
                 // the visibility is set to false
                 @Override public void componentHidden(ComponentEvent args) {
-
-                    // Get a reference to the controller of our view
-                    IController controller = getEntity(IController.class);
-
-                    // Note: Some views don't have controllers
-                    if(controller == null) {
-                        Tracelog.log(Level.WARNING, false, "Cannot invoke controller for hidden component " + args.getSource().getClass().getCanonicalName());
-                        return;
-                    }
-
-                    // Unregister all signals being listened to by this view's controller
-                    controller.clearSignalListeners();
-
-                    // Unregister all signals being listened to by the view
-                    view.clearSignalListeners();
-
                     // log that the component is being hidden
-                    //Tracelog.log(Level.INFO, false, String.format("Component %s is being hidden", args.getSource().getClass().getCanonicalName()));
+                    Tracelog.log(Level.INFO, false, String.format("Component %s is being hidden", args.getSource().getClass().getName()));
                 }
 
-                // This event is fired when  a view is shown, that is when
-                // the visibility is set to true
                 @Override public void componentShown(ComponentEvent args) {
-
-                    // Register all signals being listened to by the view
-                    view.registerSignalListeners();
-                    
                     // Indicate that this view is being shown now
-                    //Tracelog.log(Level.INFO, false, String.format("Component %s is being shown", args.getSource().getClass().getCanonicalName()));
-
-                    // Note: Some views don't have controllers
-                    IController controller = getEntity(IController.class);
-                    if(controller == null) {
-                        //Tracelog.log(Level.WARNING, false, "Cannot invoke controller for shown component " + args.getSource().getClass().getCanonicalName());
-                        return;
-                    }
-
-                    // If a registration already occurred then log that this is the case and don't register again
-                    // Note: This can occur if registration occurred before the actual view was about to be shown
-                    Map listeners = controller.getSignalListeners();
-                    if(listeners == null || !listeners.isEmpty()) {
-                        //Tracelog.log(Level.WARNING, false, String.format("Signal listeners already detected for %s, not registering again", controller.getClass().getCanonicalName()));
-                        return;
-                    }
-
-                    // Register all signals being listened to by the view's controller
-                    controller.registerSignalListeners();
+                    Tracelog.log(Level.INFO, false, String.format("Component %s is being shown", args.getSource().getClass().getCanonicalName()));
                 }
-
             });
         }
 
@@ -215,7 +177,7 @@ public interface IView extends ISignalListener {
     public default void destructor() {
     }
     
-    @Override default Map<String, SignalListenerContainer> getSignalListeners() {
+    @Override default Map<String, SignalListenerContainer> getSignals() {
         return getViewProperties().getSignalListeners();
     }
 }

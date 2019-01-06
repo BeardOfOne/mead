@@ -80,7 +80,7 @@ public interface IModel extends ISignalListener, IXMLCodec {
 
     public void addListener(ISignalListener... listeners);
     
-    @Override default Map<String, SignalListenerContainer> getSignalListeners() {
+    @Override default Map<String, SignalListenerContainer> getSignals() {
         return getModelProperties().getSignalListeners();
     }
 }

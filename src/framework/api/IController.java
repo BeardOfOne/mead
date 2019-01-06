@@ -55,7 +55,7 @@ public interface IController extends ISignalListener {
      */
     public ControllerProperties getControllerProperties();
 
-    @Override default Map<String, SignalListenerContainer> getSignalListeners() {
+    @Override default Map<String, SignalListenerContainer> getSignals() {
         return getControllerProperties().getSignalListeners();
     }
 }

@@ -260,7 +260,8 @@ public abstract class AbstractSignalFactory<T extends ISignalListener> extends A
                     if(signalEvent.isDestinationUsedAsTarget()) {
                         signalEvent.setSender(resource);
                     }
-                    resource.sendSignalEvent(signalEvent);
+                    System.out.println("Resource being sent to " + resource);
+                    resource.invokeSignal(signalEvent);
                 }
             }
         }

@@ -96,7 +96,7 @@ public final class ModelFactory extends AbstractSignalFactory<IModel> {
             // For every resource that has been created
             for(IModel resource : resources) {
                 if(uuidEvent.getIdentifiers().contains(resource.getUUID())) {
-                    resource.sendSignalEvent(event);
+                    resource.invokeSignal(event);
                 }
             }
         }

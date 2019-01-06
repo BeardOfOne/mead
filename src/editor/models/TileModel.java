@@ -109,7 +109,8 @@ public final class TileModel extends BaseModel {
      *
      * Note: Explicit default constructor
      */
-    public TileModel() {	
+    public TileModel() {
+        registerAllSignals();
     }
 
     /**
@@ -120,6 +121,7 @@ public final class TileModel extends BaseModel {
      */
     public <T extends ISignalListener> TileModel(T... receiver) {
         super(receiver);
+        registerAllSignals();
     }
 
     /**
@@ -285,11 +287,9 @@ public final class TileModel extends BaseModel {
         }
     }
 
-    @Override public void registerSignalListeners() {
-        super.registerSignalListeners();
-
+    public void registerAllSignals() {
         // Listen to the remove layer event
-        addSignalListener(TileLayerModel.EVENT_REMOVE_LAYER, new ISignalReceiver<ModelEventArgs>() {
+        addSignal(TileLayerModel.EVENT_REMOVE_LAYER, new ISignalReceiver<ModelEventArgs>() {
             @Override public void signalReceived(ModelEventArgs event) {
                 if(event.getSource() instanceof TileLayerModel) {
                     TileLayerModel tileLayerModel = (TileLayerModel) event.getSource();

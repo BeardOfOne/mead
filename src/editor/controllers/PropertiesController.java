@@ -147,7 +147,7 @@ public final class PropertiesController extends BaseController {
     }
 
 
-    @Override public void clearSignalListeners() {
+    @Override public void clearSignals() {
         _model.setTileModel(null);
     }
 }

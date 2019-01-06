@@ -48,6 +48,4 @@ public abstract class BaseController implements IController  {
     }
     
     @Override public void update(EventArgs signalEvent) { }
-    
-    @Override public void registerSignalListeners() { }   
 }

@@ -44,10 +44,10 @@ public class SignalListenerContainer {
     public final ISignalReceiver signalReceiver;
 
     /**
-     * If this signal relationship is active
+     * If this signal can be invoked on
      */
     public boolean isEnabled = true;
-
+    
     /**
      * Constructs a new instance of this class type
      *

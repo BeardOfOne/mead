@@ -124,7 +124,7 @@ public final class SaveTileMapBuilder extends AbstractBuilder<FileSystem> implem
     }
 
 
-    @Override public Map<String, SignalListenerContainer> getSignalListeners() {
+    @Override public Map<String, SignalListenerContainer> getSignals() {
         return null;
     }
 
