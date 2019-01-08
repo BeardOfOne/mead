@@ -56,8 +56,6 @@ public abstract class Application extends JFrame {
      */
     public final boolean isDebug;
     
-    public boolean isRestarting;
-    
     /**
      * The running time of engine
      */
@@ -121,7 +119,7 @@ public abstract class Application extends JFrame {
     }
     
     public void onRestart() {
-        isRestarting = false;
+        //isRestarting = false;
     }
     
     /**
