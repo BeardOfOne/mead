@@ -49,6 +49,14 @@ import framework.utils.logging.Tracelog;
  */
 public abstract class Application extends JFrame {
 
+    /**
+     * The flag indicating if the application is restarting
+     */
+    public boolean isRestarting;
+    
+    /**
+     * The singleton instance
+     */
     public static Application instance;
     
     /**
@@ -118,8 +126,11 @@ public abstract class Application extends JFrame {
         setVisible(true);
     }
     
+    /**
+     * This method gets called when the game is being restarted
+     */
     public void onRestart() {
-        //isRestarting = false;
+        isRestarting = false;
     }
     
     /**
