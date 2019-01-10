@@ -21,6 +21,7 @@
 * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
 * IN THE SOFTWARE.
 */
+
 package framework.utils;
 
 import java.awt.event.MouseEvent;
@@ -55,22 +56,12 @@ public class MouseListenerEvent extends MouseInputAdapter {
         else {
             event.consume();
         }
-//        System.out.println(String.format("%s - Locked = %s | Consumed = %s",
-//                this.getClass().getName(),
-//            Boolean.toString(_locked), 
-//            Boolean.toString(event.isConsumed())
-//        ));
     }
 
     @Override public void mouseDragged(MouseEvent event) {
         if(!_locked) {
             event.consume();
         }
-//        System.out.println(String.format("%s - Locked = %s | Consumed = %s",
-//            this.getClass().getName(),
-//            Boolean.toString(_locked), 
-//            Boolean.toString(event.isConsumed())
-//        ));
     }
     
     @Override public void mouseReleased(MouseEvent event) {
@@ -83,10 +74,5 @@ public class MouseListenerEvent extends MouseInputAdapter {
         else {
             event.consume();
         }
-//        System.out.println(String.format("%s - Locked = %s | Consumed = %s",
-//                this.getClass().getName(),
-//            Boolean.toString(_locked), 
-//            Boolean.toString(event.isConsumed())
-//        ));
     }
 }

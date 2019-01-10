@@ -128,9 +128,6 @@ public abstract class AbstractMenuItem extends AbstractMenu {
                     // As a convenience functionality, only fire onEntered/onExited after the factory
                     // has been used. This is to avoid issues related to trying to access factory related
                     // operations prematurely.
-                    //
-                    // Note: TODO This can be turned into an option to bypass
-                    // 
                     JMenuItem eventItem = (JMenuItem) event.getSource();
                     if(AbstractFactory.isRunning())
                     {

@@ -47,7 +47,6 @@ public final class CollisionListener extends MouseListenerEvent {
     /**
      * The source of where the collision took place
      */
-    // TODO - This should be ICollide
     private final Component _source;
     
     /**
