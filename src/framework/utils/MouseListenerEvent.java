@@ -24,11 +24,14 @@
 
 package framework.utils;
 
+import java.awt.Dimension;
+import java.awt.Rectangle;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 
-import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
+
+import framework.api.IView;
 
 /**
  * This mouse listener natively support left-click and right-click concepts, and distinguishes from them
@@ -76,7 +79,7 @@ public class MouseListenerEvent extends MouseInputAdapter {
     /**
      * Validates that the specified mouse event is a valid event
      *
-     * @param event The mouse event that has occured
+     * @param event The mouse event that has occurred
      * 
      * @return TRUE if the mouse event can be operated on, FALSE otherwise
      */
@@ -86,10 +89,10 @@ public class MouseListenerEvent extends MouseInputAdapter {
         
         switch(_action) {
         case LEFT:
-            result = !SwingUtilities.isRightMouseButton(event) && (event.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK;
+            result = (event.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK;
             break;
         case RIGHT:
-            result = !SwingUtilities.isLeftMouseButton(event) && (event.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK;
+            result = (event.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK;
             break;
         default:
             result = false;
@@ -100,7 +103,22 @@ public class MouseListenerEvent extends MouseInputAdapter {
     }
     
     @Override public void mousePressed(MouseEvent event) {
-        if(!validateMouseSupportedActions(event)) {
+
+    	// If the specified event originated from an engine view type then
+    	// verify that the mouse was properly over the card itself.
+    	//
+    	// This solves an issue where if you only support left-mouse and you right-mouse and hold and then left-mouse
+    	// it would work. This makes it so that if you right-mouse and drag out, and then left-mouse, it will fail
+    	// because the mousePressed did not originate within the bounds of the view container
+    	if(event.getSource() instanceof IView) {
+    		IView view = (IView)event.getSource();
+    		if(!view.getContainerClass().getBounds().intersects(new Rectangle(new Dimension(event.getX(), event.getY())))) {
+    			event.consume();
+    			return;
+    		}
+    	}
+    	
+    	if(!validateMouseSupportedActions(event)) {
             event.consume();
         }
         else {
