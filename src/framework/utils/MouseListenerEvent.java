@@ -27,6 +27,7 @@ package framework.utils;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 
+import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
 /**
@@ -85,10 +86,10 @@ public class MouseListenerEvent extends MouseInputAdapter {
         
         switch(_action) {
         case LEFT:
-            result = (event.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK;
+            result = !SwingUtilities.isRightMouseButton(event) && (event.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK;
             break;
         case RIGHT:
-            result = (event.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK;
+            result = !SwingUtilities.isLeftMouseButton(event) && (event.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK;
             break;
         default:
             result = false;
@@ -99,8 +100,7 @@ public class MouseListenerEvent extends MouseInputAdapter {
     }
     
     @Override public void mousePressed(MouseEvent event) {
-        // If the locked state was already set prior or the specified mouse event is not supported
-        if(_locked || !validateMouseSupportedActions(event)) {
+        if(!validateMouseSupportedActions(event)) {
             event.consume();
         }
         else {
@@ -115,7 +115,6 @@ public class MouseListenerEvent extends MouseInputAdapter {
     }
     
     @Override public void mouseReleased(MouseEvent event) {
-        // If the locked state was not set prior, or the specified mouse event is not supported
         if(!_locked || !validateMouseSupportedActions(event)) {
             event.consume();
         }
