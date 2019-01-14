@@ -30,31 +30,78 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
 /**
+ * This mouse listener natively support left-click and right-click concepts, and distinguishes from them
+ * when actions are performed
+ * 
  * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  */
 public class MouseListenerEvent extends MouseInputAdapter {
 
+    /**
+     * The set of supported actions available for this event to support
+     * 
+     * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
+     *
+     */
+    public enum SupportedActions { LEFT, RIGHT };
+    
+    /**
+     * A flag indicating that this mouse listener is in a locked state
+     */
     private boolean _locked;
     
+    /**
+     * The action that this event listener supports
+     */
+    private final SupportedActions _action;
+    
+    /**
+     * Constructs a new instance of this class type
+     */
+    public MouseListenerEvent() {
+        // by default, left-click is supported only
+        _action = SupportedActions.LEFT;
+    }
+    
+    /**
+     * Constructs a new instance of this class type
+     *
+     * @param action The action to have this event support
+     */
+    public MouseListenerEvent(SupportedActions action) {
+        _action = action;
+    }
+    
+    /**
+     * Validates that the specified mouse event is a valid event
+     *
+     * @param event The mouse event that has occured
+     * 
+     * @return TRUE if the mouse event can be operated on, FALSE otherwise
+     */
     private boolean validateMouseSupportedActions(MouseEvent event) {
         
-        boolean result = true;
-        if(!SwingUtilities.isLeftMouseButton(event)) {
-            result = false;
+        boolean result = false;
+        
+        switch(_action) {
+        case LEFT:
+            result = SwingUtilities.isLeftMouseButton(event);
+            break;
+        case RIGHT:
+            result = SwingUtilities.isRightMouseButton(event);
+            break;
         }
         
         return result;
     }
     
     @Override public void mousePressed(MouseEvent event) {
-        if(_locked) {
+        // If the locked state was already set prior or the specified mouse event is not supported
+        if(_locked || !validateMouseSupportedActions(event)) {
             event.consume();
-        }
-        else if(validateMouseSupportedActions(event)) {
-            _locked = true;
         }
         else {
-            event.consume();
+            _locked = true;
         }
     }
 
@@ -65,14 +112,12 @@ public class MouseListenerEvent extends MouseInputAdapter {
     }
     
     @Override public void mouseReleased(MouseEvent event) {
-        if(!_locked) {
+        // If the locked state was not set prior, or the specified mouse event is not supported
+        if(!_locked || !validateMouseSupportedActions(event)) {
             event.consume();
         }
-        else if(validateMouseSupportedActions(event)) {
+        else { 
             _locked = false;
-        }
-        else {
-            event.consume();
         }
     }
 }
