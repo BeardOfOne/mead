@@ -24,9 +24,9 @@
 
 package framework.utils;
 
+import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 
-import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
 /**
@@ -59,7 +59,7 @@ public class MouseListenerEvent extends MouseInputAdapter {
      * Constructs a new instance of this class type
      */
     public MouseListenerEvent() {
-        // by default, left-click is supported only
+        // by default, left-click is supported only when nothing has been specified
         _action = SupportedActions.LEFT;
     }
     
@@ -81,14 +81,17 @@ public class MouseListenerEvent extends MouseInputAdapter {
      */
     private boolean validateMouseSupportedActions(MouseEvent event) {
         
-        boolean result = false;
+        boolean result;
         
         switch(_action) {
         case LEFT:
-            result = SwingUtilities.isLeftMouseButton(event);
+            result = (event.getModifiers() & InputEvent.BUTTON1_MASK) == InputEvent.BUTTON1_MASK;
             break;
         case RIGHT:
-            result = SwingUtilities.isRightMouseButton(event);
+            result = (event.getModifiers() & InputEvent.BUTTON3_MASK) == InputEvent.BUTTON3_MASK;
+            break;
+        default:
+            result = false;
             break;
         }
         
