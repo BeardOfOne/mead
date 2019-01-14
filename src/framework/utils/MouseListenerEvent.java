@@ -24,14 +24,10 @@
 
 package framework.utils;
 
-import java.awt.Dimension;
-import java.awt.Rectangle;
 import java.awt.event.InputEvent;
 import java.awt.event.MouseEvent;
 
 import javax.swing.event.MouseInputAdapter;
-
-import framework.api.IView;
 
 /**
  * This mouse listener natively support left-click and right-click concepts, and distinguishes from them
@@ -53,6 +49,11 @@ public class MouseListenerEvent extends MouseInputAdapter {
      * A flag indicating that this mouse listener is in a locked state
      */
     private boolean _locked;
+    
+    /**
+     * A flag indicating that this mouse listener when through the mouse entered state
+     */
+    private boolean _mouseEntered;
     
     /**
      * The action that this event listener supports
@@ -102,25 +103,19 @@ public class MouseListenerEvent extends MouseInputAdapter {
         return result;
     }
     
+    @Override public void mouseEntered(MouseEvent event) {
+    	_mouseEntered = true;
+    }
+    
+    
+    @Override public void mouseExited(MouseEvent event) {
+    	_mouseEntered = false;
+    }
+    
     @Override public void mousePressed(MouseEvent event) {
-
-    	// If the specified event originated from an engine view type then
-    	// verify that the mouse was properly over the card itself.
-    	//
-    	// This solves an issue where if you only support left-mouse and you right-mouse and hold and then left-mouse
-    	// it would work. This makes it so that if you right-mouse and drag out, and then left-mouse, it will fail
-    	// because the mousePressed did not originate within the bounds of the view container
-    	if(event.getSource() instanceof IView) {
-    		IView view = (IView)event.getSource();
-    		if(!view.getContainerClass().getBounds().intersects(new Rectangle(new Dimension(event.getX(), event.getY())))) {
-    			event.consume();
-    			return;
-    		}
+    	if(!_mouseEntered || !validateMouseSupportedActions(event)) {
+    		event.consume();
     	}
-    	
-    	if(!validateMouseSupportedActions(event)) {
-            event.consume();
-        }
         else {
             _locked = true;
         }
