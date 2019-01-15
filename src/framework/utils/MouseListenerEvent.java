@@ -38,6 +38,11 @@ import javax.swing.event.MouseInputAdapter;
 public class MouseListenerEvent extends MouseInputAdapter {
 
     /**
+     * Flag indicating if the last processed event is in a consumed state
+     */
+    private boolean _isConsumed;
+    
+    /**
      * The set of supported actions available for this event to support
      * 
      * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
@@ -84,7 +89,7 @@ public class MouseListenerEvent extends MouseInputAdapter {
      * 
      * @return TRUE if the mouse event can be operated on, FALSE otherwise
      */
-    private boolean validateMouseSupportedActions(MouseEvent event) {
+    private boolean processMouseEvent(MouseEvent event) {
         
         boolean result;
         
@@ -100,20 +105,24 @@ public class MouseListenerEvent extends MouseInputAdapter {
             break;
         }
         
+        _isConsumed = !result;
         return result;
+    }
+    
+    public final boolean getIsConsumed() {
+        return _isConsumed;
     }
     
     @Override public void mouseEntered(MouseEvent event) {
         _mouseEntered = true;
     }
     
-    
     @Override public void mouseExited(MouseEvent event) {
         _mouseEntered = false;
     }
     
     @Override public void mousePressed(MouseEvent event) {
-        if(!_mouseEntered || !validateMouseSupportedActions(event)) {
+        if(!_mouseEntered || !processMouseEvent(event)) {
             event.consume();
         }
         else {
@@ -128,7 +137,7 @@ public class MouseListenerEvent extends MouseInputAdapter {
     }
     
     @Override public void mouseReleased(MouseEvent event) {
-        if(!_locked || !validateMouseSupportedActions(event)) {
+        if(!_locked || !processMouseEvent(event)) {
             event.consume();
         }
         else { 
