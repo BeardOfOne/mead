@@ -104,18 +104,18 @@ public class MouseListenerEvent extends MouseInputAdapter {
     }
     
     @Override public void mouseEntered(MouseEvent event) {
-    	_mouseEntered = true;
+        _mouseEntered = true;
     }
     
     
     @Override public void mouseExited(MouseEvent event) {
-    	_mouseEntered = false;
+        _mouseEntered = false;
     }
     
     @Override public void mousePressed(MouseEvent event) {
-    	if(!_mouseEntered || !validateMouseSupportedActions(event)) {
-    		event.consume();
-    	}
+        if(!_mouseEntered || !validateMouseSupportedActions(event)) {
+            event.consume();
+        }
         else {
             _locked = true;
         }
