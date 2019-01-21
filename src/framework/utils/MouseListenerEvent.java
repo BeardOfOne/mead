@@ -43,6 +43,11 @@ public class MouseListenerEvent extends MouseInputAdapter {
     private boolean _isConsumed;
     
     /**
+     * A flag indicating if this listener is enabled
+     */
+    private boolean _isEnabled = true;
+    
+    /**
      * The set of supported actions available for this event to support
      * 
      * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
@@ -68,18 +73,17 @@ public class MouseListenerEvent extends MouseInputAdapter {
     /**
      * Constructs a new instance of this class type
      */
-    public MouseListenerEvent() {
-        // by default, left-click is supported only when nothing has been specified
-        _action = SupportedActions.LEFT;
+    public MouseListenerEvent(SupportedActions action) {
+        _action = action;
     }
     
     /**
-     * Constructs a new instance of this class type
+     * Sets if this listener is enabled
      *
-     * @param action The action to have this event support
+     * @param isEnabled TRUE if this listener is enabled, FALSE otherwise
      */
-    public MouseListenerEvent(SupportedActions action) {
-        _action = action;
+    public final void setEnabled(boolean isEnabled) {
+        _isEnabled = isEnabled;
     }
     
     /**
@@ -105,12 +109,18 @@ public class MouseListenerEvent extends MouseInputAdapter {
             break;
         }
         
-        _isConsumed = !result;
         return result;
     }
     
     public final boolean getIsConsumed() {
         return _isConsumed;
+    }
+    
+    /**
+     * @return TRUE if this listener is enabled, FALSE otherwise
+     */
+    public final boolean getIsEnabled() {
+        return _isEnabled;
     }
     
     @Override public void mouseEntered(MouseEvent event) {
@@ -122,8 +132,10 @@ public class MouseListenerEvent extends MouseInputAdapter {
     }
     
     @Override public void mousePressed(MouseEvent event) {
-        if(!_mouseEntered || !processMouseEvent(event)) {
+        _isConsumed = false;
+        if(!_isEnabled || !_mouseEntered || !processMouseEvent(event)) {
             event.consume();
+            _isConsumed = true;
         }
         else {
             _locked = true;
@@ -131,14 +143,18 @@ public class MouseListenerEvent extends MouseInputAdapter {
     }
 
     @Override public void mouseDragged(MouseEvent event) {
-        if(!_locked) {
+        _isConsumed = false;
+        if(!_isEnabled || !_locked) {
             event.consume();
+            _isConsumed = true;
         }
     }
     
     @Override public void mouseReleased(MouseEvent event) {
-        if(!_locked || !processMouseEvent(event)) {
+        _isConsumed = false;
+        if(!_isEnabled || !_locked || !processMouseEvent(event)) {
             event.consume();
+            _isConsumed = true;
         }
         else { 
             _locked = false;

@@ -64,23 +64,12 @@ public class DragListener extends MouseListenerEvent {
     private boolean _stopDragging;
     
     /**
-     * The owner associated to this 
-     */
-    private final Component _owner;
-    
-    /**
-     * TRUE if the listener for the owner component is enabled, FALSE otherwise
-     */
-    private boolean _isEnabled;
-
-    /**
      * Constructs a new instance of this class type
      *
      * @param component The component to associate this listener to
      */
-    public DragListener(Component component) {
-        _owner = component;
-        setEnabled(true);
+    public DragListener(SupportedActions action) {
+        super(action);
     }
     
     /**
@@ -98,37 +87,6 @@ public class DragListener extends MouseListenerEvent {
     }
     
     /**
-     * Sets if this listener is enabled
-     *
-     * @param isEnabled TRUE if this listener is enabled, FALSE otherwise
-     */
-    public void setEnabled(boolean isEnabled) {
-        if(_isEnabled == isEnabled) {
-            return;
-        }
-        
-        _isEnabled = isEnabled;
-        
-        if(!isEnabled) {
-            _owner.removeMouseListener(this);
-            _owner.removeMouseMotionListener(this);
-        }
-        else {
-            _owner.addMouseListener(this);
-            _owner.addMouseMotionListener(this);
-        }
-    }
-    
-    /**
-     * Gets if this listener is enabled
-     *
-     * @return TRUE if this listener is enabled, FALSE otherwise
-     */
-    public boolean getIsEnabled() {
-        return _isEnabled;
-    }
-
-    /**
      * Gets if the component was last dragged
      * 
      * @return TRUE if the component was dragged during its last operation, FALSE otherwise
@@ -137,13 +95,6 @@ public class DragListener extends MouseListenerEvent {
         return _lastDragged;
     }
     
-    /**
-     * @return The owner associated to this listener
-     */
-    public final Component getOwner() {
-        return _owner;
-    }
-
     @Override public void mouseReleased(MouseEvent event) {
             
         super.mouseReleased(event);
