@@ -47,7 +47,7 @@ import framework.utils.logging.Tracelog;
  * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  */
-public abstract class Application extends JFrame {
+public class Application extends JFrame {
 
     /**
      * The flag indicating if the application is restarting
@@ -83,7 +83,8 @@ public abstract class Application extends JFrame {
         
         this.isDebug = isDebug;
     
-        // Call the engine data before event
+        // TODO - This method should not be overriden because i dont want the child to have code executing until
+        //        The construction is done
         onBeforeEngineDataInitialized();
         
         // Get the start time
@@ -116,6 +117,8 @@ public abstract class Application extends JFrame {
         }
         Tracelog.log(Level.INFO, false, "Engine Initialization Finished - " + ((System.nanoTime() - startTimeMain) / 1000000) + "ms");
             
+        // TODO - This method should not be overriden because i dont want the child to have code executing until
+        //        The construction is done
         onWindowInitialized();
         
         // Notify on the title that the game is in debug mode
@@ -123,6 +126,7 @@ public abstract class Application extends JFrame {
             setTitle(getTitle() + " - [DEBUG]");    
         }
         
+        // TODO - This should not be set here, it should be up to the developer to do this himself
         setVisible(true);
     }
     
@@ -194,5 +198,6 @@ public abstract class Application extends JFrame {
     /**
      * Called before the data has been initialized and loaded into the game engine components
      */
-    protected abstract void onBeforeEngineDataInitialized();
+    protected void onBeforeEngineDataInitialized() {
+    }
 }
