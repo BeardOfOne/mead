@@ -89,9 +89,13 @@ public class PanelView extends JPanel implements IView, IRenderer {
      * @param content The content to render
      */
     protected final void addRenderableContent(IRenderable content) {
-        if(content != null) {
+        if(content != null && !_renderCache.contains(content)) {
             _renderCache.add(content);    
         }
+    }
+    
+    protected List<IRenderable> getRenderableContent() {
+        return new ArrayList<IRenderable>(_renderCache);
     }
 
     /**
