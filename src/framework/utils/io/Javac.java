@@ -32,6 +32,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.tools.Diagnostic;
 import javax.tools.DiagnosticCollector;
@@ -42,6 +43,8 @@ import javax.tools.SimpleJavaFileObject;
 import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
+
+import framework.utils.logging.Tracelog;
 
 /**
  * This class provides runtime source compilation functionality.
@@ -74,7 +77,10 @@ public class Javac extends SimpleJavaFileObject {
 
         // Get a reference to the system compiler
         JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
-
+        if(compiler == null) {
+            Tracelog.log(Level.SEVERE, false, "Cannot find any Java Compiler...");
+        }
+        
         // Create a new diagnostic collector
         DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
 

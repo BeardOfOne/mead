@@ -55,11 +55,6 @@ public class TileView extends PanelView {
     private final Border SELECTED_BORDER = BorderFactory.createLineBorder(Color.RED, 2);
 
     /**
-     * Normal border style of this view
-     */
-    private final Border NORMAL_BORDER = BorderFactory.createLineBorder(Color.BLACK, 1);
-
-    /**
      * Constructs a new instance of this class type
      *
      * @param tileMapController The controller of the tile map that owns this tile
@@ -112,7 +107,7 @@ public class TileView extends PanelView {
             TileModel tileMapModel = (TileModel) event.getSource();
 
             // Set the border of the tile based on the selected state of the model
-            setBorder(tileMapModel.getSelected() ? SELECTED_BORDER : NORMAL_BORDER); 
+            setBorder(tileMapModel.getSelected() ? SELECTED_BORDER : null); 
 
             // If there is an image to be rendered, submit it to the graphics
             // rendering pipeline
