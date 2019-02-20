@@ -31,4 +31,6 @@ import java.awt.Component;
  */
 public interface ICollidable {
     public boolean isValidCollision(Component source);
+    public void onCollisionStart(Component source);
+    public void onCollisionStop(Component source);
 }

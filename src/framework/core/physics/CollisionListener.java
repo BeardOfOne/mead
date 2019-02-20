@@ -83,15 +83,21 @@ public final class CollisionListener extends MouseListenerEvent {
     }    
        
     @Override public void mousePressed(MouseEvent event) {
-        
         super.mousePressed(event);
         if(event.isConsumed()) {
             return;
         }
-        
-        // When the mouse button has been pressed down on this listener, the collision should be cleared
-        // or else a false-positive could end up happening
         _collision = null;
+    }
+    
+    @Override public void mouseReleased(MouseEvent event) {
+        super.mouseReleased(event);
+        if(event.isConsumed()) {
+            return;
+        }
+        if(_collision != null) {
+            _collision.onCollisionStop(source);
+        }
     }
     
     @Override public void mouseDragged(MouseEvent event) {
@@ -99,7 +105,6 @@ public final class CollisionListener extends MouseListenerEvent {
         // Before going through the list of collided components, verify if what was last colided (if any)
         // is still being collided.
         if(_isCollisionSingular && _collision != null && _collision.isValidCollision(source)) {
-            
             // Re-evaluate the intersection condition
             if(source.getBounds().intersects(((Component)_collision).getBounds())) {
                 return;  
@@ -122,6 +127,7 @@ public final class CollisionListener extends MouseListenerEvent {
                 if(collidable.isValidCollision(source)) {
                     found = true;
                    _collision = collidable;
+                   _collision.onCollisionStart(source);
                    break;
                 }
             }
@@ -129,6 +135,9 @@ public final class CollisionListener extends MouseListenerEvent {
         
         // If there was no collision that occured, ensure that the reference to any collision is no longer valid
         if(!found) {
+            if(_collision != null) {
+                _collision.onCollisionStop(source);
+            }
             _collision = null;
         }
     } 
