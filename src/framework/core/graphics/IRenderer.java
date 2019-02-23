@@ -38,7 +38,7 @@ public interface IRenderer {
      */
     public static final int RENDER_LIMIT_DEFAULT_VALUE = -1;
     
-    public class RendererExtents {
+    public class RendererProperties {
         /**
          * The x-coordinate for rendering 
          */
@@ -58,6 +58,22 @@ public interface IRenderer {
          * The height for rendering
          */
         public int height = -1;
+
+        /**
+         * Indicates if the renderer can perform a draw call
+         * 
+         * Note: If the draw call cannot be performed, then it is
+         *       up to the renderer implementation to detail what should
+         *       happen.
+         */
+        public boolean canDraw = true;
+        
+        public void reset() {
+            x = -1;
+            y = 1;
+            width = -1;
+            height = -1;
+        }
     }
     
     /**

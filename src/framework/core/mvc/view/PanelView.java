@@ -47,7 +47,7 @@ public class PanelView extends JPanel implements IView, IRenderer {
     /**
      * The extends for rendering this view
      */
-    protected RendererExtents extents = new RendererExtents();
+    protected RendererProperties extents = new RendererProperties();
     
     /**
      * The view properties of this view
@@ -120,15 +120,30 @@ public class PanelView extends JPanel implements IView, IRenderer {
         // Preprocess the renderable data and the associated context
         preProcessGraphics(renderableData, context);
         
+        // Calculate the values for position and width/height
+        int x = extents.x;
+        if(extents.x == RENDER_LIMIT_DEFAULT_VALUE) {
+            x = 0;
+        }
+        
+        int y = extents.y;
+        if(extents.y == RENDER_LIMIT_DEFAULT_VALUE) {
+            y = 0;
+        }
+        
+        int width = extents.width;
+        if(extents.width == RENDER_LIMIT_DEFAULT_VALUE) {
+            width = getWidth();
+        }
+        
+        
+        int height = extents.height;
+        if(extents.height == RENDER_LIMIT_DEFAULT_VALUE) {
+            height = getHeight();
+        }
+        
         // Use the context to draw the image
-        context.drawImage(
-            image, 
-            extents.x == RENDER_LIMIT_DEFAULT_VALUE ? 0 : extents.x,
-            extents.y == RENDER_LIMIT_DEFAULT_VALUE ? 0 : extents.y,
-            extents.width == RENDER_LIMIT_DEFAULT_VALUE ? getWidth() : extents.width, 
-            extents.height == RENDER_LIMIT_DEFAULT_VALUE ? getHeight() : extents.height, 
-            null
-        );
+        context.drawImage(image, x, y, extents.canDraw ? width : 0, extents.canDraw ? height : 0, null);
     }
 
     @Override public void update(EventArgs event) {
