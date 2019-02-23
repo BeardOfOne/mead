@@ -38,10 +38,13 @@ public abstract class AbstractDataEntity implements IRenderable {
      */
     private Image _renderableData;
     
+    private UUID _identifier;
+    
     public void setActiveData(UUID identifier) {
         _renderableData = null;
-        if(identifier != null) {
-            _renderableData = AbstractFactory.getFactory(DataFactory.class).getDataEntity(identifier);
+        _identifier = identifier;
+        if(_identifier != null) {
+            _renderableData = AbstractFactory.getFactory(DataFactory.class).getDataEntity(_identifier);
         }
     }
     
@@ -49,5 +52,12 @@ public abstract class AbstractDataEntity implements IRenderable {
     
     @Override public Image getRenderableContent() {
         return _renderableData;
+    }
+    
+    @Override public String toString() {
+        if(_identifier == null) {
+            return "No Identifier";
+        }
+        return _identifier.toString();
     }
 }

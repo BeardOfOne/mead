@@ -25,7 +25,6 @@
 package framework.core.graphics;
 
 import java.awt.Graphics;
-import java.awt.Image;
 
 /**
  * This interface defines methods for compenents that provide the ability to render content
@@ -35,21 +34,46 @@ import java.awt.Image;
 public interface IRenderer {
 
     /**
+     * The default render limit value for this panel
+     */
+    public static final int RENDER_LIMIT_DEFAULT_VALUE = -1;
+    
+    public class RendererExtents {
+        /**
+         * The x-coordinate for rendering 
+         */
+        public int x = -1;
+        
+        /**
+         * The y-coordinate for rendering
+         */
+        public int y = -1;
+        
+        /**
+         * The width for rendering
+         */
+        public int width = -1;
+        
+        /**
+         * The height for rendering
+         */
+        public int height = -1;
+    }
+    
+    /**
      * Renders the specified renderable data using the specified graphics context
      * 
      * @param renderableData The renderable data
      * @param context The graphics context
      */
     public void render(IRenderable renderableData, Graphics context);
-
+   
     /**
-     * Renders the specified renderable image data using the specified graphics context
-     * 
-     * @param renderableData The renderable image data
+     * A hook into the graphics context and the renderable data before the draw call is initiated
+     *
+     * @param renderableData The renderable data entity
      * @param context The graphics context
      */
-    public void render(Image renderableData, Graphics context);
-    
-    default public void preProcessGraphics(Graphics context) {
+    default public void preProcessGraphics(IRenderable renderableData, Graphics context) {
     }
 }

@@ -45,29 +45,9 @@ import framework.core.graphics.IRenderer;
 public class PanelView extends JPanel implements IView, IRenderer {
     
     /**
-     * The default render limit value for this panel
+     * The extends for rendering this view
      */
-    private final int RENDER_LIMIT_DEFAULT_VALUE = -1;
-    
-    /**
-     * The x-coordinate for rendering
-     */
-    private int _x = -1;
-    
-    /**
-     * The y-coordinate for rendering
-     */
-    private int _y = -1;
-    
-    /**
-     * The width for rendering
-     */
-    private int _width = -1;
-    
-    /**
-     * The height for rendering
-     */
-    private int _height = -1;
+    protected RendererExtents extents = new RendererExtents();
     
     /**
      * The view properties of this view
@@ -98,21 +78,6 @@ public class PanelView extends JPanel implements IView, IRenderer {
         return new ArrayList<IRenderable>(_renderCache);
     }
 
-    /**
-     * Sets the rendering limits for this view.
-     *
-     * @param x The x position
-     * @param y The y position
-     * @param width The width
-     * @param height The height
-     */
-    protected final void setRenderLimits(int x, int y, int width, int height) {
-        _x = x;
-        _y = y;
-        _width = width;
-        _height = height;
-    }
-             
     public void setIsHighlighted(boolean isHighlighted) {
         _isHighlighted = isHighlighted;
         repaint();
@@ -126,34 +91,11 @@ public class PanelView extends JPanel implements IView, IRenderer {
         _isForceRendering = isForceRendering;
     }
     
-    @Override public void render(IRenderable renderable, Graphics context) {
-        Image image = null;
-        if(renderable != null) {
-            image = renderable.getRenderableContent();
-        }
-        render(image, context);
-    }
-
-    @Override public void render(Image renderableData, Graphics context) {
-        context.setPaintMode();
-        preProcessGraphics(context);
-        context.drawImage(
-            renderableData, 
-            _x == RENDER_LIMIT_DEFAULT_VALUE ? 0 : _x, 
-            _y == RENDER_LIMIT_DEFAULT_VALUE ? 0 : _y,
-            _width == RENDER_LIMIT_DEFAULT_VALUE ? getWidth() : _width, 
-            _height == RENDER_LIMIT_DEFAULT_VALUE ? getHeight() : _height, 
-            null
-        );
-    }
-    
     @Override protected void paintComponent(Graphics graphics) {
         super.paintComponent(graphics);
         if(_isForceRendering) {
-            
             // Force the render method that holds an image
-            Image img = null;
-            render(img, graphics);
+            render(null, graphics);
         }
         else {
             for(IRenderable content : _renderCache) {
@@ -162,6 +104,31 @@ public class PanelView extends JPanel implements IView, IRenderer {
                 }
             }
         }
+    }
+    
+    @Override public void render(IRenderable renderableData, Graphics context) {
+        
+        // Reset the paint mode
+        context.setPaintMode();
+       
+        // Get the image associated to the renderable data
+        Image image = null;
+        if(renderableData != null) {
+            image = renderableData.getRenderableContent();
+        }
+        
+        // Preprocess the renderable data and the associated context
+        preProcessGraphics(renderableData, context);
+        
+        // Use the context to draw the image
+        context.drawImage(
+            image, 
+            extents.x == RENDER_LIMIT_DEFAULT_VALUE ? 0 : extents.x,
+            extents.y == RENDER_LIMIT_DEFAULT_VALUE ? 0 : extents.y,
+            extents.width == RENDER_LIMIT_DEFAULT_VALUE ? getWidth() : extents.width, 
+            extents.height == RENDER_LIMIT_DEFAULT_VALUE ? getHeight() : extents.height, 
+            null
+        );
     }
 
     @Override public void update(EventArgs event) {
