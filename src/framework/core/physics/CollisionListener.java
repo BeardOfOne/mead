@@ -38,11 +38,6 @@ import framework.utils.MouseListenerEvent;
  *
  */
 public final class CollisionListener extends MouseListenerEvent {
-
-    /**
-     * Indicates if this collision listener can only ever collide with at-most one element at a time
-     */
-    private boolean _isCollisionSingular;
     
     /**
      * The object that has been collided with
@@ -62,17 +57,6 @@ public final class CollisionListener extends MouseListenerEvent {
     public CollisionListener(Component source, SupportedActions action) {
         super(action);
         this.source = source;
-    }
-    
-    /**
-     * Sets if this collision listener can only ever collide with at most one object. When a
-     * valid collision has been detected, that collided object will take precedence over any other
-     * object until collision with that object is no longer valid
-     *
-     * @param isEnabled If this option is enabled
-     */
-    public void setIsSingularCollision(boolean isSingularCollision) {
-        _isCollisionSingular = isSingularCollision;
     }
     
     /**
@@ -101,15 +85,6 @@ public final class CollisionListener extends MouseListenerEvent {
     }
     
     @Override public void mouseDragged(MouseEvent event) {
-
-        // Before going through the list of collided components, verify if what was last colided (if any)
-        // is still being collided.
-        if(_isCollisionSingular && _collision != null && _collision.isValidCollision(source)) {
-            // Re-evaluate the intersection condition
-            if(source.getBounds().intersects(((Component)_collision).getBounds())) {
-                return;  
-            }
-        }
 
         // Get the list of components that implement the ICollide type
         List<Component> siblings = new ArrayList();
