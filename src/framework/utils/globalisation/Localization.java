@@ -66,8 +66,7 @@ public class Localization {
             reader.readLine();
 
             // Note: Right now, the only supported language is whatever is in the second
-            //       column of the .csv.  Eventually there will be support for more than
-            // 		 one language
+            //       column of the .csv.  Eventually there will be support for more than one language
             String line = null;
             while((line = reader.readLine()) != null) {
                 String[] data = line.split(",");
@@ -75,8 +74,7 @@ public class Localization {
             }
         }
         catch(Exception exception) {
-            Tracelog.log(Level.SEVERE, false, "Cannot load any localized strings.  Make sure that you are pointing to a valid resources file.");
-            System.exit(1);
+            Tracelog.log(Level.SEVERE, false, exception);
         }
     }
 
@@ -115,12 +113,12 @@ public class Localization {
     public String getLocalizedString(String key) {
         String result = _resources.get(key);
         if(result == null) {
-        	if(EngineProperties.instance().getIsPropertyValid(Property.DISABLE_TRANSLATIONS_PLACEHOLDER)) {
+            if(EngineProperties.instance().getIsPropertyValid(Property.DISABLE_TRANSLATIONS_PLACEHOLDER)) {
                 result = key;
             }
-        	else {
-        		result = "<!__/////" + key.toUpperCase() + "//////!>";	
-        	}
+            else {
+                result = "<!__/////" + key.toUpperCase() + "//////!>";	
+            }
         }
         
         return result;            

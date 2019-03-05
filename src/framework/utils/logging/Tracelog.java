@@ -37,6 +37,9 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.JOptionPane;
+
+import framework.core.system.Application;
 import framework.core.system.EngineProperties;
 import framework.core.system.EngineProperties.Property;
 
@@ -191,13 +194,13 @@ public final class Tracelog {
      * @param exception The exception that was thrown
      */
     public static void log(Level level, boolean isGame, Exception exception) {
-
         try(StringWriter stringWriter = new StringWriter(); PrintWriter printWriter = new PrintWriter(stringWriter)) {
             exception.printStackTrace(printWriter);
             log(level, isGame, stringWriter.toString());
+            JOptionPane.showMessageDialog(Application.instance, stringWriter.toString(), "Error", JOptionPane.ERROR_MESSAGE);
         }
         catch(Exception exception2) {
-            Tracelog.log(Level.SEVERE, false, exception2);
+            Tracelog.log(Level.SEVERE, false, exception2.toString());
         }
     }
 }
