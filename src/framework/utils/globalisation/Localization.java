@@ -60,7 +60,7 @@ public class Localization {
      * Constructs a new instance of this class type
      */
     private Localization() {
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream(EngineProperties.instance().getProperty(Property.LOCALIZATION_PATH_CVS)))))  {
+        try(BufferedReader reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream(EngineProperties.instance().getProperty(Property.LOCALIZATION_PATH_CVS)))))  {
             // Hack to skip the first row, which is the header.  This will eventually be moved
             // when multi language is supported
             reader.readLine();
