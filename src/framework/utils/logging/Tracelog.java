@@ -197,7 +197,9 @@ public final class Tracelog {
         try(StringWriter stringWriter = new StringWriter(); PrintWriter printWriter = new PrintWriter(stringWriter)) {
             exception.printStackTrace(printWriter);
             log(level, isGame, stringWriter.toString());
-            JOptionPane.showMessageDialog(Application.instance, stringWriter.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            if(Boolean.valueOf(EngineProperties.instance().getProperty(Property.DISPLAY_EXCEPTIONS))) {
+            	JOptionPane.showMessageDialog(Application.instance, stringWriter.toString(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
         catch(Exception exception2) {
             Tracelog.log(Level.SEVERE, false, exception2.toString());

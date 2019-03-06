@@ -86,7 +86,12 @@ public final class EngineProperties {
         /**
          * Disables translations placeholder, this will show the text entered as-written
          */
-        DISABLE_TRANSLATIONS_PLACEHOLDER
+        DISABLE_TRANSLATIONS_PLACEHOLDER,
+        
+        /**
+         * Flag indicating if exceptions that are thrown through the logging system should be displayed as an alert to the user
+         */
+        DISPLAY_EXCEPTIONS
     }
 
     /**
