@@ -1,5 +1,5 @@
 /**
-* Daniel Ricci <thedanny09@icloud.com>
+* Daniel Ricci {@literal <thedanny09@icloud.com>}
 *
 * Permission is hereby granted, free of charge, to any person
 * obtaining a copy of this software and associated documentation
@@ -27,7 +27,7 @@ package resources;
 /**
  * The list of available keys for localization lookup
  * 
- * @author {@literal Daniel Ricci <thedanny09@icloud.com>}
+ * @author {@literal Daniel Ricci {@literal <thedanny09@icloud.com>}}
  *
  */
 public enum ResourceKeys {

@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@icloud.com>
+ * Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -45,7 +45,7 @@ import editor.models.TileModel;
 /**
  * This view represents the visuals of a single tile
  * 
- * @author {@literal Daniel Ricci <thedanny09@icloud.com>}
+ * @author {@literal Daniel Ricci {@literal <thedanny09@icloud.com>}}
  */
 public class TileView extends PanelView {
 

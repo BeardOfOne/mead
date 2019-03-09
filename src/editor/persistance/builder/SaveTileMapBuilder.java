@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@icloud.com>
+ * Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -50,7 +50,7 @@ import editor.models.TileMapModel;
 /**
  * Builder pattern used for saving a map, so that it can be loaded back afterwards
  * 
- * @author {@literal Daniel Ricci <thedanny09@icloud.com>}
+ * @author {@literal Daniel Ricci {@literal <thedanny09@icloud.com>}}
  *
  */
 public final class SaveTileMapBuilder extends AbstractBuilder<FileSystem> implements IDataPipeline<IModel> {

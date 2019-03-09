@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@icloud.com>
+ * Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -68,6 +68,8 @@ public final class Editor extends Application {
 
     /**
      * Constructs a new instance of this class type
+     * 
+     * @param isDebug TRUE if the application is in debug mode, FALSE otherwise
      */
     public Editor(boolean isDebug) {
         super(isDebug); 

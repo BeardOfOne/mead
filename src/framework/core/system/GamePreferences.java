@@ -1,5 +1,5 @@
 /**
-* Daniel Ricci <thedanny09@icloud.com>
+* Daniel Ricci {@literal <thedanny09@icloud.com>}
 *
 * Permission is hereby granted, free of charge, to any person
 * obtaining a copy of this software and associated documentation
@@ -39,7 +39,7 @@ import framework.utils.logging.Tracelog;
  *   WARNING: Could not open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5.
  *   1. Go into your Start Menu and type regedit into the search field.
  *   2. Navigate to path HKEY_LOCAL_MACHINE\Software\JavaSoft 
- *   3. Right click on the JavaSoft folder and click on New > Key, name it Prefs
+ *   3. Right click on the JavaSoft folder and click on `New Key`, name it Prefs
  */
 public abstract class GamePreferences {
 
@@ -52,6 +52,7 @@ public abstract class GamePreferences {
      * Constructs a new instance of this class type
      * 
      * @param classType The class type to associate the game preferences to
+     * @param <T> Any object
      */
     public <T extends Object> GamePreferences(Class<T> classType) {
         preferences = Preferences.userNodeForPackage(classType);

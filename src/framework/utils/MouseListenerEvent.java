@@ -1,5 +1,5 @@
 /**
-* Daniel Ricci <thedanny09@icloud.com>
+* Daniel Ricci {@literal <thedanny09@icloud.com>}
 *
 * Permission is hereby granted, free of charge, to any person
 * obtaining a copy of this software and associated documentation
@@ -72,6 +72,8 @@ public class MouseListenerEvent extends MouseInputAdapter {
     
     /**
      * Constructs a new instance of this class type
+     * 
+     * @param action the supported action
      */
     public MouseListenerEvent(SupportedActions action) {
         _action = action;

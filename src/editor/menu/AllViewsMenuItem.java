@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@icloud.com>
+ * Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -40,7 +40,7 @@ import resources.ResourceKeys;
 /**
  * The properties menu item
  * 
- * @author {@literal Daniel Ricci <thedanny09@icloud.com>}
+ * @author {@literal Daniel Ricci {@literal <thedanny09@icloud.com>}}
  *
  */
 public class AllViewsMenuItem extends AbstractMenuItem {

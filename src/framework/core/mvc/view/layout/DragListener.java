@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@icloud.com>
+ * Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -66,7 +66,7 @@ public class DragListener extends MouseListenerEvent {
     /**
      * Constructs a new instance of this class type
      *
-     * @param component The component to associate this listener to
+     * @param action The supported action
      */
     public DragListener(SupportedActions action) {
         super(action);

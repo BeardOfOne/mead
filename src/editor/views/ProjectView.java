@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@icloud.com>
+ * Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -41,13 +41,15 @@ import editor.models.ProjectModel;
 /**
  * The main window view is the outer most shell that wraps everything
  * 
- * @author {@literal Daniel Ricci <thedanny09@icloud.com>}
+ * @author {@literal Daniel Ricci {@literal <thedanny09@icloud.com>}}
  *
  */
 public class ProjectView extends ScrollView {
 
     /**
      * Creates a new instance of this class type
+     * 
+     * @param projectName the name of the project
      */
     public ProjectView(String projectName) {
         setLayout(new DraggableLayout());

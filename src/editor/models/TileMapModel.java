@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@icloud.com>
+ * Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -236,6 +236,7 @@ public final class TileMapModel extends BaseModel {
      * Sets the coordinate of this model
      * 
      * @param x The x-coordinate
+     * @param y The y-coordinate
      * 
      */
     public void setCoordinate(int x, int y) {

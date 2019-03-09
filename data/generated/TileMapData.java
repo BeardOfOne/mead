@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@icloud.com>
+ * Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -40,7 +40,7 @@ import framework.communication.internal.persistance.IXMLCodec;
 /**
  * A tile map entity represents a portion of a tile map in data form
  * 
- * @author {@literal Daniel Ricci <thedanny09@icloud.com>}
+ * @author {@literal Daniel Ricci {@literal <thedanny09@icloud.com>}}
  * 
  */
 @XmlRootElement(name = "root")
@@ -108,7 +108,7 @@ public class TileMapData implements IXMLCodec, IData {
     /**
      * Creates a new instance of this class type
      * 
-     * @param UUID The uuid of this tile
+     * @param uuid The uuid of this tile
      * @param tileName The name of the tile
      * @param friendlyName The friendly name of the tile
      * @param layers the name of the layer

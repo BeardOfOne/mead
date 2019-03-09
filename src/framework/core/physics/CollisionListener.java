@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@icloud.com>
+ * Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -53,6 +53,7 @@ public final class CollisionListener extends MouseListenerEvent {
      * Constructs a new instance of this class type
      *
      * @param source The source component to register collision events to
+     * @param action The supported action
      */
     public CollisionListener(Component source, SupportedActions action) {
         super(action);

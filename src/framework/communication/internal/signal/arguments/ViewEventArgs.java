@@ -1,5 +1,5 @@
 /**
- * Daniel Ricci <thedanny09@icloud.com>
+ * Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -31,7 +31,6 @@ import framework.api.IView;
  * 
  * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
- * @param <T> The IView type
  */
 public final class ViewEventArgs extends EventArgs {
     /**
