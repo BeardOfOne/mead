@@ -25,7 +25,6 @@
 package editor.application;
 
 import java.awt.EventQueue;
-import java.awt.GraphicsEnvironment;
 
 import javax.swing.WindowConstants;
 
@@ -76,10 +75,8 @@ public final class Editor extends Application {
         
         // Pressing on the close button won't do it's default action
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-
-        // Set the default size of the application to be the size of the screen
-        GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();  
-        setSize(env.getMaximumWindowBounds().width, env.getMaximumWindowBounds().height);
+		setSize(1280, 768);
+		setLocationRelativeTo(null);		
     }
 
     /**

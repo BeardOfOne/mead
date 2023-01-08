@@ -61,7 +61,6 @@ public final class LoadTileMapBuilder extends AbstractBuilder<FileSystem> {
      * Builds the list of layers back into the application
      */
     private void buildLayers() {
-
         // Get the list of layer models from the file system
         List<TileLayerModel> tileLayerModels = _fileSystem.getData(TileLayerModel.class);
 
@@ -82,7 +81,6 @@ public final class LoadTileMapBuilder extends AbstractBuilder<FileSystem> {
      * Builds the main project surrounding the application session
      */
     private void buildProject() {
-
         List<ProjectModel> projectModels = _fileSystem.getData(ProjectModel.class);
         if(projectModels.size() != 1) {
             Tracelog.log(Level.SEVERE, true, "Could not load the main project, something went wrong");
@@ -97,7 +95,6 @@ public final class LoadTileMapBuilder extends AbstractBuilder<FileSystem> {
 
         // Create a new main window view that is shared among the entire application and render it
         AbstractSignalFactory.getFactory(ViewFactory.class).add(new ProjectView(model.getName()), true);
-
     }
 
     /**
@@ -121,7 +118,7 @@ public final class LoadTileMapBuilder extends AbstractBuilder<FileSystem> {
             // Clear the list of tiles, they should only exist in the cache
             model.getTiles().clear();
 
-            // Create a new tilemap view and render it's contents
+            // Create a new tile map views and render it's contents
             TileMapView tileMapView = AbstractSignalFactory.getFactory(ViewFactory.class).add(
                     new TileMapView(model.getName(), model.getRows(), model.getColumns(), model.getWidth(), model.getHeight()), 
                     false
@@ -137,7 +134,6 @@ public final class LoadTileMapBuilder extends AbstractBuilder<FileSystem> {
     }
 
     @Override public void buildContent() {
-
         // Build the project contents
         buildProject();
 
@@ -153,7 +149,6 @@ public final class LoadTileMapBuilder extends AbstractBuilder<FileSystem> {
     }
 
     @Override public boolean buildStart() {
-
         // Create a file chooser so that we can get information about
         // the save process
         JFileChooser fileChooser = new JFileChooser(System.getProperty("user.home") + File.separator + "desktop");

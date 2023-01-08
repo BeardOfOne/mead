@@ -1,8 +1,8 @@
 key,en_ca
-About,About Einstein
+About,About
 Add,Add
 AllViews,All Views
-ApplicationTitle,Einstein Editor
+ApplicationTitle,Tilemap Editor
 Browse,Browse
 Cancel,Cancel
 CellDepth,Cell Depth
@@ -25,7 +25,7 @@ ExportImages,Export Images
 ExportOverwriteMessage,"Directory already exists, are you sure you wish to override its contents?"
 File,File
 FriendlyName,Friendly Name
-Github,https://github.com/danielricci/einstein-assets-editor.git
+Github,https://github.com/danielricci/mead-framework.git
 Height,Height
 Help,Help
 ID,ID
