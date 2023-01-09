@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.logging.Level;
 
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.xml.bind.JAXBException;
 
 import framework.communication.external.builder.AbstractBuilder;
@@ -152,6 +153,8 @@ public final class LoadTileMapBuilder extends AbstractBuilder<FileSystem> {
         // Create a file chooser so that we can get information about
         // the save process
         JFileChooser fileChooser = new JFileChooser(System.getProperty("user.home") + File.separator + "desktop");
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Only .xml files", "xml"));
 
         // Set the directory location
         if(GameValues.exists(fileChooser.getClass().getSimpleName())) {

@@ -147,9 +147,16 @@ public abstract class AbstractMenuItem extends AbstractMenu {
         
         item.addActionListener(new AbstractAction(super.toString()) {
             @Override public void actionPerformed(ActionEvent event) {
-                if(isEnabled()) {
-                    onExecute(event);
-                } 
+                JComponent component = getComponent();
+                Object property = component.getClientProperty(component);
+                if(property instanceof AbstractMenuItem)
+                {
+                    AbstractMenuItem item = ((AbstractMenuItem)property);
+                    if(item.isEnabled())
+                    {
+                        onExecute(event);
+                    }
+                }
             }
         });
     }
