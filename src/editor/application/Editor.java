@@ -162,7 +162,7 @@ public final class Editor extends Application {
     }
 
     @Override protected void onBeforeEngineDataInitialized() {
-        EngineProperties.instance().setProperty(Property.LOCALIZATION_PATH_CVS, "resources/resources.csv");
+        EngineProperties.instance().setProperty(Property.LOCALIZATION_PATH_CVS, "/resources/resources.csv");
         //EngineProperties.instance().setProperty(Property.LOG_DIRECTORY, System.getProperty("user.home") + File.separator + "desktop" + File.separator);
         EngineProperties.instance().setProperty(Property.ENGINE_OUTPUT, Boolean.toString(false));
         EngineProperties.instance().setProperty(Property.SUPPRESS_SIGNAL_REGISTRATION_OUTPUT, Boolean.toString(true));
