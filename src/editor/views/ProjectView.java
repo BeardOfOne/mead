@@ -54,6 +54,7 @@ public class ProjectView extends ScrollView {
     public ProjectView(String projectName) {
         setLayout(new DraggableLayout());
         Application.instance.setContentPane(new JScrollPane(this));
+        Application.instance.setTitle(projectName);
 
         // Create the tile model that this view will be populated from
         ProjectModel model = AbstractFactory.getFactory(ModelFactory.class).add(
@@ -77,7 +78,7 @@ public class ProjectView extends ScrollView {
 
         if(event.getSource() instanceof ProjectModel) {
             ProjectModel model = (ProjectModel) event.getSource();
-            Application.instance.setTitle(Application.instance.getTitle() + " - " + model.getName());
+            Application.instance.setTitle(model.getName());
         }
 
         repaint();

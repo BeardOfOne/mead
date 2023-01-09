@@ -63,6 +63,11 @@ public class Application extends JFrame {
      * Debug state of the application
      */
     public final boolean isDebug;
+
+    /**
+     * The default application name of this application
+     */
+    protected String _applicationName;
     
     /**
      * The running time of engine
@@ -123,7 +128,7 @@ public class Application extends JFrame {
         
         // Notify on the title that the game is in debug mode
         if(isDebug) {
-            setTitle(getTitle() + " - [DEBUG]");    
+            Tracelog.log(Level.INFO, false, "In Debug Mode");
         }
         
         // TODO - This should not be set here, it should be up to the developer to do this himself
@@ -135,6 +140,10 @@ public class Application extends JFrame {
      */
     public void onRestart() {
         isRestarting = false;
+    }
+
+    public void setTitle(String projectName) {
+        super.setTitle(_applicationName + " - " + projectName);
     }
     
     /**
@@ -199,5 +208,9 @@ public class Application extends JFrame {
      * Called before the data has been initialized and loaded into the game engine components
      */
     protected void onBeforeEngineDataInitialized() {
+    }
+
+    @Override public String getTitle() { 
+        return _applicationName; 
     }
 }

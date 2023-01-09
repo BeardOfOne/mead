@@ -61,11 +61,6 @@ import resources.ResourceKeys;
 public final class Editor extends Application {
 
     /**
-     * The default application name of this application
-     */
-    private String _applicationName;
-
-    /**
      * Constructs a new instance of this class type
      * 
      * @param isDebug TRUE if the application is in debug mode, FALSE otherwise
@@ -182,9 +177,5 @@ public final class Editor extends Application {
         populateEditMenu();
         populateViewMenu();
         populateHelpMenu();
-    }
-
-    @Override public String getTitle() { 
-        return _applicationName; 
     }
 }
