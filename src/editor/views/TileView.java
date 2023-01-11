@@ -30,6 +30,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.border.Border;
 
 import framework.communication.internal.signal.arguments.EventArgs;
@@ -50,9 +51,14 @@ import editor.models.TileModel;
 public class TileView extends PanelView {
 
     /**
-     * Selected border style of this view
+     * The selected border style
      */
     private final Border SELECTED_BORDER = BorderFactory.createLineBorder(Color.RED, 2);
+
+    /**
+     * The default border style
+     */
+    private final Border DEFAULT_BORDER = BorderFactory.createLineBorder(Color.BLACK, 1);
 
     /**
      * Constructs a new instance of this class type
@@ -60,6 +66,8 @@ public class TileView extends PanelView {
      * @param tileMapController The controller of the tile map that owns this tile
      */
     public TileView(TileMapController tileMapController) {
+        // Set the border
+        setBorder(DEFAULT_BORDER);
 
         // Do not show any background, let the image do all the work
         setOpaque(false);
@@ -107,7 +115,7 @@ public class TileView extends PanelView {
             TileModel tileMapModel = (TileModel) event.getSource();
 
             // Set the border of the tile based on the selected state of the model
-            setBorder(tileMapModel.getSelected() ? SELECTED_BORDER : null); 
+            setBorder(tileMapModel.getSelected() ? SELECTED_BORDER : DEFAULT_BORDER); 
 
             // If there is an image to be rendered, submit it to the graphics
             // rendering pipeline

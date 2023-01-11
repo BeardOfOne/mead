@@ -170,9 +170,6 @@ public class TileMapView extends PanelView {
                 gbc.gridx = col;
                 gbc.gridy = row;
 
-                // Set the border
-                //view.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-
                 // Add the view to our tilemap
                 add(view, gbc);
 
