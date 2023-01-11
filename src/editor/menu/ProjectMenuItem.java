@@ -60,19 +60,17 @@ public class ProjectMenuItem extends AbstractMenuItem {
     }
 
     @Override public void onExecute(ActionEvent actionEvent) {
-        
-        // Create a new setup dialog
-        ProjectDialogView projectDialog = AbstractSignalFactory.getFactory(ViewFactory.class).add(new ProjectDialogView(), true);
-        projectDialog.render();
+        ProjectDialogView projectView = new ProjectDialogView();
+        projectView.render();
 
-        // If the dialog is not valid then clear the contents of the application and go no further
-        if(projectDialog.getDialogResult() != JOptionPane.OK_OPTION) {
-            AbstractSignalFactory.clearFactories();
+        if(projectView.getDialogResult() != JOptionPane.OK_OPTION) {
             return;
         }
 
-        // Create a new main window view that is shared among the entire application and render it
-        ProjectView view = AbstractSignalFactory.getFactory(ViewFactory.class).add(new ProjectView(projectDialog.getNameField()), true);
+        AbstractSignalFactory.clearFactories();
+        AbstractSignalFactory.getFactory(ViewFactory.class).add(projectView, true);
+
+        ProjectView view = AbstractSignalFactory.getFactory(ViewFactory.class).add(new ProjectView(projectView.getNameField()), true);
         view.render();
     }
 
