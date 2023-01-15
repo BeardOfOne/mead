@@ -56,11 +56,12 @@ import editor.models.TileMapModel;
 public final class SaveTileMapBuilder extends AbstractBuilder<FileSystem> implements IDataPipeline<IModel> {
 
     @Override public boolean buildStart() {
+        ProjectModel projectModel = AbstractFactory.getFactory(ModelFactory.class).get(ProjectModel.class);
 
         // Create a file chooser so that we can get information about
         // the save process
         JFileChooser fileChooser = new JFileChooser(System.getProperty("user.home") + File.separator + "desktop");
-        fileChooser.setSelectedFile(new File(""));
+        fileChooser.setSelectedFile(new File(projectModel.getName() + IXMLCodec.EXTENSION_XML));
 
         // Set the directory location
         if(GameValues.exists(fileChooser.getClass().getSimpleName())) {
