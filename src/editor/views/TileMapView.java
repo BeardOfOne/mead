@@ -58,16 +58,6 @@ import editor.models.TileMapModel;
 public class TileMapView extends PanelView {
 
     /**
-     * Selected border style of this view
-     */
-    private final Border SELECTED_BORDER = BorderFactory.createMatteBorder(15, 1, 1, 1, Color.RED);
-
-    /**
-     * Normal border style of this view
-     */
-    private final Border DEFAULT_BORDER = BorderFactory.createMatteBorder(15, 1, 1, 1, Color.DARK_GRAY);
-
-    /**
      * Constructs a new instance of this class type
      *
      * @param name The name of the tile map
@@ -78,9 +68,6 @@ public class TileMapView extends PanelView {
      * 
      */
     public TileMapView(String name, int rows, int columns, int cellWidth, int cellHeight) {
-        // Set the border
-        setBorder(DEFAULT_BORDER);
-
         // Do not render the background of the this class. Make it so that it is transparent. All tiles
         // that are created within this tile map should also have their opaque set to false
         setOpaque(false);
@@ -117,6 +104,9 @@ public class TileMapView extends PanelView {
 
         this.addMouseListener(drag);
         this.addMouseMotionListener(drag);
+
+        // Note: The border needs to be called at least after the tilemap model has been submitted to the controller
+        setBorder(getTileMapBorder());
     }
 
     @Override public void render() {
@@ -158,6 +148,13 @@ public class TileMapView extends PanelView {
         setVisible(true);
     }
 
+    private Border getTileMapBorder() {
+        TileMapModel tileMapModel = getViewProperties().getEntity(TileMapController.class).getSetupDetails();
+        return tileMapModel.getSelected() 
+            ? BorderFactory.createTitledBorder(BorderFactory.createMatteBorder(15, 1, 1, 1, Color.RED), tileMapModel.getName())
+            : BorderFactory.createTitledBorder(BorderFactory.createMatteBorder(15, 1, 1, 1, Color.DARK_GRAY), tileMapModel.getName());
+    }
+
     @Override public void update(EventArgs event) {
         super.update(event);
 
@@ -177,7 +174,7 @@ public class TileMapView extends PanelView {
                     );
 
             // Set the border of the tile based on the selected state of the model
-            setBorder(tileMapModel.getSelected() ? SELECTED_BORDER : DEFAULT_BORDER); 
+            setBorder(getTileMapBorder()); 
         }
 
         repaint();
