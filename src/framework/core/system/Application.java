@@ -130,9 +130,6 @@ public class Application extends JFrame {
         if(isDebug) {
             Tracelog.log(Level.INFO, false, "In Debug Mode");
         }
-        
-        // TODO - This should not be set here, it should be up to the developer to do this himself
-        setVisible(true);
     }
     
     /**

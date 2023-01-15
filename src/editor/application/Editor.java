@@ -89,7 +89,7 @@ public final class Editor extends Application {
                         break;
                     }
                 }
-                new Editor(debugMode);
+                new Editor(debugMode).setVisible(true);;
             }
         });
     }
