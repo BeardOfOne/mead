@@ -81,8 +81,9 @@ public class TileMapSettingsMenuItem extends AbstractMenuItem {
         
         // If the dialog OK button was selected then proceed forward with the changes
         if(tileMapDialogView.getDialogResult() == JOptionPane.OK_OPTION) {
-            // Note: Right now we only support the name being changed
             tileMapModel.get().setName(tileMapDialogView.getNameField());
+            tileMapModel.get().setWidth(tileMapDialogView.getCellWidthField());
+            tileMapModel.get().setHeight(tileMapDialogView.getCellHeightField());
         }
     }
     

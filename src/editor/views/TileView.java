@@ -30,7 +30,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.border.Border;
 
 import framework.communication.internal.signal.arguments.EventArgs;

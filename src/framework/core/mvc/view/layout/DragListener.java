@@ -131,9 +131,8 @@ public class DragListener extends MouseListenerEvent {
     }
 
     @Override public void mouseDragged(MouseEvent event) {
-
         super.mouseDragged(event);
-        if(event.isConsumed() && getIsConsumed()) {
+        if(event.isConsumed() || getIsConsumed()) {
             return;
         }
         

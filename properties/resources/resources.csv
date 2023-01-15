@@ -54,6 +54,7 @@ SetupError,"Invalid setup data entered, please try again"
 ShowTileMap,Show Tile Map
 TileLayers,Tile Layers
 TileLayersWindow,Tile Layers Window
+TileMapSettings,Tilemap Settings
 TileProperties,Tile Properties
 View,View
 Views,Views

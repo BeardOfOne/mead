@@ -145,6 +145,10 @@ public class MouseListenerEvent extends MouseInputAdapter {
     }
 
     @Override public void mouseDragged(MouseEvent event) {
+        if(event.isConsumed()) {
+            return;
+        }
+        
         _isConsumed = false;
         if(!_isEnabled || !_locked) {
             event.consume();

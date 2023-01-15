@@ -25,17 +25,15 @@
 package editor.views;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 
 import framework.communication.internal.signal.arguments.EventArgs;
@@ -46,13 +44,10 @@ import framework.core.factories.ModelFactory;
 import framework.core.factories.ViewFactory;
 import framework.core.mvc.view.PanelView;
 import framework.core.mvc.view.layout.DragListener;
-import framework.core.system.Application;
 import framework.utils.MouseListenerEvent.SupportedActions;
-import framework.utils.globalisation.Localization;
 
 import editor.controllers.TileMapController;
 import editor.models.TileMapModel;
-import resources.ResourceKeys;
 
 /**
  * This view represents a tilemap entity
@@ -65,12 +60,12 @@ public class TileMapView extends PanelView {
     /**
      * Selected border style of this view
      */
-    private final Border SELECTED_BORDER = BorderFactory.createMatteBorder(15, 2, 2, 2, Color.RED);
+    private final Border SELECTED_BORDER = BorderFactory.createMatteBorder(15, 1, 1, 1, Color.RED);
 
     /**
      * Normal border style of this view
      */
-    private final Border NORMAL_BORDER = BorderFactory.createMatteBorder(15, 2, 2, 2, Color.DARK_GRAY);
+    private final Border DEFAULT_BORDER = BorderFactory.createMatteBorder(15, 1, 1, 1, Color.DARK_GRAY);
 
     /**
      * Constructs a new instance of this class type
@@ -83,21 +78,23 @@ public class TileMapView extends PanelView {
      * 
      */
     public TileMapView(String name, int rows, int columns, int cellWidth, int cellHeight) {
-        
+        // Set the border
+        setBorder(DEFAULT_BORDER);
+
         // Do not render the background of the this class. Make it so that it is transparent. All tiles
         // that are created within this tile map should also have their opaque set to false
         setOpaque(false);
 
         // Create the setup model that will be associated to the tilemap
-        TileMapModel setupModel = AbstractFactory.getFactory(ModelFactory.class).add(new TileMapModel(this), false);
-        setupModel.setName(name);
-        setupModel.setRows(rows);
-        setupModel.setColumns(columns);
-        setupModel.setWidth(cellWidth);
-        setupModel.setHeight(cellHeight);
+        TileMapModel tileMapModel = AbstractFactory.getFactory(ModelFactory.class).add(new TileMapModel(this), false);
+        tileMapModel.setName(name);
+        tileMapModel.setRows(rows);
+        tileMapModel.setColumns(columns);
+        tileMapModel.setWidth(cellWidth);
+        tileMapModel.setHeight(cellHeight);
 
         // Create the tilemap controller that this view will use
-        TileMapController tileMapController = AbstractSignalFactory.getFactory(ControllerFactory.class).add(new TileMapController(setupModel), false); 
+        TileMapController tileMapController = AbstractSignalFactory.getFactory(ControllerFactory.class).add(new TileMapController(tileMapModel), false); 
         getViewProperties().setEntity(tileMapController);
 
         Rectangle visible = AbstractFactory.getFactory(ViewFactory.class).get(ProjectView.class).getVisibleRect();
@@ -106,40 +103,20 @@ public class TileMapView extends PanelView {
 
         setLayout(new GridBagLayout());
         // Listen to the drag events for both mouse and mouse motion
-        DragListener drag = new DragListener(SupportedActions.LEFT);
-
-        this.addMouseListener(new MouseAdapter() {
+        DragListener drag = new DragListener(SupportedActions.LEFT) {
+            @Override public void mousePressed(MouseEvent event) {
+                super.mousePressed(event);
+                getViewProperties().getEntity(TileMapController.class).toggleSelected();
+            }
             @Override public void mouseReleased(MouseEvent args) {
-                if(!drag.getLastDragged()) {
-
-                    // Toggle the selection state of the tile map
-                    boolean isOn = getViewProperties().getEntity(TileMapController.class).toggleSelected();
-
-                    // Set the focus on this tilemap based on if it is toggled
-                    setFocusable(isOn);
-                    if(isOn) {
-                        requestFocusInWindow();
-                    }
-                }
-                else {
-                    // Get the current coordinate of this tilemap and update it within our model
-                    getViewProperties().getEntity(TileMapController.class).updateTileMapPosition(getLocation().x, getLocation().y);
-                }
+                super.mouseReleased(args);
+                Point location = TileMapView.this.getLocation();
+                tileMapController.updateTileMapPosition(location.x, location.y);                
             }
-        });
+        };
 
-        this.addKeyListener(new KeyAdapter() {
-            @Override public void keyReleased(KeyEvent args) {
-
-                // If the user pressed on the delete button, prompt the user if they wish to 
-                // really delete this tile map
-                if(args.getKeyCode() == KeyEvent.VK_DELETE) {
-                    // If the user wishes to delete the tile map, perform the deletion
-                    if(JOptionPane.showConfirmDialog(Application.instance, Localization.instance().getLocalizedString(ResourceKeys.DeleteTileMapQuestion), Localization.instance().getLocalizedString(ResourceKeys.DeleteTileMapTitle), JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
-                    }
-                }
-            }
-        });
+        this.addMouseListener(drag);
+        this.addMouseMotionListener(drag);
     }
 
     @Override public void render() {
@@ -154,17 +131,17 @@ public class TileMapView extends PanelView {
         gbc.weighty = 1.0;
 
         // Get the setup model associated to this view
-        TileMapModel setupModel = getViewProperties().getEntity(TileMapController.class).getSetupDetails();
+        TileMapModel tileMapModel = getViewProperties().getEntity(TileMapController.class).getSetupDetails();
 
         // Get a reference to the controller of this view
         TileMapController tileMapController = getViewProperties().getEntity(TileMapController.class);
 
-        for(int row = 0; row < setupModel.getRows(); ++row) {
-            for(int col = 0; col < setupModel.getColumns(); ++col) {		
+        for(int row = 0; row < tileMapModel.getRows(); ++row) {
+            for(int col = 0; col < tileMapModel.getColumns(); ++col) {		
 
                 // Create a tile and add it to our board
                 TileView view = AbstractSignalFactory.getFactory(ViewFactory.class).add(new TileView(tileMapController), false);
-                view.setPreferredSize(new Dimension(setupModel.getWidth(), setupModel.getHeight()));
+                view.setPreferredSize(new Dimension(tileMapModel.getWidth(), tileMapModel.getHeight()));
 
                 // Make sure that dimensions are properly mapped
                 gbc.gridx = col;
@@ -186,7 +163,13 @@ public class TileMapView extends PanelView {
 
         if(event.getSource() instanceof TileMapModel) {
             TileMapModel tileMapModel = (TileMapModel) event.getSource();
-
+            for(Component component: getComponents()) {
+                if(component instanceof TileView) {
+                    component.setPreferredSize(new Dimension(tileMapModel.getWidth(), tileMapModel.getHeight()));
+                    component.revalidate();
+                }
+            }
+            
             // Update the coordinate of this tile map
             setLocation(
                     tileMapModel.getXCoordinate(),
@@ -194,7 +177,7 @@ public class TileMapView extends PanelView {
                     );
 
             // Set the border of the tile based on the selected state of the model
-            setBorder(tileMapModel.getSelected() ? SELECTED_BORDER : NORMAL_BORDER); 
+            setBorder(tileMapModel.getSelected() ? SELECTED_BORDER : DEFAULT_BORDER); 
         }
 
         repaint();
