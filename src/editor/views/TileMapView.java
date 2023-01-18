@@ -149,7 +149,16 @@ public class TileMapView extends PanelView {
     }
 
     private Border getTileMapBorder() {
-        TileMapModel tileMapModel = getViewProperties().getEntity(TileMapController.class).getSetupDetails();
+        TileMapController controller = getViewProperties().getEntity(TileMapController.class);
+        if(controller == null) {
+            return null;
+        }
+
+        TileMapModel tileMapModel = controller.getSetupDetails();
+        if(tileMapModel == null) {
+            return null;
+        }
+                
         return tileMapModel.getSelected() 
             ? BorderFactory.createTitledBorder(BorderFactory.createMatteBorder(15, 1, 1, 1, Color.RED), tileMapModel.getName())
             : BorderFactory.createTitledBorder(BorderFactory.createMatteBorder(15, 1, 1, 1, Color.DARK_GRAY), tileMapModel.getName());
