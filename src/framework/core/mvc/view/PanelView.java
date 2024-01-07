@@ -1,27 +1,3 @@
-/**
- * Daniel Ricci {@literal <thedanny09@icloud.com>}
- *
- * Permission is hereby granted, free of charge, to any person
- * obtaining a copy of this software and associated documentation
- * files (the "Software"), to deal in the Software without restriction,
- * including without limitation the rights to use, copy, modify, merge,
- * publish, distribute, sublicense, and/or sell copies of the Software,
- * and to permit persons to whom the Software is furnished to do so, subject
- * to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL
- * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
- * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
- * IN THE SOFTWARE.
- */
-
 package framework.core.mvc.view;
 
 import java.awt.Graphics;
@@ -37,7 +13,7 @@ import framework.core.graphics.IRenderable;
 import framework.core.graphics.IRenderer;
 
 /**
- * This class represents a custom panel class that ties into the gosling MVC design pattern
+ * This class represents a custom panel class for adding renderable data to the view
  * 
  * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
@@ -97,8 +73,8 @@ public class PanelView extends JPanel implements IView, IRenderer {
             // Force the render method that holds an image
             render(null, graphics);
         }
-        else {
-            for(IRenderable content : _renderCache) {
+        else if(!this._renderCache.isEmpty()) {
+        	for(IRenderable content : this._renderCache.toArray(new IRenderable[0])) {
                 if(content != null) {
                     this.render(content, graphics);
                 }
@@ -135,7 +111,6 @@ public class PanelView extends JPanel implements IView, IRenderer {
         if(extents.width == RENDER_LIMIT_DEFAULT_VALUE) {
             width = getWidth();
         }
-        
         
         int height = extents.height;
         if(extents.height == RENDER_LIMIT_DEFAULT_VALUE) {

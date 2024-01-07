@@ -1,7 +1,6 @@
 package framework.communication.external.filesystem;
 
 import java.io.File;
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
