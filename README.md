@@ -1,7 +1,4 @@
-# Mead
-Game development framework for Java Swing
-
-### Games powered by Mead 1.3
+### Games powered by Mead
 
 This framework has provided support for the below listed games. Newer version have undergone lots of code cleanup and contract modification that will break parts of the game if used. I dont mind releasing minor patches for 1.3 so just send me an email with the issue and I'll make sure to get on that. 
 
