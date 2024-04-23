@@ -1,5 +1,5 @@
 # Mead
-<img src="https://img.shields.io/github/license/mashape/apistatus.svg" />
+Game development framework for Java Swing
 
 ### Games powered by Mead 1.3
 
