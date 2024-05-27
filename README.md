@@ -1,4 +1,4 @@
-### Games powered by Mead
+### Games powered by Mead 🥃
 
 - [x] Tic-Tac-Toe - https://github.com/danielricci/tic-tac-toe
 - [x] Checkers - https://github.com/danielricci/checkers
