@@ -15,4 +15,17 @@ public interface IRenderable {
      * @return The renderable content as an image
      */
     public Image getRenderableContent();
+    
+    /**
+     * Helper method to quickly cast back to this interface type
+     *
+     * @return The interface type
+     */
+    default public IRenderable toRenderable() {
+    	return (IRenderable)this;
+    }
+    
+    default public RendererProperties getRenderableProperties() {
+    	return new RendererProperties();
+    }
 }

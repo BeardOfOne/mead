@@ -4,6 +4,7 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -70,6 +71,21 @@ public class DataFactory extends AbstractFactory {
         }
         
         return img; 
+    }
+    
+    /**
+     * Gets the in-order list of images associated to the specified identifiers
+     *
+     * @param identifiers The identifier associated to the data entities
+     * 
+     * @return The in-order list of images associated to the identifiers provided 
+     */
+    public List<Image> getDataEntities(UUID... identifiers) {
+    	if(identifiers == null) {
+    		return null;
+    	}
+
+    	return Arrays.stream(identifiers).map(z -> getDataEntity(z)).collect(Collectors.toList());
     }
 
     /**
