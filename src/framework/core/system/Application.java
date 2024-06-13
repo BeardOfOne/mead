@@ -1,9 +1,8 @@
 package framework.core.system;
 
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.time.Duration;
 import java.util.logging.Level;
 
@@ -23,7 +22,7 @@ import framework.utils.logging.Tracelog;
  * @author Daniel Ricci {@literal <thedanny09@icloud.com>}
  *
  */
-public class Application extends JFrame {
+public class Application extends JFrame implements WindowListener {
 
     /**
      * The flag indicating if the application is restarting
@@ -39,11 +38,6 @@ public class Application extends JFrame {
      * Debug state of the application
      */
     public final boolean isDebug;
-
-    /**
-     * The default application name of this application
-     */
-    protected String _applicationName;
     
     /**
      * The running time of engine
@@ -59,15 +53,13 @@ public class Application extends JFrame {
         
         instance = this;
         
+        addWindowListener(this);
+        
         // Pressing on the close button won't do it's default action
         setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         
         this.isDebug = isDebug;
-    
-        // TODO - This method should not be overriden because i dont want the child to have code executing until
-        //        The construction is done
-        onBeforeEngineDataInitialized();
-        
+            
         // Get the start time
         long startTimeMain = System.nanoTime();
         
@@ -97,11 +89,7 @@ public class Application extends JFrame {
             }
         }
         Tracelog.log(Level.INFO, false, "Engine Initialization Finished - " + ((System.nanoTime() - startTimeMain) / 1000000) + "ms");
-            
-        // TODO - This method should not be overriden because i dont want the child to have code executing until
-        //        The construction is done
-        onWindowInitialized();
-        
+                    
         // Notify on the title that the game is in debug mode
         if(isDebug) {
             Tracelog.log(Level.INFO, false, "In Debug Mode");
@@ -114,51 +102,8 @@ public class Application extends JFrame {
     public void onRestart() {
         isRestarting = false;
     }
-
-    public void setTitle(String projectName) {
-        super.setTitle(_applicationName + " - " + projectName);
-    }
     
-    /**
-     * Called when the application is shown.  
-     * 
-     * Note: A shown application is when the application's visibility is TRUE
-     */
-    protected void onApplicationShown() {
-    }
-    
-    /**
-     * Sets the window listeners for the application
-     */
-    protected void onWindowInitialized() {
-    
-        JMenuBar menu = new JMenuBar();
-        setJMenuBar(menu);
-        menu.revalidate();
-        menu.repaint();
-        
-        addComponentListener(new ComponentAdapter() {
-            @Override public void componentShown(ComponentEvent event) {
-                onApplicationShown();
-            }
-        });
-    
-        addWindowListener(new WindowAdapter() {
-            @Override public void windowClosing(WindowEvent windowEvent) {
-                dispose();
-            };
-        });
-    
-        addWindowListener(new WindowAdapter() {
-            @Override public void windowClosed(WindowEvent event) {
-                Tracelog.log(Level.INFO, false, "Engine Running Time - " + formatDuration(Duration.ofMillis(((System.nanoTime() - runningTime) / 1000000))));
-                Tracelog.log(Level.INFO, false, "Powering down engine, and shutting off the application.");
-                Tracelog.close();
-                System.exit(0);
-            }
-        });
-    }
-    
+       
     /**
      * Formats the specified duration to H:MM:SS 
      *
@@ -177,13 +122,43 @@ public class Application extends JFrame {
         return seconds < 0 ? "-" + positive : positive;
     }
     
-    /**
-     * Called before the data has been initialized and loaded into the game engine components
-     */
-    protected void onBeforeEngineDataInitialized() {
-    }
+    @Override public void windowOpened(WindowEvent windowEvent) {
+    	JMenuBar menu = new JMenuBar();
+	    setJMenuBar(menu);
+	    menu.revalidate();
+	    menu.repaint();
+            
+        addWindowListener(new WindowAdapter() {
+            @Override public void windowClosing(WindowEvent windowEvent) {
+                dispose();
+            };
+        });
+    
+        addWindowListener(new WindowAdapter() {
+            @Override public void windowClosed(WindowEvent event) {
+                Tracelog.log(Level.INFO, false, "Engine Running Time - " + formatDuration(Duration.ofMillis(((System.nanoTime() - runningTime) / 1000000))));
+                Tracelog.log(Level.INFO, false, "Powering down engine, and shutting off the application.");
+                Tracelog.close();
+                System.exit(0);
+            }
+        });
+	}
 
-    @Override public String getTitle() { 
-        return _applicationName; 
-    }
+	@Override public void windowClosing(WindowEvent windowEvent) {
+	}
+
+	@Override public void windowClosed(WindowEvent windowEvent) {
+	}
+
+	@Override public void windowIconified(WindowEvent windowEvent) {
+	}
+
+	@Override public void windowDeiconified(WindowEvent windowEvent) {
+	}
+
+	@Override public void windowActivated(WindowEvent windowEvent) {
+	}
+
+	@Override public void windowDeactivated(WindowEvent windowEvent) {
+	}
 }

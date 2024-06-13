@@ -1,6 +1,7 @@
 package editor.application;
 
 import java.awt.EventQueue;
+import java.awt.event.WindowEvent;
 
 import javax.swing.WindowConstants;
 
@@ -65,7 +66,15 @@ public final class Editor extends Application {
                         break;
                     }
                 }
-                new Editor(debugMode).setVisible(true);;
+                
+              EngineProperties.instance().setProperty(Property.LOCALIZATION_PATH_CVS, "/resources/resources.csv");
+              //EngineProperties.instance().setProperty(Property.LOG_DIRECTORY, System.getProperty("user.home") + File.separator + "desktop" + File.separator);
+              EngineProperties.instance().setProperty(Property.ENGINE_OUTPUT, Boolean.toString(false));
+              EngineProperties.instance().setProperty(Property.SUPPRESS_SIGNAL_REGISTRATION_OUTPUT, Boolean.toString(true));
+              EngineProperties.instance().setProperty(Property.DISABLE_TRANSLATIONS_PLACEHOLDER, Boolean.toString(true));
+               
+              Editor editor = new Editor(debugMode);
+              editor.setVisible(true);
             }
         });
     }
@@ -132,26 +141,12 @@ public final class Editor extends Application {
         .addMenuItem(AboutMenuItem.class);
     }
 
-    @Override protected void onBeforeEngineDataInitialized() {
-        EngineProperties.instance().setProperty(Property.LOCALIZATION_PATH_CVS, "/resources/resources.csv");
-        //EngineProperties.instance().setProperty(Property.LOG_DIRECTORY, System.getProperty("user.home") + File.separator + "desktop" + File.separator);
-        EngineProperties.instance().setProperty(Property.ENGINE_OUTPUT, Boolean.toString(false));
-        EngineProperties.instance().setProperty(Property.SUPPRESS_SIGNAL_REGISTRATION_OUTPUT, Boolean.toString(true));
-        EngineProperties.instance().setProperty(Property.DISABLE_TRANSLATIONS_PLACEHOLDER, Boolean.toString(true));
-        
-        // Set the title of the application
-        _applicationName = Localization.instance().getLocalizedString(ResourceKeys.ApplicationTitle);
-        setTitle(_applicationName);
-    }
-
-    @Override protected void onApplicationShown() {
-    }
-
-    @Override protected void onWindowInitialized() {
-        super.onWindowInitialized();
+    @Override public void windowOpened(WindowEvent windowEvent) {
+    	super.windowOpened(windowEvent);
+    	
         populateFileMenu();
         populateEditMenu();
         populateViewMenu();
         populateHelpMenu();
-    }
+    }    
 }
