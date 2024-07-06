@@ -134,7 +134,7 @@ public class PanelView extends JPanel implements IView, IRenderer {
         context.drawImage(image, x, y, renderProperties.canDraw ? width : 0, renderProperties.canDraw ? height : 0, null);
         
         // Reset the rendering properties
-    	renderProperties.reset();
+    	renderProperties.renderData = null;
     }
 
     @Override public void update(EventArgs event) {

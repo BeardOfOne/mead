@@ -45,12 +45,4 @@ public class RendererProperties {
      *       happen.
      */
     public boolean canDraw = true;
-    
-    public void reset() {
-        x = -1;
-        y = 1;
-        width = -1;
-        height = -1;
-        renderData = null;
-    }    
 }
