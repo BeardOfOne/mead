@@ -93,9 +93,6 @@ public class PanelView extends JPanel implements IView, IRenderer {
     }
     
     @Override public void render(IRenderable renderableData, Graphics context) {
-        // Reset the rendering properties
-    	renderProperties.reset();
-    	
         // Reset the paint mode
         context.setPaintMode();
           
@@ -135,6 +132,9 @@ public class PanelView extends JPanel implements IView, IRenderer {
         
         // Use the context to draw the image
         context.drawImage(image, x, y, renderProperties.canDraw ? width : 0, renderProperties.canDraw ? height : 0, null);
+        
+        // Reset the rendering properties
+    	renderProperties.reset();
     }
 
     @Override public void update(EventArgs event) {
