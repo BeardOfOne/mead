@@ -51,6 +51,10 @@ public class DataEntity implements IRenderable {
     public void refresh() {
     }
     
+    public UUID getActiveDataIdentifier() {
+    	return this._identifier;
+    }
+    
     @Override public Image getRenderableContent() {
         return _renderableData;
     }
